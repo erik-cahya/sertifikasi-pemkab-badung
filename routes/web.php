@@ -7,8 +7,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('pendaftaran', function () {
-    return view('asesi.pendaftaran.index');
+Route::get('pendaftaran-asesi', function () {
+    return view('pendaftaran.pendaftaran-asesi');
+});
+Route::get('pendaftaran-lsp', function () {
+    return view('pendaftaran.pendaftaran-lsp');
 });
 
 Route::get('/dashboard', function () {

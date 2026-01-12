@@ -37,7 +37,7 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4 class=".card-title">Form Pendaftaran Calon Asesi</h4>
+                                <h4 class=".card-title">Form Pendaftaran LSP</h4>
                                 {{-- <p class="text-muted mb-0">
                                 Most common form control, text-based input fields. Includes support for all
                                 HTML5 types: <code>text</code>, <code>password</code>, <code>datetime</code>,
