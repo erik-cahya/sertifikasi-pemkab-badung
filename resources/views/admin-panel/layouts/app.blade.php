@@ -46,8 +46,8 @@
     <!-- Vendor js -->
     <script src="{{ asset('admin') }}/assets/js/vendor.min.js"></script>
     <script src="{{ asset('admin') }}/assets/vendor/lucide/umd/lucide.min.js"></script>
-    <script src="{{ asset('admin') }}/assets/js/app.min.js"></script>
     @stack('script')
+    <script src="{{ asset('admin') }}/assets/js/app.min.js"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
