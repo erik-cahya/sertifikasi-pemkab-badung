@@ -14,7 +14,7 @@
                     <table id="scroll-horizontal-datatable" class="table-striped w-100 nowrap table">
                         <thead>
                             <tr>
-                                <th>No</th>
+                                <th>Nomor</th>
                                 <th>Nama Kegiatan</th>
                                 <th>LSP Terlibat</th>
                                 <th>Kuota Peserta</th>
