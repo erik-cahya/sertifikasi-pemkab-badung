@@ -12,15 +12,19 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('lsp', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('user_id');
-            $table->string('lsp_number');
-            $table->string('lsp_name');
-            $table->text('address');
-            $table->string('type');
+            $table->ulid('ref')->primary();
+            $table->string('lsp_nama');
+            $table->string('lsp_no_lisensi')->nullable();
+            $table->string('lsp_alamat')->nullable();
+            $table->string('lsp_email')->nullable();
+            $table->string('lsp_telp')->nullable();
+            $table->string('lsp_direktur')->nullable();
+            $table->string('lsp_direktur_telp')->nullable();
+            $table->text('lsp_logo')->nullable();
+            $table->date('lsp_tanggal_lisensi')->nullable();
+            $table->date('lsp_expired_lisensi')->nullable();
+            $table->foreignUlid('created_by')->references('ref')->on('users')->cascadeOnDelete();
             $table->timestamps();
-
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

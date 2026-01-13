@@ -60,16 +60,16 @@
                                                 <div id="kegiatan-container">
                                                     <!-- Item pertama -->
                                                     <div class="row align-items-end kegiatan-row mb-3">
-                                                        <div class="col-lg-2">
-                                                            <div class="">
-                                                                <label class="form-label">Nama LSP</label>
-                                                                <input type="text" class="form-control kegiatan-nama" name="kegiatan_name[]">
-                                                            </div>
-                                                        </div>
                                                         <div class="col-lg-3">
                                                             <div class="">
+                                                                <label class="form-label">Nama LSP</label>
+                                                                <input type="text" class="form-control kegiatan-nama" name="nama_lsp[]">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-5">
+                                                            <div class="">
                                                                 <label class="form-label">Skema</label>
-                                                                <select class="select2 form-control select2-multiple" data-toggle="select2" name="skema[][]" multiple="multiple">
+                                                                <select class="select2 form-control select2-multiple" data-toggle="select2" name="skema[0][]" multiple="multiple">
                                                                     <option value="Teknisi Refrigerasi Domestik">Teknisi Refrigerasi Domestik</option>
                                                                     <option value="Perawatan Mesin Pendingin / AC">Perawatan Mesin Pendingin / AC</option>
                                                                     <option value="Pelaksanaan Instalasi AC">Pelaksanaan Instalasi AC</option>
@@ -78,19 +78,16 @@
                                                                 </select>
                                                             </div>
                                                         </div>
-                                                        <div class="col-lg-2">
+                                                        <div class="col-lg-1">
                                                             <div class="">
                                                                 <label class="form-label">Kuota</label>
                                                                 <input type="number" class="form-control" name="kuota[]">
                                                             </div>
                                                         </div>
-                                                        <div class="col-lg-4">
+                                                        <div class="col-lg-2">
                                                             <div class="">
                                                                 <label class="form-label">Tanggal</label>
-                                                                <input type="text" class="form-control daterangepicker-input"
-                                                                    data-toggle="daterangepicker"
-                                                                    data-options='{"singleDatePicker": false, "locale": {"format": "YYYY-MM-DD"}}'
-                                                                    name="date_range[]">
+                                                                <input type="text" class="form-control daterangepicker-input" data-toggle="daterangepicker" data-options='{"singleDatePicker": false, "locale": {"format": "YYYY-MM-DD"}}' name="date_range[]">
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-1">
@@ -141,10 +138,11 @@
         document.addEventListener('DOMContentLoaded', function() {
             const kegiatanContainer = document.getElementById('kegiatan-container');
             const addButton = document.getElementById('add-kegiatan-btn');
+            let rowCounter = 0; // Counter untuk index array
 
             // Fungsi untuk menginisialisasi semua plugin
-            function initializeAllPlugins(element) {
-                // Select2
+            function initializeAllPlugins(element, index) {
+                // Select2 dengan name yang sesuai index
                 $(element).find('.select2-multiple').select2({
                     width: '100%',
                     // placeholder: 'Pilih skema',
@@ -154,76 +152,69 @@
                 // Daterangepicker
                 $(element).find('.daterangepicker-input').daterangepicker({
                     singleDatePicker: false,
-                    showDropdowns: true,
-                    minYear: 2021,
-                    maxYear: parseInt(moment().format('YYYY'), 10) + 10,
                     locale: {
-                        // format: 'YYYY-MM-DD',
-                        format: 'DD MMMM YYYY',
-                        separator: ' - ',
-                        applyLabel: 'Pilih',
-                        cancelLabel: 'Batal',
-                        fromLabel: 'Dari',
-                        toLabel: 'Sampai',
-                        customRangeLabel: 'Custom',
-                        daysOfWeek: ['Min', 'Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab'],
-                        monthNames: ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'],
-                        firstDay: 1
+                        format: 'YYYY-MM-DD',
+                        separator: ' - '
                     }
                 });
             }
 
-            // Inisialisasi untuk elemen yang sudah ada
-            initializeAllPlugins(document);
-
-            // Template untuk kegiatan baru
-            function createKegiatanItem() {
+            // Template untuk kegiatan baru dengan index dinamis
+            function createKegiatanItem(index) {
                 return `
-        <div class="row align-items-end mb-3 kegiatan-row">
-            <div class="col-lg-2">
-                <div class="">
-                    <label class="form-label">Nama LSP</label>
-                    <input type="text" class="form-control kegiatan-nama" name="kegiatan_name[]">
-                </div>
-            </div>
-            <div class="col-lg-3">
-                <div class="">
-                    <label class="form-label">Skema</label>
-                    <select class="select2 form-control select2-multiple" name="skema[][]" multiple="multiple">
-                        <option value="Teknisi Refrigerasi Domestik">Teknisi Refrigerasi Domestik</option>
-                        <option value="Perawatan Mesin Pendingin / AC">Perawatan Mesin Pendingin / AC</option>
-                        <option value="Pelaksanaan Instalasi AC">Pelaksanaan Instalasi AC</option>
-                        <option value="Teknisi Lemari Pendingin">Teknisi Lemari Pendingin</option>
-                        <option value="Mekanik Heating, Ventilation Dan Air Condition (HVAC)">Mekanik Heating, Ventilation Dan Air Condition (HVAC)</option>
-                    </select>
-                </div>
-            </div>
-            <div class="col-lg-2">
-                <div class="">
-                    <label class="form-label">Kuota</label>
-                    <input type="number" class="form-control" name="kuota[]" min="0">
-                </div>
-            </div>
-            <div class="col-lg-4">
-                <div class="">
-                    <label class="form-label">Tanggal</label>
-                    <input type="text" class="form-control daterangepicker-input" name="date_range[]">
-                </div>
-            </div>
-            <div class="col-lg-1">
-                <div class="d-grid">
-                    <button type="button" class="btn btn-outline-danger btn-sm remove-kegiatan-btn">
-                        <i class="fas fa-trash"></i> Hapus
-                    </button>
-                </div>
-            </div>
-        </div>
-        `;
+                    <div class="row align-items-end mb-3 kegiatan-row" data-index="${index}">
+                        <div class="col-lg-3">
+                            <div class="">
+                                <label class="form-label">Nama LSP</label>
+                                <input type="text" class="form-control" name="nama_lsp[${index}]">
+                            </div>
+                        </div>
+                        <div class="col-lg-5">
+                            <div class="">
+                                <label class="form-label">Skema</label>
+                                <select class="select2-multiple form-control" name="skema[${index}][]" multiple="multiple">
+                                    <option value="Teknisi Refrigerasi Domestik">Teknisi Refrigerasi Domestik</option>
+                                    <option value="Perawatan Mesin Pendingin / AC">Perawatan Mesin Pendingin / AC</option>
+                                    <option value="Pelaksanaan Instalasi AC">Pelaksanaan Instalasi AC</option>
+                                    <option value="Teknisi Lemari Pendingin">Teknisi Lemari Pendingin</option>
+                                    <option value="Mekanik Heating, Ventilation Dan Air Condition (HVAC)">Mekanik Heating, Ventilation Dan Air Condition (HVAC)</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-1">
+                            <div class="">
+                                <label class="form-label">Kuota</label>
+                                <input type="number" class="form-control" name="kuota[${index}]" min="0">
+                            </div>
+                        </div>
+                        <div class="col-lg-2">
+                            <div class="">
+                                <label class="form-label">Tanggal</label>
+                                <input type="text" class="form-control daterangepicker-input" 
+                                    name="date_range[${index}]"
+                                    placeholder="Pilih rentang tanggal">
+                            </div>
+                        </div>
+                        <div class="col-lg-1">
+                            <div class="d-grid">
+                                <button type="button" class="btn btn-outline-danger btn-sm remove-kegiatan-btn">
+                                    <i class="fas fa-trash"></i> Hapus
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            // Inisialisasi baris pertama
+            if (document.querySelector('.kegiatan-row')) {
+                initializeAllPlugins(document.querySelector('.kegiatan-row'), rowCounter);
+                rowCounter++;
             }
 
             // Event listener untuk tombol Add New Kegiatan
             addButton.addEventListener('click', function() {
-                const newKegiatan = createKegiatanItem();
+                const newKegiatan = createKegiatanItem(rowCounter);
                 const tempDiv = document.createElement('div');
                 tempDiv.innerHTML = newKegiatan;
 
@@ -231,28 +222,49 @@
                 kegiatanContainer.appendChild(newRow);
 
                 // Inisialisasi plugins
-                initializeAllPlugins(newRow);
+                initializeAllPlugins(newRow, rowCounter);
 
                 // Event listener untuk tombol hapus
                 newRow.querySelector('.remove-kegiatan-btn').addEventListener('click', function() {
-                    // Cleanup plugins sebelum hapus
                     const row = this.closest('.kegiatan-row');
                     $(row).find('.select2-multiple').select2('destroy');
-                    $(row).find('.daterangepicker-input').daterangepicker('destroy');
+                    $(row).find('.daterangepicker-input').off().removeData();
                     row.remove();
+
+                    // Update index untuk semua baris setelah yang dihapus
+                    updateIndexes();
                 });
+
+                rowCounter++;
             });
 
-            // Event delegation untuk tombol hapus yang sudah ada
-            document.addEventListener('click', function(e) {
-                if (e.target.closest('.remove-kegiatan-btn') && !e.target.closest('.remove-kegiatan-btn').disabled) {
-                    const row = e.target.closest('.kegiatan-row');
-                    // Cleanup plugins sebelum hapus
-                    $(row).find('.select2-multiple').select2('destroy');
-                    $(row).find('.daterangepicker-input').daterangepicker('destroy');
-                    row.remove();
-                }
-            });
+            // Fungsi untuk mengupdate index setelah penghapusan
+            function updateIndexes() {
+                const rows = document.querySelectorAll('.kegiatan-row');
+                rows.forEach((row, index) => {
+                    row.dataset.index = index;
+
+                    // Update semua nama input dalam baris
+                    row.querySelectorAll('[name^="kegiatan_name"]').forEach(input => {
+                        input.name = `kegiatan_name[${index}]`;
+                    });
+
+                    row.querySelectorAll('[name^="lsp"]').forEach(select => {
+                        select.name = `lsp[${index}][]`;
+                    });
+
+                    row.querySelectorAll('[name^="kuota"]').forEach(input => {
+                        input.name = `kuota[${index}]`;
+                    });
+
+                    row.querySelectorAll('[name^="date_range"]').forEach(input => {
+                        input.name = `date_range[${index}]`;
+                    });
+                });
+
+                // Update rowCounter
+                rowCounter = rows.length;
+            }
         });
     </script>
 @endpush

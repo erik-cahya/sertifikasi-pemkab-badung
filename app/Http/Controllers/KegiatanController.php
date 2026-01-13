@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Carbon\Carbon;
 use Faker\Provider\Uuid;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
 class KegiatanController extends Controller
@@ -30,7 +31,9 @@ class KegiatanController extends Controller
      */
     public function store(Request $request)
     {
-        dd(Str::ulid());
+        // dd(Str::ulid());
+
+
 
         dd($request->all());
         $range = $request->input('date_range')[0];

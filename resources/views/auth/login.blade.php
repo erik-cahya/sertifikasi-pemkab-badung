@@ -49,8 +49,8 @@
                                         <form action="{{ route('login') }}" method="POST" class="text-start">
                                             @csrf
                                             <div class="mb-3">
-                                                <label for="emailaddress" class="form-label">Email address</label>
-                                                <input class="form-control" type="text" name="login" autofocus id="emailaddress" value="{{ old('email') }}" required placeholder="Enter your email">
+                                                <label for="emailaddress" class="form-label">Email/Username</label>
+                                                <input class="form-control" type="text" name="login" autofocus id="emailaddress" value="{{ old('email') }}" required placeholder="Enter your username or email">
                                             </div>
                                             <div class="mb-3">
 
