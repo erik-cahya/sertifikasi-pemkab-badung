@@ -33,132 +33,145 @@
             <!-- Start Content-->
             <div class="container-fluid">
 
-                <div class="row">
-                    <div class="col-12">
-                        <div class="card">
-                            <div class="card-header">
-                                <h4 class=".card-title">Form Pendaftaran Calon Asesi</h4>
-                                {{-- <p class="text-muted mb-0">
-                                Most common form control, text-based input fields. Includes support for all
-                                HTML5 types: <code>text</code>, <code>password</code>, <code>datetime</code>,
-                                <code>datetime-local</code>, <code>date</code>, <code>month</code>,
-                                <code>time</code>, <code>week</code>, <code>number</code>, <code>email</code>,
-                                <code>url</code>, <code>search</code>, <code>tel</code>, and <code>color</code>.
-                            </p> --}}
-                            </div>
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-lg-12">
-                                        <div class="mb-3">
-                                            <label for="simpleinput" class="form-label">Nama Lengkap</label>
-                                            <input type="text" id="simpleinput" class="form-control">
-                                        </div>
-                                    </div>
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class=".card-title mb-0">Wizard With Progress Bar</h4>
+                        </div>
+                        <div class="card-body">
+                            <form>
+                                <div id="progressbarwizard">
 
-                                    <div class="col-lg-6">
-                                        <div class="mb-3">
-                                            <label for="simpleinput" class="form-label">Email</label>
-                                            <input type="text" id="simpleinput" class="form-control">
-                                        </div>
-                                    </div>
+                                    <ul class="nav nav-pills nav-justified form-wizard-header mb-3">
+                                        <li class="nav-item">
+                                            <a href="#account-2" data-bs-toggle="tab" data-toggle="tab" class="nav-link rounded-0 py-2">
+                                                <i class="ri-account-circle-line fw-normal fs-20 me-1 align-middle"></i>
+                                                <span class="d-none d-sm-inline">Account</span>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="#profile-tab-2" data-bs-toggle="tab" data-toggle="tab" class="nav-link rounded-0 py-2">
+                                                <i class="ri-profile-line fw-normal fs-20 me-1 align-middle"></i>
+                                                <span class="d-none d-sm-inline">Profile</span>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="#finish-2" data-bs-toggle="tab" data-toggle="tab" class="nav-link rounded-0 py-2">
+                                                <i class="ri-check-double-line fw-normal fs-20 me-1 align-middle"></i>
+                                                <span class="d-none d-sm-inline">Finish</span>
+                                            </a>
+                                        </li>
+                                    </ul>
 
-                                    <div class="col-lg-6">
-                                        <div class="mb-3">
-                                            <label for="simpleinput" class="form-label">NIK (Nomor Induk Kependudukan)</label>
-                                            <input type="text" id="simpleinput" class="form-control">
-                                        </div>
-                                    </div>
+                                    <div class="tab-content b-0 mb-0">
 
-                                    <div class="col-lg-6">
-                                        <div class="mb-3">
-                                            <label for="simpleinput" class="form-label">Tempat Lahir (Sesuai KTP)</label>
-                                            <input type="text" id="simpleinput" class="form-control">
+                                        <div id="bar" class="progress mb-3" style="height: 7px;">
+                                            <div class="bar progress-bar progress-bar-striped progress-bar-animated bg-success"></div>
                                         </div>
-                                    </div>
 
-                                    <div class="col-lg-6">
-                                        <div class="mb-3">
-                                            <label for="simpleinput" class="form-label">Tanggal Lahir</label>
-                                            <input type="date" id="simpleinput" class="form-control">
+                                        <div class="tab-pane" id="account-2">
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <div class="row mb-3">
+                                                        <label class="col-md-3 col-form-label" for="userName1">User name</label>
+                                                        <div class="col-md-9">
+                                                            <input type="text" class="form-control" id="userName1" name="userName1" value="Techmin">
+                                                        </div>
+                                                    </div>
+                                                    <div class="row mb-3">
+                                                        <label class="col-md-3 col-form-label" for="password1"> Password</label>
+                                                        <div class="col-md-9">
+                                                            <input type="password" id="password1" name="password1" class="form-control" value="123456789">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row mb-3">
+                                                        <label class="col-md-3 col-form-label" for="confirm1">Re Password</label>
+                                                        <div class="col-md-9">
+                                                            <input type="password" id="confirm1" name="confirm1" class="form-control" value="123456789">
+                                                        </div>
+                                                    </div>
+                                                </div> <!-- end col -->
+                                            </div> <!-- end row -->
+
+                                            <ul class="list-inline wizard mb-0">
+                                                <li class="next list-inline-item float-end">
+                                                    <a href="javascript:void(0);" class="btn btn-info">Add More Info <i class="ri-arrow-right-line ms-1"></i></a>
+                                                </li>
+                                            </ul>
                                         </div>
-                                    </div>
 
-                                    <div class="col-lg-6">
-                                        <div class="mb-3">
-                                            <label for="simpleinput" class="form-label">Jenis Kelamin</label>
-                                            <input type="text" id="simpleinput" class="form-control">
+                                        <div class="tab-pane" id="profile-tab-2">
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <div class="row mb-3">
+                                                        <label class="col-md-3 col-form-label" for="name1"> First name</label>
+                                                        <div class="col-md-9">
+                                                            <input type="text" id="name1" name="name1" class="form-control" value="Francis">
+                                                        </div>
+                                                    </div>
+                                                    <div class="row mb-3">
+                                                        <label class="col-md-3 col-form-label" for="surname1"> Last name</label>
+                                                        <div class="col-md-9">
+                                                            <input type="text" id="surname1" name="surname1" class="form-control" value="Brinkman">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row mb-3">
+                                                        <label class="col-md-3 col-form-label" for="email1">Email</label>
+                                                        <div class="col-md-9">
+                                                            <input type="email" id="email1" name="email1" class="form-control" value="cory1979@hotmail.com">
+                                                        </div>
+                                                    </div>
+                                                </div> <!-- end col -->
+                                            </div> <!-- end row -->
+                                            <ul class="pager wizard list-inline mb-0">
+                                                <li class="previous list-inline-item">
+                                                    <button type="button" class="btn btn-light"><i class="ri-arrow-left-line me-1"></i> Back to Account</button>
+                                                </li>
+                                                <li class="next list-inline-item float-end">
+                                                    <button type="button" class="btn btn-info">Add More Info <i class="ri-arrow-right-line ms-1"></i></button>
+                                                </li>
+                                            </ul>
                                         </div>
-                                    </div>
 
-                                    <div class="col-lg-6">
-                                        <div class="mb-3">
-                                            <label for="simpleinput" class="form-label">No Telepon (Kontak)</label>
-                                            <input type="text" id="simpleinput" class="form-control">
+                                        <div class="tab-pane" id="finish-2">
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <div class="text-center">
+                                                        <h2 class="mt-0"><i class="ri-check-double-line"></i></h2>
+                                                        <h3 class="mt-0">Thank you !</h3>
+
+                                                        <p class="w-75 mx-auto mb-2">Quisque nec turpis at urna dictum luctus. Suspendisse convallis dignissim eros at volutpat. In egestas mattis dui. Aliquam
+                                                            mattis dictum aliquet.</p>
+
+                                                        <div class="mb-3">
+                                                            <div class="form-check d-inline-block">
+                                                                <input type="checkbox" class="form-check-input" id="customCheck3">
+                                                                <label class="form-check-label" for="customCheck3">I agree with the Terms and Conditions</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div> <!-- end col -->
+                                            </div> <!-- end row -->
+                                            <ul class="pager wizard list-inline mb-0 mt-1">
+                                                <li class="previous list-inline-item">
+                                                    <button type="button" class="btn btn-light"><i class="ri-arrow-left-line me-1"></i> Back to Profile</button>
+                                                </li>
+                                                <li class="next list-inline-item float-end">
+                                                    <button type="button" class="btn btn-info">Submit</button>
+                                                </li>
+                                            </ul>
                                         </div>
-                                    </div>
 
-                                    <div class="col-lg-6">
-                                        <div class="mb-3">
-                                            <label for="simpleinput" class="form-label">Pendidikan Terakhir</label>
-                                            <input type="text" id="simpleinput" class="form-control">
-                                        </div>
-                                    </div>
+                                    </div> <!-- tab-content -->
+                                </div> <!-- end #progressbarwizard-->
+                            </form>
 
-                                    <div class="col-lg-6">
-                                        <div class="mb-3">
-                                            <label for="simpleinput" class="form-label">Alamat Tempat Tinggal</label>
-                                            <input type="text" id="simpleinput" class="form-control">
-                                        </div>
-                                    </div>
-
-                                    <div class="col-lg-6">
-                                        <div class="mb-3">
-                                            <label for="simpleinput" class="form-label">Alamat Tempat Bekerja</label>
-                                            <input type="text" id="simpleinput" class="form-control">
-                                        </div>
-                                    </div>
-
-                                    <div class="col-lg-6">
-                                        <div class="mb-3">
-                                            <label for="simpleinput" class="form-label">Jabatan</label>
-                                            <input type="text" id="simpleinput" class="form-control">
-                                        </div>
-                                    </div>
-
-                                    <div class="col-lg-12">
-                                        <div class="mb-3">
-                                            <label for="simpleinput" class="form-label">Alamat Tempat Bekerja</label>
-                                            <input type="text" id="simpleinput" class="form-control">
-                                        </div>
-                                    </div>
-
-                                    <div class="col-lg-6">
-                                        <div class="mb-3">
-                                            <label for="simpleinput" class="form-label">Nama LSP</label>
-                                            <input type="text" id="simpleinput" class="form-control">
-                                        </div>
-                                    </div>
-
-                                    <div class="col-lg-6">
-                                        <div class="mb-3">
-                                            <label for="simpleinput" class="form-label">Skema Sertifikasi</label>
-                                            <input type="text" id="simpleinput" class="form-control">
-                                        </div>
-                                    </div>
-
-                                    <div class="col-lg-6">
-                                        <div class="mb-3">
-                                            <label for="simpleinput" class="form-label">Upload Portofolop</label>
-                                            <input type="text" id="simpleinput" class="form-control">
-                                        </div>
-                                    </div>
-
-                                </div>
-                                <!-- end row-->
-                            </div> <!-- end card-body -->
-                        </div> <!-- end card -->
-                    </div><!-- end col -->
-                </div><!-- end row -->
+                        </div> <!-- end card-body -->
+                    </div> <!-- end card-->
+                </div> <!-- end col -->
+                <!-- end row -->
 
             </div> <!-- container -->
 
@@ -186,13 +199,39 @@
 
     <!-- END wrapper -->
 
-    <!-- Vendor js -->
+    {{-- ################## PUNYAMU MEL --}}
+    {{-- <!-- Vendor js -->
     <script src="{{ asset('admin') }}/assets/js/vendor.js"></script>
 
     <script src="{{ asset('admin') }}/assets/vendor/lucide/umd/lucide.js"></script>
 
     <!-- App js -->
     <script src="{{ asset('admin') }}/assets/js/app.js"></script>
+
+    <!-- Bootstrap Wizard Form js -->
+    <script src="{{ asset('admin') }}/assets/vendor/twitter-bootstrap-wizard/jquery.bootstrap.wizard.min.js"></script>
+
+    <!-- Wizard Form Demo js -->
+    <script src="{{ asset('admin') }}/assets/js/pages/form-wizard.init.js"></script>
+
+    <!-- App js -->
+    <script src="{{ asset('admin') }}/assets/js/app.min.js"></script> --}}
+
+    {{-- ################## END PUNYAMU CONG --}}
+
+    <!-- Vendor js -->
+    <script src="{{ asset('admin') }}/assets/js/vendor.min.js"></script>
+
+    <script src="{{ asset('admin') }}/assets/vendor/lucide/umd/lucide.min.js"></script>
+
+    <!-- Bootstrap Wizard Form js -->
+    <script src="{{ asset('admin') }}/assets/vendor/twitter-bootstrap-wizard/jquery.bootstrap.wizard.min.js"></script>
+
+    <!-- Wizard Form Demo js -->
+    <script src="{{ asset('admin') }}/assets/js/pages/form-wizard.init.js"></script>
+
+    <!-- App js -->
+    <script src="{{ asset('admin') }}/assets/js/app.min.js"></script>
 
 </body>
 

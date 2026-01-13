@@ -19,13 +19,13 @@ Route::get('pendaftaran-lsp', function () {
 
 // ################################ LSP
 Route::get('lsp', [LSPController::class, 'index'])->name('lsp.index');
-Route::get('lsp/create', [LSPController::class, 'create'])->name('lsp.create');
+Route::get('lsp/create', [LSPController::class, 'create'])->name('lsp.create')->middleware('auth');
 Route::post('lsp/store', [LSPController::class, 'store'])->name('lsp.store');
 
 // ################################ Kegiatan
-Route::get('kegiatan', [KegiatanController::class, 'index'])->name('kegiatan.index');
-Route::get('kegiatan/create', [KegiatanController::class, 'create'])->name('kegiatan.create');
-Route::post('kegiatan/store', [KegiatanController::class, 'store'])->name('kegiatan.store');
+Route::get('kegiatan', [KegiatanController::class, 'index'])->name('kegiatan.index')->middleware('auth');
+Route::get('kegiatan/create', [KegiatanController::class, 'create'])->name('kegiatan.create')->middleware('auth');
+Route::post('kegiatan/store', [KegiatanController::class, 'store'])->name('kegiatan.store')->middleware('auth');
 
 Route::get('/dashboard', function () {
     return view('admin-panel.dashboard.index');
