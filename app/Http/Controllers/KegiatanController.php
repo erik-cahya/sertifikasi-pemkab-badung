@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
+use Faker\Provider\Uuid;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class KegiatanController extends Controller
 {
@@ -27,6 +30,22 @@ class KegiatanController extends Controller
      */
     public function store(Request $request)
     {
+        dd(Str::ulid());
+
+        dd($request->all());
+        $range = $request->input('date_range')[0];
+        // "01/13/2026 - 01/24/2026"
+
+        // dd($range);
+
+        [$start, $end] = explode(' - ', $range);
+
+        $startDate = Carbon::createFromFormat('d F Y', trim($start));
+        $endDate   = Carbon::createFromFormat('d F Y', trim($end));
+
+        $days = $startDate->diffInDays($endDate) + 1;
+
+        dd($days); // 11
         dd($request->all());
     }
 
