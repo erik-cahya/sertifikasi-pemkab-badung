@@ -20,6 +20,7 @@ Route::get('pendaftaran-lsp', function () {
 // ################################ LSP
 Route::get('lsp', [LSPController::class, 'index'])->name('lsp.index');
 Route::get('lsp/create', [LSPController::class, 'create'])->name('lsp.create');
+Route::post('lsp/store', [LSPController::class, 'store'])->name('lsp.store');
 
 // ################################ Kegiatan
 Route::get('kegiatan', [KegiatanController::class, 'index'])->name('kegiatan.index');

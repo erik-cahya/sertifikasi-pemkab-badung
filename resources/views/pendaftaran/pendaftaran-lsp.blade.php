@@ -29,10 +29,7 @@
         <!-- Start Page Content here -->
         <!-- ============================================================== -->
         <div class="content">
-
-            <!-- Start Content-->
             <div class="container-fluid">
-
                 <div class="row">
                     <div class="col-12">
                         <div class="card">
@@ -152,16 +149,12 @@
                                             <input type="text" id="simpleinput" class="form-control">
                                         </div>
                                     </div>
-
                                 </div>
-                                <!-- end row-->
-                            </div> <!-- end card-body -->
-                        </div> <!-- end card -->
-                    </div><!-- end col -->
-                </div><!-- end row -->
-
-            </div> <!-- container -->
-
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
     </div>
@@ -188,7 +181,6 @@
 
     <!-- Vendor js -->
     <script src="{{ asset('admin') }}/assets/js/vendor.js"></script>
-
     <script src="{{ asset('admin') }}/assets/vendor/lucide/umd/lucide.js"></script>
 
     <!-- App js -->

@@ -53,6 +53,11 @@
                                                 <input class="form-control" type="text" name="name" autofocus id="name" value="{{ old('name') }}" required placeholder="Enter your email">
                                             </div>
                                             <div class="mb-3">
+                                                <label for="username" class="form-label">Username</label>
+                                                <input class="form-control" type="text" name="username" autofocus id="username" value="{{ old('username') }}" required placeholder="Enter your username">
+                                            </div>
+
+                                            <div class="mb-3">
                                                 <label for="emailaddress" class="form-label">Email address</label>
                                                 <input class="form-control" type="email" name="email" autofocus id="emailaddress" value="{{ old('email') }}" required placeholder="Enter your email">
                                             </div>

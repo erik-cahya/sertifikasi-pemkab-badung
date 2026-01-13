@@ -17,6 +17,7 @@ class UserSeeder extends Seeder
             [
                 'name' => 'Admin LSP',
                 'email' => 'master@gmail.com',
+                'username' => 'masteradmin',
                 'password' => bcrypt('master123'),
                 'roles' => 'master',
                 'is_active' => 1
