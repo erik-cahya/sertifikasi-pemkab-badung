@@ -35,7 +35,7 @@
         @include('pendaftaran.layouts.header')
 
         <!-- ========== Content ========== -->
-        <div class="content mt-4 ">
+        <div class="content mt-4">
 
             <!-- content -->
             @yield('content')

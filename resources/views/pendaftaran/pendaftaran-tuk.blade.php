@@ -9,8 +9,9 @@
                 <div class="row justify-content-center">
                     <div class="col-6">
                         <div class="card rounded-3">
-                            <div class="card-header rounded-2">
-                                <h4 class=".card-title">**</h4>
+                            <div class="my-auto p-4 mt-4 text-center text-danger">
+                                <h4 class="fs-20">FORM TUK</h4>
+                                {{-- <p class="text-muted">Silahkan mengisi formulir berikut untuk mengajukan pendaftaran sebagai Tempat Uji Kompetensi (TUK)</p> --}}
                             </div>
 
                             <div class="card-body">
@@ -29,56 +30,56 @@
                                     <div class="col-lg-12">
                                         <div class="mb-3">
                                             <label for="simpleinput" class="form-label">Nama TUK</label><span class="text-danger">*</span>
-                                            <input type="text" id="simpleinput" class="form-control rounded-3" name="nama_lengkap" required placeholder="Masukkan Nama Lengkap" required>
+                                            <input type="text" id="simpleinput" class="form-control rounded-3" name="tuk_nama" required placeholder="Masukkan Nama Lengkap" required>
                                         </div>
                                     </div>
 
                                     <div class="col-lg-12">
                                         <div class="mb-3">
                                             <label for="simpleinput" class="form-label">Alamat TUK</label><span class="text-danger">*</span>
-                                            <input type="text" id="simpleinput" class="form-control rounded-3" name="alamat" required placeholder="Masukkan alamat rumah" required>
+                                            <input type="text" id="simpleinput" class="form-control rounded-3" name="tuk_alamat" required placeholder="Masukkan alamat rumah" required>
                                         </div>
                                     </div>
 
                                     <div class="col-lg-12">
                                         <div class="mb-3">
                                             <label for="inputEmail3" class="form-label">Email TUK</label><span class="text-danger">*</span>
-                                            <input type="email" class="form-control rounded-3" id="inputEmail3" name="email" required placeholder="Masukkan alamat email" required>
+                                            <input type="email" class="form-control rounded-3" id="inputEmail3" name="tuk_email" required placeholder="Masukkan alamat email" required>
                                         </div>
                                     </div>
 
                                      <div class="col-lg-12">
                                         <div class="mb-3">
                                             <label for="simpleinput" class="form-label">No. Telp. TUK</label><span class="text-danger">*</span>
-                                            <input type="number" id="example-number" class="form-control rounded-3" name="telp_hp" placeholder="08xxxxxx" required>
+                                            <input type="number" id="example-number" class="form-control rounded-3" name="tuk_telp" placeholder="08xxxxxx" required>
                                         </div>
                                     </div>
 
                                     <div class="col-lg-12">
                                         <div class="mb-3">
                                             <label for="simpleinput" class="form-label">Nama Kontak Person</label><span class="text-danger">*</span>
-                                            <input type="text" id="simpleinput" class="form-control rounded-3" name="nama_lengkap" required placeholder="Masukkan Nama Lengkap" required>
+                                            <input type="text" id="simpleinput" class="form-control rounded-3" name="tuk_cp_nama" required placeholder="Masukkan Nama Lengkap" required>
                                         </div>
                                     </div>
 
                                     <div class="col-lg-12">
                                         <div class="mb-3">
                                             <label for="inputEmail3" class="form-label">Email Kontak Person</label><span class="text-danger">*</span>
-                                            <input type="email" class="form-control rounded-3" id="inputEmail3" name="email" required placeholder="Masukkan alamat email" required>
+                                            <input type="email" class="form-control rounded-3" id="inputEmail3" name="tuk_cp_email" required placeholder="Masukkan alamat email" required>
                                         </div>
                                     </div>
 
                                      <div class="col-lg-12">
                                         <div class="mb-3">
                                             <label for="simpleinput" class="form-label">No. Telp. Kontak Person</label><span class="text-danger">*</span>
-                                            <input type="number" id="example-number" class="form-control rounded-3" name="telp_hp" placeholder="08xxxxxx" required>
+                                            <input type="number" id="example-number" class="form-control rounded-3" name="tuk_cp_telp" placeholder="08xxxxxx" required>
                                         </div>
                                     </div>
 
                                     <div class="col-lg-12">
                                         <div class="mb-3">
                                             <label for="simpleinput" class="form-label">Surat Permohonan TUK</label><span class="text-danger">*</span>
-                                            <input type="file" id="example-fileinput" class="form-control rounded-3" name="sertikom_file" required>
+                                            <input type="file" id="example-fileinput" class="form-control rounded-3" name="tuk_file" required>
                                         </div>
                                     </div>
 
@@ -87,7 +88,6 @@
                                             <button type="submit" class="btn btn-outline-primary rounded-3"><i class="ri-save-3-line"></i> DAFTAR TUK</button>
                                         </div>
                                     </div>
-
 
                                 </div> <!-- end row-->
                             </div> <!-- end card-body -->

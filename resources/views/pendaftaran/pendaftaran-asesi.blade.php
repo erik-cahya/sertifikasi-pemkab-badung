@@ -83,9 +83,9 @@
 
                                      <div class="col-lg-6">
                                         <div class="mb-3">
-                                            <label for="example-select" class="form-label">Kebangsaan</label><span class="text-danger">*</span>
-                                            <select class="form-select rounded-3" id="example-select" name="kebangsaan" required>
-                                                <option value="">Pilih Kebangsaan</option>
+                                            <label for="example-select" class="form-label">Kewaganegaraan</label><span class="text-danger">*</span>
+                                            <select class="form-select rounded-3" id="example-select" name="kewaganegaraan" required>
+                                                <option value="">Pilih Kewaganegaraan</option>
                                                 <option value="WNI">WNI</option>
                                                 <option value="WNA">WNA</option>
                                             </select>
@@ -214,7 +214,7 @@
                                      <div class="col-lg-6">
                                         <div class="mb-3">
                                             <label for="example-select" class="form-label">Jabatan</label><span class="text-danger">*</span>
-                                            <select class="form-select rounded-3" id="example-select" name="kebangsaan"  required>
+                                            <select class="form-select rounded-3" id="example-select" name="jabatan"  required>
                                                 <option value="">Pilih Jabatan Anda</option>
                                                 <option value="xx">xx</option>
                                                 <option value="yy">yy</option>
@@ -225,35 +225,35 @@
                                     <div class="col-lg-10">
                                         <div class="mb-3">
                                             <label for="simpleinput" class="form-label">Alamat Tempat Bekerja / Perusahaan</label><span class="text-danger">*</span>
-                                            <input type="text" id="simpleinput" class="form-control rounded-3" name="alamat" required placeholder="Masukkan Alamat Tempat Bekerja / Perusahaan">
+                                            <input type="text" id="simpleinput" class="form-control rounded-3" name="alamat_perusahaan" required placeholder="Masukkan Alamat Tempat Bekerja / Perusahaan">
                                         </div>
                                     </div>
 
                                     <div class="col-lg-2">
                                         <div class="mb-3">
                                             <label for="simpleinput" class="form-label">Kode Pos</label><span class="text-danger">*</span>
-                                            <input type="number" id="example-number" class="form-control rounded-3" name="kode_pos" required placeholder="Masukkan Kode Pos Alamat Tempat Bekerja / Perusahaan">
+                                            <input type="number" id="example-number" class="form-control rounded-3" name="kode_pos_perusahaan" required placeholder="Masukkan Kode Pos Alamat Tempat Bekerja / Perusahaan">
                                         </div>
                                     </div>
 
                                     <div class="col-lg-4">
                                         <div class="mb-3">
                                             <label for="inputEmail3" class="form-label">Email</label><span class="text-danger">*</span>
-                                            <input type="email" class="form-control rounded-3" id="inputEmail3" name="email" required placeholder="Masukkan Aalamt Email Perusahaan" required>
+                                            <input type="email" class="form-control rounded-3" id="inputEmail3" name="email_perusahaan" required placeholder="Masukkan Aalamt Email Perusahaan" required>
                                         </div>
                                     </div>
 
                                      <div class="col-lg-4">
                                         <div class="mb-3">
                                             <label for="simpleinput" class="form-label">No. Telp. Tempat Bekerja / Perusahaan</label><span class="text-danger">*</span>
-                                            <input type="number" id="example-number" class="form-control rounded-3" name="telp_hp" placeholder="08xxxxxx" required>
+                                            <input type="number" id="example-number" class="form-control rounded-3" name="telp_perusahaan" placeholder="08xxxxxx" required>
                                         </div>
                                     </div>
 
                                     <div class="col-lg-4">
                                         <div class="mb-3">
                                             <label for="simpleinput" class="form-label">No. Fax Tempat Bekerja / Perusahaan</label>
-                                            <input type="number" id="example-number" class="form-control rounded-3" name="telp_rumah" placeholder="08xxxxxx">
+                                            <input type="number" id="example-number" class="form-control rounded-3" name="fax_perusahaan" placeholder="08xxxxxx">
                                         </div>
                                     </div>
 
@@ -279,7 +279,7 @@
                                      <div class="col-lg-4">
                                         <div class="mb-3">
                                             <label for="example-select" class="form-label">Lembaga Sertifikasi Kompetensi (LSP)</label><span class="text-danger">*</span>
-                                            <select class="form-select rounded-3" id="example-select" name="kebangsaan"  required>
+                                            <select class="form-select rounded-3" id="example-select" name="lsp"  required>
                                                 <option value="">Pilih Lembaga Sertifikasi Kompetensi (LSP)</option>
                                                 <option value="xx">xx</option>
                                                 <option value="yy">yy</option>
@@ -290,7 +290,7 @@
                                      <div class="col-lg-4">
                                         <div class="mb-3">
                                             <label for="example-select" class="form-label">Tempat Uji Kompetensi (TUK)</label><span class="text-danger">*</span>
-                                            <select class="form-select rounded-3" id="example-select" name="kebangsaan"  required>
+                                            <select class="form-select rounded-3" id="example-select" name="tuk"  required>
                                                 <option value="">Pilih Tempat Uji Kompetensi (TUK)</option>
                                                 <option value="xx">xx</option>
                                                 <option value="yy">yy</option>
