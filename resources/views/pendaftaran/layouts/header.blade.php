@@ -9,16 +9,19 @@
         <div class="collapse navbar-collapse justify-content-end" id="mainNavbar">
             <ul class="navbar-nav gap-lg-4">
                 <li class="nav-item">
-                    <a class="nav-link {{ request()->routeIs('/') ? 'active fw-semibold' : '' }}" href="#">Beranda</a>
+                    <a class="nav-link {{ request()->routeIs('/') ? 'active fw-semibold' : '' }}" href="{{ route('dashboard') }}">Beranda</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {{ request()->routeIs('asesi.index') ? 'active fw-semibold' : '' }}" href="#">Daftar Calon Asesi</a>
+                    <a class="nav-link {{ request()->routeIs('pegawai.index') ? 'active fw-semibold' : '' }}" href="{{ route('pegawai.index') }}">Pendataan Pegawai</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {{ request()->routeIs('/') ? 'active fw-semibold' : '' }}" href="#">Daftar TUK</a>
+                    <a class="nav-link {{ request()->routeIs('asesi.index') ? 'active fw-semibold' : '' }}" href="{{ route('asesi.index') }}">Daftar Calon Asesi</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {{ request()->routeIs('/') ? 'active fw-semibold' : '' }}" href="#">Login</a>
+                    <a class="nav-link {{ request()->routeIs('tuk.index') ? 'active fw-semibold' : '' }}" href="{{ route('tuk.index') }}">Daftar TUK</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {{ request()->routeIs('login') ? 'active fw-semibold' : '' }}" href="{{ route('login') }}">Login</a>
                 </li>
             </ul>
         </div>

@@ -2519,6 +2519,7 @@ progress {
   outline: 0;
   -webkit-box-shadow: none;
           box-shadow: none;
+          box-shadow: 0 0 0 .1rem rgba(85,110,230,.15);
 }
 .form-control::-webkit-date-and-time-value {
   min-width: 85px;
@@ -17238,7 +17239,7 @@ strong {
 }
 
 body.authentication-bg {
-  background-image: url("../images/auth-bg.jpg");
+  background-image: url("../images/auth-bg-3.jpg");
   background-size: cover;
 }
 body.authentication-bg .account-pages {

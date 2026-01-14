@@ -2,7 +2,7 @@
 
 @section('content')
     <!-- Simple form -->
-    <div class="container mt-2">
+    <div class="container mt-2 mb-2">
         <div class="content">
             <!-- Start Content-->
             <div class="container-fluid">
@@ -15,12 +15,22 @@
                                     Formulir ini digunakan untuk pendaftaran Calon Asesi dalam rangka mengikuti Sertifikasi Profesi Tahun {{ date('Y') }}  
                                     <br>
                                     Silakan mengisi formulir pendaftaran Calon Asesi Sertifikasi Profesi Tahun {{ date('Y') }} berikut dengan data yang benar dan dapat dipertanggungjawabkan. 
+                                    <br><br>
+                                    Silahkan siapkan dokumen berikut sebelum mengisi Form Pendaftaran :
+                                    <br>
+                                    1. Scan Sertifikat Kompetensi (opsional)
+                                    <br>
+                                    2. Scan Ijazah Terakhir
+                                    <br>
+                                    3. Scan Surat Keterangan Kerja
+                                    <br>
+                                    4. Pas Foto Background Merah
                                 </p>
                             </div>
 
-                            <div class="card-header">
+                            <div class="card-header bg-danger text-white">
                                 <h4 class=".card-title">A. DATA PRIBADI</h4>
-                                <p class="text-muted mb-0">
+                                <p class="text-bg-danger mb-0">
                                     Isilah form dibawah ini dengan data pribadi yang sebenarnya
                                 </p>
                             </div>
@@ -28,37 +38,43 @@
                                 <div class="row">
                                     <div class="col-lg-12">
                                         <div class="mb-3">
-                                            <label for="simpleinput" class="form-label">Nama Lengkap</label>
-                                            <input type="text" id="simpleinput" class="form-control" name="nama_lengkap" required>
+                                            <label for="simpleinput" class="form-label">Nama Lengkap</label><span class="text-danger">*</span>
+                                            <input type="text" id="simpleinput" class="form-control rounded-3" name="nama_lengkap" required placeholder="Masukkan Nama Lengkap">
+                                               {{-- <div class="input-group"> 
+                                                    <span class="input-group-text">
+                                                        <i class="ri-user-3-line"></i>
+                                                    </span>
+                                                    <input type="text" id="simpleinput" class="form-control rounded-3" name="nama_lengkap" required placeholder="Masukkan Nama Lengkap">
+                                                </div> --}}
                                         </div>
                                     </div>
 
                                     <div class="col-lg-12">
                                         <div class="mb-3">
-                                            <label for="example-number" class="form-label">No. KTP / NIK / Paspor</label>
-                                            <input type="number" id="example-number" class="form-control" name="nik" required>
+                                            <label for="example-number" class="form-label">No. KTP / NIK / Paspor</label><span class="text-danger">*</span>
+                                            <input type="number" id="example-number" class="form-control rounded-3" name="nik" required placeholder="Masukkan No. KTP/NIK/Paspor">
                                         </div>
                                     </div>
 
                                     <div class="col-lg-6">
                                         <div class="mb-3">
-                                            <label for="simpleinput" class="form-label">Tempat Lahir (Sesuai KTP)</label>
-                                            <input type="text" id="simpleinput" class="form-control" name="tempat_lahir" required>
+                                            <label for="simpleinput" class="form-label">Tempat Lahir (Sesuai KTP)</label><span class="text-danger">*</span>
+                                            <input type="text" id="simpleinput" class="form-control rounded-3" name="tempat_lahir" required placeholder="Masukkan Tempat Lahir">
                                         </div>
                                     </div>
 
                                     <div class="col-lg-6">
                                         <div class="mb-3">
-                                            <label for="simpleinput" class="form-label">Tanggal Lahir</label>
-                                            <input type="date" id="simpleinput" class="form-control" name="tanggal_lahir" required>
+                                            <label for="simpleinput" class="form-label">Tanggal Lahir</label><span class="text-danger">*</span>
+                                            <input type="date" id="simpleinput" class="form-control rounded-3" name="tanggal_lahir" required>
                                         </div>
                                     </div>
 
                                     <div class="col-lg-6">
                                         <div class="mb-3">
-                                            <label for="example-select" class="form-label">Jenis Kelamin</label>
-                                            <select class="form-select" id="example-select" name="jenis_kelamin"  required>
-                                                <option value=""></option>
+                                            <label for="example-select" class="form-label">Jenis Kelamin</label><span class="text-danger">*</span>
+                                            <select class="form-select rounded-3" id="example-select" name="jenis_kelamin" required>
+                                                <option value="">Pilih Jenis Kelamin</option>
                                                 <option value="Laki-laki">Laki-laki</option>
                                                 <option value="Perempuan">Perempuan</option>
                                             </select>
@@ -67,9 +83,9 @@
 
                                      <div class="col-lg-6">
                                         <div class="mb-3">
-                                            <label for="example-select" class="form-label">Kebangsaan</label>
-                                            <select class="form-select" id="example-select" name="kebangsaan"  required>
-                                                <option value=""></option>
+                                            <label for="example-select" class="form-label">Kebangsaan</label><span class="text-danger">*</span>
+                                            <select class="form-select rounded-3" id="example-select" name="kebangsaan" required>
+                                                <option value="">Pilih Kebangsaan</option>
                                                 <option value="WNI">WNI</option>
                                                 <option value="WNA">WNA</option>
                                             </select>
@@ -78,50 +94,51 @@
 
                                     <div class="col-lg-10">
                                         <div class="mb-3">
-                                            <label for="simpleinput" class="form-label">Alamat Rumah</label>
-                                            <input type="text" id="simpleinput" class="form-control" name="alamat" required>
+                                            <label for="simpleinput" class="form-label">Alamat Rumah</label><span class="text-danger">*</span>
+                                            <input type="text" id="simpleinput" class="form-control rounded-3" name="alamat" required placeholder="Masukkan alamat rumah" required>
                                         </div>
                                     </div>
 
                                     <div class="col-lg-2">
                                         <div class="mb-3">
-                                            <label for="simpleinput" class="form-label">Kode Pos</label>
-                                            <input type="number" id="example-number" class="form-control" name="kode_pos" required>
+                                            <label for="simpleinput" class="form-label">Kode Pos</label><span class="text-danger">*</span>
+                                            <input type="number" id="example-number" class="form-control rounded-3" name="kode_pos" required placeholder="Masukkan Kode Pos Alamat Rumah" required>
                                         </div>
                                     </div>
 
                                     <div class="col-lg-3">
                                         <div class="mb-3">
-                                            <label for="inputEmail3" class="form-label">Email</label>
-                                            <input type="email" class="form-control" id="inputEmail3" name="email" required>
+                                            <label for="inputEmail3" class="form-label">Email</label><span class="text-danger">*</span>
+                                            <input type="email" class="form-control rounded-3" id="inputEmail3" name="email" required placeholder="Masukkan alamat email" required>
                                         </div>
                                     </div>
 
                                      <div class="col-lg-3">
                                         <div class="mb-3">
-                                            <label for="simpleinput" class="form-label">No. Telp. (Hp)</label>
-                                            <input type="number" id="example-number" class="form-control" name="telp_hp">
+                                            <label for="simpleinput" class="form-label">No. Telp. (Hp)</label><span class="text-danger">*</span>
+                                            <input type="number" id="example-number" class="form-control rounded-3" name="telp_hp" placeholder="08xxxxxx" required>
                                         </div>
                                     </div>
 
                                     <div class="col-lg-3">
                                         <div class="mb-3">
                                             <label for="simpleinput" class="form-label">No. Telp. (Rumah)</label>
-                                            <input type="number" id="example-number" class="form-control" name="telp_rumah">
+                                            <input type="number" id="example-number" class="form-control rounded-3" name="telp_rumah" placeholder="08xxxxxx">
                                         </div>
                                     </div>
 
                                      <div class="col-lg-3">
                                         <div class="mb-3">
                                             <label for="simpleinput" class="form-label">No. Telp. (Kantor)</label>
-                                            <input type="number" id="example-number" class="form-control" name="telp_kantor">
+                                            <input type="number" id="example-number" class="form-control rounded-3" name="telp_kantor" placeholder="08xxxxxx">
                                         </div>
                                     </div>
 
                                     <div class="col-lg-6">
                                         <div class="mb-3">
-                                            <label for="example-select" class="form-label">Pendidikan Terakhir</label>
-                                            <select class="form-select" id="example-select" name="pendidikan_terakhir"  required>
+                                            <label for="example-select" class="form-label">Pendidikan Terakhir</label><span class="text-danger">*</span>
+                                            <select class="form-select rounded-3" id="example-select" name="pendidikan_terakhir"  required>
+                                                <option value="">Pilih Pendidikan Terakhir</option>
                                                 <option value="SD">SD</option>
                                                 <option value="SMP">SMP</option>
                                                 <option value="SMA/SMK/Sederajat">SMA/SMK/Sederajat</option>
@@ -138,36 +155,169 @@
 
                                     <div class="col-lg-6">
                                         <div class="mb-3">
-                                            <label for="simpleinput" class="form-label">Ijazah Terakhir</label>
-                                            <input type="file" id="example-fileinput" class="form-control" name="ijazah_file" required>
+                                            <label for="simpleinput" class="form-label">Ijazah Terakhir</label><span class="text-danger">*</span>
+                                            <input type="file" id="example-fileinput" class="form-control rounded-3" name="ijazah_file" required>
                                         </div>
                                     </div>
 
                                     <div class="col-lg-4">
                                         <div class="mb-3">
                                             <label for="simpleinput" class="form-label">Sertifikat Kompetensi (opsional)</label>
-                                            <input type="file" id="example-fileinput" class="form-control" name="sertikom_file">
+                                            <input type="file" id="example-fileinput" class="form-control rounded-3" name="sertikom_file">
                                         </div>
                                     </div>
 
                                     <div class="col-lg-4">
                                         <div class="mb-3">
-                                            <label for="simpleinput" class="form-label">Surat Keterangan Bekerja</label>
-                                            <input type="file" id="example-fileinput" class="form-control" name="keterangan_kerja_file">
+                                            <label for="simpleinput" class="form-label">Surat Keterangan Bekerja</label><span class="text-danger">*</span>
+                                            <input type="file" id="example-fileinput" class="form-control rounded-3" name="keterangan_kerja_file" required>
                                         </div>
                                     </div>
 
                                     <div class="col-lg-4">
                                         <div class="mb-3">
-                                            <label for="simpleinput" class="form-label">Pas Foto (.png / .jpg)</label>
-                                            <input type="file" id="example-fileinput" class="form-control" name="pas_foto_file">
+                                            <label for="simpleinput" class="form-label">Pas Foto (.png / .jpg)</label><span class="text-danger">*</span>
+                                            <input type="file" id="example-fileinput" class="form-control rounded-3" name="pas_foto_file" required>
                                         </div>
                                     </div>
 
-
-                                </div>
-                                <!-- end row-->
+                                </div> <!-- end row-->
                             </div> <!-- end card-body -->
+
+                            <div class="card-header bg-danger text-white">
+                                <h4 class=".card-title">B. DATA PEKERJAAN</h4>
+                                <p class="text-bg-danger mb-0 ">
+                                    Isilah form dibawah ini dengan data pekerjaan anda saat ini yang sebenarnya
+                                </p>
+                            </div>
+
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="mb-3">
+                                            <label for="simpleinput" class="form-label">Nama Tempat Bekerja / Perusahaan</label><span class="text-danger">*</span>
+                                            <input type="text" id="simpleinput" class="form-control rounded-3" name="nama_perusahaan" required placeholder="Masukkan Nama Tempat Bekerja / Perusahaan">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-6">
+                                        <div class="mb-3">
+                                            <label for="example-select" class="form-label">Departemen</label><span class="text-danger">*</span>
+                                            <select class="form-select rounded-3" id="example-select" name="departemen"  required>
+                                                <option value="">Pilih Departemen Pekerjaan Anda</option>
+                                                <option value="xx">xx</option>
+                                                <option value="yy">yy</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                     <div class="col-lg-6">
+                                        <div class="mb-3">
+                                            <label for="example-select" class="form-label">Jabatan</label><span class="text-danger">*</span>
+                                            <select class="form-select rounded-3" id="example-select" name="kebangsaan"  required>
+                                                <option value="">Pilih Jabatan Anda</option>
+                                                <option value="xx">xx</option>
+                                                <option value="yy">yy</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-10">
+                                        <div class="mb-3">
+                                            <label for="simpleinput" class="form-label">Alamat Tempat Bekerja / Perusahaan</label><span class="text-danger">*</span>
+                                            <input type="text" id="simpleinput" class="form-control rounded-3" name="alamat" required placeholder="Masukkan Alamat Tempat Bekerja / Perusahaan">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-2">
+                                        <div class="mb-3">
+                                            <label for="simpleinput" class="form-label">Kode Pos</label><span class="text-danger">*</span>
+                                            <input type="number" id="example-number" class="form-control rounded-3" name="kode_pos" required placeholder="Masukkan Kode Pos Alamat Tempat Bekerja / Perusahaan">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-4">
+                                        <div class="mb-3">
+                                            <label for="inputEmail3" class="form-label">Email</label><span class="text-danger">*</span>
+                                            <input type="email" class="form-control rounded-3" id="inputEmail3" name="email" required placeholder="Masukkan Aalamt Email Perusahaan" required>
+                                        </div>
+                                    </div>
+
+                                     <div class="col-lg-4">
+                                        <div class="mb-3">
+                                            <label for="simpleinput" class="form-label">No. Telp. Tempat Bekerja / Perusahaan</label><span class="text-danger">*</span>
+                                            <input type="number" id="example-number" class="form-control rounded-3" name="telp_hp" placeholder="08xxxxxx" required>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-4">
+                                        <div class="mb-3">
+                                            <label for="simpleinput" class="form-label">No. Fax Tempat Bekerja / Perusahaan</label>
+                                            <input type="number" id="example-number" class="form-control rounded-3" name="telp_rumah" placeholder="08xxxxxx">
+                                        </div>
+                                    </div>
+
+                                </div> <!-- end row #2-->
+                            </div> <!-- end card-body #2-->
+
+                            <div class="card-header bg-danger text-white">
+                                <h4 class=".card-title">C. DAFTAR UJI</h4>
+                                <p class="text-bg-danger mb-0 ">
+                                    Isilah form dibawah ini dengan data pekerjaan anda saat ini yang sebenarnya
+                                </p>
+                            </div>
+
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="mb-3">
+                                            <label for="simpleinput" class="form-label">Kegiatan Sertifikasi</label><span class="text-danger">*</span>
+                                            <input type="text" id="simpleinput" class="form-control rounded-3" name="kegiatan" disabled>
+                                        </div>
+                                    </div>
+
+                                     <div class="col-lg-4">
+                                        <div class="mb-3">
+                                            <label for="example-select" class="form-label">Lembaga Sertifikasi Kompetensi (LSP)</label><span class="text-danger">*</span>
+                                            <select class="form-select rounded-3" id="example-select" name="kebangsaan"  required>
+                                                <option value="">Pilih Lembaga Sertifikasi Kompetensi (LSP)</option>
+                                                <option value="xx">xx</option>
+                                                <option value="yy">yy</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                     <div class="col-lg-4">
+                                        <div class="mb-3">
+                                            <label for="example-select" class="form-label">Tempat Uji Kompetensi (TUK)</label><span class="text-danger">*</span>
+                                            <select class="form-select rounded-3" id="example-select" name="kebangsaan"  required>
+                                                <option value="">Pilih Tempat Uji Kompetensi (TUK)</option>
+                                                <option value="xx">xx</option>
+                                                <option value="yy">yy</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-4">
+                                        <div class="mb-3">
+                                            <label for="example-select" class="form-label">Tanggal Pelaksanaan Uji Kompetensi</label><span class="text-danger">*</span>
+                                            <select class="form-select rounded-3" id="example-select" name="kebangsaan"  required>
+                                                <option value="">Pilih Tanggal Pelaksanaan Uji Kompetensi</option>
+                                                <option value="xx">xx</option>
+                                                <option value="yy">yy</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-12">
+                                        <div class="mb-2 mt-3">
+                                            <button type="submit" class="btn btn-outline-primary rounded-3"><i class="ri-save-3-line"></i> DAFTAR</button>
+                                        </div>
+                                    </div>
+
+                                </div> <!-- end row #3-->
+                            </div> <!-- end card-body #3-->
+
                         </div> <!-- end card -->
                     </div><!-- end col -->
                 </div><!-- end row -->

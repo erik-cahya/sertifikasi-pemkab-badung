@@ -24,18 +24,18 @@
 
     <!-- Flatpickr Timepicker css -->
     <link href="{{ asset('admin') }}/assets/vendor/flatpickr/flatpickr.min.css" rel="stylesheet" type="text/css" />
-
 </head>
+
 
 <body>
     <!-- Begin page -->
-    <div class="wrapper">
+    <div class="wrapper bg-white">
 
         <!-- ========== Header ========== -->
         @include('pendaftaran.layouts.header')
 
         <!-- ========== Content ========== -->
-        <div class="content mt-4">
+        <div class="content mt-4 ">
 
             <!-- content -->
             @yield('content')

@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8" />
-    <title>Log In | GSE Management</title>
+    <title>Log In | Bidang Pelatihan dan Sertifikasi</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content="A fully responsive admin theme which can be used to build CRM, CMS,ERP etc." name="description" />
     <meta content="Techzaa" name="author" />
@@ -50,12 +50,12 @@
                                             @csrf
                                             <div class="mb-3">
                                                 <label for="emailaddress" class="form-label">Email/Username</label>
-                                                <input class="form-control" type="text" name="login" autofocus id="emailaddress" value="{{ old('email') }}" required placeholder="Enter your username or email">
+                                                <input class="form-control rounded-3" type="text" name="login" autofocus id="emailaddress" value="{{ old('email') }}" required placeholder="Enter your username or email">
                                             </div>
                                             <div class="mb-3">
 
                                                 <label for="password" class="form-label">Password</label>
-                                                <input class="form-control" type="password" name="password" required id="password" placeholder="Enter your password">
+                                                <input class="form-control rounded-3" type="password" name="password" required id="password" placeholder="Enter your password">
                                             </div>
                                             <div class="mb-3">
                                                 <div class="form-check">
@@ -71,7 +71,7 @@
                                                 </div>
                                             @enderror
                                             <div class="mb-0 text-start">
-                                                <button class="btn btn-soft-primary w-100" type="submit">
+                                                <button class="btn btn-soft-danger w-100" type="submit">
                                                     <i class="ri-login-circle-fill me-1"></i>
                                                     <span class="fw-bold">Log In</span>
                                                 </button>
@@ -88,8 +88,8 @@
                 <!-- end row -->
             </div>
             <div class="row">
-                <div class="col-12 text-center">
-                    <p class="text-dark-emphasis">Don't have an account? <a href="{{ route('register') }}" class="text-dark fw-bold link-offset-3 text-decoration-underline ms-1"><b>Sign up</b></a>
+                <div class="col-12 text-center ">
+                    <p class="text-light-emphasis">Don't have an account? <a href="{{ route('register') }}" class="text-light fw-bold link-offset-3 text-decoration-underline ms-1"><b>Sign up</b></a>
                     </p>
                 </div> <!-- end col -->
             </div>
