@@ -21,12 +21,12 @@ class LSPController extends Controller
             'lsp.lsp_no_lisensi',
             'lsp.lsp_email',
             'lsp.lsp_telp',
-            'users.is_active'
+
+            'users.is_active',
+            'users.username',
         )
             ->join('users', 'users.ref', '=', 'lsp.user_ref')
             ->get();
-
-
         return view('admin-panel.lsp.index', $data);
     }
 
@@ -35,6 +35,7 @@ class LSPController extends Controller
      */
     public function create()
     {
+
         return view('admin-panel.lsp.create');
     }
 
@@ -55,6 +56,10 @@ class LSPController extends Controller
             'lsp_direktur_telp' => 'required',
             'lsp_tanggal_lisensi' => 'required',
             'lsp_expired_lisensi' => 'required',
+
+            'name' => 'required',
+            'username' => 'required',
+            'password' => 'required|confirmed',
         ], [
             'lsp_nama.required' => 'Silahkan inputkan nama LSP',
         ]);

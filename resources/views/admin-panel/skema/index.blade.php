@@ -26,47 +26,16 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($dataLSP as $lsp)
-                                <tr class="align-middle">
-                                    <td>
-                                        <span class="bg-primary rounded-4 px-2 text-white">{{ $loop->iteration }}</span>
-                                    </td>
-                                    <td>
-                                        <span>
-                                            {{ $lsp->lsp_nama }}
-                                            <hr class="m-1">
-                                            <span class="font-size-6 fw-bold gap-1">
-                                                <small>TUK : 12</small>
-                                                <small>|</small>
-                                                <small>Skema : 12</small>
-                                                <small>|</small>
-                                                <small>Asesor : 12</small>
-                                            </span>
-                                        </span>
-                                    </td>
-                                    <td>{{ $lsp->lsp_no_lisensi }}</td>
-                                    <td>{{ $lsp->lsp_email }}</td>
-                                    <td>{{ $lsp->lsp_telp }}</td>
-                                    <td><span class="badge {{ $lsp->is_active == 1 ? 'bg-success' : 'bg-danger' }}">{{ $lsp->is_active == 1 ? 'Active' : 'Not Active' }}</span></td>
-                                    <td>
-                                        <span class="badge bg-dark rounded-pill px-2">
-                                            {{ $lsp->username }}
-                                        </span>
-                                    </td>
-                                    <td>
-                                        <div class="btn-group" role="group" aria-label="Basic outlined example">
-                                            <a href="#" class="btn btn-sm btn-success" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="See Details" data-bs-custom-class="success-tooltip"><i class="mdi mdi-eye"></i> </a>
-
-                                            <a href="#" class="btn btn-sm btn-warning" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Edit Data" data-bs-custom-class="warning-tooltip"><i class="mdi mdi-lead-pencil"></i> </a>
-
-                                            <input type="hidden" class="gseID" value="#">
-                                            <button type="button" class="btn btn-sm btn-danger deleteButton" data-nama="#" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Delete Data" data-bs-custom-class="danger-tooltip">
-                                                <i class="mdi mdi-trash-can"></i>
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
-                            @endforeach
+                            <tr>
+                                <td>1</td>
+                                <td>1</td>
+                                <td>1</td>
+                                <td>1</td>
+                                <td>1</td>
+                                <td>1</td>
+                                <td>1</td>
+                                <td>1</td>
+                            </tr>
 
                         </tbody>
                     </table>

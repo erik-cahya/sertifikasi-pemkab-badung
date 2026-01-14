@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->ulid('ref')->unique();
             $table->string('name');
-            $table->string('email')->unique();
+            $table->string('email')->unique()->nullable();
             $table->string('username')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');

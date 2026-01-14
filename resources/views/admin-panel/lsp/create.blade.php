@@ -184,7 +184,7 @@
                                             <div class="col-lg-12">
                                                 <div class="mb-3">
                                                     <div class="row g-2">
-                                                        <div class="col-md-4 mb-3">
+                                                        <div class="col-md-6 mb-3">
                                                             <label for="name" class="form-label">Name</label>
                                                             <input type="text" class="form-control" id="name" placeholder="Input Nama User" name="name">
                                                             @error('name')
@@ -198,22 +198,7 @@
                                                                 </div>
                                                             @enderror
                                                         </div>
-                                                        <div class="col-md-4 mb-3">
-                                                            <label for="email" class="form-label">Email</label>
-                                                            <input type="email" class="form-control" id="email" placeholder="Input Email" name="email">
-                                                            @error('email')
-                                                                <style>
-                                                                    #email {
-                                                                        border-color: #d03f3f
-                                                                    }
-                                                                </style>
-                                                                <div class="invalid-tooltip d-block position-static">
-                                                                    {{ $message }}
-                                                                </div>
-                                                            @enderror
-                                                        </div>
-
-                                                        <div class="col-md-4 mb-3">
+                                                        <div class="col-md-6 mb-3">
                                                             <label for="username" class="form-label">Username</label>
                                                             <input type="text" class="form-control" id="username" placeholder="Input username" name="username">
                                                             @error('username')
@@ -228,30 +213,10 @@
                                                             @enderror
                                                         </div>
 
-
                                                     </div>
 
                                                     <div class="row g-2">
-                                                        <div class="col-md-4 mb-3">
-                                                            <label for="is_active" class="form-label">Status LSP</label>
-                                                            <select class="text-capitalize form-select" id="is_active" name="is_active">
-                                                                <option value="#" disabled selected hidden>Pilih Status LSP</option>
-                                                                <option value="1" {{ old('is_active') === 'Active' ? 'selected' : '' }}>Active</option>
-                                                                <option value="0" {{ old('is_active') === 'Disabled' ? 'selected' : '' }}>Disabled</option>
-                                                            </select>
-
-                                                            @error('is_active')
-                                                                <style>
-                                                                    #is_active {
-                                                                        border-color: #d03f3f
-                                                                    }
-                                                                </style>
-                                                                <div class="invalid-tooltip d-block position-static">
-                                                                    {{ $message }}
-                                                                </div>
-                                                            @enderror
-                                                        </div>
-                                                        <div class="col-md-4 mb-3">
+                                                        <div class="col-md-6 mb-3">
                                                             <label for="password" class="form-label">Password</label>
                                                             <input type="password" class="form-control" id="password" placeholder="Password" name="password">
                                                             @error('password')
@@ -265,7 +230,7 @@
                                                                 </div>
                                                             @enderror
                                                         </div>
-                                                        <div class="col-md-4 mb-3">
+                                                        <div class="col-md-6 mb-3">
                                                             <label for="password_confirmation" class="form-label">Password Confirmation</label>
                                                             <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" placeholder="Confirmation Password">
                                                         </div>
@@ -276,7 +241,6 @@
                                         </div>
                                     </div>
                                 </div>
-
 
                                 <div class="mb-3 mt-3">
                                     <button class="btn btn-primary" type="submit">Tambahkan Data LSP</button>

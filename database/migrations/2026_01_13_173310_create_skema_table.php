@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignUlid('lsp_ref')->references('ref')->on('lsp')->cascadeOnDelete();
             $table->string('skema_judul');
             $table->string('skema_kode');
-            $table->string('skema_kategori');
+            $table->string('skema_kategori')->nullable();
             $table->foreignUlid('created_by')->references('ref')->on('users')->cascadeOnDelete();
             $table->timestamps();
         });

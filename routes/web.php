@@ -6,31 +6,44 @@ use App\Http\Controllers\AsesiController;
 use App\Http\Controllers\KegiatanController;
 use App\Http\Controllers\LSPController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SkemaController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
-// ################################ LSP
-Route::get('lsp', [LSPController::class, 'index'])->name('lsp.index')->middleware('auth');
-Route::get('lsp/create', [LSPController::class, 'create'])->name('lsp.create')->middleware('auth');
-Route::post('lsp/store', [LSPController::class, 'store'])->name('lsp.store')->middleware('auth');
 
-// ################################ Kegiatan
-Route::get('kegiatan', [KegiatanController::class, 'index'])->name('kegiatan.index')->middleware('auth');
-Route::get('kegiatan/create', [KegiatanController::class, 'create'])->name('kegiatan.create')->middleware('auth');
-Route::post('kegiatan/store', [KegiatanController::class, 'store'])->name('kegiatan.store')->middleware('auth');
-
-
-Route::get('/dashboard', function () {
-    return view('admin-panel.dashboard.index');
-})->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
+
+    // Selain role master & dinas, tidak bisa akses route ini
+    Route::middleware('role:master, dinas')->group(function () {
+        // ################################ LSP
+        Route::get('lsp', [LSPController::class, 'index'])->name('lsp.index');
+        Route::get('lsp/create', [LSPController::class, 'create'])->name('lsp.create');
+        Route::post('lsp/store', [LSPController::class, 'store'])->name('lsp.store');
+
+        // ################################ Kegiatan
+        Route::get('kegiatan', [KegiatanController::class, 'index'])->name('kegiatan.index');
+        Route::get('kegiatan/create', [KegiatanController::class, 'create'])->name('kegiatan.create');
+        Route::post('kegiatan/store', [KegiatanController::class, 'store'])->name('kegiatan.store');
+    });
+
+    // ################################ Skema
+    Route::get('skema', [SkemaController::class, 'index'])->name('skema.index');
+    Route::get('skema/create', [SkemaController::class, 'create'])->name('skema.create');
+    Route::post('skema/store', [SkemaController::class, 'store'])->name('skema.store');
+
+    // ################################ Profile
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    // ################################ Dashboard
+    Route::get('/dashboard', function () {
+        return view('admin-panel.dashboard.index');
+    })->name('dashboard');
 });
 
 // ################################ Pendaftaraan Asesi

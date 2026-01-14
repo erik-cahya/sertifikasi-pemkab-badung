@@ -36,52 +36,76 @@
 
             <li class="side-nav-title">Master Data</li>
 
-            <li class="side-nav-item {{ request()->routeIs('lsp.*') ? 'menuitem-active' : '' }}">
-                <a data-bs-toggle="collapse" href="#lspMenu" aria-expanded="false" aria-controls="lspMenu" class="side-nav-link">
+            <li class="side-nav-item {{ request()->routeIs('skema.*') ? 'menuitem-active' : '' }}">
+                <a data-bs-toggle="collapse" href="#skemaMenu" aria-expanded="false" aria-controls="skemaMenu" class="side-nav-link">
                     <i class="ri-flight-takeoff-fill"></i>
-                    <span> LSP </span>
+                    <span> Skema </span>
                     <span class="menu-arrow"></span>
                 </a>
-                <div class="{{ request()->routeIs('lsp.*') ? 'show' : '' }} collapse" id="lspMenu">
+                <div class="{{ request()->routeIs('skema.*') ? 'show' : '' }} collapse" id="skemaMenu">
                     <ul class="side-nav-second-level">
-                        <li class="side-nav-item {{ request()->routeIs('lsp.index') ? 'menuitem-active' : '' }}">
-                            <a class="side-nav-link {{ request()->routeIs('lsp.index') ? 'active' : '' }}" href="{{ route('lsp.index') }}">
-                                List All LSP
+                        <li class="side-nav-item {{ request()->routeIs('skema.index') ? 'menuitem-active' : '' }}">
+                            <a class="side-nav-link {{ request()->routeIs('skema.index') ? 'active' : '' }}" href="{{ route('skema.index') }}">
+                                List Skema
                             </a>
                         </li>
 
-                        <li class="side-nav-item {{ request()->routeIs('lsp.create') ? 'menuitem-active' : '' }}">
-                            <a class="side-nav-link {{ request()->routeIs('lsp.create') ? 'active' : '' }}" href="{{ route('lsp.create') }}">
-                                Tambah Data LSP
+                        <li class="side-nav-item {{ request()->routeIs('skema.create') ? 'menuitem-active' : '' }}">
+                            <a class="side-nav-link {{ request()->routeIs('skema.create') ? 'active' : '' }}" href="{{ route('skema.create') }}">
+                                Tambah Skema Sertifikasi
                             </a>
                         </li>
                     </ul>
                 </div>
             </li>
 
+            @if (Auth::user()->roles === 'master')
+                <li class="side-nav-item {{ request()->routeIs('lsp.*') ? 'menuitem-active' : '' }}">
+                    <a data-bs-toggle="collapse" href="#lspMenu" aria-expanded="false" aria-controls="lspMenu" class="side-nav-link">
+                        <i class="ri-flight-takeoff-fill"></i>
+                        <span> LSP </span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <div class="{{ request()->routeIs('lsp.*') ? 'show' : '' }} collapse" id="lspMenu">
+                        <ul class="side-nav-second-level">
+                            <li class="side-nav-item {{ request()->routeIs('lsp.index') ? 'menuitem-active' : '' }}">
+                                <a class="side-nav-link {{ request()->routeIs('lsp.index') ? 'active' : '' }}" href="{{ route('lsp.index') }}">
+                                    List All LSP
+                                </a>
+                            </li>
 
-            <li class="side-nav-item {{ request()->routeIs('kegiatan.*') ? 'menuitem-active' : '' }}">
-                <a data-bs-toggle="collapse" href="#kegiatanMenu" aria-expanded="false" aria-controls="kegiatanMenu" class="side-nav-link">
-                    <i class="ri-flight-takeoff-fill"></i>
-                    <span> Kegiatan </span>
-                    <span class="menu-arrow"></span>
-                </a>
-                <div class="{{ request()->routeIs('kegiatan.*') ? 'show' : '' }} collapse" id="kegiatanMenu">
-                    <ul class="side-nav-second-level">
-                        <li class="side-nav-item {{ request()->routeIs('kegiatan.index') ? 'menuitem-active' : '' }}">
-                            <a class="side-nav-link {{ request()->routeIs('kegiatan.index') ? 'active' : '' }}" href="{{ route('kegiatan.index') }}">
-                                List Kegiatan
-                            </a>
-                        </li>
+                            <li class="side-nav-item {{ request()->routeIs('lsp.create') ? 'menuitem-active' : '' }}">
+                                <a class="side-nav-link {{ request()->routeIs('lsp.create') ? 'active' : '' }}" href="{{ route('lsp.create') }}">
+                                    Tambah Data LSP
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
 
-                        <li class="side-nav-item {{ request()->routeIs('kegiatan.create') ? 'menuitem-active' : '' }}">
-                            <a class="side-nav-link {{ request()->routeIs('kegiatan.create') ? 'active' : '' }}" href="{{ route('kegiatan.create') }}">
-                                Tambah Kegiatan
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </li>
+                <li class="side-nav-item {{ request()->routeIs('kegiatan.*') ? 'menuitem-active' : '' }}">
+                    <a data-bs-toggle="collapse" href="#kegiatanMenu" aria-expanded="false" aria-controls="kegiatanMenu" class="side-nav-link">
+                        <i class="ri-flight-takeoff-fill"></i>
+                        <span> Kegiatan </span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <div class="{{ request()->routeIs('kegiatan.*') ? 'show' : '' }} collapse" id="kegiatanMenu">
+                        <ul class="side-nav-second-level">
+                            <li class="side-nav-item {{ request()->routeIs('kegiatan.index') ? 'menuitem-active' : '' }}">
+                                <a class="side-nav-link {{ request()->routeIs('kegiatan.index') ? 'active' : '' }}" href="{{ route('kegiatan.index') }}">
+                                    List Kegiatan
+                                </a>
+                            </li>
+
+                            <li class="side-nav-item {{ request()->routeIs('kegiatan.create') ? 'menuitem-active' : '' }}">
+                                <a class="side-nav-link {{ request()->routeIs('kegiatan.create') ? 'active' : '' }}" href="{{ route('kegiatan.create') }}">
+                                    Tambah Kegiatan
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+            @endif
 
             {{-- <li class="side-nav-item {{ request()->routeIs('violation.*') ? 'menuitem-active' : '' }}">
                 <a data-bs-toggle="collapse" href="#violationMenu" aria-expanded="false" aria-controls="violationMenu" class="side-nav-link">
