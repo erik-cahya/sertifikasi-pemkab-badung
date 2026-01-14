@@ -18,4 +18,13 @@ class SkemaModel extends Model
     {
         return ['ref'];
     }
+
+    public function details()
+    {
+        return $this->hasMany(
+            SkemaDetailModel::class,
+            'skema_ref',
+            'ref'
+        );
+    }
 }

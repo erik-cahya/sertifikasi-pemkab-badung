@@ -90,9 +90,9 @@ class LSPController extends Controller
         ]);
 
         $flashData = [
-            'title' => 'Tambah Data LSP Success',
+            'title' => 'Tambah Data Success',
             'message' => 'Data LSP Berhasil Ditambahkan',
-            'swalFlashIcon' => 'success',
+            'type' => 'success',
         ];
         return redirect()->route('lsp.index')->with('flashData', $flashData);
     }

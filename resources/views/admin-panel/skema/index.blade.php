@@ -8,34 +8,48 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <h4 class=".card-title">All Data LSP</h4>
+                    <h4 class=".card-title">List Skema LSP</h4>
                 </div>
                 <div class="card-body">
 
-                    <table id="scroll-horizontal-datatable" class="table-striped w-100 nowrap table">
+                    <table id="scroll-horizontal-datatable" class="table-striped table-bordered w-100 nowrap table">
                         <thead>
                             <tr>
                                 <th>No</th>
-                                <th>Nama LSP</th>
-                                <th>No Lisensi</th>
-                                <th>Email LSP</th>
-                                <th>No Telp LSP</th>
-                                <th>Status LSP</th>
-                                <th>Username</th>
+                                <th>Judul Skema</th>
+                                <th>Kode Skema</th>
+                                <th>Kategori</th>
+                                <th>Jumlah Unit</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>1</td>
-                                <td>1</td>
-                                <td>1</td>
-                                <td>1</td>
-                                <td>1</td>
-                                <td>1</td>
-                                <td>1</td>
-                            </tr>
+                            @foreach ($dataSkema as $skema)
+                                <tr>
+                                    <td>{{ $loop->iteration }}</td>
+                                    <td>{{ $skema->skema_judul }}</td>
+                                    <td>{{ $skema->skema_kode }}</td>
+                                    <td>
+                                        <span class="badge bg-primary-subtle text-primary">{{ $skema->skema_kategori }}</span>
+                                    </td>
+                                    <td>{{ $skema->unitCount }} Kode Unit</td>
+                                    <td>
+
+                                        <a href="{{ route('skema.show', $skema->ref) }}" class="text-reset fs-16 px-1">
+                                            <i class="ri-eye-line"></i>
+                                        </a>
+
+                                        <a href="javascript: void(0);" class="text-reset fs-16 px-1">
+                                            <i class="ri-pencil-line"></i>
+                                        </a>
+
+                                        <input type="hidden" class="skemaID" value="{{ $skema->ref }}">
+                                        <a href="javascript:void(0)" class="text-reset fs-16 deleteButton px-1" data-nama="{{ $skema->skema_judul }}">
+                                            <i class="mdi mdi-trash-can"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            @endforeach
 
                         </tbody>
                     </table>
@@ -65,7 +79,7 @@
                     e.preventDefault();
 
                     let propertyName = this.getAttribute('data-nama');
-                    let gseID = this.parentElement.querySelector('.gseID').value;
+                    let skemaID = this.parentElement.querySelector('.skemaID').value;
 
                     Swal.fire({
                         title: 'Are you sure?',
@@ -78,7 +92,7 @@
                     }).then((result) => {
                         if (result.isConfirmed) {
                             // Kirim DELETE request manual lewat JavaScript
-                            fetch('/gse/' + gseID, {
+                            fetch('/skema/' + skemaID, {
                                     method: 'DELETE',
                                     headers: {
                                         'X-CSRF-TOKEN': '{{ csrf_token() }}',
@@ -90,7 +104,7 @@
                                     Swal.fire({
                                         title: data.judul,
                                         text: data.pesan,
-                                        icon: data.swalFlashIcon,
+                                        icon: data.type,
                                     });
 
                                     // Optional: reload table / halaman

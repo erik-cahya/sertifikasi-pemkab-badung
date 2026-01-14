@@ -121,7 +121,7 @@
                                     Swal.fire({
                                         title: data.judul,
                                         text: data.pesan,
-                                        icon: data.swalFlashIcon,
+                                        icon: data.type,
                                     });
 
                                     // Optional: reload table / halaman
