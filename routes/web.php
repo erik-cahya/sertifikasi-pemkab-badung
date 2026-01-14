@@ -13,9 +13,9 @@ Route::get('/', function () {
 });
 
 // ################################ LSP
-Route::get('lsp', [LSPController::class, 'index'])->name('lsp.index');
+Route::get('lsp', [LSPController::class, 'index'])->name('lsp.index')->middleware('auth');
 Route::get('lsp/create', [LSPController::class, 'create'])->name('lsp.create')->middleware('auth');
-Route::post('lsp/store', [LSPController::class, 'store'])->name('lsp.store');
+Route::post('lsp/store', [LSPController::class, 'store'])->name('lsp.store')->middleware('auth');
 
 // ################################ Kegiatan
 Route::get('kegiatan', [KegiatanController::class, 'index'])->name('kegiatan.index')->middleware('auth');
