@@ -59,8 +59,8 @@
 
                                             <a href="#" class="btn btn-sm btn-warning" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Edit Data" data-bs-custom-class="warning-tooltip"><i class="mdi mdi-lead-pencil"></i> </a>
 
-                                            <input type="hidden" class="gseID" value="#">
-                                            <button type="button" class="btn btn-sm btn-danger deleteButton" data-nama="#" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Delete Data" data-bs-custom-class="danger-tooltip">
+                                            <input type="hidden" class="dataID" value="{{ $lsp->ref }}">
+                                            <button type="button" class="btn btn-sm btn-danger deleteButton" data-nama="{{ $lsp->lsp_nama }}" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Delete Data" data-bs-custom-class="danger-tooltip">
                                                 <i class="mdi mdi-trash-can"></i>
                                             </button>
                                         </div>
@@ -88,56 +88,55 @@
     {{-- Sweet Alert --}}
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Saat halaman sudah ready
-            const deleteButtons = document.querySelectorAll('.deleteButton');
 
-            deleteButtons.forEach(button => {
+            document.querySelectorAll('.deleteButton').forEach(button => {
+
                 button.addEventListener('click', function(e) {
                     e.preventDefault();
 
-                    let propertyName = this.getAttribute('data-nama');
-                    let gseID = this.parentElement.querySelector('.gseID').value;
+                    const row = this.closest('tr');
+                    const dataNama = this.dataset.nama;
+                    const dataID = this.closest('td').querySelector('.dataID').value;
 
                     Swal.fire({
                         title: 'Are you sure?',
-                        text: "Delete data " + propertyName + "?",
+                        text: `Delete data ${dataNama}?`,
                         icon: 'warning',
                         showCancelButton: true,
-                        confirmButtonColor: '#3085d6',
-                        cancelButtonColor: '#d33',
-                        confirmButtonText: 'Yes, delete it!'
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            // Kirim DELETE request manual lewat JavaScript
-                            fetch('/gse/' + gseID, {
-                                    method: 'DELETE',
-                                    headers: {
-                                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                                        'Content-Type': 'application/json'
-                                    }
-                                })
-                                .then(response => response.json())
-                                .then(data => {
-                                    Swal.fire({
-                                        title: data.judul,
-                                        text: data.pesan,
-                                        icon: data.type,
-                                    });
+                        confirmButtonText: 'Yes, delete it!',
+                    }).then(result => {
 
-                                    // Optional: reload table / halaman
-                                    setTimeout(() => {
-                                        location.reload();
-                                    }, 1500);
-                                })
-                                .catch(error => {
-                                    console.error('Error:', error);
-                                    Swal.fire('Error', 'Something went wrong!',
-                                        'error');
+                        if (!result.isConfirmed) return;
+
+                        fetch(`/lsp/${dataID}`, {
+                                method: 'DELETE',
+                                credentials: 'same-origin',
+                                headers: {
+                                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                                    'X-Requested-With': 'XMLHttpRequest',
+                                }
+                            })
+                            .then(() => {
+                                Swal.fire({
+                                    title: 'Berhasil',
+                                    text: 'Data LSP berhasil dihapus',
+                                    icon: 'success',
+                                    timer: 1200,
+                                    showConfirmButton: false
                                 });
-                        }
+                                row.style.transition = 'opacity 0.3s';
+                                row.style.opacity = 0;
+                                setTimeout(() => row.remove(), 300);
+                            })
+                            .catch(err => {
+                                console.error(err);
+                                Swal.fire('Error', 'Request gagal dikirim ke server', 'error');
+                            });
                     });
                 });
+
             });
+
         });
     </script>
 @endpush

@@ -126,6 +126,20 @@ class LSPController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        // LSPModel::where('ref', $id)->delete();
+
+        $lsp = LSPModel::where('ref', $id)->firstOrFail();
+        $lsp->delete();
+        $flashData = [
+            'judul' => 'Hapus Data Success',
+            'pesan' => 'Data LSP Berhasil Dihapus ',
+            'type' => 'success',
+        ];
+
+        return response()->json([
+            'judul' => 'Hapus Data Success',
+            'pesan' => 'Data LSP Berhasil Dihapus',
+            'type'  => 'success',
+        ], 200);
     }
 }

@@ -15,6 +15,7 @@ Route::get('/', function () {
 });
 
 
+Route::delete('lsp/{id}', [LSPController::class, 'destroy'])->name('lsp.destroy');
 
 Route::middleware('auth')->group(function () {
 
