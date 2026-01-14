@@ -50,16 +50,20 @@
                             </a>
                         </li>
 
-                        <li class="side-nav-item {{ request()->routeIs('skema.create') ? 'menuitem-active' : '' }}">
-                            <a class="side-nav-link {{ request()->routeIs('skema.create') ? 'active' : '' }}" href="{{ route('skema.create') }}">
-                                Tambah Skema Sertifikasi
-                            </a>
-                        </li>
+                        {{-- @if (Auth::user()->roles === 'lsp') --}}
+                        @role('lsp')
+                            <li class="side-nav-item {{ request()->routeIs('skema.create') ? 'menuitem-active' : '' }}">
+                                <a class="side-nav-link {{ request()->routeIs('skema.create') ? 'active' : '' }}" href="{{ route('skema.create') }}">
+                                    Tambah Skema Sertifikasi
+                                </a>
+                            </li>
+                        @endrole
+
                     </ul>
                 </div>
             </li>
 
-            @if (Auth::user()->roles === 'master')
+            @role('master')
                 <li class="side-nav-item {{ request()->routeIs('lsp.*') ? 'menuitem-active' : '' }}">
                     <a data-bs-toggle="collapse" href="#lspMenu" aria-expanded="false" aria-controls="lspMenu" class="side-nav-link">
                         <i class="ri-flight-takeoff-fill"></i>
@@ -105,7 +109,7 @@
                         </ul>
                     </div>
                 </li>
-            @endif
+            @endrole
 
             {{-- <li class="side-nav-item {{ request()->routeIs('violation.*') ? 'menuitem-active' : '' }}">
                 <a data-bs-toggle="collapse" href="#violationMenu" aria-expanded="false" aria-controls="violationMenu" class="side-nav-link">

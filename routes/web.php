@@ -33,12 +33,12 @@ Route::middleware('auth')->group(function () {
 
     // ################################ Skema
     Route::get('skema', [SkemaController::class, 'index'])->name('skema.index');
-    Route::get('skema/create', [SkemaController::class, 'create'])->name('skema.create');
+    Route::get('skema/create', [SkemaController::class, 'create'])->name('skema.create')->middleware('role:lsp');
     Route::post('skema/store', [SkemaController::class, 'store'])->name('skema.store');
     Route::get('skema/{id}', [SkemaController::class, 'show'])->name('skema.show');
     Route::delete('skema/{id}', [SkemaController::class, 'destroy'])->name('skema.destroy');
 
-    Route::post('skema/create_kode_unit', [KodeUnitController::class, 'store'])->name('kode_unit.store');
+    Route::post('skema/create_kode_unit', [KodeUnitController::class, 'store'])->name('kode_unit.store')->middleware('role:lsp');
     Route::delete('kode_unit/{id}', [KodeUnitController::class, 'destroy'])->name('kode_unit.destroy');
 
     // ################################ Profile
