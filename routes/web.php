@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AsesiController;
 use App\Http\Controllers\KegiatanController;
 use App\Http\Controllers\LSPController;
 use App\Http\Controllers\ProfileController;
@@ -26,6 +27,11 @@ Route::post('lsp/store', [LSPController::class, 'store'])->name('lsp.store');
 Route::get('kegiatan', [KegiatanController::class, 'index'])->name('kegiatan.index')->middleware('auth');
 Route::get('kegiatan/create', [KegiatanController::class, 'create'])->name('kegiatan.create')->middleware('auth');
 Route::post('kegiatan/store', [KegiatanController::class, 'store'])->name('kegiatan.store')->middleware('auth');
+
+// ################################ Pendaftaraan Asesi
+Route::get('asesi', [AsesiController::class, 'index'])->name('asesi.index')->middleware('auth');
+Route::get('asesi/create', [AsesiController::class, 'create'])->name('asesi.create')->middleware('auth');
+Route::post('asesi/store', [AsesiController::class, 'store'])->name('asesi.store')->middleware('auth');
 
 Route::get('/dashboard', function () {
     return view('admin-panel.dashboard.index');
