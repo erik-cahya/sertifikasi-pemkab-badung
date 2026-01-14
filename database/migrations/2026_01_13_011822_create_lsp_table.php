@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('lsp', function (Blueprint $table) {
             $table->ulid('ref')->primary();
+            $table->foreignUlid('user_ref')->references('ref')->on('users')->cascadeOnDelete();
             $table->string('lsp_nama');
             $table->string('lsp_no_lisensi')->nullable();
             $table->string('lsp_alamat')->nullable();

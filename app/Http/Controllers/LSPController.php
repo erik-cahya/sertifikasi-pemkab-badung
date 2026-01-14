@@ -15,7 +15,19 @@ class LSPController extends Controller
      */
     public function index()
     {
-        return view('admin-panel.lsp.index');
+        $data['dataLSP'] = LSPModel::select(
+            'lsp.ref',
+            'lsp.lsp_nama',
+            'lsp.lsp_no_lisensi',
+            'lsp.lsp_email',
+            'lsp.lsp_telp',
+            'users.is_active'
+        )
+            ->join('users', 'users.ref', '=', 'lsp.user_ref')
+            ->get();
+
+
+        return view('admin-panel.lsp.index', $data);
     }
 
     /**
@@ -47,7 +59,17 @@ class LSPController extends Controller
             'lsp_nama.required' => 'Silahkan inputkan nama LSP',
         ]);
 
+        $userCreated = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'username' => $request->username,
+            'password' => bcrypt($request->password),
+            'roles' => strtolower(trim('lsp')),
+            'is_active' => 1
+        ]);
+
         LSPModel::create([
+            'user_ref' => $userCreated->ref,
             'lsp_nama' => trim($request->lsp_nama),
             'lsp_no_lisensi' => $request->lsp_no_lisensi,
             'lsp_alamat' => $request->lsp_alamat,
@@ -60,15 +82,6 @@ class LSPController extends Controller
             'lsp_expired_lisensi' => $request->lsp_expired_lisensi,
             'created_by' => Auth::user()->ref,
 
-        ]);
-
-        User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'username' => $request->username,
-            'password' => bcrypt($request->password),
-            'roles' => strtolower(trim('lsp')),
-            'is_active' => 1
         ]);
 
         $flashData = [
