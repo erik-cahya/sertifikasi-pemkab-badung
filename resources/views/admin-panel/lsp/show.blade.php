@@ -112,9 +112,9 @@
                             </div>
 
                             <div class="col-12 mt-2">
-                                <label class="col-form-label" for="serial_gse"><i class="ri-edit-2-line"></i> Password</label>
+                                <label class="col-form-label" for="serial_gse"><i class="ri-edit-2-line"></i> username</label>
                                 <div class="">
-                                    <input disabled type="text" class="form-control" id="serial_gse" name="serial_gse" value="{{ $dataLSP->lsp_nama }}">
+                                    <input disabled type="text" class="form-control" id="serial_gse" name="serial_gse" value="{{ $dataLSP->user->username }}">
                                 </div>
                             </div>
                         </div>

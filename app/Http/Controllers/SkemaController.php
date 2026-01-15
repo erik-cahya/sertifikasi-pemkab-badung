@@ -12,6 +12,16 @@ use Illuminate\Support\Facades\Validator;
 class SkemaController extends Controller
 {
 
+    public function getByLsp(string $lspRef)
+    {
+        $skema = SkemaModel::where('lsp_ref', $lspRef)
+            ->select('ref', 'skema_judul')
+            ->orderBy('skema_judul')
+            ->get();
+
+        return response()->json($skema);
+    }
+
     /**
      * Display a listing of the resource.
      */

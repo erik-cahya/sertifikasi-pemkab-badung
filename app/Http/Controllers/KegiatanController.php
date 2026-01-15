@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\LSPModel;
 use Carbon\Carbon;
 use Faker\Provider\Uuid;
 use Illuminate\Http\Request;
@@ -23,7 +24,8 @@ class KegiatanController extends Controller
      */
     public function create()
     {
-        return view('admin-panel.kegiatan.create');
+        $data['dataLSP'] = LSPModel::get();
+        return view('admin-panel.kegiatan.create', $data);
     }
 
     /**

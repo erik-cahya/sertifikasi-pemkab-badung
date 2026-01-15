@@ -22,25 +22,20 @@
                         <div class="card-body">
                             <ul class="nav nav-pills bg-nav-pills nav-justified mb-3">
                                 <li class="nav-item">
-                                    <a href="#create_skema"
-                                        data-bs-toggle="tab"
-                                        class="nav-link rounded-0 {{ $activeTab === 'create_skema' ? 'active' : '' }}">
+                                    <a href="#create_skema" data-bs-toggle="tab" class="nav-link rounded-0 {{ $activeTab === 'create_skema' ? 'active' : '' }}">
                                         Tambah Skema Baru
                                     </a>
                                 </li>
 
                                 <li class="nav-item">
-                                    <a href="#create_kode_unit"
-                                        data-bs-toggle="tab"
-                                        class="nav-link rounded-0 {{ $activeTab === 'create_kode_unit' ? 'active' : '' }}">
+                                    <a href="#create_kode_unit" data-bs-toggle="tab" class="nav-link rounded-0 {{ $activeTab === 'create_kode_unit' ? 'active' : '' }}">
                                         Tambah Kode Unit
                                     </a>
                                 </li>
                             </ul>
 
                             <div class="tab-content">
-                                <div class="tab-pane fade {{ $activeTab === 'create_skema' ? 'show active' : '' }}"
-                                    id="create_skema">
+                                <div class="tab-pane fade {{ $activeTab === 'create_skema' ? 'show active' : '' }}" id="create_skema">
                                     <form action="{{ route('skema.store') }}" method="POST">
                                         @csrf
                                         <div class="row">
@@ -97,8 +92,7 @@
                                         </div>
                                     </form>
                                 </div>
-                                <div class="tab-pane fade {{ $activeTab === 'create_kode_unit' ? 'show active' : '' }}"
-                                    id="create_kode_unit">
+                                <div class="tab-pane fade {{ $activeTab === 'create_kode_unit' ? 'show active' : '' }}" id="create_kode_unit">
                                     <form action="{{ route('kode_unit.store') }}" method="POST">
                                         @csrf
                                         <div class="row">
@@ -129,18 +123,12 @@
                                                             <div class="row g-3" id="kegiatan-row">
                                                                 <div class="col-lg-6">
                                                                     <label class="form-label">Judul Unit</label>
-                                                                    <input type="text"
-                                                                        class="form-control @error('judul_unit.*', 'create_kode_unit') is-invalid @enderror"
-                                                                        name="judul_unit[]"
-                                                                        value="{{ old('judul_unit.0') }}">
+                                                                    <input type="text" class="form-control @error('judul_unit.*', 'create_kode_unit') is-invalid @enderror" name="judul_unit[]" value="{{ old('judul_unit.0') }}">
                                                                 </div>
 
                                                                 <div class="col-lg-6">
                                                                     <label class="form-label">Kode Unit</label>
-                                                                    <input type="text"
-                                                                        class="form-control @error('kode_unit.*', 'create_kode_unit') is-invalid @enderror"
-                                                                        name="kode_unit[]"
-                                                                        value="{{ old('kode_unit.0') }}">
+                                                                    <input type="text" class="form-control @error('kode_unit.*', 'create_kode_unit') is-invalid @enderror" name="kode_unit[]" value="{{ old('kode_unit.0') }}">
                                                                 </div>
                                                             </div>
 

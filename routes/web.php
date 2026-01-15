@@ -16,6 +16,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/ajax/skema-by-lsp/{lspRef}', [SkemaController::class, 'getByLsp'])
+    ->name('ajax.skema.by-lsp');
 
 
 Route::middleware('auth')->group(function () {
