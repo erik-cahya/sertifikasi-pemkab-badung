@@ -145,12 +145,6 @@
                     </a>
                     <div class="{{ request()->routeIs('item.*') ? 'show' : '' }} collapse" id="itemMenu">
                         <ul class="side-nav-second-level">
-                            <li class="side-nav-item {{ request()->routeIs('item.index') ? 'menuitem-active' : '' }}">
-                                <a class="side-nav-link {{ request()->routeIs('item.index') ? 'active' : '' }}" href="{{ route('item.index') }}">
-                                    Data Items
-                                </a>
-                            </li>
-
                             <li class="side-nav-departemen {{ request()->routeIs('departemen.index') ? 'menudepartemen-active' : '' }}">
                                 <a class="side-nav-link {{ request()->routeIs('departemen.index') ? 'active' : '' }}" href="{{ route('departemen.index') }}">
                                     Departemen

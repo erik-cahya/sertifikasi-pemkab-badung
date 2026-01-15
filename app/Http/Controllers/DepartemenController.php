@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\ItemModel;
+use App\Models\DepartemenModel;
+use App\Models\JabatanModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
-class ItemController extends Controller
+class DepartemenController extends Controller
 {
 
     /**
@@ -15,13 +16,13 @@ class ItemController extends Controller
      */
     public function index()
     {
-        $query = ItemModel::join('users', 'users.ref', '=', 'item.created_by')
-        ->select('item.*', 'users.name')
-        ->orderBy('item.created_at', 'desc')
+        $query = DepartemenModel::join('users', 'users.ref', '=', 'departemen.created_by')
+        ->select('departemen.*', 'users.name')
+        ->orderBy('departemen.created_at', 'desc')
         ->get();
 
-        return view('admin-panel.item.index', [
-            'dataItem' => $query
+        return view('admin-panel.departemen.index', [
+            'dataDepartemen' => $query
         ]);
     }
 
@@ -39,26 +40,22 @@ class ItemController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'item_kategori' => 'required',
-            'item_nama' => 'required',
+            'departemen_nama' => 'required',
         ], [
-            'item_kategori.required' => 'Silahkan pilih kategori terlebih dahulu',
-            'item_nama.required' => 'Silahkan isi nama item terlebih dahulu',
+            'departemen_nama.required' => 'Nama departemen tidak boleh kosong',
         ]);
 
-        ItemModel::create([
-            'item_kategori' => $request->item_kategori,
-            'item_nama' => $request->item_nama,
+        DepartemenModel::create([
+            'departemen_nama' => $request->departemen_nama,
             'created_by' => Auth::user()->ref,
         ]);
 
         $flashData = [
-            'title' => 'Tambah Data Item Berhasii',
-            'message' => 'Data Item Berhasil Ditambahkan',
+            'title' => 'Tambah Data Departemen Berhasii',
+            'message' => 'Data Departemen Berhasil Ditambahkan',
             'type' => 'success',
         ];
-        return redirect()->route('item.index')->with('flashData', $flashData);
-        
+        return redirect()->route('departemen.index')->with('flashData', $flashData);
     }
 
     /**
@@ -66,6 +63,7 @@ class ItemController extends Controller
      */
     public function show(string $id)
     {
+
     }
 
     /**
@@ -89,10 +87,12 @@ class ItemController extends Controller
      */
     public function destroy(string $id)
     {
-        ItemModel::where('ref', $id)->delete();
+        JabatanModel::where('departemen', $id)->delete();
+        DepartemenModel::where('ref', $id)->delete();
+
         $flashData = [
             'judul' => 'Hapus Data Berhasil',
-            'pesan' => 'Item Berhasil Dihapus ',
+            'pesan' => 'Departemen Berhasil Dihapus ',
             'type' => 'success',
         ];
 

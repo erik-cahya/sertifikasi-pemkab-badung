@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DepartemenController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\PegawaiController;
 use App\Http\Controllers\TUKController;
@@ -32,18 +33,12 @@ Route::middleware('auth')->group(function () {
         Route::get('kegiatan/create', [KegiatanController::class, 'create'])->name('kegiatan.create');
         Route::post('kegiatan/store', [KegiatanController::class, 'store'])->name('kegiatan.store');
 
-        // ################################ Items
-        Route::get('item', [ItemController::class, 'index'])->name('item.index');
-        Route::get('item/create', [ItemController::class, 'create'])->name('item.create')->middleware('role:lsp');
-        Route::post('item/store', [ItemController::class, 'store'])->name('item.store');
-        Route::get('item/{id}', [ItemController::class, 'show'])->name('item.show');
-        Route::delete('item/{id}', [ItemController::class, 'destroy'])->name('item.destroy');
-
-        Route::get('departemen', [ItemController::class, 'index'])->name('departemen.index');
-        Route::get('departemen/create', [ItemController::class, 'create'])->name('departemen.create')->middleware('role:lsp');
-        Route::post('departemen/store', [ItemController::class, 'store'])->name('departemen.store');
-        Route::get('departemen/{id}', [ItemController::class, 'show'])->name('departemen.show');
-        Route::delete('departemen/{id}', [ItemController::class, 'destroy'])->name('departemen.destroy');
+        // ################################ Departemen
+        Route::get('departemen', [DepartemenController::class, 'index'])->name('departemen.index');
+        Route::get('departemen/create', [DepartemenController::class, 'create'])->name('departemen.create')->middleware('role:lsp');
+        Route::post('departemen/store', [DepartemenController::class, 'store'])->name('departemen.store');
+        Route::get('departemen/{id}', [DepartemenController::class, 'show'])->name('departemen.show');
+        Route::delete('departemen/{id}', [DepartemenController::class, 'destroy'])->name('departemen.destroy');
     });
 
     // ################################ Skema
