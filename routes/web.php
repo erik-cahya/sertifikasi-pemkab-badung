@@ -30,6 +30,13 @@ Route::middleware('auth')->group(function () {
         Route::get('kegiatan', [KegiatanController::class, 'index'])->name('kegiatan.index');
         Route::get('kegiatan/create', [KegiatanController::class, 'create'])->name('kegiatan.create');
         Route::post('kegiatan/store', [KegiatanController::class, 'store'])->name('kegiatan.store');
+
+        // ################################ Items (dont forget update controller name)
+        Route::get('item', [TUKController::class, 'index'])->name('item.index');
+        Route::get('item/create', [TUKController::class, 'create'])->name('item.create')->middleware('role:lsp');
+        Route::post('item/store', [TUKController::class, 'store'])->name('item.store');
+        Route::get('item/{id}', [TUKController::class, 'show'])->name('item.show');
+        Route::delete('item/{id}', [TUKController::class, 'destroy'])->name('item.destroy');
     });
 
     // ################################ Skema
@@ -51,6 +58,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard', function () {
         return view('admin-panel.dashboard.index');
     })->name('dashboard');
+
+    // ################################ TUK by admin
+    Route::get('tukAdmin', [TUKController::class, 'index'])->name('tukAdmin.index');
+    Route::get('tukAdmin/create', [TUKController::class, 'create'])->name('tukAdmin.create')->middleware('role:lsp');
+    Route::post('tukAdmin/store', [TUKController::class, 'store'])->name('tukAdmin.store');
+    Route::get('tukAdmin/{id}', [TUKController::class, 'show'])->name('tukAdmin.show');
+    Route::delete('tukAdmin/{id}', [TUKController::class, 'destroy'])->name('tukAdmin.destroy');
 });
 
 // ################################ Pendaftaraan Asesi
