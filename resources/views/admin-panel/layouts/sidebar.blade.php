@@ -3,11 +3,11 @@
     <!-- Logo Light -->
     <a href="{{ route('dashboard') }}" class="logo logo-light">
         <span class="logo-lg">
-            <img src="{{ asset('img/logo_lsp.png') }}" style="height: 40px" alt="logo">
+            <img src="{{ asset('img/logo_dinas_title.png') }}" style="height: 38px; margin-left: -15px" alt="logo">
             {{-- <h4 class="mt-3 text-white">Gse Management</h4> --}}
         </span>
         <span class="logo-sm">
-            <img src="{{ asset('img/no_title_logo.png') }}" alt="small logo">
+            <img src="{{ asset('img/logo_dinas_no_title.png') }}" alt="small logo" style="height: 40px">
             {{-- <h4 class="mt-3 text-white">GseManagement</h4> --}}
         </span>
     </a>
@@ -15,10 +15,10 @@
     <!-- Logo Dark -->
     <a href="{{ route('dashboard') }}" class="logo logo-dark">
         <span class="logo-lg">
-            <img src="{{ asset('img/logo_lsp.png') }}" style="height: 40px" alt="logo">
+            <img src="{{ asset('img/logo_dinas_title.png') }}" style="height: 38px; margin-left: -15px" alt="logo">
         </span>
         <span class="logo-sm">
-            <img src="{{ asset('img/no_title_logo.png') }}" alt="small logo">
+            <img src="{{ asset('img/logo_dinas_no_title.png') }}" alt="small logo" style="height: 40px">
         </span>
     </a>
 
@@ -150,7 +150,7 @@
                                     Departemen
                                 </a>
                             </li>
-                            
+
                         </ul>
                     </div>
                 </li>

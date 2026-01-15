@@ -19,6 +19,8 @@
 
     <!-- Icons css -->
     <link href="{{ asset('admin') }}/assets/css/icons.css" rel="stylesheet" type="text/css" />
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
 </head>
 
 <body class="authentication-bg position-relative" style="height: 100vh;">
@@ -31,17 +33,17 @@
                             <div class="col-lg-12">
 
                                 <div class="d-flex flex-column h-100">
-                                    {{-- <div class="auth-brand p-4 text-center">
+                                    <div class="auth-brand p-4 pb-0 text-center">
                                         <a href="index.html" class="logo-light">
-                                            <img src="{{ asset('admin') }}/assets/images/logo.png" alt="logo" height="28">
+                                            <img src="{{ asset('img/logo_dinas_title.png') }}" alt="logo" height="28">
                                         </a>
                                         <a href="index.html" class="logo-dark">
-                                            <img src="{{ asset('admin') }}/assets/images/logo-dark.png" alt="dark logo" height="28">
+                                            <img src="{{ asset('img/logo_dinas_no_title.png') }}" alt="dark logo" height="158">
                                         </a>
-                                    </div> --}}
+                                    </div>
                                     <div class="my-auto p-4 text-center">
                                         <h4 class="fs-20">Sign In</h4>
-                                        <p class="text-muted mb-4">Enter your email address and password to <br> access
+                                        <p class="text-muted mb-4">Enter your email or username and password to <br> access
                                             account.
                                         </p>
 
@@ -52,11 +54,17 @@
                                                 <label for="emailaddress" class="form-label">Email/Username</label>
                                                 <input class="form-control rounded-3" type="text" name="login" autofocus id="emailaddress" value="{{ old('email') }}" required placeholder="Enter your username or email">
                                             </div>
-                                            <div class="mb-3">
 
-                                                <label for="password" class="form-label">Password</label>
-                                                <input class="form-control rounded-3" type="password" name="password" required id="password" placeholder="Enter your password">
+                                            <div class="mb-3">
+                                                <div class="input-group input-group-merge " bis_skin_checked="1">
+                                                    <input type="password" id="password" class="form-control " style="border-radius: 0.5rem 0 0 0.5rem" placeholder="Enter your password" name="password">
+                                                    <div class="input-group-text" style="border-radius: 0 0.5rem 0.5rem 0" data-password="true" bis_skin_checked="1">
+                                                        <span class="password-eye"> <i class="bi bi-eye"></i>
+                                                        </span>
+                                                    </div>
+                                                </div>
                                             </div>
+
                                             <div class="mb-3">
                                                 <div class="form-check">
                                                     <input type="checkbox" class="form-check-input" id="checkbox-signin">
@@ -64,8 +72,9 @@
                                                         me</label>
                                                 </div>
                                             </div>
-                                            @error('email')
-                                                <div class="alert alert-danger mt-4" role="alert">
+
+                                            @error('login')
+                                                <div class="alert alert-danger mt-1" role="alert">
                                                     <i data-feather="alert-circle"></i>
                                                     {{ $message }}
                                                 </div>
@@ -83,16 +92,17 @@
                                 </div>
                             </div> <!-- end col -->
                         </div>
+                        <div class="row">
+                            <div class="col-12 text-center ">
+                                <p class="text-dark-emphasis">Don't have an account? <a href="{{ route('register') }}" class="text-dark fw-bold link-offset-3 text-decoration-underline ms-1"><b>Sign up</b></a>
+                                </p>
+                            </div> <!-- end col -->
+                        </div>
                     </div>
                 </div>
                 <!-- end row -->
             </div>
-            <div class="row">
-                <div class="col-12 text-center ">
-                    <p class="text-light-emphasis">Don't have an account? <a href="{{ route('register') }}" class="text-light fw-bold link-offset-3 text-decoration-underline ms-1"><b>Sign up</b></a>
-                    </p>
-                </div> <!-- end col -->
-            </div>
+
             <!-- end row -->
         </div>
         <!-- end container -->
@@ -106,6 +116,7 @@
 
     <!-- App js -->
     <script src="{{ asset('admin') }}/assets/js/app.min.js"></script>
+
 
 </body>
 

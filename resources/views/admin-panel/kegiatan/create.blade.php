@@ -48,81 +48,236 @@
                                 <div class="row">
                                     <div class="col-lg-12">
                                         <div class="mb-3">
-                                            <label for="namaLengkap" class="form-label">Nama Kegiatan</label>
-                                            <input type="text" id="namaLengkap" class="form-control">
+                                            <label for="nama_kegiatan" class="form-label">Nama Kegiatan</label>
+                                            <input type="text" id="nama_kegiatan" name="nama_kegiatan" class="form-control rounded-3 @error('nama_kegiatan', 'create_kegiatan') is-invalid @enderror" value="{{ old('nama_kegiatan') }}">
+
+                                            @error('nama_kegiatan', 'create_kegiatan')
+                                                <div class="invalid-feedback" bis_skin_checked="1">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
                                         </div>
                                     </div>
 
+                                    <div class="col-lg-6 mb-3">
+                                        <label for="mulai_kegiatan" class="form-label">Tanggal Mulai Kegiatan</label>
+                                        <input type="date" class="form-control rounded-3 @error('mulai_kegiatan', 'create_kegiatan') is-invalid @enderror" name="mulai_kegiatan" value="{{ old('mulai_kegiatan') }}">
+
+                                        @error('mulai_kegiatan', 'create_kegiatan')
+                                            <div class="invalid-feedback" bis_skin_checked="1">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
+                                    </div>
+
+                                    <div class="col-lg-6 mb-3">
+                                        <label for="selesai_kegiatan" class="form-label">Tanggal Selesai Kegiatan</label>
+                                        <input type="date" class="form-control rounded-3 @error('selesai_kegiatan', 'create_kegiatan') is-invalid @enderror" name="selesai_kegiatan" value="{{ old('selesai_kegiatan') }}">
+
+                                        @error('selesai_kegiatan', 'create_kegiatan')
+                                            <div class="invalid-feedback" bis_skin_checked="1">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
+                                    </div>
+
+                                </div>
+                                <div class="mb-3 mt-3">
+                                    <button class="btn btn-primary" type="submit"><i class="ri-add-box-fill"></i> Add New Kegiatan</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+
+        <div class="container-fluid">
+
+            <form action="{{ route('kegiatan.store') }}" method="POST" enctype="multipart/form-data">
+                @csrf
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class=".card-title">Masukkan LSP ke Kegiatan</h4>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-lg-12 mb-3">
+                                        <label for="select_kegiatan" class="form-label">Pilih Kegiatan</label>
+                                        <select id="select_kegiatan" class="form-select" name="select_kegiatan">
+                                            <option value="" selected disabled>Pilih Kegiatan</option>
+                                            @foreach ($dataKegiatan as $kegiatan)
+                                                <option value="{{ $kegiatan->ref }}">{{ $kegiatan->nama_kegiatan }}</option>
+                                            @endforeach
+                                        </select>
+
+                                        @error('select_kegiatan')
+                                            <div class="invalid-feedback" bis_skin_checked="1">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
+                                    </div>
+
                                     <div class="col-lg-12">
-                                        <!-- Container untuk kegiatan yang akan ditambahkan -->
                                         <div class="card border-secondary border">
                                             <div class="card-body kegiatan-item">
                                                 <div id="kegiatan-container">
                                                     <!-- Item pertama -->
-                                                    <div class="row align-items-end kegiatan-row mb-3">
+                                                    <div class="align-items-end kegiatan-row mb-3">
 
-
-
-                                                        <div class="col-lg-3">
-                                                            <label for="skema_kategori" class="form-label">Nama LSP</label>
-                                                            <select id="lsp_select" class="form-select" name="lsp_ref">
-                                                                <option value="" selected disabled>Pilih LSP</option>
-                                                                @foreach ($dataLSP as $lsp)
-                                                                    <option value="{{ $lsp->ref }}">{{ $lsp->lsp_nama }}</option>
-                                                                @endforeach
-                                                            </select>
-
-                                                            @error('skema_kategori', 'create_skema')
-                                                                <div class="invalid-feedback" bis_skin_checked="1">
-                                                                    {{ $message }}
-                                                                </div>
-                                                            @enderror
-                                                        </div>
-
-                                                        <div class="col-lg-5">
-                                                            <div class="">
-                                                                <label class="form-label">Skema</label>
-                                                                <select id="skema_select" class="select2 select2-multiple form-control" multiple="multiple" name="skema_ref" disabled>
-                                                                    <option value="">Pilih Skema</option>
+                                                        <div class="row mb-3 kegiatan-row">
+                                                            <div class="col-lg-3">
+                                                                <label class="form-label">Nama LSP</label>
+                                                                <select class="form-select lsp-select" name="lsp_ref[]">
+                                                                    <option value="" disabled selected>Pilih LSP</option>
+                                                                    @foreach ($dataLSP as $lsp)
+                                                                        <option value="{{ $lsp->ref }}">{{ $lsp->lsp_nama }}</option>
+                                                                    @endforeach
                                                                 </select>
                                                             </div>
-                                                        </div>
 
+                                                            <div class="col-lg-5">
+                                                                <label class="form-label">Skema</label>
+                                                                <select class="form-control select2 skema-select" name="skema_ref[][]" multiple disabled>
+                                                                </select>
+                                                            </div>
 
-                                                        <div class="col-lg-1">
-                                                            <div class="">
+                                                            <div class="col-lg-2">
                                                                 <label class="form-label">Kuota</label>
                                                                 <input type="number" class="form-control" name="kuota[]">
                                                             </div>
-                                                        </div>
-                                                        <div class="col-lg-2">
-                                                            <div class="">
+
+                                                            <div class="col-lg-2">
                                                                 <label class="form-label">Tanggal</label>
-                                                                <input type="text" class="form-control daterangepicker-input" data-toggle="daterangepicker" data-options='{"singleDatePicker": false, "locale": {"format": "YYYY-MM-DD"}}' name="date_range[]">
+                                                                <input type="text" class="form-control daterangepicker-input" name="date_range[]">
                                                             </div>
                                                         </div>
-                                                        <div class="col-lg-1">
-                                                            <div class="d-grid">
-                                                                <button type="button" class="btn btn-outline-danger btn-sm remove-kegiatan-btn" disabled>
-                                                                    <i class="fas fa-trash"></i> Hapus
-                                                                </button>
+
+                                                        <div class="row mb-3 kegiatan-row">
+                                                            <div class="col-lg-3">
+                                                                <label class="form-label">Nama LSP</label>
+                                                                <select class="form-select lsp-select" name="lsp_ref[]">
+                                                                    <option value="" disabled selected>Pilih LSP</option>
+                                                                    @foreach ($dataLSP as $lsp)
+                                                                        <option value="{{ $lsp->ref }}">{{ $lsp->lsp_nama }}</option>
+                                                                    @endforeach
+                                                                </select>
+                                                            </div>
+
+                                                            <div class="col-lg-5">
+                                                                <label class="form-label">Skema</label>
+                                                                <select class="form-control select2 skema-select" name="skema_ref[][]" multiple disabled>
+                                                                </select>
+                                                            </div>
+
+                                                            <div class="col-lg-2">
+                                                                <label class="form-label">Kuota</label>
+                                                                <input type="number" class="form-control" name="kuota[]">
+                                                            </div>
+
+                                                            <div class="col-lg-2">
+                                                                <label class="form-label">Tanggal</label>
+                                                                <input type="text" class="form-control daterangepicker-input" name="date_range[]">
                                                             </div>
                                                         </div>
+
+                                                        <div class="row mb-3 kegiatan-row">
+                                                            <div class="col-lg-3">
+                                                                <label class="form-label">Nama LSP</label>
+                                                                <select class="form-select lsp-select" name="lsp_ref[]">
+                                                                    <option value="" disabled selected>Pilih LSP</option>
+                                                                    @foreach ($dataLSP as $lsp)
+                                                                        <option value="{{ $lsp->ref }}">{{ $lsp->lsp_nama }}</option>
+                                                                    @endforeach
+                                                                </select>
+                                                            </div>
+
+                                                            <div class="col-lg-5">
+                                                                <label class="form-label">Skema</label>
+                                                                <select class="form-control select2 skema-select" name="skema_ref[][]" multiple disabled>
+                                                                </select>
+                                                            </div>
+
+                                                            <div class="col-lg-2">
+                                                                <label class="form-label">Kuota</label>
+                                                                <input type="number" class="form-control" name="kuota[]">
+                                                            </div>
+
+                                                            <div class="col-lg-2">
+                                                                <label class="form-label">Tanggal</label>
+                                                                <input type="text" class="form-control daterangepicker-input" name="date_range[]">
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="row mb-3 kegiatan-row">
+                                                            <div class="col-lg-3">
+                                                                <label class="form-label">Nama LSP</label>
+                                                                <select class="form-select lsp-select" name="lsp_ref[]">
+                                                                    <option value="" disabled selected>Pilih LSP</option>
+                                                                    @foreach ($dataLSP as $lsp)
+                                                                        <option value="{{ $lsp->ref }}">{{ $lsp->lsp_nama }}</option>
+                                                                    @endforeach
+                                                                </select>
+                                                            </div>
+
+                                                            <div class="col-lg-5">
+                                                                <label class="form-label">Skema</label>
+                                                                <select class="form-control select2 skema-select" name="skema_ref[][]" multiple disabled>
+                                                                </select>
+                                                            </div>
+
+                                                            <div class="col-lg-2">
+                                                                <label class="form-label">Kuota</label>
+                                                                <input type="number" class="form-control" name="kuota[]">
+                                                            </div>
+
+                                                            <div class="col-lg-2">
+                                                                <label class="form-label">Tanggal</label>
+                                                                <input type="text" class="form-control daterangepicker-input" name="date_range[]">
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="row mb-3 kegiatan-row">
+                                                            <div class="col-lg-3">
+                                                                <label class="form-label">Nama LSP</label>
+                                                                <select class="form-select lsp-select" name="lsp_ref[]">
+                                                                    <option value="" disabled selected>Pilih LSP</option>
+                                                                    @foreach ($dataLSP as $lsp)
+                                                                        <option value="{{ $lsp->ref }}">{{ $lsp->lsp_nama }}</option>
+                                                                    @endforeach
+                                                                </select>
+                                                            </div>
+
+                                                            <div class="col-lg-5">
+                                                                <label class="form-label">Skema</label>
+                                                                <select class="form-control select2 skema-select" name="skema_ref[][]" multiple disabled>
+                                                                </select>
+                                                            </div>
+
+                                                            <div class="col-lg-2">
+                                                                <label class="form-label">Kuota</label>
+                                                                <input type="number" class="form-control" name="kuota[]">
+                                                            </div>
+
+                                                            <div class="col-lg-2">
+                                                                <label class="form-label">Tanggal</label>
+                                                                <input type="text" class="form-control daterangepicker-input" name="date_range[]">
+                                                            </div>
+                                                        </div>
+
                                                     </div>
-                                                </div>
-                                                <div class="mt-3">
-                                                    <button type="button" class="btn btn-sm btn-primary" id="add-kegiatan-btn">
-                                                        <i class="fas fa-plus"></i> Add New Kegiatan
-                                                    </button>
                                                 </div>
                                             </div>
                                         </div>
-
-                                        <!-- Tombol untuk menambah kegiatan baru -->
                                     </div>
                                 </div>
                                 <div class="mb-3 mt-3">
-                                    <button class="btn btn-primary" type="submit">Add New User</button>
+                                    <button class="btn btn-primary" type="submit"><i class="ri-save-2-fill"></i> Simpan Data</button>
+
+
                                 </div>
                             </div>
                         </div>
@@ -145,11 +300,11 @@
     <script src="{{ asset('admin') }}/assets/vendor/daterangepicker/moment.min.js"></script>
     <script src="{{ asset('admin') }}/assets/vendor/daterangepicker/daterangepicker.js"></script>
 
-    <script>
+    {{-- <script>
         document.addEventListener('DOMContentLoaded', function() {
 
             const lspSelect = document.getElementById('lsp_select');
-            const skemaSelect = $('#skema_select');
+            const skemaSelect = $('#skema_select1');
 
             // init select2
             skemaSelect.select2({
@@ -201,140 +356,114 @@
             });
 
         });
-    </script>
+    </script> --}}
 
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const kegiatanContainer = document.getElementById('kegiatan-container');
-            const addButton = document.getElementById('add-kegiatan-btn');
-            let rowCounter = 0; // Counter untuk index array
 
-            // Fungsi untuk menginisialisasi semua plugin
-            function initializeAllPlugins(element, index) {
-                // Select2 dengan name yang sesuai index
-                $(element).find('.select2-multiple').select2({
-                    width: '100%',
-                    // placeholder: 'Pilih skema',
-                    allowClear: true
+            const container = document.getElementById('kegiatan-container');
+
+            // init select2 & daterangepicker
+            function initPlugins(scope) {
+                $(scope).find('.select2').select2({
+                    width: '100%'
                 });
-
-                // Daterangepicker
-                $(element).find('.daterangepicker-input').daterangepicker({
-                    singleDatePicker: false,
+                $(scope).find('.daterangepicker-input').daterangepicker({
                     locale: {
-                        format: 'YYYY-MM-DD',
-                        separator: ' - '
+                        // format: 'YYYY-MM-DD'
+                        format: 'DD-MM-YYYY'
                     }
                 });
             }
 
-            // Template untuk kegiatan baru dengan index dinamis
-            function createKegiatanItem(index) {
-                return `
-                    <div class="row align-items-end mb-3 kegiatan-row" data-index="${index}">
-                        <div class="col-lg-3">
-                            <div class="">
-                                <label class="form-label">Nama LSP</label>
-                                <input type="text" class="form-control" name="nama_lsp[${index}]">
-                            </div>
-                        </div>
-                        <div class="col-lg-5">
-                            <div class="">
-                                <label class="form-label">Skema</label>
-                                <select class="select2-multiple form-control" name="skema[${index}][]" multiple="multiple">
-                                    <option value="Teknisi Refrigerasi Domestik">Teknisi Refrigerasi Domestik</option>
-                                    <option value="Perawatan Mesin Pendingin / AC">Perawatan Mesin Pendingin / AC</option>
-                                    <option value="Pelaksanaan Instalasi AC">Pelaksanaan Instalasi AC</option>
-                                    <option value="Teknisi Lemari Pendingin">Teknisi Lemari Pendingin</option>
-                                    <option value="Mekanik Heating, Ventilation Dan Air Condition (HVAC)">Mekanik Heating, Ventilation Dan Air Condition (HVAC)</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-lg-1">
-                            <div class="">
-                                <label class="form-label">Kuota</label>
-                                <input type="number" class="form-control" name="kuota[${index}]" min="0">
-                            </div>
-                        </div>
-                        <div class="col-lg-2">
-                            <div class="">
-                                <label class="form-label">Tanggal</label>
-                                <input type="text" class="form-control daterangepicker-input" 
-                                    name="date_range[${index}]"
-                                    placeholder="Pilih rentang tanggal">
-                            </div>
-                        </div>
-                        <div class="col-lg-1">
-                            <div class="d-grid">
-                                <button type="button" class="btn btn-outline-danger btn-sm remove-kegiatan-btn">
-                                    <i class="fas fa-trash"></i> Hapus
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                `;
-            }
+            initPlugins(container);
 
-            // Inisialisasi baris pertama
-            if (document.querySelector('.kegiatan-row')) {
-                initializeAllPlugins(document.querySelector('.kegiatan-row'), rowCounter);
-                rowCounter++;
-            }
+            // 🔥 LSP CHANGE → LOAD SKEMA (PER ROW)
+            container.addEventListener('change', function(e) {
 
-            // Event listener untuk tombol Add New Kegiatan
-            addButton.addEventListener('click', function() {
-                const newKegiatan = createKegiatanItem(rowCounter);
-                const tempDiv = document.createElement('div');
-                tempDiv.innerHTML = newKegiatan;
+                if (!e.target.classList.contains('lsp-select')) return;
 
-                const newRow = tempDiv.firstElementChild;
-                kegiatanContainer.appendChild(newRow);
+                const row = e.target.closest('.kegiatan-row');
+                const skemaSelect = $(row).find('.skema-select');
 
-                // Inisialisasi plugins
-                initializeAllPlugins(newRow, rowCounter);
+                skemaSelect.prop('disabled', true).empty();
 
-                // Event listener untuk tombol hapus
-                newRow.querySelector('.remove-kegiatan-btn').addEventListener('click', function() {
-                    const row = this.closest('.kegiatan-row');
-                    $(row).find('.select2-multiple').select2('destroy');
-                    $(row).find('.daterangepicker-input').off().removeData();
-                    row.remove();
+                const lspRef = e.target.value;
+                if (!lspRef) return;
 
-                    // Update index untuk semua baris setelah yang dihapus
-                    updateIndexes();
-                });
+                fetch(`/ajax/skema-by-lsp/${lspRef}`, {
+                        headers: {
+                            'Accept': 'application/json',
+                            'X-Requested-With': 'XMLHttpRequest'
+                        }
+                    })
+                    .then(res => res.json())
+                    .then(data => {
+                        data.forEach(skema => {
+                            skemaSelect.append(
+                                `<option value="${skema.ref}">
+                        ${skema.skema_judul}
+                    </option>`
+                            );
+                        });
 
-                rowCounter++;
+                        skemaSelect.prop('disabled', false).trigger('change');
+                    })
+                    .catch(() => {
+                        skemaSelect.append('<option value="">Gagal memuat skema</option>');
+                    });
             });
 
-            // Fungsi untuk mengupdate index setelah penghapusan
-            function updateIndexes() {
-                const rows = document.querySelectorAll('.kegiatan-row');
-                rows.forEach((row, index) => {
-                    row.dataset.index = index;
+        });
+    </script>
 
-                    // Update semua nama input dalam baris
-                    row.querySelectorAll('[name^="kegiatan_name"]').forEach(input => {
-                        input.name = `kegiatan_name[${index}]`;
-                    });
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
 
-                    row.querySelectorAll('[name^="lsp"]').forEach(select => {
-                        select.name = `lsp[${index}][]`;
-                    });
+            const container = document.getElementById('kegiatan-container');
 
-                    row.querySelectorAll('[name^="kuota"]').forEach(input => {
-                        input.name = `kuota[${index}]`;
-                    });
+            function getSelectedLSPs() {
+                return Array.from(
+                        container.querySelectorAll('.lsp-select')
+                    )
+                    .map(select => select.value)
+                    .filter(val => val); // buang kosong
+            }
 
-                    row.querySelectorAll('[name^="date_range"]').forEach(input => {
-                        input.name = `date_range[${index}]`;
+            function updateLspOptions() {
+                const selected = getSelectedLSPs();
+
+                container.querySelectorAll('.lsp-select').forEach(select => {
+                    const currentValue = select.value;
+
+                    select.querySelectorAll('option').forEach(option => {
+                        if (!option.value) return;
+
+                        // disable jika sudah dipilih di row lain
+                        if (selected.includes(option.value) && option.value !== currentValue) {
+                            option.disabled = true;
+                            option.hidden = true;
+                        } else {
+                            option.disabled = false;
+                            option.hidden = false;
+                        }
                     });
                 });
-
-                // Update rowCounter
-                rowCounter = rows.length;
             }
+
+            // 🔄 Saat LSP berubah
+            container.addEventListener('change', function(e) {
+                if (e.target.classList.contains('lsp-select')) {
+                    updateLspOptions();
+                }
+            });
+
+            // 🔄 Saat row baru ditambahkan (panggil manual)
+            window.updateLspOptions = updateLspOptions;
+
+            // Init pertama
+            updateLspOptions();
         });
     </script>
 @endpush

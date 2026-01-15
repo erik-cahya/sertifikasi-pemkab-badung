@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\KegiatanModel;
 use App\Models\LSPModel;
 use Carbon\Carbon;
 use Faker\Provider\Uuid;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
 class KegiatanController extends Controller
@@ -25,6 +27,7 @@ class KegiatanController extends Controller
     public function create()
     {
         $data['dataLSP'] = LSPModel::get();
+        $data['dataKegiatan'] = KegiatanModel::select('ref', 'nama_kegiatan')->get();
         return view('admin-panel.kegiatan.create', $data);
     }
 
@@ -33,7 +36,35 @@ class KegiatanController extends Controller
      */
     public function store(Request $request)
     {
-        // dd(Str::ulid());
+
+        Validator::make($request->all(), [
+            'nama_kegiatan' => 'required',
+            'mulai_kegiatan' => 'required',
+            'selesai_kegiatan' => 'required',
+        ], [
+            'nama_kegiatan.required' => 'Masukkan nama kegiatan',
+            'mulai_kegiatan.required' => 'Silahkan pilih tanggal mulai',
+            'selesai_kegiatan.required' => 'Silahkan pilih tanggal selesai',
+        ])->validateWithBag('create_kegiatan');
+
+        KegiatanModel::create([
+            'nama_kegiatan' => $request->nama_kegiatan,
+            'mulai_kegiatan' => $request->mulai_kegiatan,
+            'selesai_kegiatan' => $request->selesai_kegiatan,
+            'status' => 1,
+            'created_by' => Auth::user()->ref,
+
+        ]);
+
+        return redirect()
+            ->route('kegiatan.create')
+            ->with('flashData', [
+                'title' => 'Tambah Data Success',
+                'message' => 'Kegiatan Baru Berhasil Ditambahkan',
+                'type' => 'success',
+            ]);
+
+
 
 
 
