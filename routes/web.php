@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ItemController;
 use App\Http\Controllers\PegawaiController;
 use App\Http\Controllers\TUKController;
 use App\Http\Controllers\AsesiController;
@@ -32,11 +33,11 @@ Route::middleware('auth')->group(function () {
         Route::post('kegiatan/store', [KegiatanController::class, 'store'])->name('kegiatan.store');
 
         // ################################ Items (dont forget update controller name)
-        Route::get('item', [TUKController::class, 'index'])->name('item.index');
-        Route::get('item/create', [TUKController::class, 'create'])->name('item.create')->middleware('role:lsp');
-        Route::post('item/store', [TUKController::class, 'store'])->name('item.store');
-        Route::get('item/{id}', [TUKController::class, 'show'])->name('item.show');
-        Route::delete('item/{id}', [TUKController::class, 'destroy'])->name('item.destroy');
+        Route::get('item', [ItemController::class, 'index'])->name('item.index');
+        Route::get('item/create', [ItemController::class, 'create'])->name('item.create')->middleware('role:lsp');
+        Route::post('item/store', [ItemController::class, 'store'])->name('item.store');
+        Route::get('item/{id}', [ItemController::class, 'show'])->name('item.show');
+        Route::delete('item/{id}', [ItemController::class, 'destroy'])->name('item.destroy');
     });
 
     // ################################ Skema
