@@ -95,7 +95,19 @@ class KodeUnitController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        // dd($request->all());
+        SkemaDetailModel::where('ref', $id)->update([
+            'kode_unit' => $request->kode_unit,
+            'judul_unit' => $request->judul_unit,
+        ]);
+
+        return redirect()
+            ->back()
+            ->with('flashData', [
+                'title' => 'Edit Data Success',
+                'message' => 'Kode Unit Berhasil Diubah',
+                'type' => 'success',
+            ]);
     }
 
     /**
