@@ -38,6 +38,12 @@ Route::middleware('auth')->group(function () {
         Route::post('item/store', [ItemController::class, 'store'])->name('item.store');
         Route::get('item/{id}', [ItemController::class, 'show'])->name('item.show');
         Route::delete('item/{id}', [ItemController::class, 'destroy'])->name('item.destroy');
+
+        Route::get('departemen', [ItemController::class, 'index'])->name('departemen.index');
+        Route::get('departemen/create', [ItemController::class, 'create'])->name('departemen.create')->middleware('role:lsp');
+        Route::post('departemen/store', [ItemController::class, 'store'])->name('departemen.store');
+        Route::get('departemen/{id}', [ItemController::class, 'show'])->name('departemen.show');
+        Route::delete('departemen/{id}', [ItemController::class, 'destroy'])->name('departemen.destroy');
     });
 
     // ################################ Skema

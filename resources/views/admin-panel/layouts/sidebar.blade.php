@@ -150,6 +150,13 @@
                                     Data Items
                                 </a>
                             </li>
+
+                            <li class="side-nav-departemen {{ request()->routeIs('departemen.index') ? 'menudepartemen-active' : '' }}">
+                                <a class="side-nav-link {{ request()->routeIs('departemen.index') ? 'active' : '' }}" href="{{ route('departemen.index') }}">
+                                    Departemen
+                                </a>
+                            </li>
+                            
                         </ul>
                     </div>
                 </li>
