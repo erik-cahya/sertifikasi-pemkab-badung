@@ -18,11 +18,15 @@ class SkemaController extends Controller
     public function index()
     {
         $query = SkemaModel::select(
-            'ref',
-            'skema_judul',
-            'skema_kode',
-            'skema_kategori',
-        )->withCount('details as unitCount');
+            'skema.ref',
+            'skema.lsp_ref',
+            'skema.skema_judul',
+            'skema.skema_kode',
+            'skema.skema_kategori',
+
+            'lsp.lsp_nama'
+
+        )->withCount('details as unitCount')->with('details')->join('lsp', 'lsp.ref', '=', 'skema.lsp_ref');
 
         if (Auth::user()->roles !== 'master') {
             $dataLSP = LSPModel::where('user_ref', Auth::user()->ref)->firstOrFail();
@@ -89,7 +93,6 @@ class SkemaController extends Controller
                 'message' => 'Skema Baru Berhasil Ditambahkan',
                 'type' => 'success',
             ]);
-        // return redirect()->route('skema.index')->with('flashData', $flashData)->with('active_tab', 'create_skema');;
     }
 
     /**
@@ -98,6 +101,7 @@ class SkemaController extends Controller
     public function show(string $id)
     {
         $data['skema'] = SkemaModel::where('ref', $id)->with('details')->firstOrFail();
+
         return view('admin-panel.skema.show', $data);
     }
 
@@ -114,7 +118,19 @@ class SkemaController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        SkemaModel::where('ref', $id)->update([
+            'skema_judul' => $request->skema_judul,
+            'skema_kode' => $request->skema_kode,
+            'skema_kategori' => $request->skema_kategori,
+        ]);
+
+        return redirect()
+            ->route('skema.index')
+            ->with('flashData', [
+                'title' => 'Edit Data Success',
+                'message' => 'Skema Berhasil Diubah',
+                'type' => 'success',
+            ]);
     }
 
     /**

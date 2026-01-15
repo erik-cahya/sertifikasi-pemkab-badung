@@ -17,7 +17,6 @@ Route::get('/', function () {
 });
 
 
-Route::delete('lsp/{id}', [LSPController::class, 'destroy'])->name('lsp.destroy');
 
 Route::middleware('auth')->group(function () {
 
@@ -27,6 +26,9 @@ Route::middleware('auth')->group(function () {
         Route::get('lsp', [LSPController::class, 'index'])->name('lsp.index');
         Route::get('lsp/create', [LSPController::class, 'create'])->name('lsp.create');
         Route::post('lsp/store', [LSPController::class, 'store'])->name('lsp.store');
+        Route::get('lsp/{id}', [LSPController::class, 'show'])->name('lsp.show');
+        Route::delete('lsp/{id}', [LSPController::class, 'destroy'])->name('lsp.destroy');
+
 
         // ################################ Kegiatan
         Route::get('kegiatan', [KegiatanController::class, 'index'])->name('kegiatan.index');
@@ -44,12 +46,15 @@ Route::middleware('auth')->group(function () {
     // ################################ Skema
     Route::get('skema', [SkemaController::class, 'index'])->name('skema.index');
     Route::get('skema/create', [SkemaController::class, 'create'])->name('skema.create')->middleware('role:lsp');
-    Route::post('skema/store', [SkemaController::class, 'store'])->name('skema.store');
-    Route::get('skema/{id}', [SkemaController::class, 'show'])->name('skema.show');
-    Route::delete('skema/{id}', [SkemaController::class, 'destroy'])->name('skema.destroy');
+    Route::post('skema/store', [SkemaController::class, 'store'])->name('skema.store')->middleware('role:lsp');
+    Route::get('skema/{id}', [SkemaController::class, 'show'])->name('skema.show')->middleware('role:lsp');
+    Route::put('skema/{id}', [SkemaController::class, 'update'])->name('skema.update')->middleware('role:lsp');
+    Route::delete('skema/{id}', [SkemaController::class, 'destroy'])->name('skema.destroy')->middleware('role:lsp');
 
+    // ################################ Kode Unit
     Route::post('skema/create_kode_unit', [KodeUnitController::class, 'store'])->name('kode_unit.store')->middleware('role:lsp');
-    Route::delete('kode_unit/{id}', [KodeUnitController::class, 'destroy'])->name('kode_unit.destroy');
+    Route::put('kode_unit/{id}', [KodeUnitController::class, 'update'])->name('kode_unit.update')->middleware('role:lsp');
+    Route::delete('kode_unit/{id}', [KodeUnitController::class, 'destroy'])->name('kode_unit.destroy')->middleware('role:lsp');
 
     // ################################ Profile
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

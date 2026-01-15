@@ -35,7 +35,6 @@ class LSPController extends Controller
      */
     public function create()
     {
-
         return view('admin-panel.lsp.create');
     }
 
@@ -102,7 +101,25 @@ class LSPController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $data['dataLSP'] = LSPModel::where('ref', $id)->firstOrFail();
+
+        //     "ref" => "01kf03772shpf27xndrraat76v"
+        // "user_ref" => "01kf03772cjdjv3nf01gyz5r0e"
+        // "lsp_nama" => "LSP Engineering Hospitality Indonesia"
+        // "lsp_no_lisensi" => "BNSP-912394"
+        // "lsp_alamat" => "Jln. Mengwi"
+        // "lsp_email" => "admin@lsp-eh.com"
+        // "lsp_telp" => "0892839219"
+        // "lsp_direktur" => "Bapak Nyoman"
+        // "lsp_direktur_telp" => "09012343"
+        // "lsp_logo" => null
+        // "lsp_tanggal_lisensi" => "2026-01-16"
+        // "lsp_expired_lisensi" => "2026-01-16"
+        // "created_by" => "01kf02ds2k9969vrxv7stm6qfr"
+        // "created_at" => "2026-01-15 05:49:26"
+        // "updated_at" => "2026-01-15 05:49:26"
+
+        return view('admin-panel.lsp.show', $data);
     }
 
     /**
