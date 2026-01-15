@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ItemModel;
+use App\Models\AsesiModel;
 use Carbon\Carbon;
 use Faker\Provider\Uuid;
 use Illuminate\Http\Request;
@@ -15,6 +17,10 @@ class AsesiController extends Controller
      */
     public function index()
     {
-        return view('pendaftaran.pendaftaran-asesi');
+        $items = ItemModel::all();
+
+        return view('pendaftaran.pendaftaran-asesi', [
+            'dataItem' => $items
+        ]);
     }
 }

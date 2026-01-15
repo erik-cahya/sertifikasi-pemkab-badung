@@ -32,7 +32,7 @@ Route::middleware('auth')->group(function () {
         Route::get('kegiatan/create', [KegiatanController::class, 'create'])->name('kegiatan.create');
         Route::post('kegiatan/store', [KegiatanController::class, 'store'])->name('kegiatan.store');
 
-        // ################################ Items (dont forget update controller name)
+        // ################################ Items
         Route::get('item', [ItemController::class, 'index'])->name('item.index');
         Route::get('item/create', [ItemController::class, 'create'])->name('item.create')->middleware('role:lsp');
         Route::post('item/store', [ItemController::class, 'store'])->name('item.store');

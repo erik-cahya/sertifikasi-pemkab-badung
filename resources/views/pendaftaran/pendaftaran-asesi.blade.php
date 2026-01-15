@@ -205,8 +205,13 @@
                                             <label for="example-select" class="form-label">Departemen</label><span class="text-danger">*</span>
                                             <select class="form-select rounded-3" id="example-select" name="departemen"  required>
                                                 <option value="">Pilih Departemen Pekerjaan Anda</option>
-                                                <option value="xx">xx</option>
-                                                <option value="yy">yy</option>
+                                                    @foreach ($dataItem as $item)
+                                                        @if ($item->item_kategori == 'Departemen')
+                                                            <option value="{{ $item->item_nama }}">
+                                                                {{ $item->item_nama }}
+                                                            </option>
+                                                        @endif
+                                                    @endforeach
                                             </select>
                                         </div>
                                     </div>
@@ -216,8 +221,13 @@
                                             <label for="example-select" class="form-label">Jabatan</label><span class="text-danger">*</span>
                                             <select class="form-select rounded-3" id="example-select" name="jabatan"  required>
                                                 <option value="">Pilih Jabatan Anda</option>
-                                                <option value="xx">xx</option>
-                                                <option value="yy">yy</option>
+                                                    @foreach ($dataItem as $item)
+                                                        @if ($item->item_kategori == 'Jabatan')
+                                                            <option value="{{ $item->item_nama }}">
+                                                                {{ $item->item_nama }}
+                                                            </option>
+                                                        @endif
+                                                    @endforeach
                                             </select>
                                         </div>
                                     </div>

@@ -59,7 +59,7 @@
                                 <th>Kategori</th>
                                 <th>Judul</th>
                                 <th>Dibuat oleh</th>
-                                <th>Action</th>
+                                <th width="5%">Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -70,12 +70,12 @@
                                     <td>{{ $item->name }} <br> {{ $item->created_at->format('Y-m-d') }}</td>
                                     <td>
                                          <a href="javascript: void(0);" class="text-reset fs-16 px-1">
-                                            <i class="ri-pencil-line"></i>
+                                            <button type="button" class="btn btn-sm btn-outline-primary"><i class="ri-pencil-line"></i> Edit</button>
                                         </a>
 
                                         <input type="hidden" class="itemID" value="{{ $item->ref }}">
                                         <a href="javascript:void(0)" class="text-reset fs-16 deleteButton px-1" data-nama="{{ $item->item_nama }}">
-                                            <i class="mdi mdi-trash-can"></i>
+                                            <button type="button" class="btn btn-sm btn-outline-danger"><i class=" ri-delete-bin-5-line"></i> Hapus</button>
                                         </a>
                                     </td>
                                 </tr>

@@ -17,6 +17,7 @@ class ItemController extends Controller
     {
         $query = ItemModel::join('users', 'users.ref', '=', 'item.created_by')
         ->select('item.*', 'users.name')
+        ->orderBy('item.created_at', 'desc')
         ->get();
 
         return view('admin-panel.item.index', [
@@ -88,6 +89,13 @@ class ItemController extends Controller
      */
     public function destroy(string $id)
     {
-    
+        ItemModel::where('ref', $id)->delete();
+        $flashData = [
+            'judul' => 'Hapus Data Berhasil',
+            'pesan' => 'Item Berhasil Dihapus ',
+            'type' => 'success',
+        ];
+
+        return response()->json($flashData);
     }
 }
