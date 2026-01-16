@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\ItemModel;
+use App\Models\DepartemenModel;
+use App\Models\JabatanModel;
 use App\Models\AsesiModel;
 use Carbon\Carbon;
 use Faker\Provider\Uuid;
@@ -17,10 +18,12 @@ class AsesiController extends Controller
      */
     public function index()
     {
-        $items = ItemModel::all();
+        $departemen = DepartemenModel::all();
+        $jabatan = JabatanModel::all();
 
         return view('pendaftaran.pendaftaran-asesi', [
-            'dataItem' => $items
+            'dataDepartemen' => $departemen,
+            'dataJabatan' => $jabatan,
         ]);
     }
 }
