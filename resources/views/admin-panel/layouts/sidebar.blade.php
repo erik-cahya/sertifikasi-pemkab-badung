@@ -93,7 +93,7 @@
             @role('master')
                 <li class="side-nav-item {{ request()->routeIs('lsp.*') ? 'menuitem-active' : '' }}">
                     <a data-bs-toggle="collapse" href="#lspMenu" aria-expanded="false" aria-controls="lspMenu" class="side-nav-link">
-                        <i class=" ri-team-line"></i>
+                        <i class="ri-team-line"></i>
                         <span> LSP </span>
                         <span class="menu-arrow"></span>
                     </a>
@@ -139,7 +139,7 @@
 
                 <li class="side-nav-item {{ request()->routeIs('item.*') ? 'menuitem-active' : '' }}">
                     <a data-bs-toggle="collapse" href="#itemMenu" aria-expanded="false" aria-controls="itemMenu" class="side-nav-link">
-                        <i class=" ri-settings-2-line"></i>
+                        <i class="ri-settings-2-line"></i>
                         <span> Option </span>
                         <span class="menu-arrow"></span>
                     </a>

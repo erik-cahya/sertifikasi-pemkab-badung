@@ -128,10 +128,10 @@
                                                     <!-- Item pertama -->
                                                     <div class="align-items-end kegiatan-row mb-3">
 
-                                                        <div class="row mb-3 kegiatan-row">
+                                                        <div class="row kegiatan-row mb-3">
                                                             <div class="col-lg-3">
                                                                 <label class="form-label">Nama LSP</label>
-                                                                <select class="form-select lsp-select" name="lsp_ref[]">
+                                                                <select class="lsp-select form-select" name="lsp_ref[]">
                                                                     <option value="" disabled selected>Pilih LSP</option>
                                                                     @foreach ($dataLSP as $lsp)
                                                                         <option value="{{ $lsp->ref }}">{{ $lsp->lsp_nama }}</option>
@@ -156,10 +156,10 @@
                                                             </div>
                                                         </div>
 
-                                                        <div class="row mb-3 kegiatan-row">
+                                                        <div class="row kegiatan-row mb-3">
                                                             <div class="col-lg-3">
                                                                 <label class="form-label">Nama LSP</label>
-                                                                <select class="form-select lsp-select" name="lsp_ref[]">
+                                                                <select class="lsp-select form-select" name="lsp_ref[]">
                                                                     <option value="" disabled selected>Pilih LSP</option>
                                                                     @foreach ($dataLSP as $lsp)
                                                                         <option value="{{ $lsp->ref }}">{{ $lsp->lsp_nama }}</option>
@@ -184,10 +184,10 @@
                                                             </div>
                                                         </div>
 
-                                                        <div class="row mb-3 kegiatan-row">
+                                                        <div class="row kegiatan-row mb-3">
                                                             <div class="col-lg-3">
                                                                 <label class="form-label">Nama LSP</label>
-                                                                <select class="form-select lsp-select" name="lsp_ref[]">
+                                                                <select class="lsp-select form-select" name="lsp_ref[]">
                                                                     <option value="" disabled selected>Pilih LSP</option>
                                                                     @foreach ($dataLSP as $lsp)
                                                                         <option value="{{ $lsp->ref }}">{{ $lsp->lsp_nama }}</option>
@@ -212,10 +212,10 @@
                                                             </div>
                                                         </div>
 
-                                                        <div class="row mb-3 kegiatan-row">
+                                                        <div class="row kegiatan-row mb-3">
                                                             <div class="col-lg-3">
                                                                 <label class="form-label">Nama LSP</label>
-                                                                <select class="form-select lsp-select" name="lsp_ref[]">
+                                                                <select class="lsp-select form-select" name="lsp_ref[]">
                                                                     <option value="" disabled selected>Pilih LSP</option>
                                                                     @foreach ($dataLSP as $lsp)
                                                                         <option value="{{ $lsp->ref }}">{{ $lsp->lsp_nama }}</option>
@@ -240,10 +240,10 @@
                                                             </div>
                                                         </div>
 
-                                                        <div class="row mb-3 kegiatan-row">
+                                                        <div class="row kegiatan-row mb-3">
                                                             <div class="col-lg-3">
                                                                 <label class="form-label">Nama LSP</label>
-                                                                <select class="form-select lsp-select" name="lsp_ref[]">
+                                                                <select class="lsp-select form-select" name="lsp_ref[]">
                                                                     <option value="" disabled selected>Pilih LSP</option>
                                                                     @foreach ($dataLSP as $lsp)
                                                                         <option value="{{ $lsp->ref }}">{{ $lsp->lsp_nama }}</option>
@@ -276,7 +276,6 @@
                                 </div>
                                 <div class="mb-3 mt-3">
                                     <button class="btn btn-primary" type="submit"><i class="ri-save-2-fill"></i> Simpan Data</button>
-
 
                                 </div>
                             </div>
@@ -357,7 +356,6 @@
 
         });
     </script> --}}
-
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
