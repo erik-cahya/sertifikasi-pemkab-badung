@@ -9,16 +9,28 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <h4 class=".card-title">Tambah Data Departemen</h4>
+                    <h4 class=".card-title">Tambah Data Jabatan</h4>
                 </div>
-                <form action="{{ route('departemen.store') }}" method="POST">
+                <form action="{{ route('jabatan.store') }}" method="POST">
                     @csrf
                     <div class="card-body">
                         <div class="row">
                             <div class="col-lg-5">
                                 <div class="mb-3">
-                                    <label for="simpleinput" class="form-label">Nama Departemen</label><span class="text-danger">*</span>
-                                    <input type="text" id="simpleinput" class="form-control rounded-3" name="departemen_nama" required placeholder="Masukkan nama departemen" required>
+                                    <label for="example-select" class="form-label">Pilih Departemen</label><span class="text-danger">*</span>
+                                    <select class="form-select rounded-3" id="example-select" name="departemen_ref"  required>
+                                        <option value="">Pilih Departemen</option>
+                                        @foreach ($dataDepartemen as $departemen)
+                                            <option value="{{ $departemen->ref }}">{{ $departemen->departemen_nama }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-5">
+                                <div class="mb-3">
+                                    <label for="simpleinput" class="form-label">Nama Jabatan</label><span class="text-danger">*</span>
+                                    <input type="text" id="simpleinput" class="form-control rounded-3" name="jabatan_nama" required placeholder="Masukkan nama jabatan" required>
                                 </div>
                             </div>
 
@@ -38,30 +50,32 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <h4 class=".card-title">Daftar Departemen</h4>
+                    <h4 class=".card-title">Daftar Jabatan</h4>
                 </div>
                 <div class="card-body">
 
                     <table id="fixed-columns-datatable" class="table table-striped nowrap row-border order-column w-100">
                         <thead>
                             <tr>
-                                <th>Nama</th>
+                                <th>Departemen</th>
+                                <th>Nama Jabatan</th>
                                 <th>Dibuat oleh</th>
                                 <th width="5%">Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($dataDepartemen as $item)
+                            @foreach ($dataJabatan as $item)
                                 <tr>
                                     <td>{{ $item->departemen_nama }}</td>
+                                    <td>{{ $item->jabatan_nama }}</td>
                                     <td>{{ $item->name }} <br> {{ $item->created_at->format('Y-m-d') }}</td>
                                     <td>
-                                         <a href="{{ route('departemen.edit', $item->ref) }}" class="text-reset fs-16 px-1">
+                                         <a href="{{ route('jabatan.edit', $item->ref) }}" class="text-reset fs-16 px-1">
                                             <button type="button" class="btn btn-sm btn-outline-primary"><i class="ri-pencil-line"></i> Edit</button>
                                         </a>
 
-                                        <input type="hidden" class="departemenID" value="{{ $item->ref }}">
-                                        <a href="javascript:void(0)" class="text-reset fs-16 deleteButton px-1" data-nama="{{ $item->departemen_nama }}">
+                                        <input type="hidden" class="jabatanID" value="{{ $item->ref }}">
+                                        <a href="javascript:void(0)" class="text-reset fs-16 deleteButton px-1" data-nama="{{ $item->jabatan_nama }}">
                                             <button type="button" class="btn btn-sm btn-outline-danger"><i class=" ri-delete-bin-5-line"></i> Hapus</button>
                                         </a>
                                     </td>
@@ -97,7 +111,7 @@
                     e.preventDefault();
 
                     let propertyName = this.getAttribute('data-nama');
-                    let departemenID = this.parentElement.querySelector('.departemenID').value;
+                    let jabatanID = this.parentElement.querySelector('.jabatanID').value;
 
                     Swal.fire({
                         title: 'Are you sure?',
@@ -110,7 +124,7 @@
                     }).then((result) => {
                         if (result.isConfirmed) {
                             // Kirim DELETE request manual lewat JavaScript
-                            fetch('/departemen/' + departemenID, {
+                            fetch('/jabatan/' + jabatanID, {
                                     method: 'DELETE',
                                     headers: {
                                         'X-CSRF-TOKEN': '{{ csrf_token() }}',

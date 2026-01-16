@@ -204,14 +204,10 @@
                                         <div class="mb-3">
                                             <label for="example-select" class="form-label">Departemen</label><span class="text-danger">*</span>
                                             <select class="form-select rounded-3" id="example-select" name="departemen"  required>
-                                                <option value="">Pilih Departemen Pekerjaan Anda</option>
-                                                    @foreach ($dataItem as $item)
-                                                        @if ($item->item_kategori == 'Departemen')
-                                                            <option value="{{ $item->item_nama }}">
-                                                                {{ $item->item_nama }}
-                                                            </option>
-                                                        @endif
-                                                    @endforeach
+                                                <option value="">Pilih Departemen Anda</option>
+                                                @foreach ($dataDepartemen as $departemen)
+                                                    <option value="{{ $departemen->departemen_nama }}">{{ $departemen->departemen_nama }}</option>
+                                                @endforeach
                                             </select>
                                         </div>
                                     </div>
@@ -221,13 +217,9 @@
                                             <label for="example-select" class="form-label">Jabatan</label><span class="text-danger">*</span>
                                             <select class="form-select rounded-3" id="example-select" name="jabatan"  required>
                                                 <option value="">Pilih Jabatan Anda</option>
-                                                    @foreach ($dataItem as $item)
-                                                        @if ($item->item_kategori == 'Jabatan')
-                                                            <option value="{{ $item->item_nama }}">
-                                                                {{ $item->item_nama }}
-                                                            </option>
-                                                        @endif
-                                                    @endforeach
+                                                @foreach ($dataJabatan as $jabatan)
+                                                    <option value="{{ $jabatan->jabatan_nama }}" data-dept="{{ $jabatan->departement_ref }}">{{ $jabatan->jabatan_nama }}</option>
+                                                @endforeach
                                             </select>
                                         </div>
                                     </div>
@@ -291,8 +283,9 @@
                                             <label for="example-select" class="form-label">Lembaga Sertifikasi Kompetensi (LSP)</label><span class="text-danger">*</span>
                                             <select class="form-select rounded-3" id="example-select" name="lsp"  required>
                                                 <option value="">Pilih Lembaga Sertifikasi Kompetensi (LSP)</option>
-                                                <option value="xx">xx</option>
-                                                <option value="yy">yy</option>
+                                                @foreach ($dataLsp as $lsp)
+                                                    <option value="{{ $lsp->ref }}">{{ $lsp->lsp_nama }}</option>
+                                                @endforeach
                                             </select>
                                         </div>
                                     </div>
@@ -336,5 +329,5 @@
 
         </div>
     </div>
-
+    
 @endsection

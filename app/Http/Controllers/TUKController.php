@@ -7,6 +7,8 @@ use Faker\Provider\Uuid;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+use App\Models\TUKModel;
+use App\Models\LSPModel;
 
 class TUKController extends Controller
 {
@@ -15,6 +17,10 @@ class TUKController extends Controller
      */
     public function index()
     {
-        return view('pendaftaran.pendaftaran-tuk');
+        $lsp = LSPModel::all();
+
+        return view('pendaftaran.pendaftaran-tuk', [
+            'dataLsp' => $lsp
+        ]);
     }
 }
