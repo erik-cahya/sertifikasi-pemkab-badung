@@ -1,7 +1,7 @@
 <?php
 
+use App\Http\Controllers\JabatanController;
 use App\Http\Controllers\DepartemenController;
-use App\Http\Controllers\ItemController;
 use App\Http\Controllers\PegawaiController;
 use App\Http\Controllers\TUKController;
 use App\Http\Controllers\AsesiController;
@@ -43,6 +43,13 @@ Route::middleware('auth')->group(function () {
         Route::get('departemen/{id}', [DepartemenController::class, 'edit'])->name('departemen.edit');
         Route::put('departemen/{id}', [DepartemenController::class, 'update'])->name('departemen.update');
         Route::delete('departemen/{id}', [DepartemenController::class, 'destroy'])->name('departemen.destroy');
+
+        // ################################ Jabatan
+        Route::get('jabatan', [JabatanController::class, 'index'])->name('jabatan.index');
+        Route::post('jabatan/store', [JabatanController::class, 'store'])->name('jabatan.store');
+        Route::get('jabatan/{id}', [JabatanController::class, 'edit'])->name('jabatan.edit');
+        Route::put('jabatan/{id}', [JabatanController::class, 'update'])->name('jabatan.update');
+        Route::delete('jabatan/{id}', [JabatanController::class, 'destroy'])->name('jabatan.destroy');
     });
 
     // ################################ Skema

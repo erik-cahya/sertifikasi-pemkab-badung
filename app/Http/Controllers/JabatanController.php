@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\DepartemenModel;
 use App\Models\JabatanModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
-class DepartemenController extends Controller
+class JabatanController extends Controller
 {
 
     /**
@@ -15,13 +16,17 @@ class DepartemenController extends Controller
      */
     public function index()
     {
-        $query = JabatanModel::join('users', 'users.ref', '=', 'jabatan.created_by')
-        ->select('jabatan.*', 'users.name')
+        $query = JabatanModel::join('departemen', 'departemen.ref', '=', 'jabatan.departemen_ref')
+        ->join('users', 'users.ref', '=', 'jabatan.created_by')
+        ->select('jabatan.*','departemen.departemen_nama', 'users.name')
         ->orderBy('jabatan.created_at', 'desc')
         ->get();
 
+        $departemen = DepartemenModel::all();
+
         return view('admin-panel.jabatan.index', [
-            'dataJabatan' => $query
+            'dataJabatan' => $query,
+            'dataDepartemen' => $departemen,
         ]);
     }
 
@@ -38,23 +43,26 @@ class DepartemenController extends Controller
      */
     public function store(Request $request)
     {
-        // $validated = $request->validate([
-        //     'departemen_nama' => 'required',
-        // ], [
-        //     'departemen_nama.required' => 'Nama departemen tidak boleh kosong',
-        // ]);
+        $validated = $request->validate([
+            'departemen_ref' => 'required',
+            'jabatan_nama' => 'required',
+        ], [
+            'departemen_ref.required' => 'Departemen tidak boleh kosong',
+            'jabatan_nama.required' => 'Jabatan tidak boleh kosong',
+        ]);
 
-        // JabatanModel::create([
-        //     'departemen_nama' => $request->departemen_nama,
-        //     'created_by' => Auth::user()->ref,
-        // ]);
+        JabatanModel::create([
+            'departemen_ref' => $request->departemen_ref,
+            'jabatan_nama' => $request->jabatan_nama,
+            'created_by' => Auth::user()->ref,
+        ]);
 
-        // $flashData = [
-        //     'title' => 'Tambah Data Departemen Berhasii',
-        //     'message' => 'Data Departemen Berhasil Ditambahkan',
-        //     'type' => 'success',
-        // ];
-        // return redirect()->route('departemen.index')->with('flashData', $flashData);
+        $flashData = [
+            'title' => 'Tambah Data Jabatan Berhasii',
+            'message' => 'Data Jabatan Berhasil Ditambahkan',
+            'type' => 'success',
+        ];
+        return redirect()->route('jabatan.index')->with('flashData', $flashData);
     }
 
     /**
@@ -70,7 +78,19 @@ class DepartemenController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $query = JabatanModel::join('departemen', 'departemen.ref', '=', 'jabatan.departemen_ref')
+        ->join('users', 'users.ref', '=', 'jabatan.created_by')
+        ->select('jabatan.*','departemen.departemen_nama', 'users.name')
+        ->orderBy('jabatan.created_at', 'desc')
+        ->where('jabatan.ref', $id)
+        ->get();
+
+        $departemen = DepartemenModel::all();
+
+        return view('admin-panel.jabatan.edit', [
+            'dataJabatan' => $query,
+            'dataDepartemen' => $departemen
+        ]);
     }
 
     /**
@@ -78,7 +98,18 @@ class DepartemenController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        JabatanModel::where('ref', $id)->update([
+            'departemen_ref' => $request->departemen_ref,
+            'jabatan_nama' => $request->jabatan_nama,
+        ]);
+
+        return redirect()
+            ->route('jabatan.index')
+            ->with('flashData', [
+                'title' => 'Edit Data Success',
+                'message' => 'Data Jabatan Berhasil Diubah',
+                'type' => 'success',
+            ]);
     }
 
     /**
@@ -86,11 +117,10 @@ class DepartemenController extends Controller
      */
     public function destroy(string $id)
     {
-        // Note : harus delete jabatan juga jangan lupa
         JabatanModel::where('ref', $id)->delete();
         $flashData = [
             'judul' => 'Hapus Data Berhasil',
-            'pesan' => 'Jabatan Berhasil Dihapus ',
+            'pesan' => 'Data Jabatan Berhasil Dihapus ',
             'type' => 'success',
         ];
 

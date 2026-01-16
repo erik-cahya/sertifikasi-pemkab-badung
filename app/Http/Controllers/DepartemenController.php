@@ -95,7 +95,7 @@ class DepartemenController extends Controller
             ->route('departemen.index')
             ->with('flashData', [
                 'title' => 'Edit Data Success',
-                'message' => 'Skema Berhasil Diubah',
+                'message' => 'Departemen Berhasil Diubah',
                 'type' => 'success',
             ]);
     }

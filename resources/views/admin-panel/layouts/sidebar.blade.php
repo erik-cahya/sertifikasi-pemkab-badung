@@ -150,7 +150,11 @@
                                     Departemen
                                 </a>
                             </li>
-
+                             <li class="side-nav-jabatan {{ request()->routeIs('jabatan.index') ? 'menujabatan-active' : '' }}">
+                                <a class="side-nav-link {{ request()->routeIs('jabatan.index') ? 'active' : '' }}" href="{{ route('jabatan.index') }}">
+                                    Jabatan
+                                </a>
+                            </li>
                         </ul>
                     </div>
                 </li>
