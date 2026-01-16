@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class KegiatanDetailModel extends Model
 {
@@ -22,5 +23,23 @@ class KegiatanDetailModel extends Model
         if ($value !== null) {
             $this->attributes['ref'] = strtoupper($value);
         }
+    }
+
+    public function kegiatan(): BelongsTo
+    {
+        return $this->belongsTo(
+            KegiatanModel::class,
+            'kegiatan_ref',
+            'ref'
+        );
+    }
+
+    public function lsp(): BelongsTo
+    {
+        return $this->belongsTo(
+            LSPModel::class,
+            'lsp_ref',
+            'ref'
+        );
     }
 }

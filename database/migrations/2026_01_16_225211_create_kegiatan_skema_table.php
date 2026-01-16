@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('kegiatan_skema', function (Blueprint $table) {
             $table->ulid('ref')->primary();
             $table->foreignUlid('kegiatan_ref')->references('ref')->on('kegiatan')->cascadeOnDelete();
-            $table->string('skema_ref');
-
+            $table->foreignUlid('skema_ref')->references('ref')->on('skema')->cascadeOnDelete();
             $table->foreignUlid('created_by')->references('ref')->on('users')->cascadeOnDelete();
+
             $table->timestamps();
         });
     }

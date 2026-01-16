@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\KegiatanDetailModel;
+use App\Models\KegiatanSkemaModel;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class KegiatanDetailController extends Controller
@@ -32,57 +34,63 @@ class KegiatanDetailController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->all());
+        DB::transaction(function () use ($request) {
 
-        Validator::make($request->all(), [
-            'kegiatan_ref' => 'required',
-        ], [
-            'kegiatan_ref.required' => 'Silahkan pilih kegiatan',
-        ])->validateWithBag('create_detail_kegiatan');
+            Validator::make($request->all(), [
+                'kegiatan_ref' => 'required',
+            ], [
+                'kegiatan_ref.required' => 'Silahkan pilih kegiatan',
+            ])->validateWithBag('create_detail_kegiatan');
+
+            foreach ($request->lsp_ref as $i => $lspRef) {
 
 
-        foreach ($request->lsp_ref as $i => $lspRef) {
+                if (!$lspRef) continue;
 
-            if (!$lspRef) continue;
+                $lsp    = $request->lsp_ref[$i];
+                $skemas = $request->skema_ref[$i] ?? [];
+                $kuota  = (int) ($request->kuota_lsp[$i] ?? 0);
+                $range  = $request->date_range[$i] ?? null;
 
-            $lsp    = $request->lsp_ref[$i];
-            $skemas = $request->skema_ref[$i] ?? [];
-            $kuota  = (int) ($request->kuota_lsp[$i] ?? 0);
-            $range  = $request->date_range[$i] ?? null;
+                // Jika skema kosong, kuota 0, atau date range kosong, skip/lewati
+                if (!$skemas || !$kuota || !$range) continue;
 
-            // if (!$skemas || !$kuota || !$range) continue;
+                foreach ($skemas as $i => $skema) {
 
-            // 🔹 Parse date range
-            [$start, $end] = array_map('trim', explode(' - ', $range));
-            $startDate = Carbon::createFromFormat('d-m-Y', $start);
-            $endDate   = Carbon::createFromFormat('d-m-Y', $end);
+                    KegiatanSkemaModel::create([
+                        'kegiatan_ref' => $request->kegiatan_ref,
+                        'skema_ref'    => $skema,
+                        'created_by'   => Auth::user()->ref,
+                    ]);
+                }
 
-            // 🔹 Buat list tanggal
-            $dates = collect(CarbonPeriod::create($startDate, $endDate));
-            $totalDays = $dates->count();
 
-            // 🔹 Hitung kuota
-            $baseQuota = intdiv($kuota, $totalDays);
-            $remainder = $kuota % $totalDays;
+                [$start, $end] = array_map('trim', explode(' - ', $range));
+                $startDate = Carbon::createFromFormat('d-m-Y', $start);
+                $endDate   = Carbon::createFromFormat('d-m-Y', $end);
 
-            foreach ($dates as $index => $date) {
+                $dates = collect(CarbonPeriod::create($startDate, $endDate));
+                $totalDays = $dates->count();
 
-                // 🔸 Hari awal dapat sisa dulu
-                $quotaForDay = $baseQuota + ($index < $remainder ? 1 : 0);
+                $baseQuota = intdiv($kuota, $totalDays);
+                $remainder = $kuota % $totalDays;
 
-                // dd($quotaForDay);
+                foreach ($dates as $index => $date) {
 
-                KegiatanDetailModel::create([
-                    'kegiatan_ref'    => $request->kegiatan_ref,
-                    'lsp_ref'         => $lsp,
-                    'kuota_lsp'       => $quotaForDay,
-                    'mulai_asesmen'   => $date instanceof Carbon ? $date->format('Y-m-d') : (string) $date,
-                    'selesai_asesmen' => $endDate->format('Y-m-d'),
-                    'created_by'      => Auth::user()->ref,
-                ]);
+                    $quotaForDay = $baseQuota + ($index < $remainder ? 1 : 0);
+
+                    // dd($quotaForDay);
+                    KegiatanDetailModel::create([
+                        'kegiatan_ref'    => $request->kegiatan_ref,
+                        'lsp_ref'         => $lsp,
+                        'kuota_lsp'       => $quotaForDay,
+                        'mulai_asesmen'   => $date instanceof Carbon ? $date->format('Y-m-d') : (string) $date,
+                        'selesai_asesmen' => $endDate->format('Y-m-d'),
+                        'created_by'      => Auth::user()->ref,
+                    ]);
+                }
             }
-        }
-
+        });
         $flashData = [
             'title' => 'Tambah Data Success',
             'message' => 'Kegiatan Berhasil Ditambahkan',

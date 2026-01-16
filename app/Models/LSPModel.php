@@ -31,6 +31,17 @@ class LSPModel extends Model
         return $this->belongsTo(User::class, 'user_ref', 'ref');
     }
 
+
+
+    public function kegiatanDetails()
+    {
+        return $this->hasMany(
+            KegiatanDetailModel::class,
+            'lsp_ref',
+            'ref'
+        );
+    }
+
     protected static function booted()
     {
         static::deleting(function ($lsp) {

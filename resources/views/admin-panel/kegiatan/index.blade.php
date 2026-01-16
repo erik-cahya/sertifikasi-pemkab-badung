@@ -18,40 +18,49 @@
                                 <th>Nama Kegiatan</th>
                                 <th>LSP Terlibat</th>
                                 <th>Kuota Peserta</th>
-                                <th>Tanggal</th>
-                                <th>No Telp LSP</th>
-                                <th>Status LSP</th>
+                                <th>Mulai Kegiatan</th>
+                                <th>Kegiatan Selesai</th>
+                                <th>Status Kegiatan</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>Sertifikasi LSP Engineering Hospitality</td>
-                                <td>
-                                    <span class="d-flex flex-column">
-                                        <span class="badge bg-primary mt-1" style="font-size: 10px">LSP Engineering Hospitality Indonesia</span>
-                                        <span class="badge bg-primary mt-1" style="font-size: 10px">LSP Engineering Hospitality Indonesia</span>
-                                    </span>
-                                </td>
-                                <td>BNSP-LSP-1303-ID</td>
-                                <td>2027-01-24</td>
-                                <td>081337803127</td>
-                                <td><span class="badge bg-success">Active</span></td>
-                                <td>
-                                    <div class="btn-group" role="group" aria-label="Basic outlined example">
-                                        <a href="#" class="btn btn-sm btn-success" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="See Details" data-bs-custom-class="success-tooltip"><i class="mdi mdi-eye"></i> </a>
-                                        <a href="#" class="btn btn-sm btn-warning" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Edit Data" data-bs-custom-class="warning-tooltip"><i class="mdi mdi-lead-pencil"></i> </a>
+                            @foreach ($dataKegiatan as $kegiatan)
+                                <tr>
+                                    <td>
+                                        <span class="bg-primary rounded-4 px-2 text-white">{{ $loop->iteration }}</span>
+                                    </td>
+                                    <td>{{ $kegiatan->nama_kegiatan }}</td>
+                                    <td>
+                                        @php
+                                            // Ambil LSP unik (karena bisa muncul berulang di detail)
+                                            $lsps = $kegiatan->details->pluck('lsp')->unique('ref');
+                                        @endphp
 
-                                        <input type="hidden" class="gseID" value="#">
-                                        <button type="button" class="btn btn-sm btn-danger deleteButton" data-nama="#" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Delete Data" data-bs-custom-class="danger-tooltip">
-                                            <i class="mdi mdi-trash-can"></i>
-                                        </button>
+                                        @foreach ($lsps as $lsp)
+                                            <span class="badge bg-primary-subtle text-primary">
+                                                {{ $lsp->lsp_nama }}
+                                            </span>
+                                        @endforeach
+                                    </td>
+                                    <td>{{ $kegiatan->total_kuota_lsp }} Peserta</td>
+                                    <td>{{ \Carbon\Carbon::parse($kegiatan->mulai_kegiatan)->format('d M Y') }}</td>
+                                    <td>{{ \Carbon\Carbon::parse($kegiatan->selesai_kegiatan)->format('d M Y') }}</td>
+                                    <td><span class="badge bg-success">{{ $kegiatan->status == 1 ? 'Aktif' : 'Tidak Aktif' }}</span></td>
+                                    <td>
+                                        <div class="btn-group" role="group" aria-label="Basic outlined example">
+                                            <a href="#" class="btn btn-sm btn-success" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="See Details" data-bs-custom-class="success-tooltip"><i class="mdi mdi-eye"></i> </a>
+                                            <a href="#" class="btn btn-sm btn-warning" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Edit Data" data-bs-custom-class="warning-tooltip"><i class="mdi mdi-lead-pencil"></i> </a>
 
-                                    </div>
-                                </td>
-                            </tr>
+                                            <input type="hidden" class="gseID" value="#">
+                                            <button type="button" class="btn btn-sm btn-danger deleteButton" data-nama="#" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Delete Data" data-bs-custom-class="danger-tooltip">
+                                                <i class="mdi mdi-trash-can"></i>
+                                            </button>
 
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endforeach
                         </tbody>
                     </table>
 

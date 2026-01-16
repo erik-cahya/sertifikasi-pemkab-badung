@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\KegiatanDetailModel;
 use App\Models\KegiatanModel;
 use App\Models\LSPModel;
 use Carbon\Carbon;
@@ -18,7 +19,16 @@ class KegiatanController extends Controller
      */
     public function index()
     {
-        return view('admin-panel.kegiatan.index');
+        $data['dataKegiatan'] = KegiatanModel::with([
+            'details.lsp'
+        ])->withSum(
+            'details as total_kuota_lsp',
+            'kuota_lsp'
+        )->get();
+
+        // dd($data['dataKegiatan']);
+
+        return view('admin-panel.kegiatan.index', $data);
     }
 
     /**
