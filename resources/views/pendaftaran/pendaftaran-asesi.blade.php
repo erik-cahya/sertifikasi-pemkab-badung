@@ -283,8 +283,9 @@
                                             <label for="example-select" class="form-label">Lembaga Sertifikasi Kompetensi (LSP)</label><span class="text-danger">*</span>
                                             <select class="form-select rounded-3" id="example-select" name="lsp"  required>
                                                 <option value="">Pilih Lembaga Sertifikasi Kompetensi (LSP)</option>
-                                                <option value="xx">xx</option>
-                                                <option value="yy">yy</option>
+                                                @foreach ($dataLsp as $lsp)
+                                                    <option value="{{ $lsp->ref }}">{{ $lsp->lsp_nama }}</option>
+                                                @endforeach
                                             </select>
                                         </div>
                                     </div>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\LSPModel;
 use App\Models\DepartemenModel;
 use App\Models\JabatanModel;
 use App\Models\AsesiModel;
@@ -20,10 +21,12 @@ class AsesiController extends Controller
     {
         $departemen = DepartemenModel::all();
         $jabatan = JabatanModel::all();
+        $lsp = LSPModel::all();
 
         return view('pendaftaran.pendaftaran-asesi', [
             'dataDepartemen' => $departemen,
             'dataJabatan' => $jabatan,
+            'dataLsp' => $lsp,
         ]);
     }
 }
