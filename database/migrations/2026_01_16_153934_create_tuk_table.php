@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('tuk_alamat');
             $table->string('tuk_email');
             $table->string('tuk_telp');
-            $table->string('tuk_cp_name');
+            $table->string('tuk_cp_nama');
             $table->string('tuk_cp_email');
             $table->string('tuk_cp_telp');  
             $table->text('tuk_file')->nullable();
