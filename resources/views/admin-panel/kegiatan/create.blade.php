@@ -95,7 +95,7 @@
 
         <div class="container-fluid">
 
-            <form action="{{ route('kegiatan.store') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('kegiatan-detail.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="row">
                     <div class="col-12">
@@ -106,15 +106,15 @@
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-lg-12 mb-3">
-                                        <label for="select_kegiatan" class="form-label">Pilih Kegiatan</label>
-                                        <select id="select_kegiatan" class="form-select" name="select_kegiatan">
+                                        <label for="kegiatan_ref" class="form-label">Pilih Kegiatan</label>
+                                        <select id="kegiatan_ref" class="form-select  @error('kegiatan_ref', 'create_detail_kegiatan') is-invalid @enderror" name="kegiatan_ref">
                                             <option value="" selected disabled>Pilih Kegiatan</option>
                                             @foreach ($dataKegiatan as $kegiatan)
                                                 <option value="{{ $kegiatan->ref }}">{{ $kegiatan->nama_kegiatan }}</option>
                                             @endforeach
                                         </select>
 
-                                        @error('select_kegiatan')
+                                        @error('kegiatan_ref', 'create_detail_kegiatan')
                                             <div class="invalid-feedback" bis_skin_checked="1">
                                                 {{ $message }}
                                             </div>
@@ -126,12 +126,12 @@
                                             <div class="card-body kegiatan-item">
                                                 <div id="kegiatan-container">
                                                     <!-- Item pertama -->
-                                                    <div class="align-items-end kegiatan-row mb-3">
-
+                                                    @for ($i = 0; $i < 5; $i++)
                                                         <div class="row kegiatan-row mb-3">
+
                                                             <div class="col-lg-3">
                                                                 <label class="form-label">Nama LSP</label>
-                                                                <select class="lsp-select form-select" name="lsp_ref[]">
+                                                                <select class="form-select lsp-select" name="lsp_ref[{{ $i }}]">
                                                                     <option value="" disabled selected>Pilih LSP</option>
                                                                     @foreach ($dataLSP as $lsp)
                                                                         <option value="{{ $lsp->ref }}">{{ $lsp->lsp_nama }}</option>
@@ -141,134 +141,22 @@
 
                                                             <div class="col-lg-5">
                                                                 <label class="form-label">Skema</label>
-                                                                <select class="form-control select2 skema-select" name="skema_ref[][]" multiple disabled>
+                                                                <select class="form-control select2 skema-select" name="skema_ref[{{ $i }}][]" multiple disabled>
                                                                 </select>
                                                             </div>
 
                                                             <div class="col-lg-2">
                                                                 <label class="form-label">Kuota</label>
-                                                                <input type="number" class="form-control" name="kuota[]">
+                                                                <input type="number" class="form-control" name="kuota_lsp[{{ $i }}]">
                                                             </div>
 
                                                             <div class="col-lg-2">
                                                                 <label class="form-label">Tanggal</label>
-                                                                <input type="text" class="form-control daterangepicker-input" name="date_range[]">
+                                                                <input type="text" class="form-control daterangepicker-input" name="date_range[{{ $i }}]">
                                                             </div>
+
                                                         </div>
-
-                                                        <div class="row kegiatan-row mb-3">
-                                                            <div class="col-lg-3">
-                                                                <label class="form-label">Nama LSP</label>
-                                                                <select class="lsp-select form-select" name="lsp_ref[]">
-                                                                    <option value="" disabled selected>Pilih LSP</option>
-                                                                    @foreach ($dataLSP as $lsp)
-                                                                        <option value="{{ $lsp->ref }}">{{ $lsp->lsp_nama }}</option>
-                                                                    @endforeach
-                                                                </select>
-                                                            </div>
-
-                                                            <div class="col-lg-5">
-                                                                <label class="form-label">Skema</label>
-                                                                <select class="form-control select2 skema-select" name="skema_ref[][]" multiple disabled>
-                                                                </select>
-                                                            </div>
-
-                                                            <div class="col-lg-2">
-                                                                <label class="form-label">Kuota</label>
-                                                                <input type="number" class="form-control" name="kuota[]">
-                                                            </div>
-
-                                                            <div class="col-lg-2">
-                                                                <label class="form-label">Tanggal</label>
-                                                                <input type="text" class="form-control daterangepicker-input" name="date_range[]">
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="row kegiatan-row mb-3">
-                                                            <div class="col-lg-3">
-                                                                <label class="form-label">Nama LSP</label>
-                                                                <select class="lsp-select form-select" name="lsp_ref[]">
-                                                                    <option value="" disabled selected>Pilih LSP</option>
-                                                                    @foreach ($dataLSP as $lsp)
-                                                                        <option value="{{ $lsp->ref }}">{{ $lsp->lsp_nama }}</option>
-                                                                    @endforeach
-                                                                </select>
-                                                            </div>
-
-                                                            <div class="col-lg-5">
-                                                                <label class="form-label">Skema</label>
-                                                                <select class="form-control select2 skema-select" name="skema_ref[][]" multiple disabled>
-                                                                </select>
-                                                            </div>
-
-                                                            <div class="col-lg-2">
-                                                                <label class="form-label">Kuota</label>
-                                                                <input type="number" class="form-control" name="kuota[]">
-                                                            </div>
-
-                                                            <div class="col-lg-2">
-                                                                <label class="form-label">Tanggal</label>
-                                                                <input type="text" class="form-control daterangepicker-input" name="date_range[]">
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="row kegiatan-row mb-3">
-                                                            <div class="col-lg-3">
-                                                                <label class="form-label">Nama LSP</label>
-                                                                <select class="lsp-select form-select" name="lsp_ref[]">
-                                                                    <option value="" disabled selected>Pilih LSP</option>
-                                                                    @foreach ($dataLSP as $lsp)
-                                                                        <option value="{{ $lsp->ref }}">{{ $lsp->lsp_nama }}</option>
-                                                                    @endforeach
-                                                                </select>
-                                                            </div>
-
-                                                            <div class="col-lg-5">
-                                                                <label class="form-label">Skema</label>
-                                                                <select class="form-control select2 skema-select" name="skema_ref[][]" multiple disabled>
-                                                                </select>
-                                                            </div>
-
-                                                            <div class="col-lg-2">
-                                                                <label class="form-label">Kuota</label>
-                                                                <input type="number" class="form-control" name="kuota[]">
-                                                            </div>
-
-                                                            <div class="col-lg-2">
-                                                                <label class="form-label">Tanggal</label>
-                                                                <input type="text" class="form-control daterangepicker-input" name="date_range[]">
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="row kegiatan-row mb-3">
-                                                            <div class="col-lg-3">
-                                                                <label class="form-label">Nama LSP</label>
-                                                                <select class="lsp-select form-select" name="lsp_ref[]">
-                                                                    <option value="" disabled selected>Pilih LSP</option>
-                                                                    @foreach ($dataLSP as $lsp)
-                                                                        <option value="{{ $lsp->ref }}">{{ $lsp->lsp_nama }}</option>
-                                                                    @endforeach
-                                                                </select>
-                                                            </div>
-
-                                                            <div class="col-lg-5">
-                                                                <label class="form-label">Skema</label>
-                                                                <select class="form-control select2 skema-select" name="skema_ref[][]" multiple disabled>
-                                                                </select>
-                                                            </div>
-
-                                                            <div class="col-lg-2">
-                                                                <label class="form-label">Kuota</label>
-                                                                <input type="number" class="form-control" name="kuota[]">
-                                                            </div>
-
-                                                            <div class="col-lg-2">
-                                                                <label class="form-label">Tanggal</label>
-                                                                <input type="text" class="form-control daterangepicker-input" name="date_range[]">
-                                                            </div>
-                                                        </div>
-
-                                                    </div>
+                                                    @endfor
                                                 </div>
                                             </div>
                                         </div>

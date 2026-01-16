@@ -6,6 +6,7 @@ use App\Http\Controllers\PegawaiController;
 use App\Http\Controllers\TUKController;
 use App\Http\Controllers\AsesiController;
 use App\Http\Controllers\KegiatanController;
+use App\Http\Controllers\KegiatanDetailController;
 use App\Http\Controllers\KodeUnitController;
 use App\Http\Controllers\LSPController;
 use App\Http\Controllers\ProfileController;
@@ -16,8 +17,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/ajax/skema-by-lsp/{lspRef}', [SkemaController::class, 'getByLsp'])
-    ->name('ajax.skema.by-lsp');
+Route::get('/ajax/skema-by-lsp/{lspRef}', [SkemaController::class, 'getByLsp'])->name('ajax.skema.by-lsp');
 
 
 Route::middleware('auth')->group(function () {
@@ -36,6 +36,9 @@ Route::middleware('auth')->group(function () {
         Route::get('kegiatan', [KegiatanController::class, 'index'])->name('kegiatan.index');
         Route::get('kegiatan/create', [KegiatanController::class, 'create'])->name('kegiatan.create');
         Route::post('kegiatan/store', [KegiatanController::class, 'store'])->name('kegiatan.store');
+
+        // ################################ Kegiatan Detail
+        Route::post('kegiatan-detail', [KegiatanDetailController::class, 'store'])->name('kegiatan-detail.store');
 
         // ################################ Departemen
         Route::get('departemen', [DepartemenController::class, 'index'])->name('departemen.index');

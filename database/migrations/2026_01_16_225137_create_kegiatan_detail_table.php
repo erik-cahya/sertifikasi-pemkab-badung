@@ -11,18 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tuk', function (Blueprint $table) {
+        Schema::create('kegiatan_detail', function (Blueprint $table) {
             $table->ulid('ref')->primary();
+            $table->foreignUlid('kegiatan_ref')->references('ref')->on('kegiatan')->cascadeOnDelete();
             $table->foreignUlid('lsp_ref')->references('ref')->on('lsp')->cascadeOnDelete();
-            $table->string('tuk_nama');
-            $table->string('tuk_alamat');
-            $table->string('tuk_email');
-            $table->string('tuk_telp');
-            $table->string('tuk_cp_nama');
-            $table->string('tuk_cp_email');
-            $table->string('tuk_cp_telp');
-            $table->text('tuk_file')->nullable();
-            $table->boolean('tuk_verif');
+            $table->integer('kuota_lsp');
+            $table->dateTime('mulai_asesmen');
+            $table->dateTime('selesai_asesmen');
             $table->foreignUlid('created_by')->references('ref')->on('users')->cascadeOnDelete();
             $table->timestamps();
         });
@@ -33,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tuk');
+        Schema::dropIfExists('kegiatan_detail');
     }
 };
