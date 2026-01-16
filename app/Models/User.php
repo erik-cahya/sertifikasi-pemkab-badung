@@ -20,6 +20,13 @@ class User extends Authenticatable
         return ['ref'];
     }
 
+    public function setRefAttribute($value)
+    {
+        if ($value !== null) {
+            $this->attributes['ref'] = strtoupper($value);
+        }
+    }
+
     /**
      * The attributes that are mass assignable.
      *

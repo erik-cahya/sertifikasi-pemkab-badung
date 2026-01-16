@@ -17,8 +17,14 @@ class DepartemenModel extends Model
     {
         return ['ref'];
     }
+    public function setRefAttribute($value)
+    {
+        if ($value !== null) {
+            $this->attributes['ref'] = strtoupper($value);
+        }
+    }
 
-     public function details()
+    public function details()
     {
         return $this->hasMany(
             JabatanModel::class,
@@ -26,5 +32,4 @@ class DepartemenModel extends Model
             'ref'
         );
     }
-
 }

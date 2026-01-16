@@ -17,5 +17,10 @@ class AsesiModel extends Model
     {
         return ['ref'];
     }
-
+    public function setRefAttribute($value)
+    {
+        if ($value !== null) {
+            $this->attributes['ref'] = strtoupper($value);
+        }
+    }
 }
