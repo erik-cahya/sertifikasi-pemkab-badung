@@ -110,7 +110,7 @@
                                         <select id="kegiatan_ref" class="form-select  @error('kegiatan_ref', 'create_detail_kegiatan') is-invalid @enderror" name="kegiatan_ref">
                                             <option value="" selected disabled>Pilih Kegiatan</option>
                                             @foreach ($dataKegiatan as $kegiatan)
-                                                <option value="{{ $kegiatan->ref }}">{{ $kegiatan->nama_kegiatan }}</option>
+                                                <option value="{{ $kegiatan->ref }} {{ old('kegiatan_ref') == $kegiatan->ref ? 'selected' : '' }}">{{ $kegiatan->nama_kegiatan }}</option>
                                             @endforeach
                                         </select>
 
@@ -131,24 +131,39 @@
 
                                                             <div class="col-lg-3">
                                                                 <label class="form-label">Nama LSP</label>
-                                                                <select class="form-select lsp-select" name="lsp_ref[{{ $i }}]">
-                                                                    <option value="" disabled selected>Pilih LSP</option>
+                                                                <select class="form-select lsp-select  @error(`lsp_ref.$i`) is-invalid @enderror" name="lsp_ref[{{ $i }}]">
+                                                                    <option value="" selected>Pilih LSP</option>
                                                                     @foreach ($dataLSP as $lsp)
-                                                                        <option value="{{ $lsp->ref }}">{{ $lsp->lsp_nama }}</option>
+                                                                        <option value="{{ $lsp->ref }}" {{ old('lsp_ref.' . $i) == $lsp->ref ? 'selected' : '' }}>{{ $lsp->lsp_nama }}</option>
                                                                     @endforeach
                                                                 </select>
+
+                                                                @error("lsp_ref.$i")
+                                                                    <div class="invalid-feedback" bis_skin_checked="1">
+                                                                        {{ $message }}
+                                                                    </div>
+                                                                @enderror
                                                             </div>
 
                                                             <div class="col-lg-5">
                                                                 <label class="form-label">Skema</label>
-                                                                <select class="form-control select2 skema-select" name="skema_ref[{{ $i }}][]" multiple disabled>
+                                                                <select class="form-control select2 skema-select @error(`skema_ref.$i`) is-invalid @enderror" name="skema_ref[{{ $i }}][]" multiple disabled>
                                                                 </select>
+                                                                @error("skema_ref.$i")
+                                                                    <div class="invalid-feedback" bis_skin_checked="1">
+                                                                        {{ $message }}
+                                                                    </div>
+                                                                @enderror
                                                             </div>
 
                                                             <div class="col-lg-2">
                                                                 <label class="form-label">Kuota</label>
-                                                                <input type="number" class="form-control" name="kuota_lsp[{{ $i }}]">
+                                                                <input type="number" class="form-control" name="kuota_lsp[{{ $i }}]" min="1" value="{{ old("kuota_lsp.$i") }}">
+                                                                @error("kuota_lsp.$i")
+                                                                    <div class="text-danger">{{ $message }}</div>
+                                                                @enderror
                                                             </div>
+
 
                                                             <div class="col-lg-2">
                                                                 <label class="form-label">Tanggal</label>

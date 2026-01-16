@@ -16,10 +16,7 @@ class KegiatanDetailController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        //
-    }
+    public function index() {}
 
     /**
      * Show the form for creating a new resource.
@@ -44,8 +41,22 @@ class KegiatanDetailController extends Controller
 
             foreach ($request->lsp_ref as $i => $lspRef) {
 
-
+                // Kalau LSP kosong, lewati
                 if (!$lspRef) continue;
+
+                Validator::make($request->all(), [
+                    "lsp_ref.$i" => 'required',
+                    "skema_ref.$i" => ['required', 'array', 'min:1'],
+                    "skema_ref.$i.*" => 'required',
+                    "kuota_lsp.$i" => ['required', 'integer', 'min:1'],
+                    "date_range.$i" => ['required', 'regex:/^\d{2}-\d{2}-\d{4}\s-\s\d{2}-\d{2}-\d{4}$/'],
+                ], [
+                    'lsp_ref.*.required'     => 'LSP wajib dipilih',
+                    'skema_ref.*.required'   => 'Minimal 1 skema harus dipilih',
+                    'kuota_lsp.*.required'   => 'Kuota wajib diisi',
+                    'kuota_lsp.*.min'        => 'Kuota minimal 1',
+                    'date_range.*.required'  => 'Tanggal wajib diisi',
+                ])->validate();
 
                 $lsp    = $request->lsp_ref[$i];
                 $skemas = $request->skema_ref[$i] ?? [];

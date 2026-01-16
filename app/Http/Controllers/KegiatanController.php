@@ -37,7 +37,9 @@ class KegiatanController extends Controller
     public function create()
     {
         $data['dataLSP'] = LSPModel::get();
-        $data['dataKegiatan'] = KegiatanModel::select('ref', 'nama_kegiatan')->get();
+
+        // Jika data kegiatan sudah dibuat, maka tidak ditampilkan lagi
+        $data['dataKegiatan'] = KegiatanModel::select('ref', 'nama_kegiatan')->whereDoesntHave('details')->get();
         return view('admin-panel.kegiatan.create', $data);
     }
 
