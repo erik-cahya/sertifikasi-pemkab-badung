@@ -39,9 +39,9 @@ Route::middleware('auth')->group(function () {
 
         // ################################ Departemen
         Route::get('departemen', [DepartemenController::class, 'index'])->name('departemen.index');
-        Route::get('departemen/create', [DepartemenController::class, 'create'])->name('departemen.create')->middleware('role:lsp');
         Route::post('departemen/store', [DepartemenController::class, 'store'])->name('departemen.store');
-        Route::get('departemen/{id}', [DepartemenController::class, 'show'])->name('departemen.show');
+        Route::get('departemen/{id}', [DepartemenController::class, 'edit'])->name('departemen.edit');
+        Route::put('departemen/{id}', [DepartemenController::class, 'update'])->name('departemen.update');
         Route::delete('departemen/{id}', [DepartemenController::class, 'destroy'])->name('departemen.destroy');
     });
 

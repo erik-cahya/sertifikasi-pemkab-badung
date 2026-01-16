@@ -56,7 +56,7 @@
                                     <td>{{ $item->departemen_nama }}</td>
                                     <td>{{ $item->name }} <br> {{ $item->created_at->format('Y-m-d') }}</td>
                                     <td>
-                                         <a href="javascript: void(0);" class="text-reset fs-16 px-1">
+                                         <a href="{{ route('departemen.edit', $item->ref) }}" class="text-reset fs-16 px-1">
                                             <button type="button" class="btn btn-sm btn-outline-primary"><i class="ri-pencil-line"></i> Edit</button>
                                         </a>
 
@@ -110,7 +110,7 @@
                     }).then((result) => {
                         if (result.isConfirmed) {
                             // Kirim DELETE request manual lewat JavaScript
-                            fetch('/item/' + departemenID, {
+                            fetch('/departemen/' + departemenID, {
                                     method: 'DELETE',
                                     headers: {
                                         'X-CSRF-TOKEN': '{{ csrf_token() }}',

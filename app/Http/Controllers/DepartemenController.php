@@ -63,7 +63,7 @@ class DepartemenController extends Controller
      */
     public function show(string $id)
     {
-
+       
     }
 
     /**
@@ -71,7 +71,15 @@ class DepartemenController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $query = DepartemenModel::join('users', 'users.ref', '=', 'departemen.created_by')
+        ->select('departemen.*', 'users.name')
+        ->orderBy('departemen.created_at', 'desc')
+        ->where('departemen.ref', $id)
+        ->get();
+
+        return view('admin-panel.departemen.edit', [
+            'dataDepartemen' => $query
+        ]);
     }
 
     /**
@@ -79,7 +87,17 @@ class DepartemenController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        DepartemenModel::where('ref', $id)->update([
+            'departemen_nama' => $request->departemen_nama,
+        ]);
+
+        return redirect()
+            ->route('departemen.index')
+            ->with('flashData', [
+                'title' => 'Edit Data Success',
+                'message' => 'Skema Berhasil Diubah',
+                'type' => 'success',
+            ]);
     }
 
     /**
@@ -87,7 +105,7 @@ class DepartemenController extends Controller
      */
     public function destroy(string $id)
     {
-        JabatanModel::where('departemen', $id)->delete();
+        JabatanModel::where('departemen_ref', $id)->delete();
         DepartemenModel::where('ref', $id)->delete();
 
         $flashData = [
