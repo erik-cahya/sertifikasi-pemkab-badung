@@ -81,11 +81,7 @@ Route::middleware('auth')->group(function () {
     })->name('dashboard');
 
     // ################################ TUK by admin
-    Route::get('tukAdmin', [TUKController::class, 'index'])->name('tukAdmin.index');
-    Route::get('tukAdmin/create', [TUKController::class, 'create'])->name('tukAdmin.create')->middleware('role:lsp');
-    Route::post('tukAdmin/store', [TUKController::class, 'store'])->name('tukAdmin.store');
-    Route::get('tukAdmin/{id}', [TUKController::class, 'show'])->name('tukAdmin.show');
-    Route::delete('tukAdmin/{id}', [TUKController::class, 'destroy'])->name('tukAdmin.destroy');
+    Route::get('tukAdmin', [TUKController::class, 'list'])->name('tukAdmin.index');
 });
 
 // ################################ Pendaftaraan Asesi

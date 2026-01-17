@@ -23,4 +23,17 @@ class TUKController extends Controller
             'dataLsp' => $lsp
         ]);
     }
+
+    public function list()
+    {
+        $tuk = TUKModel::join('lsp', 'lsp.ref', '=', 'tuk.lsp_ref')
+        ->join('users', 'users.ref', '=', 'tuk.created_by')
+        ->select('tuk.*','lsp.lsp_nama', 'users.name')
+        ->orderBy('tuk.created_at', 'desc')
+        ->get();
+
+        return view('admin-panel.tuk.index', [
+            'dataTUK' => $tuk,
+        ]);
+    }
 }
