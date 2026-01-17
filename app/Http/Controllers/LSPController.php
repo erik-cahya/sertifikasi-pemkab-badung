@@ -131,12 +131,6 @@ class LSPController extends Controller
 
         $lsp = LSPModel::where('ref', $id)->firstOrFail();
         $lsp->delete();
-        $flashData = [
-            'judul' => 'Hapus Data Success',
-            'pesan' => 'Data LSP Berhasil Dihapus ',
-            'type' => 'success',
-        ];
-
         return response()->json([
             'judul' => 'Hapus Data Success',
             'pesan' => 'Data LSP Berhasil Dihapus',

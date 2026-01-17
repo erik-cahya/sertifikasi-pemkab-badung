@@ -36,24 +36,33 @@
                                             // Ambil LSP unik (karena bisa muncul berulang di detail)
                                             $lsps = $kegiatan->details->pluck('lsp')->unique('ref');
                                         @endphp
+                                        @php
+                                            $validLsps = $lsps->filter(fn($lsp) => filled($lsp->lsp_nama));
+                                        @endphp
 
-                                        @foreach ($lsps as $lsp)
-                                            <span class="badge bg-primary-subtle text-primary">
-                                                {{ $lsp->lsp_nama }}
+                                        @if ($validLsps->isEmpty())
+                                            <span class="badge bg-danger-subtle text-danger">
+                                                Tidak ada LSP yang terlibat
                                             </span>
-                                        @endforeach
+                                        @else
+                                            @foreach ($validLsps as $lsp)
+                                                <span class="badge bg-primary-subtle text-primary">
+                                                    {{ $lsp->lsp_nama }}
+                                                </span>
+                                            @endforeach
+                                        @endif
                                     </td>
                                     <td>{{ $kegiatan->total_kuota_lsp }} Peserta</td>
-                                    <td>{{ \Carbon\Carbon::parse($kegiatan->mulai_kegiatan)->format('d M Y') }}</td>
-                                    <td>{{ \Carbon\Carbon::parse($kegiatan->selesai_kegiatan)->format('d M Y') }}</td>
+                                    <td>{{ \Carbon\Carbon::parse($kegiatan->mulai_kegiatan)->locale('id')->translatedFormat('l, d F Y') }}</td>
+                                    <td>{{ \Carbon\Carbon::parse($kegiatan->selesai_kegiatan)->locale('id')->translatedFormat('l, d F Y') }}</td>
                                     <td><span class="badge bg-success">{{ $kegiatan->status == 1 ? 'Aktif' : 'Tidak Aktif' }}</span></td>
                                     <td>
                                         <div class="btn-group" role="group" aria-label="Basic outlined example">
-                                            <a href="#" class="btn btn-sm btn-success" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="See Details" data-bs-custom-class="success-tooltip"><i class="mdi mdi-eye"></i> </a>
+                                            <a href="{{ route('kegiatan.show', $kegiatan->ref) }}" class="btn btn-sm btn-success" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="See Details" data-bs-custom-class="success-tooltip"><i class="mdi mdi-eye"></i> </a>
                                             <a href="#" class="btn btn-sm btn-warning" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Edit Data" data-bs-custom-class="warning-tooltip"><i class="mdi mdi-lead-pencil"></i> </a>
 
-                                            <input type="hidden" class="gseID" value="#">
-                                            <button type="button" class="btn btn-sm btn-danger deleteButton" data-nama="#" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Delete Data" data-bs-custom-class="danger-tooltip">
+                                            <input type="hidden" class="valueID" value="{{ $kegiatan->ref }}">
+                                            <button type="button" class="btn btn-sm btn-danger deleteButton" data-nama="{{ $kegiatan->nama_kegiatan }}" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Delete Data" data-bs-custom-class="danger-tooltip">
                                                 <i class="mdi mdi-trash-can"></i>
                                             </button>
 
@@ -89,7 +98,7 @@
                     e.preventDefault();
 
                     let propertyName = this.getAttribute('data-nama');
-                    let gseID = this.parentElement.querySelector('.gseID').value;
+                    let valueID = this.parentElement.querySelector('.valueID').value;
 
                     Swal.fire({
                         title: 'Are you sure?',
@@ -102,7 +111,7 @@
                     }).then((result) => {
                         if (result.isConfirmed) {
                             // Kirim DELETE request manual lewat JavaScript
-                            fetch('/gse/' + gseID, {
+                            fetch('/kegiatan/' + valueID, {
                                     method: 'DELETE',
                                     headers: {
                                         'X-CSRF-TOKEN': '{{ csrf_token() }}',

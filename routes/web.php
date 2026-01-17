@@ -36,6 +36,8 @@ Route::middleware('auth')->group(function () {
         Route::get('kegiatan', [KegiatanController::class, 'index'])->name('kegiatan.index');
         Route::get('kegiatan/create', [KegiatanController::class, 'create'])->name('kegiatan.create');
         Route::post('kegiatan/store', [KegiatanController::class, 'store'])->name('kegiatan.store');
+        Route::get('kegiatan/{id}', [KegiatanController::class, 'show'])->name('kegiatan.show');
+        Route::delete('kegiatan/{id}', [KegiatanController::class, 'destroy'])->name('kegiatan.destroy');
 
         // ################################ Kegiatan Detail
         Route::post('kegiatan-detail', [KegiatanDetailController::class, 'store'])->name('kegiatan-detail.store');

@@ -49,52 +49,33 @@ class KegiatanController extends Controller
     public function store(Request $request)
     {
 
+        // dd($request->all());
         Validator::make($request->all(), [
-            'nama_kegiatan' => 'required',
+            'nama_kegiatan' => 'required|unique:kegiatan,nama_kegiatan',
             'mulai_kegiatan' => 'required',
             'selesai_kegiatan' => 'required',
         ], [
             'nama_kegiatan.required' => 'Masukkan nama kegiatan',
+            'nama_kegiatan.unique' => 'Nama kegiatan ini sudah ada',
             'mulai_kegiatan.required' => 'Silahkan pilih tanggal mulai',
             'selesai_kegiatan.required' => 'Silahkan pilih tanggal selesai',
         ])->validateWithBag('create_kegiatan');
 
         KegiatanModel::create([
             'nama_kegiatan' => $request->nama_kegiatan,
-            'mulai_kegiatan' => $request->mulai_kegiatan,
-            'selesai_kegiatan' => $request->selesai_kegiatan,
+            'mulai_kegiatan' => Carbon::createFromFormat('d/m/Y', $request->mulai_kegiatan)->format('Y-m-d'),
+            'selesai_kegiatan' => Carbon::createFromFormat('d/m/Y', $request->selesai_kegiatan)->format('Y-m-d'),
             'status' => 1,
             'created_by' => Auth::user()->ref,
 
         ]);
 
-        return redirect()
-            ->route('kegiatan.create')
+        return redirect('/kegiatan/create#add_lsp')
             ->with('flashData', [
                 'title' => 'Tambah Data Success',
                 'message' => 'Kegiatan Baru Berhasil Ditambahkan',
                 'type' => 'success',
             ]);
-
-
-
-
-
-        dd($request->all());
-        $range = $request->input('date_range')[0];
-        // "01/13/2026 - 01/24/2026"
-
-        // dd($range);
-
-        [$start, $end] = explode(' - ', $range);
-
-        $startDate = Carbon::createFromFormat('d F Y', trim($start));
-        $endDate   = Carbon::createFromFormat('d F Y', trim($end));
-
-        $days = $startDate->diffInDays($endDate) + 1;
-
-        dd($days); // 11
-        dd($request->all());
     }
 
     /**
@@ -102,7 +83,15 @@ class KegiatanController extends Controller
      */
     public function show(string $id)
     {
-        //
+
+        $data['dataKegiatan'] = KegiatanModel::where('ref', $id)->with([
+            'details.lsp'
+        ])->withSum(
+            'details as total_kuota_lsp',
+            'kuota_lsp'
+        )->firstOrFail();
+
+        return view('admin-panel.kegiatan.show', $data);
     }
 
     /**
@@ -126,6 +115,14 @@ class KegiatanController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+
+        KegiatanModel::where('ref', $id)->delete();
+        $flashData = [
+            'judul' => 'Hapus Data Success',
+            'pesan' => 'Kegiatan Berhasil Dihapus ',
+            'type' => 'success',
+        ];
+
+        return response()->json($flashData);
     }
 }

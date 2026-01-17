@@ -60,8 +60,8 @@
                                     </div>
 
                                     <div class="col-lg-6 mb-3">
-                                        <label for="mulai_kegiatan" class="form-label">Tanggal Mulai Kegiatan</label>
-                                        <input type="date" class="form-control rounded-3 @error('mulai_kegiatan', 'create_kegiatan') is-invalid @enderror" name="mulai_kegiatan" value="{{ old('mulai_kegiatan') }}">
+                                        <label class="form-label" for="mulai_kegiatan">Tanggal Mulai Kegiatan</label>
+                                        <input type="text" id="mulai_kegiatan" name="mulai_kegiatan" class="form-control single-date @error('mulai_kegiatan', 'create_kegiatan') is-invalid @enderror" value="{{ old('mulai_kegiatan') }}">
 
                                         @error('mulai_kegiatan', 'create_kegiatan')
                                             <div class="invalid-feedback" bis_skin_checked="1">
@@ -71,8 +71,8 @@
                                     </div>
 
                                     <div class="col-lg-6 mb-3">
-                                        <label for="selesai_kegiatan" class="form-label">Tanggal Selesai Kegiatan</label>
-                                        <input type="date" class="form-control rounded-3 @error('selesai_kegiatan', 'create_kegiatan') is-invalid @enderror" name="selesai_kegiatan" value="{{ old('selesai_kegiatan') }}">
+                                        <label class="form-label" for="selesai_kegiatan">Tanggal Selesai Kegiatan</label>
+                                        <input type="text" id="selesai_kegiatan" name="selesai_kegiatan" class="form-control single-date @error('selesai_kegiatan', 'create_kegiatan') is-invalid @enderror" value="{{ old('selesai_kegiatan') }}">
 
                                         @error('selesai_kegiatan', 'create_kegiatan')
                                             <div class="invalid-feedback" bis_skin_checked="1">
@@ -93,8 +93,7 @@
 
         </div>
 
-        <div class="container-fluid">
-
+        <div class="container-fluid" id="add_lsp">
             <form action="{{ route('kegiatan-detail.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="row">
@@ -107,7 +106,7 @@
                                 <div class="row">
                                     <div class="col-lg-12 mb-3">
                                         <label for="kegiatan_ref" class="form-label">Pilih Kegiatan</label>
-                                        <select id="kegiatan_ref" class="form-select  @error('kegiatan_ref', 'create_detail_kegiatan') is-invalid @enderror" name="kegiatan_ref">
+                                        <select id="kegiatan_ref" class="@error('kegiatan_ref', 'create_detail_kegiatan') is-invalid @enderror form-select" name="kegiatan_ref">
                                             <option value="" selected disabled>Pilih Kegiatan</option>
                                             @foreach ($dataKegiatan as $kegiatan)
                                                 <option value="{{ $kegiatan->ref }} {{ old('kegiatan_ref') == $kegiatan->ref ? 'selected' : '' }}">{{ $kegiatan->nama_kegiatan }}</option>
@@ -131,7 +130,7 @@
 
                                                             <div class="col-lg-3">
                                                                 <label class="form-label">Nama LSP</label>
-                                                                <select class="form-select lsp-select  @error(`lsp_ref.$i`) is-invalid @enderror" name="lsp_ref[{{ $i }}]">
+                                                                <select class="lsp-select @error(`lsp_ref.$i`) is-invalid @enderror form-select" name="lsp_ref[{{ $i }}]">
                                                                     <option value="" selected>Pilih LSP</option>
                                                                     @foreach ($dataLSP as $lsp)
                                                                         <option value="{{ $lsp->ref }}" {{ old('lsp_ref.' . $i) == $lsp->ref ? 'selected' : '' }}>{{ $lsp->lsp_nama }}</option>
@@ -164,7 +163,6 @@
                                                                 @enderror
                                                             </div>
 
-
                                                             <div class="col-lg-2">
                                                                 <label class="form-label">Tanggal</label>
                                                                 <input type="text" class="form-control daterangepicker-input" name="date_range[{{ $i }}]">
@@ -194,74 +192,27 @@
 @push('script')
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-
-    {{-- <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script> --}}
-    {{-- <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script> --}}
-
     <!-- Daterangepicker Plugin js -->
     <script src="{{ asset('admin') }}/assets/vendor/daterangepicker/moment.min.js"></script>
     <script src="{{ asset('admin') }}/assets/vendor/daterangepicker/daterangepicker.js"></script>
 
-    {{-- <script>
-        document.addEventListener('DOMContentLoaded', function() {
-
-            const lspSelect = document.getElementById('lsp_select');
-            const skemaSelect = $('#skema_select1');
-
-            // init select2
-            skemaSelect.select2({
-                placeholder: 'Pilih Skema',
-                width: '100%'
-            });
-
-            lspSelect.addEventListener('change', function() {
-
-                const lspRef = this.value;
-
-                // reset skema
-                skemaSelect.empty()
-                    .append('<option value="">Loading...</option>')
-                    .prop('disabled', true)
-                    .trigger('change');
-
-                if (!lspRef) return;
-
-                fetch(`/ajax/skema-by-lsp/${lspRef}`, {
-                        headers: {
-                            'Accept': 'application/json',
-                            'X-Requested-With': 'XMLHttpRequest'
-                        }
-                    })
-                    .then(res => res.json())
-                    .then(data => {
-
-                        skemaSelect.empty();
-
-                        if (data.length === 0) {
-                            skemaSelect.append('<option value="">Tidak ada skema</option>');
-                        } else {
-                            data.forEach(skema => {
-                                skemaSelect.append(
-                                    `<option value="${skema.ref}">
-                            ${skema.skema_judul}
-                         </option>`
-                                );
-                            });
-                        }
-
-                        skemaSelect.prop('disabled', false).trigger('change');
-                    })
-                    .catch(() => {
-                        skemaSelect.empty()
-                            .append('<option value="">Gagal memuat data</option>');
-                    });
-            });
-
-        });
-    </script> --}}
-
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            $(function() {
+                $('.single-date').daterangepicker({
+                    singleDatePicker: true,
+                    autoUpdateInput: false,
+                    locale: {
+                        format: 'DD/MM/YYYY'
+                    }
+                });
+
+                $('.single-date').on('apply.daterangepicker', function(ev, picker) {
+                    $(this).val(picker.startDate.format('DD/MM/YYYY'));
+                }).on('cancel.daterangepicker', function() {
+                    $(this).val('');
+                });
+            });
 
             const container = document.getElementById('kegiatan-container');
 

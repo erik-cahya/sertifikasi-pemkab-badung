@@ -65,14 +65,14 @@
                                 <div class="row mb-3">
                                     <label class="col-md-3 col-form-label" for="serial_gse"><i class="ri-edit-2-line"></i> Tanggal Lisensi LSP</label>
                                     <div class="col-md-9">
-                                        <input disabled type="text" class="form-control" id="serial_gse" name="serial_gse" value="{{ \Carbon\Carbon::parse($dataLSP->lsp_tanggal_lisensi)->format('d F Y') }}">
+                                        <input disabled type="text" class="form-control" id="serial_gse" name="serial_gse" value="{{ \Carbon\Carbon::parse($dataLSP->lsp_tanggal_lisensi)->locale('id')->translatedFormat('l, d F Y') }}">
                                     </div>
                                 </div>
 
                                 <div class="row mb-3">
                                     <label class="col-md-3 col-form-label" for="serial_gse"><i class="ri-edit-2-line"></i> Tanggal Expired Lisensi</label>
                                     <div class="col-md-9">
-                                        <input disabled type="text" class="form-control" id="serial_gse" name="serial_gse" value="{{ \Carbon\Carbon::parse($dataLSP->lsp_expired_lisensi)->format('d F Y') }}">
+                                        <input disabled type="text" class="form-control" id="serial_gse" name="serial_gse" value="{{ \Carbon\Carbon::parse($dataLSP->lsp_expired_lisensi)->locale('id')->translatedFormat('l, d F Y') }}">
                                     </div>
                                 </div>
 
