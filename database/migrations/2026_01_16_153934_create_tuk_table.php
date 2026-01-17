@@ -21,9 +21,7 @@ return new class extends Migration
             $table->string('tuk_cp_nama');
             $table->string('tuk_cp_email');
             $table->string('tuk_cp_telp');
-            $table->text('tuk_file')->nullable();
             $table->boolean('tuk_verif');
-            $table->foreignUlid('created_by')->references('ref')->on('users')->cascadeOnDelete();
             $table->timestamps();
         });
     }

@@ -17,7 +17,6 @@ class TUKSeeder extends Seeder
      */
     public function run(): void
     {
-        $user = User::where('email', 'master@gmail.com')->value('ref');
         $lsp = LSPModel::where('lsp_nama', 'LSP Engineering Hospitality Indonesia')->value('ref');
 
 
@@ -33,7 +32,6 @@ class TUKSeeder extends Seeder
                 'tuk_cp_email' => 'erik@gmail.com',
                 'tuk_cp_telp' => '08234567890',
                 'tuk_verif' => 0,
-                'created_by' => $user,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],

@@ -82,6 +82,12 @@ Route::middleware('auth')->group(function () {
 
     // ################################ TUK by admin
     Route::get('tukAdmin', [TUKController::class, 'list'])->name('tukAdmin.index');
+    Route::get('tukAdmin/create', [TUKController::class, 'create'])->name('tukAdmin.create');
+    Route::post('tukAdmin/store', [TUKController::class, 'store'])->name('tukAdmin.store');
+    Route::get('tukAdmin/{id}', [TUKController::class, 'edit'])->name('tukAdmin.edit');
+    Route::put('tukAdmin/{id}', [TUKController::class, 'update'])->name('tukAdmin.update');
+    Route::get('tukAdmin/{id}/{code}', [TUKController::class, 'verifikasi'])->name('tukAdmin.verifikasi');
+    Route::delete('tukAdmin/{id}', [TUKController::class, 'destroy'])->name('tukAdmin.destroy');
 });
 
 // ################################ Pendaftaraan Asesi
@@ -91,8 +97,7 @@ Route::post('asesi/store', [AsesiController::class, 'store'])->name('asesi.store
 
 // ################################ Pendaftaraan TUK
 Route::get('tuk', [TUKController::class, 'index'])->name('tuk.index');
-Route::get('tuk/create', [TUKController::class, 'create'])->name('tuk.create');
-Route::post('tuk/store', [TUKController::class, 'store'])->name('tuk.store');
+Route::post('tuk/added', [TUKController::class, 'added'])->name('tuk.added');
 
 // ################################ Data Pegawai
 Route::get('pegawai', [PegawaiController::class, 'index'])->name('pegawai.index');

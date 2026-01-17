@@ -78,13 +78,13 @@
                         </li>
 
                         {{-- @if (Auth::user()->roles === 'lsp') --}}
-                        @role('lsp')
+                        {{-- @role('lsp') --}}
                             <li class="side-nav-item {{ request()->routeIs('tukAdmin.create') ? 'menuitem-active' : '' }}">
                                 <a class="side-nav-link {{ request()->routeIs('tukAdmin.create') ? 'active' : '' }}" href="{{ route('tukAdmin.create') }}">
                                     Tambah TUK
                                 </a>
                             </li>
-                        @endrole
+                        {{-- @endrole --}}
 
                     </ul>
                 </div>

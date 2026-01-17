@@ -24,7 +24,8 @@
                                 <th>Nama CP</th>
                                 <th>Email CP</th>
                                 <th>Telp CP</th>
-                                <th>Dibuat Oleh</th>
+                                <th>Verifikasi</th>
+                                <th>Dibuat Pada</th>
                                 <th width="5%">Action</th>
                             </tr>
                         </thead>
@@ -39,9 +40,10 @@
                                     <td>{{ $item->tuk_cp_nama }}</td>
                                     <td>{{ $item->tuk_cp_email }}</td>
                                     <td>{{ $item->tuk_cp_telp }}</td>
-                                    <td>{{ $item->name }} <br> {{ $item->created_at->format('Y-m-d') }}</td>
+                                    <td>@if($item->tuk_verif==0)  <a href="{{ route('tukAdmin.verifikasi',  [$item->ref, 1]) }}"><i class=" ri-close-fill fs-3 text-danger fw-bold text-center d-block"></a>@else <a href="{{ route('tukAdmin.verifikasi',  [$item->ref, 0]) }}"><i class="ri-check-fill  fs-3 text-success fw-bold text-center d-block" ></i></a> @endif</td>
+                                    <td>{{ $item->created_at->format('Y-m-d') }}</td>
                                     <td>
-                                         <a href="#" class="text-reset fs-16 px-1">
+                                         <a href="{{ route('tukAdmin.edit', $item->ref) }}" class="text-reset fs-16 px-1">
                                             <button type="button" class="btn btn-sm btn-outline-primary"><i class="ri-pencil-line"></i> Edit</button>
                                         </a>
 
@@ -81,7 +83,7 @@
                     e.preventDefault();
 
                     let propertyName = this.getAttribute('data-nama');
-                    let departemenID = this.parentElement.querySelector('.departemenID').value;
+                    let tukID = this.parentElement.querySelector('.tukID').value;
 
                     Swal.fire({
                         title: 'Are you sure?',
@@ -94,7 +96,7 @@
                     }).then((result) => {
                         if (result.isConfirmed) {
                             // Kirim DELETE request manual lewat JavaScript
-                            fetch('/departemen/' + departemenID, {
+                            fetch('/tukAdmin/' + tukID, {
                                     method: 'DELETE',
                                     headers: {
                                         'X-CSRF-TOKEN': '{{ csrf_token() }}',

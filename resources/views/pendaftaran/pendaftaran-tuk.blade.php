@@ -13,14 +13,14 @@
                                 <h4 class="fs-20">FORM TUK</h4>
                             </div>
 
-                            <form action="#" method="POST">
-                            @csrf
+                            <form action="{{ route('tuk.added') }}" method="POST">
+                                @csrf
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col-lg-12">
                                             <div class="mb-3">
                                                 <label for="example-select" class="form-label">Lembaga Sertifikasi Kompetensi (LSP)</label><span class="text-danger">*</span>
-                                                <select class="form-select rounded-3" id="example-select" name="kebangsaan"  required>
+                                                <select class="form-select rounded-3" id="example-select" name="lps_ref"  required>
                                                     <option value="">Pilih Lembaga Sertifikasi Kompetensi (LSP)</option>
                                                     @foreach ($dataLsp as $lsp)
                                                         <option value="{{ $lsp->ref }}">{{ $lsp->lsp_nama }}</option>
@@ -78,12 +78,12 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-lg-12">
+                                        {{-- <div class="col-lg-12">
                                             <div class="mb-3">
                                                 <label for="simpleinput" class="form-label">Surat Permohonan TUK</label>
                                                 <input type="file" id="example-fileinput" class="form-control rounded-3" name="tuk_file">
                                             </div>
-                                        </div>
+                                        </div> --}}
 
                                         <div class="col-lg-12">
                                             <div class="mb-2 mt-3">
