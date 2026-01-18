@@ -12,7 +12,16 @@
                             <div class="my-auto p-4 mt-4 text-center text-danger">
                                 <h4 class="fs-20">FORM TUK</h4>
                             </div>
-
+                            @if ($errors->any())
+                                <div class="alert alert-danger">
+                                    <strong>DATA GAGAL DISIMPAN!</strong>
+                                    <ul class="mb-0 mt-2">
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endif
                             <form action="{{ route('tuk.added') }}" method="POST">
                                 @csrf
                                 <div class="card-body">

@@ -90,6 +90,23 @@
                 </div>
             </li>
 
+            <li class="side-nav-item {{ request()->routeIs('pegawai.list') ? 'menuitem-active' : '' }}">
+                <a data-bs-toggle="collapse" href="#pegawaiMenu" aria-expanded="false" aria-controls="pegawaiMenu" class="side-nav-link">
+                    <i class="ri-contacts-line"></i>
+                    <span> Pegawai </span>
+                    <span class="menu-arrow"></span>
+                </a>
+                <div class="{{ request()->routeIs('pegawai.list') ? 'show' : '' }} collapse" id="pegawaiMenu">
+                    <ul class="side-nav-second-level">
+                        <li class="side-nav-item {{ request()->routeIs('pegawai.list') ? 'menuitem-active' : '' }}">
+                            <a class="side-nav-link {{ request()->routeIs('pegawai.list') ? 'active' : '' }}" href="{{ route('pegawai.list') }}">
+                                Daftar Pegawai
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+
             @role('master')
                 <li class="side-nav-item {{ request()->routeIs('lsp.*') ? 'menuitem-active' : '' }}">
                     <a data-bs-toggle="collapse" href="#lspMenu" aria-expanded="false" aria-controls="lspMenu" class="side-nav-link">

@@ -101,7 +101,7 @@ Route::post('tuk/added', [TUKController::class, 'added'])->name('tuk.added');
 
 // ################################ Data Pegawai
 Route::get('pegawai', [PegawaiController::class, 'index'])->name('pegawai.index');
-Route::get('pegawai/create', [PegawaiController::class, 'create'])->name('pegawai.create');
+Route::get('pegawaiAdmin', [PegawaiController::class, 'list'])->name('pegawai.list');
 Route::post('pegawai/store', [PegawaiController::class, 'store'])->name('pegawai.store');
 
 require __DIR__ . '/auth.php';

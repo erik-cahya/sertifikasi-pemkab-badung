@@ -26,14 +26,6 @@ class TUKController extends Controller
 
     public function added(Request $request)
     {
-    //       $tuk = new TUKModel();
-    //     $tuk->lsp_ref = '01KF6F3GDNBJWT8A8RZ0W60X5C';
-    //     $tuk->tuk_nama = 'TEST';
-    //     $tuk->save();
-
-    // dd('SAVE OK');
-
-
         $validated = $request->validate([
             'lsp_ref' => 'required|exists:lsp,ref',
             'tuk_nama' => 'required',
