@@ -12,6 +12,17 @@ class TUKModel extends Model
 
     protected $table = 'tuk';
     protected $guarded = ['ref'];
+    // protected $fillable = [
+    //     'lsp_ref',
+    //     'tuk_nama',
+    //     'tuk_alamat',
+    //     'tuk_email',
+    //     'tuk_telp',
+    //     'tuk_cp_nama',
+    //     'tuk_cp_email',
+    //     'tuk_cp_telp',
+    //     'tuk_verif',
+    // ];
 
 
     public function uniqueIds()

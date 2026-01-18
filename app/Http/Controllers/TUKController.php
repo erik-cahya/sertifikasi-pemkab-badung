@@ -26,28 +26,34 @@ class TUKController extends Controller
 
     public function added(Request $request)
     {
-        dd($request);
+    //       $tuk = new TUKModel();
+    //     $tuk->lsp_ref = '01KF6F3GDNBJWT8A8RZ0W60X5C';
+    //     $tuk->tuk_nama = 'TEST';
+    //     $tuk->save();
+
+    // dd('SAVE OK');
+
+
         $validated = $request->validate([
-            'lsp_ref' => 'required',
+            'lsp_ref' => 'required|exists:lsp,ref',
             'tuk_nama' => 'required',
             'tuk_alamat' => 'required', 
-            'tuk_telp' => 'required', 
             'tuk_email' => 'required', 
+            'tuk_telp' => 'required', 
             'tuk_cp_nama' => 'required', 
             'tuk_cp_email' => 'required', 
             'tuk_cp_telp' => 'required', 
         ], [
-            'lsp_ref' => 'TUK harus memiliki LSP Induk tidak boleh kosong',
-            'tuk_nama' => 'Nama TUK tidak boleh kosong',
-            'tuk_alamat' => 'Alamat TUK tidak boleh kosong', 
-            'tuk_telp' => 'Telp TUK tidak boleh kosong', 
-            'tuk_email' => 'Email TUK tidak boleh kosong', 
-            'tuk_cp_nama' => 'Nama Kontak Person TUK tidak boleh kosong', 
-            'tuk_cp_email' => 'Email Kontak Person TUK tidak boleh kosong', 
-            'tuk_cp_telp' => 'Telp Kontak Person TUK tidak boleh kosong',
+            'lsp_ref.required' => 'TUK harus memiliki LSP Induk tidak boleh kosong',
+            'tuk_nama.required' => 'Nama TUK tidak boleh kosong',
+            'tuk_alamat.required' => 'Alamat TUK tidak boleh kosong', 
+            'tuk_telp.required' => 'Telp TUK tidak boleh kosong', 
+            'tuk_email.required' => 'Email TUK tidak boleh kosong', 
+            'tuk_cp_nama.required' => 'Nama Kontak Person TUK tidak boleh kosong', 
+            'tuk_cp_email.required' => 'Email Kontak Person TUK tidak boleh kosong', 
         ]);
 
-        TUKModel::create([
+       TUKModel::create([
             'lsp_ref' => $request->lsp_ref,
             'tuk_nama' => $request->tuk_nama,
             'tuk_alamat' => $request->tuk_alamat,

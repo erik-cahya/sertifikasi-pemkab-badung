@@ -20,7 +20,7 @@
                                         <div class="col-lg-12">
                                             <div class="mb-3">
                                                 <label for="example-select" class="form-label">Lembaga Sertifikasi Kompetensi (LSP)</label><span class="text-danger">*</span>
-                                                <select class="form-select rounded-3" id="example-select" name="lps_ref"  required>
+                                                 <select class="form-select rounded-3" id="example-select" name="lsp_ref"  required>
                                                     <option value="">Pilih Lembaga Sertifikasi Kompetensi (LSP)</option>
                                                     @foreach ($dataLsp as $lsp)
                                                         <option value="{{ $lsp->ref }}">{{ $lsp->lsp_nama }}</option>
@@ -32,21 +32,21 @@
                                         <div class="col-lg-12">
                                             <div class="mb-3">
                                                 <label for="simpleinput" class="form-label">Nama TUK</label><span class="text-danger">*</span>
-                                                <input type="text" id="simpleinput" class="form-control rounded-3" name="tuk_nama" required placeholder="Masukkan Nama Lengkap" required>
+                                                <input type="text" id="simpleinput" class="form-control rounded-3" name="tuk_nama" required placeholder="Masukkan nama TUK" required>
                                             </div>
                                         </div>
 
                                         <div class="col-lg-12">
                                             <div class="mb-3">
                                                 <label for="simpleinput" class="form-label">Alamat TUK</label><span class="text-danger">*</span>
-                                                <input type="text" id="simpleinput" class="form-control rounded-3" name="tuk_alamat" required placeholder="Masukkan alamat rumah" required>
+                                                <input type="text" id="simpleinput" class="form-control rounded-3" name="tuk_alamat" required placeholder="Masukkan alamat TUK" required>
                                             </div>
                                         </div>
 
                                         <div class="col-lg-12">
                                             <div class="mb-3">
                                                 <label for="inputEmail3" class="form-label">Email TUK</label><span class="text-danger">*</span>
-                                                <input type="email" class="form-control rounded-3" id="inputEmail3" name="tuk_email" required placeholder="Masukkan alamat email" required>
+                                                <input type="email" class="form-control rounded-3" id="inputEmail3" name="tuk_email" required placeholder="Masukkan alamat email TUK" required>
                                             </div>
                                         </div>
 
@@ -60,14 +60,14 @@
                                         <div class="col-lg-12">
                                             <div class="mb-3">
                                                 <label for="simpleinput" class="form-label">Nama Kontak Person</label><span class="text-danger">*</span>
-                                                <input type="text" id="simpleinput" class="form-control rounded-3" name="tuk_cp_nama" required placeholder="Masukkan Nama Lengkap" required>
+                                                <input type="text" id="simpleinput" class="form-control rounded-3" name="tuk_cp_nama" required placeholder="Masukkan Nama Kontak Person TUK" required>
                                             </div>
                                         </div>
 
                                         <div class="col-lg-12">
                                             <div class="mb-3">
                                                 <label for="inputEmail3" class="form-label">Email Kontak Person</label><span class="text-danger">*</span>
-                                                <input type="email" class="form-control rounded-3" id="inputEmail3" name="tuk_cp_email" required placeholder="Masukkan alamat email" required>
+                                                <input type="email" class="form-control rounded-3" id="inputEmail3" name="tuk_cp_email" required placeholder="Masukkan alamat email Kontak Person TUK" required>
                                             </div>
                                         </div>
 

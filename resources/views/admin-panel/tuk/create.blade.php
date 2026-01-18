@@ -43,7 +43,7 @@
 
                             <div class="col-lg-4">
                                 <div class="mb-3">
-                                    <label for="example-number" class="form-label">Nomor Telp TUK</label><span class="text-danger">*</span>
+                                    <label for="simpleinput" class="form-label">Nomor Telp TUK</label><span class="text-danger">*</span>
                                     <input type="number" id="example-number" class="form-control rounded-3" name="tuk_telp" required >
                                 </div>
                             </div>
@@ -71,7 +71,7 @@
 
                             <div class="col-lg-4">
                                 <div class="mb-3">
-                                    <label for="example-number" class="form-label">Nomor Telp Kontak Person TUK</label><span class="text-danger">*</span>
+                                    <label for="simpleinput" class="form-label">Nomor Telp Kontak Person TUK</label><span class="text-danger">*</span>
                                     <input type="number" id="example-number" class="form-control rounded-3" name="tuk_cp_telp" required>
                                 </div>
                             </div>

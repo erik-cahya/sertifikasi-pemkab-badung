@@ -71,7 +71,7 @@
             Swal.fire({
                 title: flashData.title,
                 text: flashData.message,
-                icon: flashData.swalFlashIcon,
+                icon: flashData.type,
                 confirmButtonText: 'OK'
             });
         @endif
