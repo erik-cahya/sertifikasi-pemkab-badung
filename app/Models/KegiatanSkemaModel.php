@@ -23,4 +23,13 @@ class KegiatanSkemaModel extends Model
             $this->attributes['ref'] = strtoupper($value);
         }
     }
+    public function lsp()
+    {
+        return $this->belongsTo(LSPModel::class, 'lsp_ref', 'ref');
+    }
+
+    public function skema()
+    {
+        return $this->belongsTo(SkemaModel::class, 'skema_ref', 'ref');
+    }
 }

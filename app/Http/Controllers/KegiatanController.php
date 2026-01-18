@@ -84,12 +84,21 @@ class KegiatanController extends Controller
     public function show(string $id)
     {
 
-        $data['dataKegiatan'] = KegiatanModel::where('ref', $id)->with([
-            'details.lsp'
-        ])->withSum(
-            'details as total_kuota_lsp',
-            'kuota_lsp'
-        )->firstOrFail();
+        $data['dataKegiatan'] = KegiatanModel::where('ref', $id)
+            ->with([
+                'details.lsp',           // detail kuota + LSP
+                'skemaPerLsp.lsp',        // total skema per LSP
+                'kuotaPerLsp.lsp'      // total kuota per LSP
+            ])->withSum(
+                'details as total_kuota_lsp',
+                'kuota_lsp'
+            )->withCount('skemas')        // total skema kegiatan
+            ->firstOrFail();
+
+        $data['skemaPerLsp'] = $data['dataKegiatan']->skemaPerLsp
+            ->keyBy('lsp_ref');
+
+        // dd($data['skemaPerLsp']);
 
         return view('admin-panel.kegiatan.show', $data);
     }

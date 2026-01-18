@@ -70,6 +70,7 @@ class KegiatanDetailController extends Controller
 
                     KegiatanSkemaModel::create([
                         'kegiatan_ref' => $request->kegiatan_ref,
+                        'lsp_ref'    => $lsp,
                         'skema_ref'    => $skema,
                         'created_by'   => Auth::user()->ref,
                     ]);

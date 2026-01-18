@@ -14,6 +14,10 @@ class SkemaModel extends Model
     protected $table = 'skema';
     protected $guarded = ['ref'];
 
+    protected $primaryKey = 'ref';
+    public $incrementing = false;
+    protected $keyType = 'string';
+
     public function uniqueIds()
     {
         return ['ref'];
@@ -32,6 +36,16 @@ class SkemaModel extends Model
             SkemaDetailModel::class,
             'skema_ref',
             'ref'
+        );
+    }
+
+    public function kegiatans()
+    {
+        return $this->belongsToMany(
+            KegiatanModel::class,
+            'kegiatan_skema',
+            'skema_ref',
+            'kegiatan_ref'
         );
     }
 }

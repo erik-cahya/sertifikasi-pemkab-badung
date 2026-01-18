@@ -30,7 +30,10 @@
                                     <td>
                                         <span class="bg-primary rounded-4 px-2 text-white">{{ $loop->iteration }}</span>
                                     </td>
-                                    <td>{{ $kegiatan->nama_kegiatan }}</td>
+                                    <td>
+                                        <span class="badge {{ $kegiatan->status == 1 ? 'bg-success' : 'bg-danger' }} rounded-circle p-1"><small></small></span>
+                                        {{ $kegiatan->nama_kegiatan }}
+                                    </td>
                                     <td>
                                         @php
                                             // Ambil LSP unik (karena bisa muncul berulang di detail)
@@ -52,7 +55,7 @@
                                             @endforeach
                                         @endif
                                     </td>
-                                    <td>{{ $kegiatan->total_kuota_lsp }} Peserta</td>
+                                    <td>{{ $kegiatan->total_kuota_lsp == null ? '0' : $kegiatan->total_kuota_lsp }} Peserta</td>
                                     <td>{{ \Carbon\Carbon::parse($kegiatan->mulai_kegiatan)->locale('id')->translatedFormat('l, d F Y') }}</td>
                                     <td>{{ \Carbon\Carbon::parse($kegiatan->selesai_kegiatan)->locale('id')->translatedFormat('l, d F Y') }}</td>
                                     <td><span class="badge bg-success">{{ $kegiatan->status == 1 ? 'Aktif' : 'Tidak Aktif' }}</span></td>
