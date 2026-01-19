@@ -83,22 +83,19 @@ class KegiatanController extends Controller
      */
     public function show(string $id)
     {
-
         $data['dataKegiatan'] = KegiatanModel::where('ref', $id)
             ->with([
                 'details.lsp',           // detail kuota + LSP
                 'skemaPerLsp.lsp',        // total skema per LSP
                 'kuotaPerLsp.lsp'      // total kuota per LSP
             ])->withSum(
-                'details as total_kuota_lsp',
+                'details as total_peserta',
                 'kuota_lsp'
             )->withCount('skemas')        // total skema kegiatan
             ->firstOrFail();
 
-        $data['skemaPerLsp'] = $data['dataKegiatan']->skemaPerLsp
-            ->keyBy('lsp_ref');
-
-        // dd($data['skemaPerLsp']);
+        $data['skemaPerLsp'] = $data['dataKegiatan']->skemaPerLsp->keyBy('lsp_ref'); // Mengelompokkan skema per LSP berdasarkan lsp_ref
+        $data['jadwalKegiatan'] = $data['dataKegiatan']->details->groupBy('lsp_ref'); // Mengelompokkan jadwal kegiatan berdasarkan lsp_ref
 
         return view('admin-panel.kegiatan.show', $data);
     }
@@ -116,7 +113,21 @@ class KegiatanController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+
+        KegiatanModel::where('ref', $id)->update([
+            'nama_kegiatan' => $request->nama_kegiatan,
+            'mulai_kegiatan' => Carbon::createFromFormat('d/m/Y', $request->mulai_kegiatan)->format('Y-m-d'),
+            'selesai_kegiatan' => Carbon::createFromFormat('d/m/Y', $request->selesai_kegiatan)->format('Y-m-d'),
+            'status' => $request->status,
+        ]);
+
+        return redirect()
+            ->route('kegiatan.index')
+            ->with('flashData', [
+                'title' => 'Edit Data Success',
+                'message' => 'Skema Berhasil Diubah',
+                'type' => 'success',
+            ]);
     }
 
     /**

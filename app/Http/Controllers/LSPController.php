@@ -45,7 +45,6 @@ class LSPController extends Controller
     public function store(Request $request)
     {
         // dd($request->all());
-
         $validated = $request->validate([
             'lsp_nama' => 'required',
             'lsp_no_lisensi' => 'required',

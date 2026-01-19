@@ -34,7 +34,7 @@
                                         <span class="badge {{ $kegiatan->status == 1 ? 'bg-success' : 'bg-danger' }} rounded-circle p-1"><small></small></span>
                                         {{ $kegiatan->nama_kegiatan }}
                                     </td>
-                                    <td>
+                                    <td class="d-flex flex-wrap gap-1">
                                         @php
                                             // Ambil LSP unik (karena bisa muncul berulang di detail)
                                             $lsps = $kegiatan->details->pluck('lsp')->unique('ref');
@@ -58,7 +58,7 @@
                                     <td>{{ $kegiatan->total_kuota_lsp == null ? '0' : $kegiatan->total_kuota_lsp }} Peserta</td>
                                     <td>{{ \Carbon\Carbon::parse($kegiatan->mulai_kegiatan)->locale('id')->translatedFormat('l, d F Y') }}</td>
                                     <td>{{ \Carbon\Carbon::parse($kegiatan->selesai_kegiatan)->locale('id')->translatedFormat('l, d F Y') }}</td>
-                                    <td><span class="badge bg-success">{{ $kegiatan->status == 1 ? 'Aktif' : 'Tidak Aktif' }}</span></td>
+                                    <td><span class="badge {{ $kegiatan->status == 1 ? 'bg-success' : 'bg-danger' }}">{{ $kegiatan->status == 1 ? 'Aktif' : 'Tidak Aktif' }}</span></td>
                                     <td>
                                         <div class="btn-group" role="group" aria-label="Basic outlined example">
                                             <a href="{{ route('kegiatan.show', $kegiatan->ref) }}" class="btn btn-sm btn-success" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="See Details" data-bs-custom-class="success-tooltip"><i class="mdi mdi-eye"></i> </a>
