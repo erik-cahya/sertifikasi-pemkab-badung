@@ -43,6 +43,7 @@ class KegiatanController extends Controller
         return view('admin-panel.kegiatan.create', $data);
     }
 
+
     /**
      * Store a newly created resource in storage.
      */
@@ -83,6 +84,7 @@ class KegiatanController extends Controller
      */
     public function show(string $id)
     {
+        $data['dataLSP'] = LSPModel::get();
         $data['dataKegiatan'] = KegiatanModel::where('ref', $id)
             ->with([
                 'details.lsp',           // detail kuota + LSP
@@ -97,6 +99,7 @@ class KegiatanController extends Controller
         $data['skemaPerLsp'] = $data['dataKegiatan']->skemaPerLsp->keyBy('lsp_ref'); // Mengelompokkan skema per LSP berdasarkan lsp_ref
         $data['jadwalKegiatan'] = $data['dataKegiatan']->details->groupBy('lsp_ref'); // Mengelompokkan jadwal kegiatan berdasarkan lsp_ref
 
+        // dd($data['dataKegiatan']);
         return view('admin-panel.kegiatan.show', $data);
     }
 
@@ -144,5 +147,18 @@ class KegiatanController extends Controller
         ];
 
         return response()->json($flashData);
+    }
+
+
+    // Function untuk menambahkan data LSP baru pada page details kegiatan
+    public function add_lsp($id)
+    {
+        // dd($id);
+        $data['dataLSP'] = LSPModel::whereDoesntHave('kegiatanDetails')->get();
+
+        // Jika data kegiatan sudah dibuat, maka tidak ditampilkan lagi
+
+        $data['dataKegiatan'] = KegiatanModel::where('ref', $id)->first();
+        return view('admin-panel.kegiatan.create-lsp', $data);
     }
 }

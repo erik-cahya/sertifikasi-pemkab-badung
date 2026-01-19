@@ -36,6 +36,7 @@ Route::middleware('auth')->group(function () {
         // ################################ Kegiatan
         Route::get('kegiatan', [KegiatanController::class, 'index'])->name('kegiatan.index');
         Route::get('kegiatan/create', [KegiatanController::class, 'create'])->name('kegiatan.create');
+        Route::get('kegiatan/add-lsp/{id}', [KegiatanController::class, 'add_lsp'])->name('kegiatan.add-lsp');
         Route::post('kegiatan/store', [KegiatanController::class, 'store'])->name('kegiatan.store');
         Route::get('kegiatan/{id}', [KegiatanController::class, 'show'])->name('kegiatan.show');
         Route::put('kegiatan/{id}', [KegiatanController::class, 'update'])->name('kegiatan.update');

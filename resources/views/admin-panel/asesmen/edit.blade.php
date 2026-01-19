@@ -20,7 +20,7 @@
                             <div class="col-lg-6">
                                 <div class="mb-3">
                                     <label for="namaKegiatan" class="form-label">Nama Kegiatan</label>
-                                    <input type="text" id="namaKegiatan" class="form-control rounded-3" name="tuk_email" required value="{{ $dataKegiatan->kegiatan->nama_kegiatan }}">
+                                    <input type="text" id="namaKegiatan" class="form-control rounded-3" name="tuk_email" required value="{{ $dataKegiatan->kegiatan->nama_kegiatan }}" disabled>
                                 </div>
                             </div>
 
