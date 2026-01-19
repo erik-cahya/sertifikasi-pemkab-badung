@@ -166,15 +166,14 @@
                                                                             <td>{{ $jadwal->kuota_lsp }} Peserta</td>
                                                                             <td>{{ \Carbon\Carbon::parse($jadwal->mulai_asesmen)->locale('id')->translatedFormat('l, d F Y') }}</td>
                                                                             <td class="d-flex gap-2">
-                                                                                <a href="#" class="text-primary" data-nama="{{ $jadwal->lsp->lsp_nama }}">
+                                                                                <a href="{{ route('asesmen.edit', $jadwal->ref) }}" class="text-primary">
                                                                                     <i class="mdi mdi-pencil-outline"></i> Edit
                                                                                 </a>
 
-                                                                                <a href="#" class="text-danger deleteButton" data-nama="{{ $jadwal->lsp->lsp_nama }}">
+                                                                                <input type="hidden" class="dataID" value="{{ $jadwal->ref }}">
+                                                                                <a href="#" class="text-danger deleteButton" data-nama="{{ \Carbon\Carbon::parse($jadwal->mulai_asesmen)->locale('id')->translatedFormat('l, d F Y') }}">
                                                                                     <i class="mdi mdi-trash-can-outline"></i> Hapus
                                                                                 </a>
-                                                                                <input type="hidden" class="dataID" value="{{ $jadwal->ref }}">
-
                                                                             </td>
                                                                         </tr>
                                                                     @endforeach
@@ -242,10 +241,6 @@
     <!-- Datatable Demo App js -->
     <script src="{{ asset('admin') }}/assets/js/pages/datatable.init.js"></script>
 
-    <!-- Bootstrap Datepicker Plugin js -->
-    <!-- Vendor js -->
-    <script src="{{ asset('admin') }}/assets/js/vendor.min.js"></script>
-
     <script src="{{ asset('admin') }}/assets/vendor/lucide/umd/lucide.min.js"></script>
 
     <!--  Select2 Plugin Js -->
@@ -254,37 +249,6 @@
     <!-- Daterangepicker Plugin js -->
     <script src="{{ asset('admin') }}/assets/vendor/daterangepicker/moment.min.js"></script>
     <script src="{{ asset('admin') }}/assets/vendor/daterangepicker/daterangepicker.js"></script>
-
-    <!-- Bootstrap Datepicker Plugin js -->
-    <script src="{{ asset('admin') }}/assets/vendor/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
-
-    <!-- Bootstrap Timepicker Plugin js -->
-    <script src="{{ asset('admin') }}/assets/vendor/bootstrap-timepicker/js/bootstrap-timepicker.min.js"></script>
-
-    <!-- Input Mask Plugin js -->
-    <script src="{{ asset('admin') }}/assets/vendor/jquery-mask-plugin/jquery.mask.min.js"></script>
-
-    <!-- Bootstrap Touchspin Plugin js -->
-    <script src="{{ asset('admin') }}/assets/vendor/bootstrap-touchspin/jquery.bootstrap-touchspin.min.js"></script>
-
-    <!-- Bootstrap Maxlength Plugin js -->
-    <script src="{{ asset('admin') }}/assets/vendor/bootstrap-maxlength/bootstrap-maxlength.min.js"></script>
-
-    <!-- Typehead Plugin js -->
-    <script src="{{ asset('admin') }}/assets/vendor/handlebars/handlebars.min.js"></script>
-    <script src="{{ asset('admin') }}/assets/vendor/typeahead.js/typeahead.bundle.min.js"></script>
-
-    <!-- Flatpickr Timepicker Plugin js -->
-    <script src="{{ asset('admin') }}/assets/vendor/flatpickr/flatpickr.min.js"></script>
-
-    <!-- Typehead Demo js -->
-    <script src="{{ asset('admin') }}/assets/js/pages/typehead.init.js"></script>
-
-    <!-- Timepicker Demo js -->
-    <script src="{{ asset('admin') }}/assets/js/pages/timepicker.init.js"></script>
-
-    <!-- App js -->
-    <script src="{{ asset('admin') }}/assets/js/app.min.js"></script>
 
     <script>
         $(document).on('focus', '.single-date', function() {
@@ -320,7 +284,7 @@
 
                     Swal.fire({
                         title: 'Are you sure?',
-                        text: `Delete data ${dataNama}?`,
+                        text: `Hapus jadwal asesmen pada hari ${dataNama}?`,
                         icon: 'warning',
                         showCancelButton: true,
                         confirmButtonText: 'Yes, delete it!',
@@ -328,7 +292,7 @@
 
                         if (!result.isConfirmed) return;
 
-                        fetch(`/lsp/${dataID}`, {
+                        fetch(`/asesmen/${dataID}`, {
                                 method: 'DELETE',
                                 credentials: 'same-origin',
                                 headers: {
@@ -339,7 +303,7 @@
                             .then(() => {
                                 Swal.fire({
                                     title: 'Berhasil',
-                                    text: 'Data LSP berhasil dihapus',
+                                    text: 'Jadwal asesmen berhasil dihapus',
                                     icon: 'success',
                                     timer: 1200,
                                     showConfirmButton: false

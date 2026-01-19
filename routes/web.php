@@ -5,6 +5,7 @@ use App\Http\Controllers\DepartemenController;
 use App\Http\Controllers\PegawaiController;
 use App\Http\Controllers\TUKController;
 use App\Http\Controllers\AsesiController;
+use App\Http\Controllers\AsesmenController;
 use App\Http\Controllers\KegiatanController;
 use App\Http\Controllers\KegiatanDetailController;
 use App\Http\Controllers\KodeUnitController;
@@ -39,6 +40,9 @@ Route::middleware('auth')->group(function () {
         Route::get('kegiatan/{id}', [KegiatanController::class, 'show'])->name('kegiatan.show');
         Route::put('kegiatan/{id}', [KegiatanController::class, 'update'])->name('kegiatan.update');
         Route::delete('kegiatan/{id}', [KegiatanController::class, 'destroy'])->name('kegiatan.destroy');
+
+        // ################################ Asesmen by Admin
+        Route::resource('asesmen', AsesmenController::class)->except('index');
 
         // ################################ Kegiatan Detail
         Route::post('kegiatan-detail', [KegiatanDetailController::class, 'store'])->name('kegiatan-detail.store');
