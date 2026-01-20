@@ -139,7 +139,7 @@
                                                     <th>Nama LSP</th>
                                                     <th>Jumlah Skema</th>
                                                     <th>Kuota</th>
-                                                    <th>Jadwal</th>
+                                                    <th>Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody class="table-group-divider fs-12">
@@ -154,7 +154,7 @@
                                                         <td>{{ $details->total_kuota_lsp ?? '0' }} Peserta</td>
                                                         {{-- <td>{{ \Carbon\Carbon::parse($details->created_at)->locale('id')->translatedFormat('d F Y') }}</td> --}}
                                                         <td>
-                                                            <a href="#" data-bs-toggle="modal" data-bs-target="#jadwalModal-{{ $details->lsp_ref }}">Lihat Jadwal</a>
+                                                            <a href="#" data-bs-toggle="modal" data-bs-target="#jadwalModal-{{ $details->lsp_ref }}">Details</a>
                                                         </td>
                                                     </tr>
                                                 @endforeach
@@ -168,13 +168,11 @@
                                                 <div class="modal-dialog">
                                                     <div class="modal-content">
                                                         <div class="modal-header modal-colored-header bg-success">
-                                                            <h4 class="modal-title" id="success-header-modalLabel">Pembagian Jadwal Asesmen</h4>
+                                                            <h4 class="modal-title" id="success-header-modalLabel">Detail Asesmen</h4>
                                                             <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                                                         </div>
                                                         <div class="modal-body">
-                                                            <span class="badge bg-primary-subtle text-primary rounded-pill fs-5 mb-2">{{ $jadwalKegiatan[$details->lsp_ref]->first()->lsp->lsp_nama ?? '' }}</span>
-
-
+                                                            <span class="badge bg-primary-subtle text-primary fs-6">{{ $jadwalKegiatan[$details->lsp_ref]->first()->lsp->lsp_nama ?? '' }}</span>
                                                             <div class="nav nav-pills nav-justified gap-0 p-3 text-center" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                                                                 <li class="nav-item mt-2"><a class="nav-link fs-5 active p-2" data-bs-toggle="tab" data-bs-target="#jadwal_asesmen" type="button" role="tab" aria-controls="home" aria-selected="true" href="#jadwal_asesmen"><i class="mdi mdi-pencil"></i> Daftar Jadwal Asesmen</a></li>
                                                                 <li class="nav-item mt-2"><a class="nav-link fs-5 p-2" data-bs-toggle="tab" data-bs-target="#daftar_skema" type="button" role="tab" aria-controls="home" aria-selected="true" href="#daftar_skema"><i class="mdi mdi-pencil"></i> Daftar Skema</a></li>
@@ -232,11 +230,10 @@
                                                                                     </tr>
                                                                                 </thead>
                                                                                 <tbody>
-                                                                                    @foreach ($skemaPerLsp[$details->lsp_ref] as $jadwal)
-                                                                                        {{ dd($skemaPerLsp) }}
+                                                                                    @foreach ($dataSkema[$details->lsp_ref] as $skema)
                                                                                         <tr>
                                                                                             <td>{{ $loop->iteration }}</td>
-                                                                                            <td>Skema 1</td>
+                                                                                            <td>{{ $skema->skema_judul }}</td>
                                                                                             <td class="d-flex gap-2">
                                                                                                 <a href="#" class="text-danger">
                                                                                                     <i class="mdi mdi-trash-can-outline"></i> Hapus
@@ -251,9 +248,7 @@
                                                                 </div>
                                                                 {{-- END Skema Content --}}
 
-
                                                             </div>
-
 
                                                         </div>
                                                         <div class="modal-footer">
@@ -334,8 +329,6 @@
     <!--  Select2 Plugin Js -->
     <script src="{{ asset('admin') }}/assets/vendor/select2/js/select2.min.js"></script>
 
-
-
     <script>
         $(document).on('focus', '.single-date', function() {
             const modal = $(this).closest('.modal');
@@ -354,8 +347,6 @@
             });
         });
     </script>
-
-
 
     {{-- Sweet Alert --}}
     <script>

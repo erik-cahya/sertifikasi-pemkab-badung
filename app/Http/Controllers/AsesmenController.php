@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\KegiatanDetailModel;
+use App\Models\KegiatanSkemaModel;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -75,7 +76,21 @@ class AsesmenController extends Controller
      */
     public function destroy(string $id)
     {
-        KegiatanDetailModel::where('ref', $id)->delete();
+        // KegiatanDetailModel::where('ref', $id)->delete();
+
+        $detail = KegiatanDetailModel::findOrFail($id);
+        $kegiatanRef = $detail->kegiatan_ref;
+
+        // 🔥 hapus detail
+        $detail->delete();
+
+        // 🔍 cek apakah masih ada detail lain
+        $remaining = KegiatanDetailModel::where('kegiatan_ref', $kegiatanRef)->count();
+
+        // ❗ jika sudah 0 → hapus skema
+        if ($remaining === 0) {
+            KegiatanSkemaModel::where('kegiatan_ref', $kegiatanRef)->delete();
+        }
         $flashData = [
             'judul' => 'Hapus Data Success',
             'pesan' => 'Kegiatan Berhasil Dihapus ',
