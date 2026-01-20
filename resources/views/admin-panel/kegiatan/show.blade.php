@@ -32,7 +32,7 @@
 @section('content')
     <div class="container-fluid">
         <div class="row mt-2">
-            <div class="col-lg-4">
+            <div class="col-lg-12">
                 <div class="card border-top-0 overflow-hidden">
                     <div class="progress progress-sm rounded-0 bg-light" role="progressbar" aria-valuenow="88" aria-valuemin="0" aria-valuemax="100">
                         <div class="progress-bar bg-success" style="width: 60%"></div>
@@ -118,7 +118,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-8">
+            <div class="col-lg-12">
                 <div class="card">
                     <div class="nav nav-pills nav-justified gap-0 p-3 text-center" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                         <li class="nav-item mt-2"><a class="nav-link fs-5 active p-2" data-bs-toggle="tab" data-bs-target="#daftar_lsp" type="button" role="tab" aria-controls="home" aria-selected="true" href="#daftar_lsp"><i class="mdi mdi-pencil"></i> Daftar LSP</a></li>
@@ -233,7 +233,7 @@
                                                                                 </thead>
                                                                                 <tbody>
                                                                                     @foreach ($skemaPerLsp[$details->lsp_ref] as $jadwal)
-                                                                                        {{ dd($skemaPerLsp) }}
+                                                                                        {{-- {{ dd($skemaPerLsp) }} --}}
                                                                                         <tr>
                                                                                             <td>{{ $loop->iteration }}</td>
                                                                                             <td>Skema 1</td>
@@ -272,21 +272,20 @@
                         <div id="daftar_asesi" class="tab-pane">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <table id="scroll-horizontal-datatable" class="table-sm table-bordered table-striped w-100 nowrap table">
+                                    {{-- <table id="scroll-horizontal-datatable" class="table-sm table-bordered table-striped w-100 nowrap table"> --}}
+                                    <table id="fixed-columns-datatable" class="table table-striped nowrap row-border order-column w-100">
                                         <thead>
-
                                             <tr>
                                                 <th>No</th>
                                                 <th>Nama Peserta</th>
                                                 <th>Tanggal Ujian</th>
-                                                <th>
-                                                    LSP Dipilih
-                                                </th>
+                                                <th> LSP Dipilih</th>
+                                                <th>Skema</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
 
-                                        <tbody style="font-size: 12px">
+                                        <tbody>
                                             @for ($x = 1; $x <= 50; $x++)
                                                 <tr>
                                                     <td>{{ $x }}</td>
@@ -294,10 +293,11 @@
                                                     <td>AC-213214.312421</td>
                                                     <td>
                                                         LSP Engineering Hospitality Indonesia
-                                                        <hr class="my-1">
-                                                        Skema Refrigerasi Domestik
+                                                        {{-- <hr class="my-1"> --}}
+                                                        
 
                                                     </td>
+                                                    <td>Skema Refrigerasi Domestik</td>
                                                     <td>10 Unit</td>
                                                 </tr>
                                             @endfor
