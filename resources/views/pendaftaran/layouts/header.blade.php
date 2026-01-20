@@ -13,7 +13,7 @@
         <div class="collapse navbar-collapse justify-content-end" id="mainNavbar">
             <ul class="navbar-nav gap-lg-4">
                 <li class="nav-item">
-                    <a class="nav-link {{ request()->routeIs('/home') ? 'active fw-semibold' : '' }}" href="{{ route('dashboard') }}">Beranda</a>
+                    <a class="nav-link {{ request()->routeIs('/') ? 'active fw-semibold' : '' }}" href="/">Beranda</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link {{ request()->routeIs('pegawai.index') ? 'active fw-semibold' : '' }}" href="{{ route('pegawai.index') }}">Pendataan Pegawai</a>
