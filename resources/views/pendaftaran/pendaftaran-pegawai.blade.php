@@ -8,9 +8,9 @@
             <div class="container-fluid">
                 <div class="row justify-content-center">
                     <div class="col-6">
-                        <div class="card rounded-3">
-                            <div class="my-auto p-4 mt-3 text-center text-danger">
-                                <h4 class="fs-20">FORM PENDATAAN PEGAWAI</h4>
+                        <div class="card shadow-lg border-0 rounded-4">
+                            <div class="my-auto p-4 text-center text-danger">
+                                <h3 class="card-title fw-bold">FORMULIR PENDATAAN PEGAWAI</h3>
                             </div>
                             @if ($errors->any())
                                 <div class="alert alert-danger">
@@ -56,7 +56,7 @@
 
                                         <div class="col-lg-12">
                                             <div class="mb-2 mt-3">
-                                                <button type="submit" class="btn btn-outline-primary rounded-3"><i class="ri-save-3-line"></i> SUBMIT</button>
+                                                <button type="submit" class="btn btn-outline-primary rounded-3"><i class="ri-save-3-line"></i> SIMPAN</button>
                                             </div>
                                         </div>
                                         

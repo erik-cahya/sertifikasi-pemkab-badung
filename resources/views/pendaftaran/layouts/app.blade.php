@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8" />
-    <title>*****</title>
+    <title>Bidang Pelatihan dan Sertifikasi - Dinas Perindustrian dan Ketenagakerjaan Kabupaten Badung</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content="A fully responsive admin theme which can be used to build CRM, CMS,ERP etc." name="description" />
     <meta content="Techzaa" name="author" />
@@ -29,18 +29,20 @@
 
 <body>
     <!-- Begin page -->
-    <div class="wrapper bg-white">
+    <div class="wrapper bg-white d-flex flex-column min-vh-100">
 
         <!-- ========== Header ========== -->
         @include('pendaftaran.layouts.header')
 
         <!-- ========== Content ========== -->
-        <div class="content mt-4">
+        <div class="content flex-grow-1 mt-4 mb-5">
 
             <!-- content -->
             @yield('content')
-
         </div>
+
+        <!-- Footer -->
+        @include('pendaftaran.layouts.footer')
 
     </div>
 

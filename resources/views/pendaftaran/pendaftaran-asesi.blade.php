@@ -8,15 +8,15 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-12">
-                        <div class="card">
-                            <div class="card-header">
-                                <h4 class=".card-title">**</h4>
-                                <p class="text-muted mb-0">
+                        <div class="card shadow-lg border-0 rounded-4">
+                            <div class="card-header rounded-top-4">
+                                <h4 class="card-title mb-3 fw-bold">FORMULIR PENDAFTARAN CALON ASESI</h4>
+                                <smal>
                                     Formulir ini digunakan untuk pendaftaran Calon Asesi dalam rangka mengikuti Sertifikasi Profesi Tahun {{ date('Y') }}  
                                     <br>
-                                    Silakan mengisi formulir pendaftaran Calon Asesi Sertifikasi Profesi Tahun {{ date('Y') }} berikut dengan data yang benar dan dapat dipertanggungjawabkan. 
+                                    Silakan mengisi formulir pendaftaran berikut dengan data yang benar, lengkap dan dapat dipertanggungjawabkan. 
                                     <br><br>
-                                    Silahkan siapkan dokumen berikut sebelum mengisi Form Pendaftaran :
+                                    Harap menyiapkan dokumen berikut sebelum mengisi formulir pendaftaran:
                                     <br>
                                     1. Scan Sertifikat Kompetensi (opsional)
                                     <br>
@@ -25,7 +25,7 @@
                                     3. Scan Surat Keterangan Kerja
                                     <br>
                                     4. Pas Foto Background Merah
-                                </p>
+                               </smal>
                             </div>
                             @if ($errors->any())
                                 <div class="alert alert-danger">
@@ -39,11 +39,11 @@
                             @endif
                             <form action="#" method="POST">
                             @csrf
-                                <div class="card-header bg-danger text-white">
-                                    <h4 class=".card-title">A. DATA PRIBADI</h4>
-                                    <p class="text-bg-danger mb-0">
-                                        Isilah form dibawah ini dengan data pribadi yang sebenarnya
-                                    </p>
+                                <div class="card-header bg-danger text-white px-4 py-2 rounded-top">
+                                    <h5 class="card-title mb-1 fw-bold">A. DATA PRIBADI</h5>
+                                    <small class="opacity-75">
+                                        Isilah formulir di bawah ini dengan data pribadi yang benar dan sesuai dengan dokumen resmi.
+                                    </small>
                                 </div>
                                 <div class="card-body">
                                     <div class="row">
@@ -195,11 +195,11 @@
                                     </div> <!-- end row-->
                                 </div> <!-- end card-body -->
 
-                                <div class="card-header bg-danger text-white">
-                                    <h4 class=".card-title">B. DATA PEKERJAAN</h4>
-                                    <p class="text-bg-danger mb-0 ">
-                                        Isilah form dibawah ini dengan data pekerjaan anda saat ini yang sebenarnya
-                                    </p>
+                                <div class="card-header bg-danger text-white px-4 py-2 rounded-top">
+                                    <h5 class="card-title mb-1 fw-bold">B. DATA PEKERJAAN</h5>
+                                    <small class="opacity-75">
+                                        Isilah formulir di bawah ini dengan data pekerjaan yang sedang dijalani saat ini.
+                                    </small>
                                 </div>
 
                                 <div class="card-body">
@@ -273,11 +273,11 @@
                                     </div> <!-- end row #2-->
                                 </div> <!-- end card-body #2-->
 
-                                <div class="card-header bg-danger text-white">
-                                    <h4 class=".card-title">C. DAFTAR UJI</h4>
-                                    <p class="text-bg-danger mb-0 ">
-                                        Isilah form dibawah ini dengan data pekerjaan anda saat ini yang sebenarnya
-                                    </p>
+                                <div class="card-header bg-danger text-white px-4 py-2 rounded-top">
+                                    <h5 class="card-title mb-1 fw-bold">C. DAFTAR UJI</h5>
+                                    <small class="opacity-75">
+                                        Isilah formulir di bawah ini untuk memilih Lembaga Sertifikasi Profesi (LSP), Tempat Uji Kompetensi (TUK), dan jadwal pelaksanaan uji sertifikasi yang akan diikuti.
+                                    </small>
                                 </div>
 
                                 <div class="card-body">

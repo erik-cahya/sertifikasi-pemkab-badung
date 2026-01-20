@@ -8,9 +8,9 @@
             <div class="container-fluid">
                 <div class="row justify-content-center">
                     <div class="col-6">
-                        <div class="card rounded-3">
-                            <div class="my-auto p-4 mt-4 text-center text-danger">
-                                <h4 class="fs-20">FORM TUK</h4>
+                        <div class="card shadow-lg border-0 rounded-4">
+                            <div class="my-auto p-4 text-center text-danger">
+                                <h3 class="card-title fw-bold">FORMULIR PENDAFTARAN TEMPAT UJI KOMPETENSI (TUK)</h3>
                             </div>
                             @if ($errors->any())
                                 <div class="alert alert-danger">
