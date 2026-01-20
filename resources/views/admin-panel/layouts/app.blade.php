@@ -11,7 +11,7 @@
     @stack('style')
 
     {{-- !-- App favicon --> --}}
-    <link rel="shortcut icon" href="{{ asset('admin') }}/assets/images/favicon.ico">
+    {{-- <link rel="shortcut icon" href="{{ asset('admin') }}/assets/images/favicon.ico"> --}}
     <script src="{{ asset('admin') }}/assets/js/config.js"></script>
     <link href="{{ asset('admin') }}/assets/css/app.css" rel="stylesheet" type="text/css" id="app-style" />
     <link href="{{ asset('admin') }}/assets/css/icons.css" rel="stylesheet" type="text/css" />
