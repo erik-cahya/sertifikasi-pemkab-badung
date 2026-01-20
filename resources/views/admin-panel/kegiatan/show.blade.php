@@ -42,29 +42,29 @@
                             <div class="">
                                 <p class="text-muted fw-semibold fs-16 mb-1">{{ $dataKegiatan->nama_kegiatan }}</p>
                                 <p class="text-muted">
-                                    <small> {{ \Carbon\Carbon::parse($dataKegiatan->mulai_kegiatan)->locale('id')->translatedFormat('d F Y') }} - {{ \Carbon\Carbon::parse($dataKegiatan->selesai_kegiatan)->locale('id')->translatedFormat('d F Y') }}</small>
+                                    <small>Durasi Kegiatan : {{ \Carbon\Carbon::parse($dataKegiatan->mulai_kegiatan)->locale('id')->translatedFormat('d F Y') }} -\s/d {{ \Carbon\Carbon::parse($dataKegiatan->selesai_kegiatan)->locale('id')->translatedFormat('d F Y') }}</small>
                                 </p>
 
-                                <span class="badge {{ $dataKegiatan->status == 1 ? 'bg-success' : 'bg-danger' }} rounded-pill px-3">{{ $dataKegiatan->status == 1 ? 'Aktif' : 'Tidak Aktif' }}</span>
-                                <span class="badge bg-info rounded-pill px-3">{{ $dataKegiatan->details->pluck('lsp')->unique('ref')->count() }} LSP</span>
-                                <span class="badge bg-primary rounded-pill px-3">13/{{ $dataKegiatan->total_peserta }} Peserta</span>
+                                <span class="badge {{ $dataKegiatan->status == 1 ? 'bg-success' : 'bg-danger' }} rounded-pill px-2 py-1">Status : {{ $dataKegiatan->status == 1 ? 'Aktif' : 'Tidak Aktif' }}</span>
+                                <span class="badge bg-info rounded-pill px-2 py-1">{{ $dataKegiatan->details->pluck('lsp')->unique('ref')->count() }} LSP</span>
+                                <span class="badge bg-primary rounded-pill px-2 py-1">13/{{ $dataKegiatan->total_peserta }} Calon Asesi</span>
 
                             </div>
-                            <div class="avatar-sm mb-4">
-                                <div class="avatar-title bg-danger-subtle text-danger fs-24 rounded">
-                                    <i class="bi bi-journal-medical"></i>
+                            {{-- <div class="avatar-sm mb-4">
+                                <div class="avatar-title bg-info-subtle text-info fs-24 rounded">
+                                    <i class=" ri-information-fill"></i>
                                 </div>
-                            </div>
+                            </div> --}}
                         </div>
                         <hr>
                         <div class="d-flex gap-2">
                             <div class="d-flex flex-lg-nowrap justify-content-between align-items-end flex-wrap">
-                                <button class="btn-sm btn btn-pink" data-bs-toggle="modal" data-bs-target="#editModal-{{ $dataKegiatan->ref }}">
+                                <button class="btn-sm btn btn-warning" data-bs-toggle="modal" data-bs-target="#editModal-{{ $dataKegiatan->ref }}">
                                     <i class="mdi mdi-pencil"></i> Edit Kegiatan</button>
                             </div>
 
                             <div class="d-flex flex-lg-nowrap justify-content-between align-items-end flex-wrap">
-                                <a href="{{ route('kegiatan.add-lsp', $dataKegiatan->ref) }}" class="btn-sm btn btn-success"><i class="mdi mdi-plus"></i> Tambah LSP Baru</a>
+                                <a href="{{ route('kegiatan.add-lsp', $dataKegiatan->ref) }}" class="btn-sm btn btn-success"><i class="mdi mdi-plus"></i> Tambah LSP</a>
                             </div>
                         </div>
 
@@ -121,8 +121,8 @@
             <div class="col-lg-12">
                 <div class="card">
                     <div class="nav nav-pills nav-justified gap-0 p-3 text-center" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                        <li class="nav-item mt-2"><a class="nav-link fs-5 active p-2" data-bs-toggle="tab" data-bs-target="#daftar_lsp" type="button" role="tab" aria-controls="home" aria-selected="true" href="#daftar_lsp"><i class="mdi mdi-pencil"></i> Daftar LSP</a></li>
-                        <li class="nav-item mt-2"><a class="nav-link fs-5 p-2" data-bs-toggle="tab" data-bs-target="#daftar_asesi" type="button" role="tab" aria-controls="home" aria-selected="true" href="#daftar_asesi"><i class="mdi mdi-pencil"></i> Daftar Peserta Asesi</a></li>
+                        <li class="nav-item mt-2"><a class="nav-link fs-5 active p-2 border border-primary" data-bs-toggle="tab" data-bs-target="#daftar_lsp" type="button" role="tab" aria-controls="home" aria-selected="true" href="#daftar_lsp"></i> Daftar LSP</a></li>
+                        <li class="nav-item mt-2"><a class="nav-link fs-5 p-2 border border-primary" data-bs-toggle="tab" data-bs-target="#daftar_asesi" type="button" role="tab" aria-controls="home" aria-selected="true" href="#daftar_asesi"></i> Daftar Calon Asesi</a></li>
                     </div>
 
                     <div class="tab-content m-0 p-3 pt-0" id="v-pills-tabContent">
@@ -133,9 +133,10 @@
                                 <div class="col-md-12">
                                     <div class="table-responsive">
                                         <table class="table-sm table-bordered table-striped mb-0 table">
+                                        {{-- <table id="fixed-columns-datatable" class="table table-striped nowrap row-border order-column w-100"> --}}
                                             <thead>
                                                 <tr>
-                                                    <th>#</th>
+                                                    <th>No</th>
                                                     <th>Nama LSP</th>
                                                     <th>Jumlah Skema</th>
                                                     <th>Kuota</th>
