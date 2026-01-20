@@ -98,8 +98,8 @@ class KegiatanController extends Controller
 
         $data['skemaPerLsp'] = $data['dataKegiatan']->skemaPerLsp->keyBy('lsp_ref'); // Mengelompokkan skema per LSP berdasarkan lsp_ref
         $data['jadwalKegiatan'] = $data['dataKegiatan']->details->groupBy('lsp_ref'); // Mengelompokkan jadwal kegiatan berdasarkan lsp_ref
+        $data['dataSkema'] = $data['dataKegiatan']->skemas->groupBy('lsp_ref'); // Mengelompokkan data skema berdasarkan lsp_ref
 
-        // dd($data['dataKegiatan']);
         return view('admin-panel.kegiatan.show', $data);
     }
 

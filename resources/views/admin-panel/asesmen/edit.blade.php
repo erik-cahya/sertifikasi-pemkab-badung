@@ -27,7 +27,7 @@
                             <div class="col-lg-6">
                                 <div class="mb-3">
                                     <label for="inputEmail3" class="form-label">Nama LSP</label>
-                                    <input type="text" id="inputEmail3" class="form-control rounded-3" name="tuk_email" value="{{ $dataKegiatan->lsp->lsp_nama }}" required>
+                                    <input type="text" id="inputEmail3" class="form-control rounded-3" name="tuk_email" value="{{ $dataKegiatan->lsp->lsp_nama }}" disabled>
                                 </div>
                             </div>
 
