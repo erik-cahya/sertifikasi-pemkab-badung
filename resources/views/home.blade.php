@@ -10,7 +10,7 @@
                         Sistem Informasi Pelatihan dan Sertifikasi
                     </h1>
 
-                    <p class="fs-5 text-white-50 mb-5">
+                    <p class="fs-5 text-white mb-5">
                         Portal resmi Dinas Perindustrian dan Ketenagakerjaan Kabupaten Badung
                         untuk pengelolaan pelatihan dan sertifikasi tenaga kerja.
                     </p>
@@ -104,7 +104,7 @@
             <div class="row justify-content-center">
                 <div class="col-lg-8">
                     <div class="bg-white rounded-4 shadow-lg p-4 p-md-5">
-                        <h2 class="fw-bold text-center mb-4" style="color:#571919;">
+                        <h2 class="fw-bold text-center mb-4 text-orange">
                             Tentang Bidang Pelatihan dan Sertifikasi
                         </h2>
 
