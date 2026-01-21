@@ -11,11 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('kegiatan_detail', function (Blueprint $table) {
+        Schema::create('kegiatan_jadwal', function (Blueprint $table) {
             $table->ulid('ref')->primary();
-            $table->foreignUlid('kegiatan_ref')->references('ref')->on('kegiatan')->cascadeOnDelete();
             $table->foreignUlid('lsp_ref')->references('ref')->on('lsp')->cascadeOnDelete();
-            $table->integer('kuota_lsp');
+            $table->foreignUlid('kegiatan_lsp_ref')->references('ref')->on('kegiatan_lsp')->cascadeOnDelete();
             $table->dateTime('mulai_asesmen');
             $table->dateTime('selesai_asesmen');
             $table->foreignUlid('created_by')->references('ref')->on('users')->cascadeOnDelete();
@@ -28,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('kegiatan_detail');
+        Schema::dropIfExists('kegiatan_jadwal');
     }
 };
