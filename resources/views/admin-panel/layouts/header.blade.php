@@ -62,7 +62,10 @@
             <li class="dropdown">
                 <a class="nav-link dropdown-toggle arrow-none nav-user" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
                     <span class="account-user-avatar">
-                        <img src="{{ asset('admin') }}/assets/images/users/avatar-1.jpg" alt="user-image" width="32" class="rounded-circle">
+                        {{-- <img src="{{ asset('admin') }}/assets/images/users/avatar-1.jpg" alt="user-image" width="32" class="rounded-circle"> --}}
+                        <div class="rounded-circle bg-dinas text-white d-flex align-items-center justify-content-center" style="width:40px;height:40px;">
+                            <i class="bi bi-person-fill fs-3"></i>
+                        </div>
                     </span>
                     <span class="d-lg-block d-none">
                         <h5 class="fw-normal my-0">{{ Auth::user()->name }}<i class="ri-arrow-down-s-line fs-22 d-none d-sm-inline-block align-middle"></i>
@@ -72,7 +75,7 @@
                 <div class="dropdown-menu dropdown-menu-end dropdown-menu-animated profile-dropdown">
                     <!-- item-->
                     <div class="dropdown-header noti-title">
-                        <h6 class="text-overflow m-0">Welcome !</h6>
+                        <h6 class="text-overflow m-0">Welcome {{ strtoupper(Auth::user()->roles) }}!</h6>
                     </div>
 
                     <!-- item-->

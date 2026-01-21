@@ -20081,50 +20081,44 @@ span.flatpickr-weekday,
 .custom-nav .nav-link {
     color: #fff;
     padding: 8px 16px;
-    border-radius: 6px;
+    border-radius: 4px;
     transition: all 0.2s ease-in-out;
+    font-size: 13px;
 }
 
 /* Hover */
 .custom-nav .nav-link:hover {
-    background-color: #8b1d1d; /* merah lebih gelap */
+    background-color: #824848; /* merah lebih gelap */
     color: #fff;
 }
 
 /* Active */
 .custom-nav .nav-link.active {
-    background-color: #7a1515; /* paling gelap */
+    background-color: #824848; /* paling gelap */
     color: #fff;
     font-weight: 500;
 }
 
 .bg-dinas {
-  /* --tz-bg-opacity: 1; */
-  background-color: #571919 !important;
+  background-color: #671919 !important;
 }
 
 .bg-gray-700 {
     background-color: #404040 !important;
 }
 
-/* .hero-gradient {
-    background: linear-gradient(
-        160deg,
-        #6b2020,
-        #571919,
-        #2f0c0c
-    );
-} */
+.bg-orange {
+    background-color: #ec4913 !important;
+}
 
 .hero-gradient {
     background: linear-gradient(
-        160deg,
-        #8a2a2a,  /* atas kiri lebih terang */
-        #6b2020,
-        #2f0c0c
+        135deg,
+        #9b2323 0%,
+        #851d1d 50%,
+        #5f1414 100%
     );
 }
-
 
 .btn-orange {
   --tz-btn-bg: #ec4913;
@@ -20171,7 +20165,7 @@ span.flatpickr-weekday,
     width: 56px;
     height: 56px;
     background-color: rgba(87, 25, 25, 0.1);
-    color: #571919;
+    color: #671919;
     border-radius: 0.75rem;
     display: flex;
     align-items: center;
@@ -20180,11 +20174,16 @@ span.flatpickr-weekday,
 }
 
 .service-card:hover .service-icon {
-    background-color: rgba(87, 25, 25, 0.2);
+    background-color: rgba(120, 25, 25, 0.2);
 }
 
 .service-card:hover h5 {
-    color: #571919;
+    color: #ec4913;
+}
+
+.text-orange{
+  --tz-text-opacity: 1;
+  color: #ec4913 !important;
 }
 
 

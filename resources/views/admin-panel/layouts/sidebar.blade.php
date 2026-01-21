@@ -1,4 +1,4 @@
-<div class="leftside-menu">
+<div class="leftside-menu bg-dinas">
 
     <!-- Logo Light -->
     <a href="{{ route('dashboard') }}" class="logo logo-light">
