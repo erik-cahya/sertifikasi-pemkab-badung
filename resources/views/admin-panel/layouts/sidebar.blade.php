@@ -51,13 +51,13 @@
                         </li>
 
                         {{-- @if (Auth::user()->roles === 'lsp') --}}
-                        @role('lsp')
-                            <li class="side-nav-item {{ request()->routeIs('skema.create') ? 'menuitem-active' : '' }}">
-                                <a class="side-nav-link {{ request()->routeIs('skema.create') ? 'active' : '' }}" href="{{ route('skema.create') }}">
-                                    Tambah Skema Sertifikasi
-                                </a>
-                            </li>
-                        @endrole
+                        {{-- @role('lsp') --}}
+                        <li class="side-nav-item {{ request()->routeIs('skema.create') ? 'menuitem-active' : '' }}">
+                            <a class="side-nav-link {{ request()->routeIs('skema.create') ? 'active' : '' }}" href="{{ route('skema.create') }}">
+                                Tambah Skema Sertifikasi
+                            </a>
+                        </li>
+                        {{-- @endrole --}}
 
                     </ul>
                 </div>
@@ -79,11 +79,11 @@
 
                         {{-- @if (Auth::user()->roles === 'lsp') --}}
                         {{-- @role('lsp') --}}
-                            <li class="side-nav-item {{ request()->routeIs('tukAdmin.create') ? 'menuitem-active' : '' }}">
-                                <a class="side-nav-link {{ request()->routeIs('tukAdmin.create') ? 'active' : '' }}" href="{{ route('tukAdmin.create') }}">
-                                    Tambah TUK
-                                </a>
-                            </li>
+                        <li class="side-nav-item {{ request()->routeIs('tukAdmin.create') ? 'menuitem-active' : '' }}">
+                            <a class="side-nav-link {{ request()->routeIs('tukAdmin.create') ? 'active' : '' }}" href="{{ route('tukAdmin.create') }}">
+                                Tambah TUK
+                            </a>
+                        </li>
                         {{-- @endrole --}}
 
                     </ul>
@@ -107,75 +107,75 @@
                 </div>
             </li>
 
-            @role('master')
-                <li class="side-nav-item {{ request()->routeIs('lsp.*') ? 'menuitem-active' : '' }}">
-                    <a data-bs-toggle="collapse" href="#lspMenu" aria-expanded="false" aria-controls="lspMenu" class="side-nav-link">
-                        <i class="ri-team-line"></i>
-                        <span> LSP </span>
-                        <span class="menu-arrow"></span>
-                    </a>
-                    <div class="{{ request()->routeIs('lsp.*') ? 'show' : '' }} collapse" id="lspMenu">
-                        <ul class="side-nav-second-level">
-                            <li class="side-nav-item {{ request()->routeIs('lsp.index') ? 'menuitem-active' : '' }}">
-                                <a class="side-nav-link {{ request()->routeIs('lsp.index') ? 'active' : '' }}" href="{{ route('lsp.index') }}">
-                                    Daftar LSP
-                                </a>
-                            </li>
+            {{-- @role('master') --}}
+            <li class="side-nav-item {{ request()->routeIs('lsp.*') ? 'menuitem-active' : '' }}">
+                <a data-bs-toggle="collapse" href="#lspMenu" aria-expanded="false" aria-controls="lspMenu" class="side-nav-link">
+                    <i class="ri-team-line"></i>
+                    <span> LSP </span>
+                    <span class="menu-arrow"></span>
+                </a>
+                <div class="{{ request()->routeIs('lsp.*') ? 'show' : '' }} collapse" id="lspMenu">
+                    <ul class="side-nav-second-level">
+                        <li class="side-nav-item {{ request()->routeIs('lsp.index') ? 'menuitem-active' : '' }}">
+                            <a class="side-nav-link {{ request()->routeIs('lsp.index') ? 'active' : '' }}" href="{{ route('lsp.index') }}">
+                                Daftar LSP
+                            </a>
+                        </li>
 
-                            <li class="side-nav-item {{ request()->routeIs('lsp.create') ? 'menuitem-active' : '' }}">
-                                <a class="side-nav-link {{ request()->routeIs('lsp.create') ? 'active' : '' }}" href="{{ route('lsp.create') }}">
-                                    Tambah LSP
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
+                        <li class="side-nav-item {{ request()->routeIs('lsp.create') ? 'menuitem-active' : '' }}">
+                            <a class="side-nav-link {{ request()->routeIs('lsp.create') ? 'active' : '' }}" href="{{ route('lsp.create') }}">
+                                Tambah LSP
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
 
-                <li class="side-nav-item {{ request()->routeIs('kegiatan.*') ? 'menuitem-active' : '' }}">
-                    <a data-bs-toggle="collapse" href="#kegiatanMenu" aria-expanded="false" aria-controls="kegiatanMenu" class="side-nav-link">
-                        <i class="ri-edit-2-line"></i>
-                        <span> Kegiatan </span>
-                        <span class="menu-arrow"></span>
-                    </a>
-                    <div class="{{ request()->routeIs('kegiatan.*') ? 'show' : '' }} collapse" id="kegiatanMenu">
-                        <ul class="side-nav-second-level">
-                            <li class="side-nav-item {{ request()->routeIs('kegiatan.index') ? 'menuitem-active' : '' }}">
-                                <a class="side-nav-link {{ request()->routeIs('kegiatan.index') ? 'active' : '' }}" href="{{ route('kegiatan.index') }}">
-                                    Daftar Kegiatan
-                                </a>
-                            </li>
+            <li class="side-nav-item {{ request()->routeIs('kegiatan.*') ? 'menuitem-active' : '' }}">
+                <a data-bs-toggle="collapse" href="#kegiatanMenu" aria-expanded="false" aria-controls="kegiatanMenu" class="side-nav-link">
+                    <i class="ri-edit-2-line"></i>
+                    <span> Kegiatan </span>
+                    <span class="menu-arrow"></span>
+                </a>
+                <div class="{{ request()->routeIs('kegiatan.*') ? 'show' : '' }} collapse" id="kegiatanMenu">
+                    <ul class="side-nav-second-level">
+                        <li class="side-nav-item {{ request()->routeIs('kegiatan.index') ? 'menuitem-active' : '' }}">
+                            <a class="side-nav-link {{ request()->routeIs('kegiatan.index') ? 'active' : '' }}" href="{{ route('kegiatan.index') }}">
+                                Daftar Kegiatan
+                            </a>
+                        </li>
 
-                            <li class="side-nav-item {{ request()->routeIs('kegiatan.create') ? 'menuitem-active' : '' }}">
-                                <a class="side-nav-link {{ request()->routeIs('kegiatan.create') ? 'active' : '' }}" href="{{ route('kegiatan.create') }}">
-                                    Tambah Kegiatan
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
+                        <li class="side-nav-item {{ request()->routeIs('kegiatan.create') ? 'menuitem-active' : '' }}">
+                            <a class="side-nav-link {{ request()->routeIs('kegiatan.create') ? 'active' : '' }}" href="{{ route('kegiatan.create') }}">
+                                Tambah Kegiatan
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
 
-                <li class="side-nav-item {{ request()->routeIs('item.*') ? 'menuitem-active' : '' }}">
-                    <a data-bs-toggle="collapse" href="#itemMenu" aria-expanded="false" aria-controls="itemMenu" class="side-nav-link">
-                        <i class="ri-settings-2-line"></i>
-                        <span> Option </span>
-                        <span class="menu-arrow"></span>
-                    </a>
-                    <div class="{{ request()->routeIs('item.*') ? 'show' : '' }} collapse" id="itemMenu">
-                        <ul class="side-nav-second-level">
-                            <li class="side-nav-departemen {{ request()->routeIs('departemen.index') ? 'menudepartemen-active' : '' }}">
-                                <a class="side-nav-link {{ request()->routeIs('departemen.index') ? 'active' : '' }}" href="{{ route('departemen.index') }}">
-                                    Departemen
-                                </a>
-                            </li>
-                             <li class="side-nav-jabatan {{ request()->routeIs('jabatan.index') ? 'menujabatan-active' : '' }}">
-                                <a class="side-nav-link {{ request()->routeIs('jabatan.index') ? 'active' : '' }}" href="{{ route('jabatan.index') }}">
-                                    Jabatan
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
-            @endrole
+            <li class="side-nav-item {{ request()->routeIs('item.*') ? 'menuitem-active' : '' }}">
+                <a data-bs-toggle="collapse" href="#itemMenu" aria-expanded="false" aria-controls="itemMenu" class="side-nav-link">
+                    <i class="ri-settings-2-line"></i>
+                    <span> Option </span>
+                    <span class="menu-arrow"></span>
+                </a>
+                <div class="{{ request()->routeIs('item.*') ? 'show' : '' }} collapse" id="itemMenu">
+                    <ul class="side-nav-second-level">
+                        <li class="side-nav-departemen {{ request()->routeIs('departemen.index') ? 'menudepartemen-active' : '' }}">
+                            <a class="side-nav-link {{ request()->routeIs('departemen.index') ? 'active' : '' }}" href="{{ route('departemen.index') }}">
+                                Departemen
+                            </a>
+                        </li>
+                        <li class="side-nav-jabatan {{ request()->routeIs('jabatan.index') ? 'menujabatan-active' : '' }}">
+                            <a class="side-nav-link {{ request()->routeIs('jabatan.index') ? 'active' : '' }}" href="{{ route('jabatan.index') }}">
+                                Jabatan
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+            {{-- @endrole --}}
 
             {{-- <li class="side-nav-item {{ request()->routeIs('violation.*') ? 'menuitem-active' : '' }}">
                 <a data-bs-toggle="collapse" href="#violationMenu" aria-expanded="false" aria-controls="violationMenu" class="side-nav-link">

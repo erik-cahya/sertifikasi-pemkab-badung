@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\KegiatanDetailModel;
+use App\Models\KegiatanLSPModel;
 use App\Models\KegiatanSkemaModel;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
@@ -11,7 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
-class KegiatanDetailController extends Controller
+class KegiatanLSPController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -95,7 +96,7 @@ class KegiatanDetailController extends Controller
                     $quotaForDay = $baseQuota + ($index < $remainder ? 1 : 0);
 
                     // dd($quotaForDay);
-                    KegiatanDetailModel::create([
+                    KegiatanLSPModel::create([
                         'kegiatan_ref'    => $request->kegiatan_ref,
                         'lsp_ref'         => $lsp,
                         'kuota_lsp'       => $kuota,

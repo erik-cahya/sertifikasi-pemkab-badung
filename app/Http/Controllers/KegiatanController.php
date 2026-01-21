@@ -3,9 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\KegiatanDetailModel;
+use App\Models\KegiatanJadwalModel;
+use App\Models\KegiatanLSPModel;
 use App\Models\KegiatanModel;
+use App\Models\KegiatanSkemaModel;
 use App\Models\LSPModel;
 use Carbon\Carbon;
+use Carbon\CarbonPeriod;
 use Faker\Provider\Uuid;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -20,17 +24,17 @@ class KegiatanController extends Controller
      */
     public function index()
     {
-        $data['dataKegiatan'] = KegiatanModel::with([
-            'details.lsp'
-        ])->withSum(
-            'details as total_kuota_lsp',
+        $data['dataKegiatan'] = KegiatanModel::with(
+            [
+                'kegiatanLsp.lsp'
+            ]
+        )->withSum(
+            'kegiatanLsp as total_kuota',
             'kuota_lsp'
         )->get();
 
 
-
-
-        dd($data['dataKegiatan']);
+        // dd($data['dataKegiatan']);
         return view('admin-panel.kegiatan.index', $data);
     }
 
@@ -42,7 +46,8 @@ class KegiatanController extends Controller
         $data['dataLSP'] = LSPModel::get();
 
         // Jika data kegiatan sudah dibuat, maka tidak ditampilkan lagi
-        $data['dataKegiatan'] = KegiatanModel::select('ref', 'nama_kegiatan')->whereDoesntHave('details')->get();
+        // $data['dataKegiatan'] = KegiatanModel::select('ref', 'nama_kegiatan')->whereDoesntHave('details')->get();
+        $data['dataKegiatan'] = KegiatanModel::select('ref', 'nama_kegiatan')->whereDoesntHave('kegiatanLsp')->get();
         return view('admin-panel.kegiatan.create', $data);
     }
 
@@ -52,7 +57,6 @@ class KegiatanController extends Controller
      */
     public function store(Request $request)
     {
-
         // dd($request->all());
         Validator::make($request->all(), [
             'nama_kegiatan' => 'required|unique:kegiatan,nama_kegiatan',
@@ -65,14 +69,100 @@ class KegiatanController extends Controller
             'selesai_kegiatan.required' => 'Silahkan pilih tanggal selesai',
         ])->validateWithBag('create_kegiatan');
 
-        KegiatanModel::create([
-            'nama_kegiatan' => $request->nama_kegiatan,
-            'mulai_kegiatan' => Carbon::createFromFormat('d/m/Y', $request->mulai_kegiatan)->format('Y-m-d'),
-            'selesai_kegiatan' => Carbon::createFromFormat('d/m/Y', $request->selesai_kegiatan)->format('Y-m-d'),
-            'status' => 1,
-            'created_by' => Auth::user()->ref,
+        DB::transaction(function () use ($request) {
 
-        ]);
+            $kegiatan = KegiatanModel::create([
+                'nama_kegiatan' => $request->nama_kegiatan,
+                'mulai_kegiatan' => Carbon::createFromFormat('d/m/Y', $request->mulai_kegiatan)->format('Y-m-d'),
+                'selesai_kegiatan' => Carbon::createFromFormat('d/m/Y', $request->selesai_kegiatan)->format('Y-m-d'),
+                'status' => 1,
+                'created_by' => Auth::user()->ref,
+
+            ]);
+
+            // ############################################################## Tambah LSP ke Kegiatan
+
+            // Validator::make($request->all(), [
+            //     'kegiatan_ref' => 'required',
+            // ], [
+            //     'kegiatan_ref.required' => 'Silahkan pilih kegiatan',
+            // ])->validateWithBag('create_detail_kegiatan');
+
+            foreach ($request->lsp_ref as $i => $lspRef) {
+
+                // Kalau LSP kosong, lewati
+                if (!$lspRef) continue;
+
+                // Validator::make($request->all(), [
+                //     "lsp_ref.$i" => 'required',
+                //     "skema_ref.$i" => ['required', 'array', 'min:1'],
+                //     "skema_ref.$i.*" => 'required',
+                //     "kuota_lsp.$i" => ['required', 'integer', 'min:1'],
+                //     "date_range.$i" => ['required', 'regex:/^\d{2}-\d{2}-\d{4}\s-\s\d{2}-\d{2}-\d{4}$/'],
+                // ], [
+                //     'lsp_ref.*.required'     => 'LSP wajib dipilih',
+                //     'skema_ref.*.required'   => 'Minimal 1 skema harus dipilih',
+                //     'kuota_lsp.*.required'   => 'Kuota wajib diisi',
+                //     'kuota_lsp.*.min'        => 'Kuota minimal 1',
+                //     'date_range.*.required'  => 'Tanggal wajib diisi',
+                // ])->validate();
+
+
+
+                $lsp    = $request->lsp_ref[$i];
+                $skemas = $request->skema_ref[$i] ?? [];
+                $kuota  = (int) ($request->kuota_lsp[$i] ?? 0);
+                $range  = $request->date_range[$i] ?? null;
+
+                // Jika skema kosong, kuota 0, atau date range kosong, skip/lewati
+                if (!$skemas || !$kuota || !$range) continue;
+
+                foreach ($skemas as $i => $skema) {
+
+                    KegiatanSkemaModel::create([
+                        'kegiatan_ref' => $kegiatan->ref,
+                        'lsp_ref'    => $lsp,
+                        'skema_ref'    => $skema,
+                        'created_by'   => Auth::user()->ref,
+                    ]);
+                }
+
+                $kegiatanLSP = KegiatanLSPModel::create([
+                    'kegiatan_ref' => $kegiatan->ref,
+                    'lsp_ref' => $lsp,
+                    'kuota_lsp' => $kuota,
+                    'limit_kuota' => 50,
+                    'created_by'   => Auth::user()->ref,
+
+                ]);
+
+                [$start, $end] = array_map('trim', explode(' - ', $range));
+                $startDate = Carbon::createFromFormat('d-m-Y', $start);
+                $endDate   = Carbon::createFromFormat('d-m-Y', $end);
+
+                $dates = collect(CarbonPeriod::create($startDate, $endDate));
+                $totalDays = $dates->count();
+
+                $baseQuota = intdiv($kuota, $totalDays);
+                $remainder = $kuota % $totalDays;
+
+                // dd($baseQuota, $remainder, $kuota);
+
+                foreach ($dates as $index => $date) {
+
+                    $quotaForDay = $baseQuota + ($index < $remainder ? 1 : 0);
+
+                    // dd($quotaForDay);
+                    KegiatanJadwalModel::create([
+                        'lsp_ref'         => $lsp,
+                        'kegiatan_lsp_ref' => $kegiatanLSP->ref,
+                        'mulai_asesmen'   => $date instanceof Carbon ? $date->format('Y-m-d') : (string) $date,
+                        'selesai_asesmen' => $endDate->format('Y-m-d'),
+                        'created_by'      => Auth::user()->ref,
+                    ]);
+                }
+            }
+        });
 
         return redirect('/kegiatan/create#add_lsp')
             ->with('flashData', [
@@ -88,20 +178,49 @@ class KegiatanController extends Controller
     public function show(string $id)
     {
         $data['dataLSP'] = LSPModel::get();
+
+        // $data['dataKegiatan'] = KegiatanModel::with(
+        //     [
+        //         'kegiatanLsp.lsp'
+        //     ]
+        // )->withSum(
+        //     'kegiatanLsp as total_peserta',
+        //     'kuota_lsp'
+        // )->get();
+
+
+        // $data['dataKegiatan'] = KegiatanModel::where('ref', $id)
+        //     ->with([
+        //         'kegiatanLsp.lsp',           // detail kuota + LSP
+        //         'skemaPerLsp.lsp',        // total skema per LSP
+        //         'kuotaPerLsp.lsp'      // total kuota per LSP
+        //     ])->withSum(
+        //         'kegiatanLsp as total_peserta',
+        //         'kuota_lsp'
+        //     )->withCount('skemas')        // total skema kegiatan
+        //     ->firstOrFail();
+
+
+
         $data['dataKegiatan'] = KegiatanModel::where('ref', $id)
             ->with([
-                'details.lsp',           // detail kuota + LSP
+                'kegiatanLsp.lsp',           // detail kuota + LSP
                 'skemaPerLsp.lsp',        // total skema per LSP
                 'kuotaPerLsp.lsp'      // total kuota per LSP
             ])->withSum(
-                'details as total_peserta',
+                'kegiatanLsp as total_peserta',
                 'kuota_lsp'
             )->withCount('skemas')        // total skema kegiatan
             ->firstOrFail();
 
+
+        // dd($data['dataKegiatan']);
+        // dd($data['dataKegiatan']->kegiatanLsp->groupBy('lsp_ref'));
+
         $data['skemaPerLsp'] = $data['dataKegiatan']->skemaPerLsp->keyBy('lsp_ref'); // Mengelompokkan skema per LSP berdasarkan lsp_ref
-        $data['jadwalKegiatan'] = $data['dataKegiatan']->details->groupBy('lsp_ref'); // Mengelompokkan jadwal kegiatan berdasarkan lsp_ref
+        $data['jadwalKegiatan'] = $data['dataKegiatan']->kegiatanLsp->groupBy('lsp_ref'); // Mengelompokkan jadwal kegiatan berdasarkan lsp_ref
         $data['dataSkema'] = $data['dataKegiatan']->skemas->groupBy('lsp_ref'); // Mengelompokkan data skema berdasarkan lsp_ref
+
 
         return view('admin-panel.kegiatan.show', $data);
     }

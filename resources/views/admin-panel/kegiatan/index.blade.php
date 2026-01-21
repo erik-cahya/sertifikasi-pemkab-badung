@@ -36,24 +36,19 @@
                                     </td>
                                     <td>
                                         @php
-                                            // Ambil LSP unik (karena bisa muncul berulang di detail)
-                                            $lsps = $kegiatan->details->pluck('lsp')->unique('ref');
-                                            $dataKuota = $kegiatan->details->first();
-
-                                            // dd($kegiatan->details->groupBy('lsp_ref'));
-
-                                        @endphp
-                                        @php
-                                            $validLsps = $lsps->filter(fn($lsp) => filled($lsp->lsp_nama));
+                                            $lsps = $kegiatan->kegiatanLsp
+                                                ->map(fn($item) => $item->lsp) // ambil model LSP
+                                                ->filter() // buang null
+                                                ->unique('ref'); // unik per LSP
                                         @endphp
 
                                         <div class="d-flex flex-column gap-1">
-                                            @if ($validLsps->isEmpty())
+                                            @if ($lsps->isEmpty())
                                                 <span class="badge bg-danger-subtle text-danger">
                                                     Tidak ada LSP yang terlibat
                                                 </span>
                                             @else
-                                                @foreach ($validLsps as $lsp)
+                                                @foreach ($lsps as $lsp)
                                                     <span class="badge bg-primary-subtle text-primary">
                                                         {{ $lsp->lsp_nama }}
                                                     </span>
@@ -61,7 +56,7 @@
                                             @endif
                                         </div>
                                     </td>
-                                    <td>{{ $dataKuota->kuota_lsp ?? '0' }} Peserta</td>
+                                    <td>{{ $kegiatan->total_kuota ?? '0' }} Peserta</td>
                                     <td>{{ \Carbon\Carbon::parse($kegiatan->mulai_kegiatan)->locale('id')->translatedFormat('l, d F Y') }}</td>
                                     <td>{{ \Carbon\Carbon::parse($kegiatan->selesai_kegiatan)->locale('id')->translatedFormat('l, d F Y') }}</td>
                                     <td><span class="badge {{ $kegiatan->status == 1 ? 'bg-success' : 'bg-danger' }}">{{ $kegiatan->status == 1 ? 'Aktif' : 'Tidak Aktif' }}</span></td>

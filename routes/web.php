@@ -9,6 +9,7 @@ use App\Http\Controllers\AsesmenController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\KegiatanController;
 use App\Http\Controllers\KegiatanDetailController;
+use App\Http\Controllers\KegiatanLSPController;
 use App\Http\Controllers\KodeUnitController;
 use App\Http\Controllers\LSPController;
 use App\Http\Controllers\ProfileController;
@@ -45,8 +46,8 @@ Route::middleware('auth')->group(function () {
         // ################################ Asesmen by Admin
         Route::resource('asesmen', AsesmenController::class)->except('index');
 
-        // ################################ Kegiatan Detail
-        Route::post('kegiatan-detail', [KegiatanDetailController::class, 'store'])->name('kegiatan-detail.store');
+        // ################################ Kegiatan LSP
+        Route::post('kegiatan-detail', [KegiatanLSPController::class, 'store'])->name('kegiatan-lsp.store');
 
         // ################################ Departemen
         Route::get('departemen', [DepartemenController::class, 'index'])->name('departemen.index');
@@ -63,18 +64,23 @@ Route::middleware('auth')->group(function () {
         Route::delete('jabatan/{id}', [JabatanController::class, 'destroy'])->name('jabatan.destroy');
     });
 
-    // ################################ Skema
-    Route::get('skema', [SkemaController::class, 'index'])->name('skema.index');
-    Route::get('skema/create', [SkemaController::class, 'create'])->name('skema.create')->middleware('role:lsp');
-    Route::post('skema/store', [SkemaController::class, 'store'])->name('skema.store')->middleware('role:lsp');
-    Route::get('skema/{id}', [SkemaController::class, 'show'])->name('skema.show')->middleware('role:lsp');
-    Route::put('skema/{id}', [SkemaController::class, 'update'])->name('skema.update')->middleware('role:lsp');
-    Route::delete('skema/{id}', [SkemaController::class, 'destroy'])->name('skema.destroy')->middleware('role:lsp');
+    // Role LSP
+    Route::middleware(['role:lsp,master, dinas'])->group(function () {
+        // ################################ Skema
+        Route::get('skema', [SkemaController::class, 'index'])->name('skema.index');
+        Route::get('skema/create', [SkemaController::class, 'create'])->name('skema.create');
+        Route::post('skema/store', [SkemaController::class, 'store'])->name('skema.store');
+        Route::get('skema/{id}', [SkemaController::class, 'show'])->name('skema.show');
+        Route::put('skema/{id}', [SkemaController::class, 'update'])->name('skema.update');
+        Route::delete('skema/{id}', [SkemaController::class, 'destroy'])->name('skema.destroy');
 
-    // ################################ Kode Unit
-    Route::post('skema/create_kode_unit', [KodeUnitController::class, 'store'])->name('kode_unit.store')->middleware('role:lsp');
-    Route::put('kode_unit/{id}', [KodeUnitController::class, 'update'])->name('kode_unit.update')->middleware('role:lsp');
-    Route::delete('kode_unit/{id}', [KodeUnitController::class, 'destroy'])->name('kode_unit.destroy')->middleware('role:lsp');
+        // ################################ Kode Unit
+        Route::post('skema/create_kode_unit', [KodeUnitController::class, 'store'])->name('kode_unit.store');
+        Route::put('kode_unit/{id}', [KodeUnitController::class, 'update'])->name('kode_unit.update');
+        Route::delete('kode_unit/{id}', [KodeUnitController::class, 'destroy'])->name('kode_unit.destroy');
+    });
+
+
 
     // ################################ Profile
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

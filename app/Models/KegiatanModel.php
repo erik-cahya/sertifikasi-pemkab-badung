@@ -35,10 +35,10 @@ class KegiatanModel extends Model
         return $this->hasMany(KegiatanJadwalModel::class, 'kegiatan_ref', 'ref');
     }
 
-    public function details(): HasMany
+    public function kegiatanLsp(): HasMany
     {
         return $this->hasMany(
-            KegiatanJadwalModel::class,
+            KegiatanLSPModel::class,
             'kegiatan_ref', // FK di kegiatan_detail
             'ref'           // PK di kegiatan
         );
@@ -75,7 +75,7 @@ class KegiatanModel extends Model
     public function kuotaPerLsp()
     {
         return $this->hasMany(
-            KegiatanJadwalModel::class,
+            KegiatanLSPModel::class,
             'kegiatan_ref',
             'ref'
         )

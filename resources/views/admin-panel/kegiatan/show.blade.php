@@ -46,7 +46,7 @@
                                 </p>
 
                                 <span class="badge {{ $dataKegiatan->status == 1 ? 'bg-success' : 'bg-danger' }} rounded-pill px-2 py-1">Status : {{ $dataKegiatan->status == 1 ? 'Aktif' : 'Tidak Aktif' }}</span>
-                                <span class="badge bg-info rounded-pill px-2 py-1">{{ $dataKegiatan->details->pluck('lsp')->unique('ref')->count() }} LSP</span>
+                                <span class="badge bg-info rounded-pill px-2 py-1">{{ $dataKegiatan->kegiatanLsp->pluck('lsp')->unique('ref')->count() }} LSP</span>
                                 <span class="badge bg-primary rounded-pill px-2 py-1">13/{{ $dataKegiatan->total_peserta }} Calon Asesi</span>
 
                             </div>
@@ -141,128 +141,76 @@
                                             </thead>
                                             <tbody class="table-group-divider fs-12">
 
-                                                @foreach ($dataKegiatan->detailsGroupedByLsp as $details)
-                                                    <tr>
-                                                        <td>{{ $loop->iteration }}</td>
-                                                        <td>{{ $details->lsp->lsp_nama }}</td>
-                                                        <td>
-                                                            {{ $skemaPerLsp[$details->lsp_ref]->total_skema ?? 0 }} Skema
-                                                        </td>
-                                                        <td>{{ $details->total_kuota_lsp ?? '0' }} Peserta</td>
-                                                        {{-- <td>{{ \Carbon\Carbon::parse($details->created_at)->locale('id')->translatedFormat('d F Y') }}</td> --}}
-                                                        <td>
-                                                            <a href="#" data-bs-toggle="modal" data-bs-target="#jadwalModal-{{ $details->lsp_ref }}">Details</a>
-                                                        </td>
-                                                    </tr>
-                                                @endforeach
-                                                =======
-                                                <table class="table-sm table-bordered fs-12 w-100 table">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>No</th>
-                                                            <th>Nama LSP</th>
-                                                            <th>Jumlah Skema</th>
-                                                            <th>Kuota</th>
-                                                            <th>Jadwal</th>
-                                                        </tr>
-                                                    </thead>
 
-                                                    {{-- <tbody id="accordionTable"> --}}
-                                                    <tbody>
-                                                        @for ($x = 1; $x <= 5; $x++)
-                                                            <!-- ROW UTAMA -->
-                                                            <tr>
-                                                                <td>{{ $x }}</td>
-                                                                <td>LSP Engineering Hospitality Indonesia</td>
-                                                                <td class="d-flex flex-wrap gap-1 border-0" width="500px">
-                                                                    <span class="badge bg-primary-subtle text-primary">
-                                                                        Teknisi Refrigerasi Domestik
-                                                                    </span>
-                                                                    <span class="badge bg-primary-subtle text-primary">
-                                                                        Teknisi Refrigerasi Domestik
-                                                                    </span>
-                                                                    <span class="badge bg-primary-subtle text-primary">
-                                                                        Teknisi Refrigerasi
-                                                                    </span>
-                                                                    <span class="badge bg-primary-subtle text-primary">
-                                                                        Teknisi Refrigerasi Domestik
-                                                                    </span>
-                                                                    <span class="badge bg-primary-subtle text-primary">
-                                                                        Teknisi Refrigerasi Domestik
-                                                                    </span>
-                                                                </td>
-                                                                <td>200 Peserta</td>
-                                                                <td>
-                                                                    <button
-                                                                        class="btn btn-link text-decoration-none fs-12 p-0"
-                                                                        data-bs-toggle="collapse"
-                                                                        data-bs-target="#detail-{{ $x }}"
-                                                                        aria-expanded="false"
-                                                                        aria-controls="detail-{{ $x }}">
-                                                                        Lihat Detail
-                                                                    </button>
-                                                                </td>
-                                                            </tr>
-                                                            >>>>>>> erikupdate
+                                                <tr>
+                                                    <td>1</td>
+                                                    <td>LSP EHI</td>
+                                                    <td>
+                                                        20 Skema
+                                                    </td>
+                                                    <td>100 Peserta</td>
+                                                    {{-- <td>{{ \Carbon\Carbon::parse($details->created_at)->locale('id')->translatedFormat('d F Y') }}</td> --}}
+                                                    <td>
+                                                        <a href="#" data-bs-toggle="modal" data-bs-target="#jadwalModal-1">Details</a>
+                                                    </td>
+                                                </tr>
 
-                                                            <!-- ROW DETAIL -->
-                                                            <tr class="bg-light collapse"
-                                                                id="detail-{{ $x }}"
-                                                                {{-- data-bs-parent="#accordionTable" --}}>
+                                                <!-- ROW DETAIL -->
+                                                <tr class="bg-light collapse" id="detail1" {{-- data-bs-parent="#accordionTable" --}}>
 
-                                                                <td colspan="5">
+                                                    <td colspan="5">
 
-                                                                    <div class="card border-0 shadow-sm">
-                                                                        <div class="card-body">
-                                                                            <h6 class="card-title mb-2">
-                                                                                Detail Jadwal & Skema
-                                                                            </h6>
-                                                                            @foreach ($dataKegiatan->detailsGroupedByLsp as $details)
-                                                                                <table class="table-sm table-bordered table" style="font-size: 12px">
-                                                                                    <thead>
-                                                                                        <tr>
-                                                                                            <th>No</th>
-                                                                                            <th>Kuota</th>
-                                                                                            <th>Tanggal Asesmen</th>
-                                                                                            <th>Action</th>
-                                                                                        </tr>
-                                                                                    </thead>
-                                                                                    <tbody>
-                                                                                        @foreach ($jadwalKegiatan[$details->lsp_ref] as $jadwal)
-                                                                                            <tr>
-                                                                                                <td>{{ $loop->iteration }}</td>
-                                                                                                <td>{{ $jadwal->kuota_lsp }} Peserta</td>
-                                                                                                <td>{{ \Carbon\Carbon::parse($jadwal->mulai_asesmen)->locale('id')->translatedFormat('l, d F Y') }}</td>
-                                                                                                <td class="d-flex gap-2">
-                                                                                                    <a href="{{ route('asesmen.edit', $jadwal->ref) }}" class="text-primary">
-                                                                                                        <i class="mdi mdi-pencil-outline"></i> Details
-                                                                                                    </a>
-                                                                                                    {{-- <a href="{{ route('asesmen.edit', $jadwal->ref) }}" class="text-primary">
+                                                        <div class="card border-0 shadow-sm">
+                                                            <div class="card-body">
+                                                                <h6 class="card-title mb-2">
+                                                                    Detail Jadwal & Skema
+                                                                </h6>
+
+                                                                <table class="table-sm table-bordered table" style="font-size: 12px">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th>No</th>
+                                                                            <th>Kuota</th>
+                                                                            <th>Tanggal Asesmen</th>
+                                                                            <th>Action</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+
+                                                                        <tr>
+                                                                            <td>1</td>
+                                                                            <td>20 Peserta</td>
+                                                                            <td>20 Juli 2024</td>
+                                                                            <td class="d-flex gap-2">
+                                                                                <a href="#" class="text-primary">
+                                                                                    <i class="mdi mdi-pencil-outline"></i> Details
+                                                                                </a>
+                                                                                {{-- <a href="{{ route('asesmen.edit', $jadwal->ref) }}" class="text-primary">
                                                                                 <i class="mdi mdi-pencil-outline"></i> Edit
                                                                             </a> --}}
 
-                                                                                                    {{-- <input type="hidden" class="dataID" value="{{ $jadwal->ref }}">
+                                                                                {{-- <input type="hidden" class="dataID" value="{{ $jadwal->ref }}">
                                                                             <a href="#" class="text-danger deleteButton" data-nama="{{ \Carbon\Carbon::parse($jadwal->mulai_asesmen)->locale('id')->translatedFormat('l, d F Y') }}">
                                                                                 <i class="mdi mdi-trash-can-outline"></i> Hapus
                                                                             </a> --}}
-                                                                                                </td>
-                                                                                            </tr>
-                                                                                        @endforeach
-                                                                                        <tr>
-                                                                                            <td colspan="4">LSP Engineering Hospitality</td>
-                                                                                        </tr>
-                                                                                    </tbody>
-                                                                                </table>
-                                                                            @endforeach
-                                                                        </div>
-                                                                    </div>
+                                                                            </td>
+                                                                        </tr>
 
-                                                                </td>
+                                                                        <tr>
+                                                                            <td colspan="4">LSP Engineering Hospitality</td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
 
-                                                            </tr>
-                                                        @endfor
-                                                    </tbody>
-                                                </table>
+                                                            </div>
+                                                        </div>
+
+                                                    </td>
+
+                                                </tr>
+
+                                            </tbody>
+                                        </table>
 
                                     </div> <!-- end card-body-->
                                 </div> <!-- end card-->
@@ -305,96 +253,100 @@
                             </div> <!-- end col-->
                         </div>
                     </div>
-                @endsection
-                @push('script')
-                    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-                    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-                    <!-- Daterangepicker Plugin js -->
-                    <script src="{{ asset('admin') }}/assets/vendor/daterangepicker/moment.min.js"></script>
-                    <script src="{{ asset('admin') }}/assets/vendor/daterangepicker/daterangepicker.js"></script>
+                </div>
+            </div>
+        </div>
+    </div>
+@endsection
+@push('script')
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <!-- Daterangepicker Plugin js -->
+    <script src="{{ asset('admin') }}/assets/vendor/daterangepicker/moment.min.js"></script>
+    <script src="{{ asset('admin') }}/assets/vendor/daterangepicker/daterangepicker.js"></script>
 
-                    <!-- Datatables js -->
-                    <script src="{{ asset('admin') }}/assets/vendor/datatables.net/js/jquery.dataTables.min.js"></script>
-                    <script src="{{ asset('admin') }}/assets/vendor/datatables.net-bs5/js/dataTables.bootstrap5.min.js"></script>
-                    <script src="{{ asset('admin') }}/assets/vendor/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
-                    <script src="{{ asset('admin') }}/assets/js/pages/datatable.init.js"></script>
+    <!-- Datatables js -->
+    <script src="{{ asset('admin') }}/assets/vendor/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="{{ asset('admin') }}/assets/vendor/datatables.net-bs5/js/dataTables.bootstrap5.min.js"></script>
+    <script src="{{ asset('admin') }}/assets/vendor/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="{{ asset('admin') }}/assets/js/pages/datatable.init.js"></script>
 
-                    <script src="{{ asset('admin') }}/assets/vendor/lucide/umd/lucide.min.js"></script>
+    <script src="{{ asset('admin') }}/assets/vendor/lucide/umd/lucide.min.js"></script>
 
-                    <!--  Select2 Plugin Js -->
-                    <script src="{{ asset('admin') }}/assets/vendor/select2/js/select2.min.js"></script>
+    <!--  Select2 Plugin Js -->
+    <script src="{{ asset('admin') }}/assets/vendor/select2/js/select2.min.js"></script>
 
-                    <script>
-                        $(document).on('focus', '.single-date', function() {
-                            const modal = $(this).closest('.modal');
+    <script>
+        $(document).on('focus', '.single-date', function() {
+            const modal = $(this).closest('.modal');
 
-                            $(this).daterangepicker({
-                                singleDatePicker: true,
-                                autoUpdateInput: false,
-                                parentEl: modal,
-                                locale: {
-                                    format: 'DD/MM/YYYY'
+            $(this).daterangepicker({
+                singleDatePicker: true,
+                autoUpdateInput: false,
+                parentEl: modal,
+                locale: {
+                    format: 'DD/MM/YYYY'
+                }
+            });
+
+            $(this).on('apply.daterangepicker', function(ev, picker) {
+                $(this).val(picker.startDate.format('DD/MM/YYYY'));
+            });
+        });
+    </script>
+
+    {{-- Sweet Alert --}}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+
+            document.querySelectorAll('.deleteButton').forEach(button => {
+
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+
+                    const row = this.closest('tr');
+                    const dataNama = this.dataset.nama;
+                    const dataID = this.closest('td').querySelector('.dataID').value;
+
+                    Swal.fire({
+                        title: 'Are you sure?',
+                        text: `Hapus jadwal asesmen pada hari ${dataNama}?`,
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonText: 'Yes, delete it!',
+                    }).then(result => {
+
+                        if (!result.isConfirmed) return;
+
+                        fetch(`/asesmen/${dataID}`, {
+                                method: 'DELETE',
+                                credentials: 'same-origin',
+                                headers: {
+                                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                                    'X-Requested-With': 'XMLHttpRequest',
                                 }
-                            });
-
-                            $(this).on('apply.daterangepicker', function(ev, picker) {
-                                $(this).val(picker.startDate.format('DD/MM/YYYY'));
-                            });
-                        });
-                    </script>
-
-                    {{-- Sweet Alert --}}
-                    <script>
-                        document.addEventListener('DOMContentLoaded', function() {
-
-                            document.querySelectorAll('.deleteButton').forEach(button => {
-
-                                button.addEventListener('click', function(e) {
-                                    e.preventDefault();
-
-                                    const row = this.closest('tr');
-                                    const dataNama = this.dataset.nama;
-                                    const dataID = this.closest('td').querySelector('.dataID').value;
-
-                                    Swal.fire({
-                                        title: 'Are you sure?',
-                                        text: `Hapus jadwal asesmen pada hari ${dataNama}?`,
-                                        icon: 'warning',
-                                        showCancelButton: true,
-                                        confirmButtonText: 'Yes, delete it!',
-                                    }).then(result => {
-
-                                        if (!result.isConfirmed) return;
-
-                                        fetch(`/asesmen/${dataID}`, {
-                                                method: 'DELETE',
-                                                credentials: 'same-origin',
-                                                headers: {
-                                                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                                                    'X-Requested-With': 'XMLHttpRequest',
-                                                }
-                                            })
-                                            .then(() => {
-                                                Swal.fire({
-                                                    title: 'Berhasil',
-                                                    text: 'Jadwal asesmen berhasil dihapus',
-                                                    icon: 'success',
-                                                    timer: 1200,
-                                                    showConfirmButton: false
-                                                });
-                                                row.style.transition = 'opacity 0.3s';
-                                                row.style.opacity = 0;
-                                                setTimeout(() => row.remove(), 300);
-                                            })
-                                            .catch(err => {
-                                                console.error(err);
-                                                Swal.fire('Error', 'Request gagal dikirim ke server', 'error');
-                                            });
-                                    });
+                            })
+                            .then(() => {
+                                Swal.fire({
+                                    title: 'Berhasil',
+                                    text: 'Jadwal asesmen berhasil dihapus',
+                                    icon: 'success',
+                                    timer: 1200,
+                                    showConfirmButton: false
                                 });
-
+                                row.style.transition = 'opacity 0.3s';
+                                row.style.opacity = 0;
+                                setTimeout(() => row.remove(), 300);
+                            })
+                            .catch(err => {
+                                console.error(err);
+                                Swal.fire('Error', 'Request gagal dikirim ke server', 'error');
                             });
+                    });
+                });
 
-                        });
-                    </script>
-                @endpush
+            });
+
+        });
+    </script>
+@endpush

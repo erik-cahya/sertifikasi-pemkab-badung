@@ -81,6 +81,59 @@
                                         @enderror
                                     </div>
 
+                                    <div class="card border-secondary border">
+                                        <div class="card-body kegiatan-item">
+                                            <div id="kegiatan-container">
+                                                <!-- Item pertama -->
+                                                @for ($i = 0; $i < 5; $i++)
+                                                    <div class="row kegiatan-row mb-3">
+
+                                                        <div class="col-lg-3">
+                                                            <label class="form-label">Nama LSP</label>
+                                                            <select class="lsp-select @error(`lsp_ref.$i`) is-invalid @enderror form-select" name="lsp_ref[{{ $i }}]">
+                                                                <option value="" selected>Pilih LSP</option>
+                                                                @foreach ($dataLSP as $lsp)
+                                                                    <option value="{{ $lsp->ref }}" {{ old('lsp_ref.' . $i) == $lsp->ref ? 'selected' : '' }}>{{ $lsp->lsp_nama }}</option>
+                                                                @endforeach
+                                                            </select>
+
+                                                            @error("lsp_ref.$i")
+                                                                <div class="invalid-feedback" bis_skin_checked="1">
+                                                                    {{ $message }}
+                                                                </div>
+                                                            @enderror
+                                                        </div>
+
+                                                        <div class="col-lg-5">
+                                                            <label class="form-label">Skema</label>
+                                                            <select class="form-control select2 skema-select @error(`skema_ref.$i`) is-invalid @enderror" name="skema_ref[{{ $i }}][]" multiple disabled>
+                                                            </select>
+                                                            @error("skema_ref.$i")
+                                                                <div class="invalid-feedback" bis_skin_checked="1">
+                                                                    {{ $message }}
+                                                                </div>
+                                                            @enderror
+                                                        </div>
+
+                                                        <div class="col-lg-2">
+                                                            <label class="form-label">Kuota</label>
+                                                            <input type="number" class="form-control" name="kuota_lsp[{{ $i }}]" min="1" value="{{ old("kuota_lsp.$i") }}">
+                                                            @error("kuota_lsp.$i")
+                                                                <div class="text-danger">{{ $message }}</div>
+                                                            @enderror
+                                                        </div>
+
+                                                        <div class="col-lg-2">
+                                                            <label class="form-label">Tanggal</label>
+                                                            <input type="text" class="form-control daterangepicker-input" name="date_range[{{ $i }}]">
+                                                        </div>
+
+                                                    </div>
+                                                @endfor
+                                            </div>
+                                        </div>
+                                    </div>
+
                                 </div>
                                 <div class="mb-3 mt-3">
                                     <button class="btn btn-primary" type="submit"><i class="ri-add-box-fill"></i> Add New Kegiatan</button>
@@ -88,13 +141,16 @@
                             </div>
                         </div>
                     </div>
+
                 </div>
+
+
             </form>
 
         </div>
 
-        <div class="container-fluid" id="add_lsp">
-            <form action="{{ route('kegiatan-detail.store') }}" method="POST" enctype="multipart/form-data">
+        {{-- <div class="container-fluid" id="add_lsp">
+            <form action="{{ route('kegiatan-lsp.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="row">
                     <div class="col-12">
@@ -185,7 +241,7 @@
                 </div>
             </form>
 
-        </div>
+        </div> --}}
 
     </div>
 @endsection

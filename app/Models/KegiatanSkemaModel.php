@@ -28,6 +28,7 @@ class KegiatanSkemaModel extends Model
         return $this->belongsTo(LSPModel::class, 'lsp_ref', 'ref');
     }
 
+
     public function skema()
     {
         return $this->belongsTo(SkemaModel::class, 'skema_ref', 'ref');

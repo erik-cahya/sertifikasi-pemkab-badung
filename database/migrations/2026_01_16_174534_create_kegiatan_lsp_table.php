@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignUlid('kegiatan_ref')->references('ref')->on('kegiatan')->cascadeOnDelete();
             $table->foreignUlid('lsp_ref')->references('ref')->on('lsp')->cascadeOnDelete();
             $table->integer('kuota_lsp');
+            $table->integer('limit_kuota');
             $table->timestamps();
         });
     }
