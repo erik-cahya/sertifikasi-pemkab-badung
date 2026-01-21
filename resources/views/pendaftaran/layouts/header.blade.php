@@ -1,8 +1,13 @@
-<nav class="navbar navbar-expand-lg bg-danger navbar-dark sticky-top shadow">
+<nav class="navbar navbar-expand-lg bg-dinas navbar-dark sticky-top shadow">
     <div class="container">
         <a class="navbar-brand" href="#">
-            <span class="logo-lg">
-                <img src="{{ asset('img/logo_dinas_title.png') }}" style="height: 40px; margin-left: -15px" alt="logo">
+            <span class="logo-lg d-flex align-items-center">
+                <img src="{{ asset('img/logo_dinas_no_title.png') }}" alt="logo" class="me-2" style="height: 40px">
+
+                <div class="lh-sm">
+                    <h1 class="fw-bold small mb-1">DINAS PERINDUSTRIAN DAN TENAGA KERJA</h1>
+                    <p class="opacity-75 small mb-0">BIDANG PELATIHAN DAN SERTIFIKASI</p>
+                </div>
             </span>
         </a>
 
@@ -11,6 +16,7 @@
         </button>
 
         <div class="collapse navbar-collapse justify-content-end" id="mainNavbar">
+            {{-- <ul class="navbar-nav custom-nav gap-lg-4"> --}}
             <ul class="navbar-nav gap-lg-4">
                 <li class="nav-item">
                     <a class="nav-link {{ request()->routeIs('/') ? 'active fw-semibold' : '' }}" href="/">Beranda</a>

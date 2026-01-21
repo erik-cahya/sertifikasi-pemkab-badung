@@ -20076,3 +20076,33 @@ span.flatpickr-weekday,
   margin: -0.5rem -0.75rem;
   padding: 0.5rem 0.75rem;
 }
+
+/* ##############------------------- NEW -------------------##############  */
+.custom-nav .nav-link {
+    color: #fff;
+    padding: 8px 16px;
+    border-radius: 6px;
+    transition: all 0.2s ease-in-out;
+}
+
+/* Hover */
+.custom-nav .nav-link:hover {
+    background-color: #8b1d1d; /* merah lebih gelap */
+    color: #fff;
+}
+
+/* Active */
+.custom-nav .nav-link.active {
+    background-color: #7a1515; /* paling gelap */
+    color: #fff;
+    font-weight: 500;
+}
+
+.bg-dinas {
+  /* --tz-bg-opacity: 1; */
+  background-color: #571919 !important;
+}
+
+.bg-gray-700 {
+    background-color: #404040 !important;
+}
