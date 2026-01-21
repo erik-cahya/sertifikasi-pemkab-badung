@@ -31,7 +31,7 @@
                     <a class="nav-link {{ request()->routeIs('tuk.index') ? 'active fw-semibold' : '' }}" href="{{ route('tuk.index') }}">Daftar TUK</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {{ request()->routeIs('login') ? 'active fw-semibold' : '' }} bg-orange rounded-4 px-3 fw-bold" href="{{ route('login') }}"><i class="bi bi-box-arrow-in-right"></i> Masuk</a>
+                    <a target="_" class="nav-link {{ request()->routeIs('login') ? 'active fw-semibold' : '' }} bg-orange rounded-4 px-3 fw-bold" href="{{ route('login') }}"><i class="bi bi-box-arrow-in-right"></i> Masuk</a>
                 </li>
             </ul>
         </div>
