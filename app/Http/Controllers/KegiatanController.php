@@ -82,30 +82,24 @@ class KegiatanController extends Controller
 
             // ############################################################## Tambah LSP ke Kegiatan
 
-            // Validator::make($request->all(), [
-            //     'kegiatan_ref' => 'required',
-            // ], [
-            //     'kegiatan_ref.required' => 'Silahkan pilih kegiatan',
-            // ])->validateWithBag('create_detail_kegiatan');
-
             foreach ($request->lsp_ref as $i => $lspRef) {
 
                 // Kalau LSP kosong, lewati
                 if (!$lspRef) continue;
 
-                // Validator::make($request->all(), [
-                //     "lsp_ref.$i" => 'required',
-                //     "skema_ref.$i" => ['required', 'array', 'min:1'],
-                //     "skema_ref.$i.*" => 'required',
-                //     "kuota_lsp.$i" => ['required', 'integer', 'min:1'],
-                //     "date_range.$i" => ['required', 'regex:/^\d{2}-\d{2}-\d{4}\s-\s\d{2}-\d{2}-\d{4}$/'],
-                // ], [
-                //     'lsp_ref.*.required'     => 'LSP wajib dipilih',
-                //     'skema_ref.*.required'   => 'Minimal 1 skema harus dipilih',
-                //     'kuota_lsp.*.required'   => 'Kuota wajib diisi',
-                //     'kuota_lsp.*.min'        => 'Kuota minimal 1',
-                //     'date_range.*.required'  => 'Tanggal wajib diisi',
-                // ])->validate();
+                Validator::make($request->all(), [
+                    "lsp_ref.$i" => 'required',
+                    "skema_ref.$i" => ['required', 'array', 'min:1'],
+                    "skema_ref.$i.*" => 'required',
+                    "kuota_lsp.$i" => ['required', 'integer', 'min:1'],
+                    "date_range.$i" => ['required', 'regex:/^\d{2}-\d{2}-\d{4}\s-\s\d{2}-\d{2}-\d{4}$/'],
+                ], [
+                    'lsp_ref.*.required'     => 'LSP wajib dipilih',
+                    'skema_ref.*.required'   => 'Minimal 1 skema harus dipilih',
+                    'kuota_lsp.*.required'   => 'Kuota wajib diisi',
+                    'kuota_lsp.*.min'        => 'Kuota minimal 1',
+                    'date_range.*.required'  => 'Tanggal wajib diisi',
+                ])->validate();
 
 
 
@@ -178,30 +172,6 @@ class KegiatanController extends Controller
     public function show(string $id)
     {
         $data['dataLSP'] = LSPModel::get();
-
-        // $data['dataKegiatan'] = KegiatanModel::with(
-        //     [
-        //         'kegiatanLsp.lsp'
-        //     ]
-        // )->withSum(
-        //     'kegiatanLsp as total_peserta',
-        //     'kuota_lsp'
-        // )->get();
-
-
-        // $data['dataKegiatan'] = KegiatanModel::where('ref', $id)
-        //     ->with([
-        //         'kegiatanLsp.lsp',           // detail kuota + LSP
-        //         'skemaPerLsp.lsp',        // total skema per LSP
-        //         'kuotaPerLsp.lsp'      // total kuota per LSP
-        //     ])->withSum(
-        //         'kegiatanLsp as total_peserta',
-        //         'kuota_lsp'
-        //     )->withCount('skemas')        // total skema kegiatan
-        //     ->firstOrFail();
-
-
-
         $data['dataKegiatan'] = KegiatanModel::where('ref', $id)
             ->with([
                 'kegiatanLsp.lsp',           // detail kuota + LSP

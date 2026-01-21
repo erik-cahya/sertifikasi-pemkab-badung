@@ -135,7 +135,7 @@
                                 </tr>
                             </thead>
 
-                            <tbody id="accordionTable">
+                            <tbody id="dataPeserta">
                                 {{-- <tbody> --}}
                                 @foreach ($dataKegiatan->kegiatanLsp as $kegiatan)
                                     {{-- {{ dd($kegiatan->lsp) }} --}}
@@ -160,7 +160,7 @@
                                     </tr>
 
                                     <!-- ROW DETAIL -->
-                                    <tr class="bg-light collapse" id="jadwal-{{ $kegiatan->ref }}" data-bs-parent="#accordionTable">
+                                    <tr class="bg-light collapse" id="jadwal-{{ $kegiatan->ref }}" data-bs-parent="#dataPeserta">
 
                                         <td colspan="5" class="p-1">
                                             <div class="card mb-0 border-0 shadow-sm">
@@ -178,7 +178,7 @@
                                                                 <th>Action</th>
                                                             </tr>
                                                         </thead>
-                                                        <tbody id="detailJadwal">
+                                                        <tbody id="detailJadwal-{{ $kegiatan->ref }}">
                                                             @foreach ($jadwalKegiatan[$kegiatan->lsp->ref] as $skema)
                                                                 @foreach ($skema->jadwal as $jadwal)
                                                                     <tr>
@@ -191,7 +191,7 @@
                                                                             </button>
                                                                         </td>
                                                                     </tr>
-                                                                    <tr class="bg-light collapse" id="asesi_list-{{ $jadwal->ref }}" data-bs-parent="#detailJadwal">
+                                                                    <tr class="bg-light collapse" id="asesi_list-{{ $jadwal->ref }}" data-bs-parent="#detailJadwal-{{ $kegiatan->ref }}">
                                                                         <td colspan="4" class="p-3">
                                                                             <div class="card mb-0 border-0 shadow-sm">
                                                                                 <div class="card-body">
