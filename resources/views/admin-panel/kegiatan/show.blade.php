@@ -135,13 +135,23 @@
                                 </tr>
                             </thead>
 
-                            <tbody id="accordionTable">
-                                @for ($x = 1; $x <= 50; $x++)
+                            {{-- <tbody id="accordionTable"> --}}
+                            <tbody>
+                                @for ($x = 1; $x <= 5; $x++)
                                     <!-- ROW UTAMA -->
                                     <tr>
                                         <td>{{ $x }}</td>
                                         <td>LSP Engineering Hospitality Indonesia</td>
-                                        <td class="d-flex flex-wrap gap-1">
+                                        <td class="d-flex flex-wrap gap-1 border-0" width="500px">
+                                            <span class="badge bg-primary-subtle text-primary">
+                                                Teknisi Refrigerasi Domestik
+                                            </span>
+                                            <span class="badge bg-primary-subtle text-primary">
+                                                Teknisi Refrigerasi Domestik
+                                            </span>
+                                            <span class="badge bg-primary-subtle text-primary">
+                                                Teknisi Refrigerasi
+                                            </span>
                                             <span class="badge bg-primary-subtle text-primary">
                                                 Teknisi Refrigerasi Domestik
                                             </span>
@@ -165,21 +175,55 @@
                                     <!-- ROW DETAIL -->
                                     <tr class="bg-light collapse"
                                         id="detail-{{ $x }}"
-                                        data-bs-parent="#accordionTable">
+                                        {{-- data-bs-parent="#accordionTable" --}}>
 
                                         <td colspan="5">
-                                            <div class="p-1">
-                                                <div class="card border-0 shadow-sm">
-                                                    <div class="card-body">
-                                                        <h6 class="card-title mb-2">
-                                                            Detail Jadwal & Skema
-                                                        </h6>
-                                                        <p class="mb-0">
-                                                            Placeholder content detail untuk LSP ke-{{ $x }}.
-                                                        </p>
-                                                    </div>
+
+                                            <div class="card border-0 shadow-sm">
+                                                <div class="card-body">
+                                                    <h6 class="card-title mb-2">
+                                                        Detail Jadwal & Skema
+                                                    </h6>
+                                                    @foreach ($dataKegiatan->detailsGroupedByLsp as $details)
+                                                        <table class="table-sm table-bordered table" style="font-size: 12px">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>No</th>
+                                                                    <th>Kuota</th>
+                                                                    <th>Tanggal Asesmen</th>
+                                                                    <th>Action</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                @foreach ($jadwalKegiatan[$details->lsp_ref] as $jadwal)
+                                                                    <tr>
+                                                                        <td>{{ $loop->iteration }}</td>
+                                                                        <td>{{ $jadwal->kuota_lsp }} Peserta</td>
+                                                                        <td>{{ \Carbon\Carbon::parse($jadwal->mulai_asesmen)->locale('id')->translatedFormat('l, d F Y') }}</td>
+                                                                        <td class="d-flex gap-2">
+                                                                            <a href="{{ route('asesmen.edit', $jadwal->ref) }}" class="text-primary">
+                                                                                <i class="mdi mdi-pencil-outline"></i> Details
+                                                                            </a>
+                                                                            {{-- <a href="{{ route('asesmen.edit', $jadwal->ref) }}" class="text-primary">
+                                                                                <i class="mdi mdi-pencil-outline"></i> Edit
+                                                                            </a> --}}
+
+                                                                            {{-- <input type="hidden" class="dataID" value="{{ $jadwal->ref }}">
+                                                                            <a href="#" class="text-danger deleteButton" data-nama="{{ \Carbon\Carbon::parse($jadwal->mulai_asesmen)->locale('id')->translatedFormat('l, d F Y') }}">
+                                                                                <i class="mdi mdi-trash-can-outline"></i> Hapus
+                                                                            </a> --}}
+                                                                        </td>
+                                                                    </tr>
+                                                                @endforeach
+                                                                <tr>
+                                                                    <td colspan="4">LSP Engineering Hospitality</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    @endforeach
                                                 </div>
                                             </div>
+
                                         </td>
 
                                     </tr>
@@ -187,105 +231,6 @@
                             </tbody>
                         </table>
 
-                        @foreach ($dataKegiatan->detailsGroupedByLsp as $details)
-                            <!-- Edit Data Modal -->
-                            <div id="jadwalModal-1" class="modal modal-lg fade" tabindex="-1" role="dialog" aria-labelledby="success-header-modalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header modal-colored-header bg-success">
-                                            <h4 class="modal-title" id="success-header-modalLabel">Pembagian Jadwal Asesmen</h4>
-                                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <span class="badge bg-primary-subtle text-primary rounded-pill fs-5 mb-2">{{ $jadwalKegiatan[$details->lsp_ref]->first()->lsp->lsp_nama ?? '' }}</span>
-
-                                            <div class="nav nav-pills nav-justified gap-0 p-3 text-center" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                                                <li class="nav-item mt-2"><a class="nav-link fs-5 active p-2" data-bs-toggle="tab" data-bs-target="#jadwal_asesmen" type="button" role="tab" aria-controls="home" aria-selected="true" href="#jadwal_asesmen"><i class="mdi mdi-pencil"></i> Daftar Jadwal Asesmen</a></li>
-                                                <li class="nav-item mt-2"><a class="nav-link fs-5 p-2" data-bs-toggle="tab" data-bs-target="#daftar_skema" type="button" role="tab" aria-controls="home" aria-selected="true" href="#daftar_skema"><i class="mdi mdi-pencil"></i> Daftar Skema</a></li>
-                                            </div>
-
-                                            <div class="tab-content m-0 p-3 pt-0" id="v-pills-tabContent">
-                                                {{-- Jadwal Asesmen Content --}}
-                                                <div id="jadwal_asesmen" class="tab-pane active">
-                                                    <div class="row">
-                                                        <div class="col-lg-12">
-                                                            <table class="table-sm table-bordered table-striped mb-0 table" style="font-size: 12px">
-                                                                <thead>
-                                                                    <tr>
-                                                                        <th>No</th>
-                                                                        <th>Kuota</th>
-                                                                        <th>Tanggal Asesmen</th>
-                                                                        <th>Action</th>
-                                                                    </tr>
-                                                                </thead>
-                                                                <tbody>
-                                                                    @foreach ($jadwalKegiatan[$details->lsp_ref] as $jadwal)
-                                                                        <tr>
-                                                                            <td>{{ $loop->iteration }}</td>
-                                                                            <td>{{ $jadwal->kuota_lsp }} Peserta</td>
-                                                                            <td>{{ \Carbon\Carbon::parse($jadwal->mulai_asesmen)->locale('id')->translatedFormat('l, d F Y') }}</td>
-                                                                            <td class="d-flex gap-2">
-                                                                                <a href="{{ route('asesmen.edit', $jadwal->ref) }}" class="text-primary">
-                                                                                    <i class="mdi mdi-pencil-outline"></i> Edit
-                                                                                </a>
-
-                                                                                <input type="hidden" class="dataID" value="{{ $jadwal->ref }}">
-                                                                                <a href="#" class="text-danger deleteButton" data-nama="{{ \Carbon\Carbon::parse($jadwal->mulai_asesmen)->locale('id')->translatedFormat('l, d F Y') }}">
-                                                                                    <i class="mdi mdi-trash-can-outline"></i> Hapus
-                                                                                </a>
-                                                                            </td>
-                                                                        </tr>
-                                                                    @endforeach
-                                                                </tbody>
-                                                            </table>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                {{-- END Jadwal Asesmen Content --}}
-
-                                                {{-- Skema Content --}}
-                                                <div id="daftar_skema" class="tab-pane">
-                                                    <div class="row">
-                                                        <div class="col-lg-12">
-                                                            <table class="table-sm table-bordered table-striped mb-0 table" style="font-size: 12px">
-                                                                <thead>
-                                                                    <tr>
-                                                                        <th>No</th>
-                                                                        <th>Nama Skema</th>
-                                                                        <th>Action</th>
-                                                                    </tr>
-                                                                </thead>
-                                                                <tbody>
-                                                                    @foreach ($skemaPerLsp[$details->lsp_ref] as $jadwal)
-                                                                        {{-- {{ dd($skemaPerLsp) }} --}}
-                                                                        <tr>
-                                                                            <td>{{ $loop->iteration }}</td>
-                                                                            <td>Skema 1</td>
-                                                                            <td class="d-flex gap-2">
-                                                                                <a href="#" class="text-danger">
-                                                                                    <i class="mdi mdi-trash-can-outline"></i> Hapus
-                                                                                </a>
-                                                                            </td>
-                                                                        </tr>
-                                                                    @endforeach
-                                                                </tbody>
-                                                            </table>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                {{-- END Skema Content --}}
-
-                                            </div>
-
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-                                            <button type="submit" class="btn btn-success">Simpan Perubahan</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        @endforeach
                     </div> <!-- end card-body-->
                 </div> <!-- end card-->
             </div>

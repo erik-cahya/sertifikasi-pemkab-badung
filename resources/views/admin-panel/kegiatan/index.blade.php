@@ -34,28 +34,34 @@
                                         <span class="badge {{ $kegiatan->status == 1 ? 'bg-success' : 'bg-danger' }} rounded-circle p-1"><small></small></span>
                                         {{ $kegiatan->nama_kegiatan }}
                                     </td>
-                                    <td class="d-flex flex-wrap gap-1">
+                                    <td>
                                         @php
                                             // Ambil LSP unik (karena bisa muncul berulang di detail)
                                             $lsps = $kegiatan->details->pluck('lsp')->unique('ref');
+                                            $dataKuota = $kegiatan->details->first();
+
+                                            // dd($kegiatan->details->groupBy('lsp_ref'));
+
                                         @endphp
                                         @php
                                             $validLsps = $lsps->filter(fn($lsp) => filled($lsp->lsp_nama));
                                         @endphp
 
-                                        @if ($validLsps->isEmpty())
-                                            <span class="badge bg-danger-subtle text-danger">
-                                                Tidak ada LSP yang terlibat
-                                            </span>
-                                        @else
-                                            @foreach ($validLsps as $lsp)
-                                                <span class="badge bg-primary-subtle text-primary">
-                                                    {{ $lsp->lsp_nama }}
+                                        <div class="d-flex flex-column gap-1">
+                                            @if ($validLsps->isEmpty())
+                                                <span class="badge bg-danger-subtle text-danger">
+                                                    Tidak ada LSP yang terlibat
                                                 </span>
-                                            @endforeach
-                                        @endif
+                                            @else
+                                                @foreach ($validLsps as $lsp)
+                                                    <span class="badge bg-primary-subtle text-primary">
+                                                        {{ $lsp->lsp_nama }}
+                                                    </span>
+                                                @endforeach
+                                            @endif
+                                        </div>
                                     </td>
-                                    <td>{{ $kegiatan->total_kuota_lsp == null ? '0' : $kegiatan->total_kuota_lsp }} Peserta</td>
+                                    <td>{{ $dataKuota->kuota_lsp ?? '0' }} Peserta</td>
                                     <td>{{ \Carbon\Carbon::parse($kegiatan->mulai_kegiatan)->locale('id')->translatedFormat('l, d F Y') }}</td>
                                     <td>{{ \Carbon\Carbon::parse($kegiatan->selesai_kegiatan)->locale('id')->translatedFormat('l, d F Y') }}</td>
                                     <td><span class="badge {{ $kegiatan->status == 1 ? 'bg-success' : 'bg-danger' }}">{{ $kegiatan->status == 1 ? 'Aktif' : 'Tidak Aktif' }}</span></td>

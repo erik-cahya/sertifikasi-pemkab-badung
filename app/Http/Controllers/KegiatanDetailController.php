@@ -31,6 +31,7 @@ class KegiatanDetailController extends Controller
      */
     public function store(Request $request)
     {
+
         DB::transaction(function () use ($request) {
 
             Validator::make($request->all(), [
@@ -87,6 +88,8 @@ class KegiatanDetailController extends Controller
                 $baseQuota = intdiv($kuota, $totalDays);
                 $remainder = $kuota % $totalDays;
 
+                // dd($baseQuota, $remainder, $kuota);
+
                 foreach ($dates as $index => $date) {
 
                     $quotaForDay = $baseQuota + ($index < $remainder ? 1 : 0);
@@ -95,7 +98,7 @@ class KegiatanDetailController extends Controller
                     KegiatanDetailModel::create([
                         'kegiatan_ref'    => $request->kegiatan_ref,
                         'lsp_ref'         => $lsp,
-                        'kuota_lsp'       => $quotaForDay,
+                        'kuota_lsp'       => $kuota,
                         'mulai_asesmen'   => $date instanceof Carbon ? $date->format('Y-m-d') : (string) $date,
                         'selesai_asesmen' => $endDate->format('Y-m-d'),
                         'created_by'      => Auth::user()->ref,
