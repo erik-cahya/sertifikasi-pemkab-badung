@@ -39,7 +39,7 @@ class KegiatanModel extends Model
     {
         return $this->hasMany(
             KegiatanLSPModel::class,
-            'kegiatan_ref', // FK di kegiatan_detail
+            'kegiatan_ref', // FK di kegiatan_lsp
             'ref'           // PK di kegiatan
         );
     }

@@ -63,9 +63,9 @@
                                     <i class="mdi mdi-pencil"></i> Edit Kegiatan</button>
                             </div>
 
-                            <div class="d-flex flex-lg-nowrap justify-content-between align-items-end flex-wrap">
+                            {{-- <div class="d-flex flex-lg-nowrap justify-content-between align-items-end flex-wrap">
                                 <a href="{{ route('kegiatan.add-lsp', $dataKegiatan->ref) }}" class="btn-sm btn btn-success"><i class="mdi mdi-plus"></i> Tambah LSP</a>
-                            </div>
+                            </div> --}}
                         </div>
 
                         <!-- Edit Data Modal -->
@@ -124,138 +124,195 @@
                     <h5 class="card-header bg-light-subtle">Data Peserta</h5>
                     <div class="card-body" bis_skin_checked="1">
 
-                        <!-- Daftar LSP -->
-                        <div id="daftar_lsp" class="tab-pane active">
-                            <div class="row m-t-10">
-                                <div class="col-md-12">
-                                    <div class="table-responsive">
-                                        <table class="table-sm table-bordered table-striped mb-0 table">
-                                            <thead>
-                                                <tr>
-                                                    <th>#</th>
-                                                    <th>Nama LSP</th>
-                                                    <th>Jumlah Skema</th>
-                                                    <th>Kuota</th>
-                                                    <th>Action</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody class="table-group-divider fs-12">
+                        <table class="table-sm table-bordered fs-12 w-100 table">
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>Nama LSP</th>
+                                    <th>Jumlah Skema</th>
+                                    <th>Kuota</th>
+                                    <th>Details</th>
+                                </tr>
+                            </thead>
 
+                            <tbody id="accordionTable">
+                                {{-- <tbody> --}}
+                                @foreach ($dataKegiatan->kegiatanLsp as $kegiatan)
+                                    {{-- {{ dd($kegiatan->lsp) }} --}}
+                                    <!-- ROW UTAMA -->
+                                    <tr>
+                                        <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $kegiatan->lsp->lsp_nama }}</td>
+                                        <td class="d-flex flex-wrap gap-1 border-0" width="500px">
 
-                                                <tr>
-                                                    <td>1</td>
-                                                    <td>LSP EHI</td>
-                                                    <td>
-                                                        20 Skema
-                                                    </td>
-                                                    <td>100 Peserta</td>
-                                                    {{-- <td>{{ \Carbon\Carbon::parse($details->created_at)->locale('id')->translatedFormat('d F Y') }}</td> --}}
-                                                    <td>
-                                                        <a href="#" data-bs-toggle="modal" data-bs-target="#jadwalModal-1">Details</a>
-                                                    </td>
-                                                </tr>
+                                            @foreach ($dataSkema[$kegiatan->lsp->ref] as $skema)
+                                                <span class="badge bg-primary-subtle text-primary">
+                                                    {{ $skema->skema_judul }}
+                                                </span>
+                                            @endforeach
+                                        </td>
+                                        <td>{{ $kegiatan->kuota_lsp ?? 0 }} Peserta</td>
+                                        <td>
+                                            <button class="btn btn-link text-decoration-none fs-12 p-0" data-bs-toggle="collapse" data-bs-target="#jadwal-{{ $kegiatan->ref }}" aria-expanded="false" aria-controls="jadwal-{{ $kegiatan->ref }}">
+                                                Lihat Detail
+                                            </button>
+                                        </td>
+                                    </tr>
 
-                                                <!-- ROW DETAIL -->
-                                                <tr class="bg-light collapse" id="detail1" {{-- data-bs-parent="#accordionTable" --}}>
+                                    <!-- ROW DETAIL -->
+                                    <tr class="bg-light collapse" id="jadwal-{{ $kegiatan->ref }}" data-bs-parent="#accordionTable">
 
-                                                    <td colspan="5">
+                                        <td colspan="5" class="p-1">
+                                            <div class="card mb-0 border-0 shadow-sm">
+                                                <div class="card-body">
+                                                    <div class="card-header text-bg-info" bis_skin_checked="1">
+                                                        <h4 class="card-title"> Detail Jadwal & Skema
+                                                        </h4>
+                                                    </div>
+                                                    <table class="table-sm table-bordered table" style="font-size: 12px">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>No</th>
+                                                                <th>Peserta Terdaftar</th>
+                                                                <th>Tanggal Asesmen</th>
+                                                                <th>Action</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody id="detailJadwal">
+                                                            @foreach ($jadwalKegiatan[$kegiatan->lsp->ref] as $skema)
+                                                                @foreach ($skema->jadwal as $jadwal)
+                                                                    <tr>
+                                                                        <td>{{ $loop->iteration }}</td>
+                                                                        <td>30 Peserta</td>
+                                                                        <td>{{ \Carbon\Carbon::parse($jadwal->mulai_asesmen)->locale('id')->translatedFormat('l, d F Y') }}</td>
+                                                                        <td class="d-flex gap-2">
+                                                                            <button class="btn btn-link text-decoration-none fs-12 p-0" data-bs-toggle="collapse" data-bs-target="#asesi_list-{{ $jadwal->ref }}" aria-expanded="false" aria-controls="asesi_list-{{ $jadwal->ref }}">
+                                                                                Lihat Detail
+                                                                            </button>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr class="bg-light collapse" id="asesi_list-{{ $jadwal->ref }}" data-bs-parent="#detailJadwal">
+                                                                        <td colspan="4" class="p-3">
+                                                                            <div class="card mb-0 border-0 shadow-sm">
+                                                                                <div class="card-body">
+                                                                                    <div class="card-header text-bg-primary px-3" bis_skin_checked="1">
+                                                                                        <h4 class="card-title"> List Asesi</h4>
+                                                                                        <h6>{{ \Carbon\Carbon::parse($jadwal->mulai_asesmen)->locale('id')->translatedFormat('l, d F Y') }}</h6>
+                                                                                    </div>
 
-                                                        <div class="card border-0 shadow-sm">
-                                                            <div class="card-body">
-                                                                <h6 class="card-title mb-2">
-                                                                    Detail Jadwal & Skema
-                                                                </h6>
+                                                                                    <table class="table-sm table-bordered table" style="font-size: 12px">
+                                                                                        <thead>
+                                                                                            <tr>
+                                                                                                <th>Nama Asesi</th>
+                                                                                                <th>Skema Dipilih</th>
+                                                                                                <th>Lokasi TUK</th>
+                                                                                                <th>Upload Berkas</th>
+                                                                                            </tr>
+                                                                                        </thead>
+                                                                                        <tbody>
+                                                                                            <tr>
+                                                                                                <td>1</td>
+                                                                                                <td>30 Peserta</td>
+                                                                                                <td>20 Januari 2024</td>
+                                                                                                <td class="d-flex gap-2">
+                                                                                                    <button class="btn btn-link text-decoration-none fs-12 p-0">
+                                                                                                        Download Berkas
+                                                                                                    </button>
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                            <tr>
+                                                                                                <td>1</td>
+                                                                                                <td>30 Peserta</td>
+                                                                                                <td>20 Januari 2024</td>
+                                                                                                <td class="d-flex gap-2">
+                                                                                                    <button class="btn btn-link text-decoration-none fs-12 p-0">
+                                                                                                        Download Berkas
+                                                                                                    </button>
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                            <tr>
+                                                                                                <td>1</td>
+                                                                                                <td>30 Peserta</td>
+                                                                                                <td>20 Januari 2024</td>
+                                                                                                <td class="d-flex gap-2">
+                                                                                                    <button class="btn btn-link text-decoration-none fs-12 p-0">
+                                                                                                        Download Berkas
+                                                                                                    </button>
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                            <tr>
+                                                                                                <td>1</td>
+                                                                                                <td>30 Peserta</td>
+                                                                                                <td>20 Januari 2024</td>
+                                                                                                <td class="d-flex gap-2">
+                                                                                                    <button class="btn btn-link text-decoration-none fs-12 p-0">
+                                                                                                        Download Berkas
+                                                                                                    </button>
+                                                                                                </td>
+                                                                                            </tr>
 
-                                                                <table class="table-sm table-bordered table" style="font-size: 12px">
-                                                                    <thead>
-                                                                        <tr>
-                                                                            <th>No</th>
-                                                                            <th>Kuota</th>
-                                                                            <th>Tanggal Asesmen</th>
-                                                                            <th>Action</th>
-                                                                        </tr>
-                                                                    </thead>
-                                                                    <tbody>
+                                                                                        </tbody>
+                                                                                    </table>
 
-                                                                        <tr>
-                                                                            <td>1</td>
-                                                                            <td>20 Peserta</td>
-                                                                            <td>20 Juli 2024</td>
-                                                                            <td class="d-flex gap-2">
-                                                                                <a href="#" class="text-primary">
-                                                                                    <i class="mdi mdi-pencil-outline"></i> Details
-                                                                                </a>
-                                                                                {{-- <a href="{{ route('asesmen.edit', $jadwal->ref) }}" class="text-primary">
-                                                                                <i class="mdi mdi-pencil-outline"></i> Edit
-                                                                            </a> --}}
+                                                                                </div>
+                                                                            </div>
+                                                                        </td>
+                                                                    </tr>
+                                                                @endforeach
+                                                            @endforeach
+                                                        </tbody>
+                                                    </table>
 
-                                                                                {{-- <input type="hidden" class="dataID" value="{{ $jadwal->ref }}">
-                                                                            <a href="#" class="text-danger deleteButton" data-nama="{{ \Carbon\Carbon::parse($jadwal->mulai_asesmen)->locale('id')->translatedFormat('l, d F Y') }}">
-                                                                                <i class="mdi mdi-trash-can-outline"></i> Hapus
-                                                                            </a> --}}
-                                                                            </td>
-                                                                        </tr>
-
-                                                                        <tr>
-                                                                            <td colspan="4">LSP Engineering Hospitality</td>
-                                                                        </tr>
-                                                                    </tbody>
-                                                                </table>
-
-                                                            </div>
-                                                        </div>
-
-                                                    </td>
-
-                                                </tr>
-
-                                            </tbody>
-                                        </table>
-
-                                    </div> <!-- end card-body-->
-                                </div> <!-- end card-->
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-12">
-
-                            </div>
-
-                            <div class="row">
-                                <div class="col-xl-6">
-                                    <div class="card-body">
-                                        <div class="accordion accordion-flush" id="accordionFlushExample">
-
-                                            <div class="accordion-item">
-                                                <h2 class="accordion-header">
-                                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
-                                                        Accordion Item #2
-                                                    </button>
-                                                </h2>
-                                                <div id="flush-collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-                                                    <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the <code>.accordion-flush</code> class. This is the second item's accordion body. Let's imagine this being filled with some actual content.</div>
                                                 </div>
                                             </div>
-                                            <div class="accordion-item">
-                                                <h2 class="accordion-header">
-                                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
-                                                        Accordion Item #3
-                                                    </button>
-                                                </h2>
-                                                <div id="flush-collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-                                                    <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the <code>.accordion-flush</code> class. This is the third item's accordion body. Nothing more exciting happening here in terms of content, but just filling up the space to make it look, at least at first glance, a bit more representative of how this would look in a real-world application.</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div> <!-- end card-body-->
-                                </div> <!-- end card-->
-                            </div> <!-- end col-->
-                        </div>
-                    </div>
-                </div>
+
+                                        </td>
+
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+
+                    </div> <!-- end card-body-->
+                </div> <!-- end card-->
             </div>
         </div>
+
+        {{-- <div class="row">
+            <div class="col-12">
+
+            </div>
+
+            <div class="row">
+                <div class="col-xl-6">
+                    <div class="card-body">
+                        <div class="accordion accordion-flush" id="accordionFlushExample">
+
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+                                        Accordion Item #2
+                                    </button>
+                                </h2>
+                                <div id="flush-collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                                    <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the <code>.accordion-flush</code> class. This is the second item's accordion body. Let's imagine this being filled with some actual content.</div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
+                                        Accordion Item #3
+                                    </button>
+                                </h2>
+                                <div id="flush-collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                                    <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the <code>.accordion-flush</code> class. This is the third item's accordion body. Nothing more exciting happening here in terms of content, but just filling up the space to make it look, at least at first glance, a bit more representative of how this would look in a real-world application.</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div> <!-- end card-body-->
+                </div> <!-- end card-->
+            </div> <!-- end col-->
+        </div> --}}
     </div>
 @endsection
 @push('script')

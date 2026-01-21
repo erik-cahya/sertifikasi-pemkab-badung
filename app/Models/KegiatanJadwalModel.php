@@ -42,4 +42,13 @@ class KegiatanJadwalModel extends Model
             'ref'
         );
     }
+
+    public function kegiatanLsp()
+    {
+        return $this->belongsTo(
+            KegiatanLSPModel::class,
+            'kegiatan_lsp_ref',
+            'ref'
+        );
+    }
 }

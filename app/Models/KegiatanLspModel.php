@@ -31,4 +31,22 @@ class KegiatanLSPModel extends Model
     {
         return $this->belongsTo(LSPModel::class, 'lsp_ref', 'ref');
     }
+
+    public function kegiatan()
+    {
+        return $this->belongsTo(
+            KegiatanModel::class,
+            'kegiatan_ref',
+            'ref'
+        );
+    }
+
+    public function jadwal()
+    {
+        return $this->hasMany(
+            KegiatanJadwalModel::class,
+            'kegiatan_lsp_ref',
+            'ref'
+        );
+    }
 }

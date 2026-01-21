@@ -205,8 +205,10 @@ class KegiatanController extends Controller
         $data['dataKegiatan'] = KegiatanModel::where('ref', $id)
             ->with([
                 'kegiatanLsp.lsp',           // detail kuota + LSP
+                'kegiatanLsp.jadwal',
                 'skemaPerLsp.lsp',        // total skema per LSP
                 'kuotaPerLsp.lsp'      // total kuota per LSP
+
             ])->withSum(
                 'kegiatanLsp as total_peserta',
                 'kuota_lsp'
@@ -221,6 +223,7 @@ class KegiatanController extends Controller
         $data['jadwalKegiatan'] = $data['dataKegiatan']->kegiatanLsp->groupBy('lsp_ref'); // Mengelompokkan jadwal kegiatan berdasarkan lsp_ref
         $data['dataSkema'] = $data['dataKegiatan']->skemas->groupBy('lsp_ref'); // Mengelompokkan data skema berdasarkan lsp_ref
 
+        // dd($data['jadwalKegiatan']);
 
         return view('admin-panel.kegiatan.show', $data);
     }
