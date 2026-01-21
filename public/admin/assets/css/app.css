@@ -20106,3 +20106,85 @@ span.flatpickr-weekday,
 .bg-gray-700 {
     background-color: #404040 !important;
 }
+
+/* .hero-gradient {
+    background: linear-gradient(
+        160deg,
+        #6b2020,
+        #571919,
+        #2f0c0c
+    );
+} */
+
+.hero-gradient {
+    background: linear-gradient(
+        160deg,
+        #8a2a2a,  /* atas kiri lebih terang */
+        #6b2020,
+        #2f0c0c
+    );
+}
+
+
+.btn-orange {
+  --tz-btn-bg: #ec4913;
+  --tz-btn-border-color: #ec4913;
+  --tz-btn-hover-bg: #d44111;
+  --tz-btn-hover-border-color: #d44111;
+  --tz-btn-focus-shadow-rgb: var(--tz-danger-rgb);
+  --tz-btn-active-bg: #d44111;
+  --tz-btn-active-border-color: #d44111;
+}
+
+.btn-outline-orange {
+  --tz-btn-color: #ec4913;
+  --tz-btn-border-color: #fff;
+  --tz-btn-hover-color: #fff;
+  --tz-btn-hover-bg: #ec4913;
+  --tz-btn-hover-border-color: #ec4913;
+  --tz-btn-focus-shadow-rgb: 208, 63, 63;
+  --tz-btn-active-color: #fff;
+  --tz-btn-active-bg: #ec4913;
+  --tz-btn-active-border-color: #ec4913;
+  --tz-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+  --tz-btn-disabled-color: #ec4913;
+  --tz-btn-disabled-bg: transparent;
+  --tz-btn-disabled-border-color: #ec4913;
+  --tz-gradient: none;
+}
+
+.service-card {
+    background-color: #fff;
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.08);
+    transition: all 0.25s ease;
+    color: inherit;
+}
+
+.service-card:hover {
+    box-shadow: 0 0.75rem 1.5rem rgba(0, 0, 0, 0.12);
+    transform: translateY(-2px);
+}
+
+.service-icon {
+    width: 56px;
+    height: 56px;
+    background-color: rgba(87, 25, 25, 0.1);
+    color: #571919;
+    border-radius: 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.25s ease;
+}
+
+.service-card:hover .service-icon {
+    background-color: rgba(87, 25, 25, 0.2);
+}
+
+.service-card:hover h5 {
+    color: #571919;
+}
+
+

@@ -35,7 +35,7 @@
         @include('pendaftaran.layouts.header')
 
         <!-- ========== Content ========== -->
-        <div class="content flex-grow-1 mt-4 mb-5">
+        <div class="content flex-grow-1">
 
             <!-- content -->
             @yield('content')
