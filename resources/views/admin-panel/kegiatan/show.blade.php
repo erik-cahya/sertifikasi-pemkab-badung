@@ -32,7 +32,7 @@
 @section('content')
     <div class="container-fluid">
         <div class="row mt-2">
-            <div class="col-lg-4">
+            <div class="col-lg-12">
                 <div class="card border-top-0 overflow-hidden">
                     <div class="progress progress-sm rounded-0 bg-light" role="progressbar" aria-valuenow="88" aria-valuemin="0" aria-valuemax="100">
                         <div class="progress-bar bg-success" style="width: 60%"></div>
@@ -42,29 +42,29 @@
                             <div class="">
                                 <p class="text-muted fw-semibold fs-16 mb-1">{{ $dataKegiatan->nama_kegiatan }}</p>
                                 <p class="text-muted">
-                                    <small> {{ \Carbon\Carbon::parse($dataKegiatan->mulai_kegiatan)->locale('id')->translatedFormat('d F Y') }} - {{ \Carbon\Carbon::parse($dataKegiatan->selesai_kegiatan)->locale('id')->translatedFormat('d F Y') }}</small>
+                                    <small>Durasi Kegiatan : {{ \Carbon\Carbon::parse($dataKegiatan->mulai_kegiatan)->locale('id')->translatedFormat('d F Y') }} -\s/d {{ \Carbon\Carbon::parse($dataKegiatan->selesai_kegiatan)->locale('id')->translatedFormat('d F Y') }}</small>
                                 </p>
 
-                                <span class="badge {{ $dataKegiatan->status == 1 ? 'bg-success' : 'bg-danger' }} rounded-pill px-3">{{ $dataKegiatan->status == 1 ? 'Aktif' : 'Tidak Aktif' }}</span>
-                                <span class="badge bg-info rounded-pill px-3">{{ $dataKegiatan->details->pluck('lsp')->unique('ref')->count() }} LSP</span>
-                                <span class="badge bg-primary rounded-pill px-3">13/{{ $dataKegiatan->total_peserta }} Peserta</span>
+                                <span class="badge {{ $dataKegiatan->status == 1 ? 'bg-success' : 'bg-danger' }} rounded-pill px-2 py-1">Status : {{ $dataKegiatan->status == 1 ? 'Aktif' : 'Tidak Aktif' }}</span>
+                                <span class="badge bg-info rounded-pill px-2 py-1">{{ $dataKegiatan->details->pluck('lsp')->unique('ref')->count() }} LSP</span>
+                                <span class="badge bg-primary rounded-pill px-2 py-1">13/{{ $dataKegiatan->total_peserta }} Calon Asesi</span>
 
                             </div>
-                            <div class="avatar-sm mb-4">
-                                <div class="avatar-title bg-danger-subtle text-danger fs-24 rounded">
-                                    <i class="bi bi-journal-medical"></i>
+                            {{-- <div class="avatar-sm mb-4">
+                                <div class="avatar-title bg-info-subtle text-info fs-24 rounded">
+                                    <i class=" ri-information-fill"></i>
                                 </div>
-                            </div>
+                            </div> --}}
                         </div>
                         <hr>
                         <div class="d-flex gap-2">
                             <div class="d-flex flex-lg-nowrap justify-content-between align-items-end flex-wrap">
-                                <button class="btn-sm btn btn-pink" data-bs-toggle="modal" data-bs-target="#editModal-{{ $dataKegiatan->ref }}">
+                                <button class="btn-sm btn btn-warning" data-bs-toggle="modal" data-bs-target="#editModal-{{ $dataKegiatan->ref }}">
                                     <i class="mdi mdi-pencil"></i> Edit Kegiatan</button>
                             </div>
 
                             <div class="d-flex flex-lg-nowrap justify-content-between align-items-end flex-wrap">
-                                <a href="{{ route('kegiatan.add-lsp', $dataKegiatan->ref) }}" class="btn-sm btn btn-success"><i class="mdi mdi-plus"></i> Tambah LSP Baru</a>
+                                <a href="{{ route('kegiatan.add-lsp', $dataKegiatan->ref) }}" class="btn-sm btn btn-success"><i class="mdi mdi-plus"></i> Tambah LSP</a>
                             </div>
                         </div>
 
@@ -118,14 +118,11 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-8">
-                <div class="card">
-                    <div class="nav nav-pills nav-justified gap-0 p-3 text-center" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                        <li class="nav-item mt-2"><a class="nav-link fs-5 active p-2" data-bs-toggle="tab" data-bs-target="#daftar_lsp" type="button" role="tab" aria-controls="home" aria-selected="true" href="#daftar_lsp"><i class="mdi mdi-pencil"></i> Daftar LSP</a></li>
-                        <li class="nav-item mt-2"><a class="nav-link fs-5 p-2" data-bs-toggle="tab" data-bs-target="#daftar_asesi" type="button" role="tab" aria-controls="home" aria-selected="true" href="#daftar_asesi"><i class="mdi mdi-pencil"></i> Daftar Peserta Asesi</a></li>
-                    </div>
 
-                    <div class="tab-content m-0 p-3 pt-0" id="v-pills-tabContent">
+            <div class="col-lg-12" bis_skin_checked="1">
+                <div class="card" bis_skin_checked="1">
+                    <h5 class="card-header bg-light-subtle">Data Peserta</h5>
+                    <div class="card-body" bis_skin_checked="1">
 
                         <!-- Daftar LSP -->
                         <div id="daftar_lsp" class="tab-pane active">
@@ -158,248 +155,246 @@
                                                         </td>
                                                     </tr>
                                                 @endforeach
+                                                =======
+                                                <table class="table-sm table-bordered fs-12 w-100 table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>No</th>
+                                                            <th>Nama LSP</th>
+                                                            <th>Jumlah Skema</th>
+                                                            <th>Kuota</th>
+                                                            <th>Jadwal</th>
+                                                        </tr>
+                                                    </thead>
 
-                                            </tbody>
-                                        </table>
+                                                    {{-- <tbody id="accordionTable"> --}}
+                                                    <tbody>
+                                                        @for ($x = 1; $x <= 5; $x++)
+                                                            <!-- ROW UTAMA -->
+                                                            <tr>
+                                                                <td>{{ $x }}</td>
+                                                                <td>LSP Engineering Hospitality Indonesia</td>
+                                                                <td class="d-flex flex-wrap gap-1 border-0" width="500px">
+                                                                    <span class="badge bg-primary-subtle text-primary">
+                                                                        Teknisi Refrigerasi Domestik
+                                                                    </span>
+                                                                    <span class="badge bg-primary-subtle text-primary">
+                                                                        Teknisi Refrigerasi Domestik
+                                                                    </span>
+                                                                    <span class="badge bg-primary-subtle text-primary">
+                                                                        Teknisi Refrigerasi
+                                                                    </span>
+                                                                    <span class="badge bg-primary-subtle text-primary">
+                                                                        Teknisi Refrigerasi Domestik
+                                                                    </span>
+                                                                    <span class="badge bg-primary-subtle text-primary">
+                                                                        Teknisi Refrigerasi Domestik
+                                                                    </span>
+                                                                </td>
+                                                                <td>200 Peserta</td>
+                                                                <td>
+                                                                    <button
+                                                                        class="btn btn-link text-decoration-none fs-12 p-0"
+                                                                        data-bs-toggle="collapse"
+                                                                        data-bs-target="#detail-{{ $x }}"
+                                                                        aria-expanded="false"
+                                                                        aria-controls="detail-{{ $x }}">
+                                                                        Lihat Detail
+                                                                    </button>
+                                                                </td>
+                                                            </tr>
+                                                            >>>>>>> erikupdate
 
-                                        @foreach ($dataKegiatan->detailsGroupedByLsp as $details)
-                                            <!-- Edit Data Modal -->
-                                            <div id="jadwalModal-{{ $details->lsp_ref }}" class="modal modal-lg fade" tabindex="-1" role="dialog" aria-labelledby="success-header-modalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
-                                                <div class="modal-dialog">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header modal-colored-header bg-success">
-                                                            <h4 class="modal-title" id="success-header-modalLabel">Detail Asesmen</h4>
-                                                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                        </div>
-                                                        <div class="modal-body">
-                                                            <span class="badge bg-primary-subtle text-primary fs-6">{{ $jadwalKegiatan[$details->lsp_ref]->first()->lsp->lsp_nama ?? '' }}</span>
-                                                            <div class="nav nav-pills nav-justified gap-0 p-3 text-center" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                                                                <li class="nav-item mt-2"><a class="nav-link fs-5 active p-2" data-bs-toggle="tab" data-bs-target="#jadwal_asesmen" type="button" role="tab" aria-controls="home" aria-selected="true" href="#jadwal_asesmen"><i class="mdi mdi-pencil"></i> Daftar Jadwal Asesmen</a></li>
-                                                                <li class="nav-item mt-2"><a class="nav-link fs-5 p-2" data-bs-toggle="tab" data-bs-target="#daftar_skema" type="button" role="tab" aria-controls="home" aria-selected="true" href="#daftar_skema"><i class="mdi mdi-pencil"></i> Daftar Skema</a></li>
-                                                            </div>
+                                                            <!-- ROW DETAIL -->
+                                                            <tr class="bg-light collapse"
+                                                                id="detail-{{ $x }}"
+                                                                {{-- data-bs-parent="#accordionTable" --}}>
 
-                                                            <div class="tab-content m-0 p-3 pt-0" id="v-pills-tabContent">
-                                                                {{-- Jadwal Asesmen Content --}}
-                                                                <div id="jadwal_asesmen" class="tab-pane active">
-                                                                    <div class="row">
-                                                                        <div class="col-lg-12">
-                                                                            <table class="table-sm table-bordered table-striped mb-0 table" style="font-size: 12px">
-                                                                                <thead>
-                                                                                    <tr>
-                                                                                        <th>No</th>
-                                                                                        <th>Kuota</th>
-                                                                                        <th>Tanggal Asesmen</th>
-                                                                                        <th>Action</th>
-                                                                                    </tr>
-                                                                                </thead>
-                                                                                <tbody>
-                                                                                    @foreach ($jadwalKegiatan[$details->lsp_ref] as $jadwal)
+                                                                <td colspan="5">
+
+                                                                    <div class="card border-0 shadow-sm">
+                                                                        <div class="card-body">
+                                                                            <h6 class="card-title mb-2">
+                                                                                Detail Jadwal & Skema
+                                                                            </h6>
+                                                                            @foreach ($dataKegiatan->detailsGroupedByLsp as $details)
+                                                                                <table class="table-sm table-bordered table" style="font-size: 12px">
+                                                                                    <thead>
                                                                                         <tr>
-                                                                                            <td>{{ $loop->iteration }}</td>
-                                                                                            <td>{{ $jadwal->kuota_lsp }} Peserta</td>
-                                                                                            <td>{{ \Carbon\Carbon::parse($jadwal->mulai_asesmen)->locale('id')->translatedFormat('l, d F Y') }}</td>
-                                                                                            <td class="d-flex gap-2">
-                                                                                                <a href="{{ route('asesmen.edit', $jadwal->ref) }}" class="text-primary">
-                                                                                                    <i class="mdi mdi-pencil-outline"></i> Edit
-                                                                                                </a>
-
-                                                                                                <input type="hidden" class="dataID" value="{{ $jadwal->ref }}">
-                                                                                                <a href="#" class="text-danger deleteButton" data-nama="{{ \Carbon\Carbon::parse($jadwal->mulai_asesmen)->locale('id')->translatedFormat('l, d F Y') }}">
-                                                                                                    <i class="mdi mdi-trash-can-outline"></i> Hapus
-                                                                                                </a>
-                                                                                            </td>
+                                                                                            <th>No</th>
+                                                                                            <th>Kuota</th>
+                                                                                            <th>Tanggal Asesmen</th>
+                                                                                            <th>Action</th>
                                                                                         </tr>
-                                                                                    @endforeach
-                                                                                </tbody>
-                                                                            </table>
+                                                                                    </thead>
+                                                                                    <tbody>
+                                                                                        @foreach ($jadwalKegiatan[$details->lsp_ref] as $jadwal)
+                                                                                            <tr>
+                                                                                                <td>{{ $loop->iteration }}</td>
+                                                                                                <td>{{ $jadwal->kuota_lsp }} Peserta</td>
+                                                                                                <td>{{ \Carbon\Carbon::parse($jadwal->mulai_asesmen)->locale('id')->translatedFormat('l, d F Y') }}</td>
+                                                                                                <td class="d-flex gap-2">
+                                                                                                    <a href="{{ route('asesmen.edit', $jadwal->ref) }}" class="text-primary">
+                                                                                                        <i class="mdi mdi-pencil-outline"></i> Details
+                                                                                                    </a>
+                                                                                                    {{-- <a href="{{ route('asesmen.edit', $jadwal->ref) }}" class="text-primary">
+                                                                                <i class="mdi mdi-pencil-outline"></i> Edit
+                                                                            </a> --}}
+
+                                                                                                    {{-- <input type="hidden" class="dataID" value="{{ $jadwal->ref }}">
+                                                                            <a href="#" class="text-danger deleteButton" data-nama="{{ \Carbon\Carbon::parse($jadwal->mulai_asesmen)->locale('id')->translatedFormat('l, d F Y') }}">
+                                                                                <i class="mdi mdi-trash-can-outline"></i> Hapus
+                                                                            </a> --}}
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                        @endforeach
+                                                                                        <tr>
+                                                                                            <td colspan="4">LSP Engineering Hospitality</td>
+                                                                                        </tr>
+                                                                                    </tbody>
+                                                                                </table>
+                                                                            @endforeach
                                                                         </div>
                                                                     </div>
-                                                                </div>
-                                                                {{-- END Jadwal Asesmen Content --}}
 
-                                                                {{-- Skema Content --}}
-                                                                <div id="daftar_skema" class="tab-pane">
-                                                                    <div class="row">
-                                                                        <div class="col-lg-12">
-                                                                            <table class="table-sm table-bordered table-striped mb-0 table" style="font-size: 12px">
-                                                                                <thead>
-                                                                                    <tr>
-                                                                                        <th>No</th>
-                                                                                        <th>Nama Skema</th>
-                                                                                        <th>Action</th>
-                                                                                    </tr>
-                                                                                </thead>
-                                                                                <tbody>
-                                                                                    @foreach ($dataSkema[$details->lsp_ref] as $skema)
-                                                                                        <tr>
-                                                                                            <td>{{ $loop->iteration }}</td>
-                                                                                            <td>{{ $skema->skema_judul }}</td>
-                                                                                            <td class="d-flex gap-2">
-                                                                                                <a href="#" class="text-danger">
-                                                                                                    <i class="mdi mdi-trash-can-outline"></i> Hapus
-                                                                                                </a>
-                                                                                            </td>
-                                                                                        </tr>
-                                                                                    @endforeach
-                                                                                </tbody>
-                                                                            </table>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                {{-- END Skema Content --}}
+                                                                </td>
 
-                                                            </div>
+                                                            </tr>
+                                                        @endfor
+                                                    </tbody>
+                                                </table>
 
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-                                                            <button type="submit" class="btn btn-success">Simpan Perubahan</button>
-                                                        </div>
-                                                    </div>
+                                    </div> <!-- end card-body-->
+                                </div> <!-- end card-->
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-12">
+
+                            </div>
+
+                            <div class="row">
+                                <div class="col-xl-6">
+                                    <div class="card-body">
+                                        <div class="accordion accordion-flush" id="accordionFlushExample">
+
+                                            <div class="accordion-item">
+                                                <h2 class="accordion-header">
+                                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+                                                        Accordion Item #2
+                                                    </button>
+                                                </h2>
+                                                <div id="flush-collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                                                    <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the <code>.accordion-flush</code> class. This is the second item's accordion body. Let's imagine this being filled with some actual content.</div>
                                                 </div>
                                             </div>
-                                        @endforeach
-                                    </div>
-                                </div>
-                            </div>
+                                            <div class="accordion-item">
+                                                <h2 class="accordion-header">
+                                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
+                                                        Accordion Item #3
+                                                    </button>
+                                                </h2>
+                                                <div id="flush-collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                                                    <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the <code>.accordion-flush</code> class. This is the third item's accordion body. Nothing more exciting happening here in terms of content, but just filling up the space to make it look, at least at first glance, a bit more representative of how this would look in a real-world application.</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div> <!-- end card-body-->
+                                </div> <!-- end card-->
+                            </div> <!-- end col-->
                         </div>
-                        <!-- Daftar Asesi -->
-                        <div id="daftar_asesi" class="tab-pane">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <table id="scroll-horizontal-datatable" class="table-sm table-bordered table-striped w-100 nowrap table">
-                                        <thead>
-
-                                            <tr>
-                                                <th>No</th>
-                                                <th>Nama Peserta</th>
-                                                <th>Tanggal Ujian</th>
-                                                <th>
-                                                    LSP Dipilih
-                                                </th>
-                                                <th>Action</th>
-                                            </tr>
-                                        </thead>
-
-                                        <tbody style="font-size: 12px">
-                                            @for ($x = 1; $x <= 50; $x++)
-                                                <tr>
-                                                    <td>{{ $x }}</td>
-                                                    <td>Gede Nyoman</td>
-                                                    <td>AC-213214.312421</td>
-                                                    <td>
-                                                        LSP Engineering Hospitality Indonesia
-                                                        <hr class="my-1">
-                                                        Skema Refrigerasi Domestik
-
-                                                    </td>
-                                                    <td>10 Unit</td>
-                                                </tr>
-                                            @endfor
-
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-
                     </div>
+                @endsection
+                @push('script')
+                    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+                    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+                    <!-- Daterangepicker Plugin js -->
+                    <script src="{{ asset('admin') }}/assets/vendor/daterangepicker/moment.min.js"></script>
+                    <script src="{{ asset('admin') }}/assets/vendor/daterangepicker/daterangepicker.js"></script>
 
-                </div>
-            </div>
-        </div>
+                    <!-- Datatables js -->
+                    <script src="{{ asset('admin') }}/assets/vendor/datatables.net/js/jquery.dataTables.min.js"></script>
+                    <script src="{{ asset('admin') }}/assets/vendor/datatables.net-bs5/js/dataTables.bootstrap5.min.js"></script>
+                    <script src="{{ asset('admin') }}/assets/vendor/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+                    <script src="{{ asset('admin') }}/assets/js/pages/datatable.init.js"></script>
 
-    </div>
-@endsection
-@push('script')
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-    <!-- Daterangepicker Plugin js -->
-    <script src="{{ asset('admin') }}/assets/vendor/daterangepicker/moment.min.js"></script>
-    <script src="{{ asset('admin') }}/assets/vendor/daterangepicker/daterangepicker.js"></script>
+                    <script src="{{ asset('admin') }}/assets/vendor/lucide/umd/lucide.min.js"></script>
 
-    <!-- Datatables js -->
-    <script src="{{ asset('admin') }}/assets/vendor/datatables.net/js/jquery.dataTables.min.js"></script>
-    <script src="{{ asset('admin') }}/assets/vendor/datatables.net-bs5/js/dataTables.bootstrap5.min.js"></script>
-    <script src="{{ asset('admin') }}/assets/vendor/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
-    <script src="{{ asset('admin') }}/assets/js/pages/datatable.init.js"></script>
+                    <!--  Select2 Plugin Js -->
+                    <script src="{{ asset('admin') }}/assets/vendor/select2/js/select2.min.js"></script>
 
-    <script src="{{ asset('admin') }}/assets/vendor/lucide/umd/lucide.min.js"></script>
+                    <script>
+                        $(document).on('focus', '.single-date', function() {
+                            const modal = $(this).closest('.modal');
 
-    <!--  Select2 Plugin Js -->
-    <script src="{{ asset('admin') }}/assets/vendor/select2/js/select2.min.js"></script>
-
-    <script>
-        $(document).on('focus', '.single-date', function() {
-            const modal = $(this).closest('.modal');
-
-            $(this).daterangepicker({
-                singleDatePicker: true,
-                autoUpdateInput: false,
-                parentEl: modal,
-                locale: {
-                    format: 'DD/MM/YYYY'
-                }
-            });
-
-            $(this).on('apply.daterangepicker', function(ev, picker) {
-                $(this).val(picker.startDate.format('DD/MM/YYYY'));
-            });
-        });
-    </script>
-
-    {{-- Sweet Alert --}}
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-
-            document.querySelectorAll('.deleteButton').forEach(button => {
-
-                button.addEventListener('click', function(e) {
-                    e.preventDefault();
-
-                    const row = this.closest('tr');
-                    const dataNama = this.dataset.nama;
-                    const dataID = this.closest('td').querySelector('.dataID').value;
-
-                    Swal.fire({
-                        title: 'Are you sure?',
-                        text: `Hapus jadwal asesmen pada hari ${dataNama}?`,
-                        icon: 'warning',
-                        showCancelButton: true,
-                        confirmButtonText: 'Yes, delete it!',
-                    }).then(result => {
-
-                        if (!result.isConfirmed) return;
-
-                        fetch(`/asesmen/${dataID}`, {
-                                method: 'DELETE',
-                                credentials: 'same-origin',
-                                headers: {
-                                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                                    'X-Requested-With': 'XMLHttpRequest',
+                            $(this).daterangepicker({
+                                singleDatePicker: true,
+                                autoUpdateInput: false,
+                                parentEl: modal,
+                                locale: {
+                                    format: 'DD/MM/YYYY'
                                 }
-                            })
-                            .then(() => {
-                                Swal.fire({
-                                    title: 'Berhasil',
-                                    text: 'Jadwal asesmen berhasil dihapus',
-                                    icon: 'success',
-                                    timer: 1200,
-                                    showConfirmButton: false
-                                });
-                                row.style.transition = 'opacity 0.3s';
-                                row.style.opacity = 0;
-                                setTimeout(() => row.remove(), 300);
-                            })
-                            .catch(err => {
-                                console.error(err);
-                                Swal.fire('Error', 'Request gagal dikirim ke server', 'error');
                             });
-                    });
-                });
 
-            });
+                            $(this).on('apply.daterangepicker', function(ev, picker) {
+                                $(this).val(picker.startDate.format('DD/MM/YYYY'));
+                            });
+                        });
+                    </script>
 
-        });
-    </script>
-@endpush
+                    {{-- Sweet Alert --}}
+                    <script>
+                        document.addEventListener('DOMContentLoaded', function() {
+
+                            document.querySelectorAll('.deleteButton').forEach(button => {
+
+                                button.addEventListener('click', function(e) {
+                                    e.preventDefault();
+
+                                    const row = this.closest('tr');
+                                    const dataNama = this.dataset.nama;
+                                    const dataID = this.closest('td').querySelector('.dataID').value;
+
+                                    Swal.fire({
+                                        title: 'Are you sure?',
+                                        text: `Hapus jadwal asesmen pada hari ${dataNama}?`,
+                                        icon: 'warning',
+                                        showCancelButton: true,
+                                        confirmButtonText: 'Yes, delete it!',
+                                    }).then(result => {
+
+                                        if (!result.isConfirmed) return;
+
+                                        fetch(`/asesmen/${dataID}`, {
+                                                method: 'DELETE',
+                                                credentials: 'same-origin',
+                                                headers: {
+                                                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                                                    'X-Requested-With': 'XMLHttpRequest',
+                                                }
+                                            })
+                                            .then(() => {
+                                                Swal.fire({
+                                                    title: 'Berhasil',
+                                                    text: 'Jadwal asesmen berhasil dihapus',
+                                                    icon: 'success',
+                                                    timer: 1200,
+                                                    showConfirmButton: false
+                                                });
+                                                row.style.transition = 'opacity 0.3s';
+                                                row.style.opacity = 0;
+                                                setTimeout(() => row.remove(), 300);
+                                            })
+                                            .catch(err => {
+                                                console.error(err);
+                                                Swal.fire('Error', 'Request gagal dikirim ke server', 'error');
+                                            });
+                                    });
+                                });
+
+                            });
+
+                        });
+                    </script>
+                @endpush

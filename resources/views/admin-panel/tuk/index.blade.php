@@ -13,7 +13,7 @@
                 </div>
                 <div class="card-body">
 
-                    <table id="fixed-columns-datatable" class="table table-striped nowrap row-border order-column w-100">
+                    <table id="datatable-buttons" class="table table-striped nowrap row-border order-column w-100">
                         <thead>
                             <tr>
                                 <th>LSP</th>

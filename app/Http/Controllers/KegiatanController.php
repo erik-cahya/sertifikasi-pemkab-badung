@@ -9,6 +9,7 @@ use Carbon\Carbon;
 use Faker\Provider\Uuid;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
@@ -26,8 +27,10 @@ class KegiatanController extends Controller
             'kuota_lsp'
         )->get();
 
-        // dd($data['dataKegiatan']);
 
+
+
+        dd($data['dataKegiatan']);
         return view('admin-panel.kegiatan.index', $data);
     }
 
