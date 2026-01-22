@@ -22,6 +22,8 @@ Route::get('/ajax/skema-by-lsp/{lspRef}', [SkemaController::class, 'getByLsp'])-
 Route::get('/ajax/lsp-by-kegiatan/{kegiatan}', [AsesiController::class, 'getLspByKegiatan']);
 
 Route::get('/ajax/skema-by-kegiatan-lsp', [AsesiController::class, 'getSkemaByKegiatanLsp']);
+Route::get('/ajax/jadwal-by-lsp', [AsesiController::class, 'getJadwalByLsp']);
+Route::get('/ajax/tuk-by-lsp', [AsesiController::class, 'getTukByLsp']);
 
 Route::get('/', function () {
     return view('home');

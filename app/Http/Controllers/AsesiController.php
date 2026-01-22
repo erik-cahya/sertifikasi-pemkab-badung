@@ -59,6 +59,52 @@ class AsesiController extends Controller
     }
 
 
+    public function getJadwalByLsp(Request $request)
+    {
+        // dd($request->all());
+        $request->validate([
+            'kegiatan_ref' => 'required',
+            'lsp_ref'      => 'required',
+        ]);
+
+
+        $kegiatanLsp = KegiatanLSPModel::where('kegiatan_ref', $request->kegiatan_ref)
+            ->where('lsp_ref', $request->lsp_ref)
+            ->with('jadwal:ref,kegiatan_lsp_ref,mulai_asesmen,selesai_asesmen')
+            ->first();
+
+        if (! $kegiatanLsp) {
+            return response()->json([]);
+        }
+
+        return response()->json(
+            $kegiatanLsp->jadwal->map(fn($jadwal) => [
+                'ref'            => $jadwal->ref,
+                'mulai_asesmen'  => $jadwal->mulai_asesmen,
+                'selesai_asesmen' => $jadwal->selesai_asesmen,
+            ])
+        );
+    }
+
+    public function getTukByLsp(Request $request)
+    {
+        // dd($request->all());
+        $request->validate([
+            'kegiatan_ref' => 'required',
+            'lsp_ref'      => 'required',
+        ]);
+
+
+        $dataTUK = TUKModel::where('lsp_ref', $request->lsp_ref)->first();
+
+        if (!$dataTUK) {
+            return response()->json([]);
+        }
+
+        return response()->json($dataTUK);
+    }
+
+
     /**
      * Display a listing of the resource.
      */
@@ -81,7 +127,7 @@ class AsesiController extends Controller
 
     public function store(Request $request)
     {
-        // dd($request->all());
+        dd($request->all());
         // dd(array_keys($request->all()));
 
         $validated = $request->validate([
