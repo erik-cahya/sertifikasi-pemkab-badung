@@ -50,35 +50,35 @@
                                         <div class="col-lg-12">
                                             <div class="mb-3">
                                                 <label for="nama_lengkap" class="form-label">Nama Lengkap</label><span class="text-danger">*</span>
-                                                <input type="text" id="nama_lengkap" class="form-control rounded-3" name="nama_lengkap" placeholder="Masukkan Nama Lengkap" value="{{ old('nama_lengkap') }}">
+                                                <input type="text" id="nama_lengkap" class="form-control rounded-3 @error('nama_lengkap') is-invalid @enderror" name="nama_lengkap" placeholder="Masukkan Nama Lengkap" value="{{ old('nama_lengkap') }}">
                                             </div>
                                         </div>
 
                                         <div class="col-lg-12">
                                             <div class="mb-3">
                                                 <label for="nik" class="form-label">No. KTP / NIK / Paspor</label><span class="text-danger">*</span>
-                                                <input type="number" id="nik" class="form-control rounded-3" name="nik" placeholder="Masukkan No. KTP/NIK/Paspor" value="{{ old('nik') }}">
+                                                <input type="number" id="nik" class="form-control rounded-3 @error('nik') is-invalid @enderror" name="nik" placeholder="Masukkan No. KTP/NIK/Paspor" value="{{ old('nik') }}">
                                             </div>
                                         </div>
 
                                         <div class="col-lg-6">
                                             <div class="mb-3">
                                                 <label for="tempat_lahir" class="form-label">Tempat Lahir (Sesuai KTP)</label><span class="text-danger">*</span>
-                                                <input type="text" id="tempat_lahir" class="form-control rounded-3" name="tempat_lahir" placeholder="Masukkan Tempat Lahir" value="{{ old('tempat_lahir') }}">
+                                                <input type="text" id="tempat_lahir" class="form-control rounded-3 @error('tempat_lahir') is-invalid @enderror" name="tempat_lahir" placeholder="Masukkan Tempat Lahir" value="{{ old('tempat_lahir') }}">
                                             </div>
                                         </div>
 
                                         <div class="col-lg-6">
                                             <div class="mb-3">
                                                 <label for="tgl_lahir" class="form-label">Tanggal Lahir</label><span class="text-danger">*</span>
-                                                <input type="date" id="tgl_lahir" class="form-control rounded-3" name="tgl_lahir" value="{{ old('tgl_lahir') }}">
+                                                <input type="date" id="tgl_lahir" class="form-control rounded-3 @error('tgl_lahir') is-invalid @enderror" name="tgl_lahir" value="{{ old('tgl_lahir') }}">
                                             </div>
                                         </div>
 
                                         <div class="col-lg-6">
                                             <div class="mb-3">
                                                 <label for="jenis_kelamin" class="form-label">Jenis Kelamin</label><span class="text-danger">*</span>
-                                                <select class="form-select rounded-3" id="jenis_kelamin" name="jenis_kelamin">
+                                                <select class="form-select rounded-3 @error('jenis_kelamin') is-invalid @enderror" id="jenis_kelamin" name="jenis_kelamin">
                                                     <option value="" disabled selected>Pilih Jenis Kelamin</option>
                                                     <option value="Laki-laki" {{ old('jenis_kelamin') == 'Laki-laki' ? 'selected' : '' }}>Laki-laki</option>
                                                     <option value="Perempuan" {{ old('jenis_kelamin') == 'Perempuan' ? 'selected' : '' }}>Perempuan</option>
@@ -89,7 +89,7 @@
                                         <div class="col-lg-6">
                                             <div class="mb-3">
                                                 <label for="kewarganegaraan" class="form-label">Kewarganegaraan</label><span class="text-danger">*</span>
-                                                <select class="form-select rounded-3" id="kewarganegaraan" name="kewarganegaraan">
+                                                <select class="form-select rounded-3 @error('kewarganegaraan') is-invalid @enderror" id="kewarganegaraan" name="kewarganegaraan">
                                                     <option value="" disabled selected>Pilih Kewarganegaraan</option>
                                                     <option value="WNI" {{ old('kewarganegaraan') == 'WNI' ? 'selected' : '' }}>WNI</option>
                                                     <option value="WNA" {{ old('kewarganegaraan') == 'WNA' ? 'selected' : '' }}>WNA</option>
@@ -100,49 +100,49 @@
                                         <div class="col-lg-10">
                                             <div class="mb-3">
                                                 <label for="alamat" class="form-label">Alamat Rumah</label><span class="text-danger">*</span>
-                                                <input type="text" id="alamat" class="form-control rounded-3" name="alamat" placeholder="Masukkan alamat rumah" value="{{ old('alamat') }}">
+                                                <input type="text" id="alamat" class="form-control rounded-3 @error('alamat') is-invalid @enderror" name="alamat" placeholder="Masukkan alamat rumah" value="{{ old('alamat') }}">
                                             </div>
                                         </div>
 
                                         <div class="col-lg-2">
                                             <div class="mb-3">
                                                 <label for="kode_pos" class="form-label">Kode Pos</label><span class="text-danger">*</span>
-                                                <input type="number" id="kode_pos" class="form-control rounded-3" name="kode_pos" placeholder="Masukkan Kode Pos Alamat Rumah" value="{{ old('kode_pos') }}">
+                                                <input type="number" id="kode_pos" class="form-control rounded-3 @error('kode_pos') is-invalid @enderror" name="kode_pos" placeholder="Masukkan Kode Pos Alamat Rumah" value="{{ old('kode_pos') }}">
                                             </div>
                                         </div>
 
                                         <div class="col-lg-3">
                                             <div class="mb-3">
                                                 <label for="email" class="form-label">Email</label><span class="text-danger">*</span>
-                                                <input type="email" class="form-control rounded-3" id="email" name="email" placeholder="Masukkan alamat email" value="{{ old('email') }}">
+                                                <input type="email" class="form-control rounded-3 @error('email') is-invalid @enderror" id="email" name="email" placeholder="Masukkan alamat email" value="{{ old('email') }}">
                                             </div>
                                         </div>
 
                                         <div class="col-lg-3">
                                             <div class="mb-3">
                                                 <label for="telp_hp" class="form-label">No. Telp. (Hp)</label><span class="text-danger">*</span>
-                                                <input type="number" id="telp_hp" class="form-control rounded-3" name="telp_hp" placeholder="08xxxxxx" value="{{ old('telp_hp') }}">
+                                                <input type="number" id="telp_hp" class="form-control rounded-3 @error('telp_hp') is-invalid @enderror" name="telp_hp" placeholder="08xxxxxx" value="{{ old('telp_hp') }}">
                                             </div>
                                         </div>
 
                                         <div class="col-lg-3">
                                             <div class="mb-3">
                                                 <label for="telp_rumah" class="form-label">No. Telp. (Rumah)</label>
-                                                <input type="number" id="telp_rumah" class="form-control rounded-3" name="telp_rumah" placeholder="08xxxxxx" value="{{ old('telp_rumah') }}">
+                                                <input type="number" id="telp_rumah" class="form-control rounded-3 @error('telp_rumah') is-invalid @enderror" name="telp_rumah" placeholder="08xxxxxx" value="{{ old('telp_rumah') }}">
                                             </div>
                                         </div>
 
                                         <div class="col-lg-3">
                                             <div class="mb-3">
                                                 <label for="telp_kantor" class="form-label">No. Telp. (Kantor)</label>
-                                                <input type="number" id="telp_kantor" class="form-control rounded-3" name="telp_kantor" placeholder="08xxxxxx" value="{{ old('telp_kantor') }}">
+                                                <input type="number" id="telp_kantor" class="form-control rounded-3 @error('telp_kantor') is-invalid @enderror" name="telp_kantor" placeholder="08xxxxxx" value="{{ old('telp_kantor') }}">
                                             </div>
                                         </div>
 
                                         <div class="col-lg-6">
                                             <div class="mb-3">
                                                 <label for="pendidikan_terakhir" class="form-label">Pendidikan Terakhir</label><span class="text-danger">*</span>
-                                                <select class="form-select rounded-3" id="pendidikan_terakhir" name="pendidikan_terakhir">
+                                                <select class="form-select rounded-3 @error('pendidikan_terakhir') is-invalid @enderror" id="pendidikan_terakhir" name="pendidikan_terakhir">
                                                     <option value="" disabled selected>Pilih Pendidikan Terakhir</option>
                                                     <option value="SD" {{ old('pendidikan_terakhir') === 'SD' ? 'selected' : '' }}>SD</option>
                                                     <option value="SMP" {{ old('pendidikan_terakhir') === 'SMP' ? 'selected' : '' }}>SMP</option>
@@ -161,28 +161,28 @@
                                         <div class="col-lg-6">
                                             <div class="mb-3">
                                                 <label for="ijazah_file" class="form-label">Ijazah Terakhir</label><span class="text-danger">*</span>
-                                                <input type="file" id="ijazah_file" class="form-control rounded-3" name="ijazah_file">
+                                                <input type="file" id="ijazah_file" class="form-control rounded-3 @error('ijazah_file') is-invalid @enderror" name="ijazah_file">
                                             </div>
                                         </div>
 
                                         <div class="col-lg-4">
                                             <div class="mb-3">
                                                 <label for="sertikom_file" class="form-label">Sertifikat Kompetensi (opsional)</label>
-                                                <input type="file" id="sertikom_file" class="form-control rounded-3" name="sertikom_file">
+                                                <input type="file" id="sertikom_file" class="form-control rounded-3 @error('sertikom_file') is-invalid @enderror" name="sertikom_file">
                                             </div>
                                         </div>
 
                                         <div class="col-lg-4">
                                             <div class="mb-3">
                                                 <label for="keterangan_kerja_file" class="form-label">Surat Keterangan Bekerja</label><span class="text-danger">*</span>
-                                                <input type="file" id="keterangan_kerja_file" class="form-control rounded-3" name="keterangan_kerja_file">
+                                                <input type="file" id="keterangan_kerja_file" class="form-control rounded-3 @error('keterangan_kerja_file') is-invalid @enderror" name="keterangan_kerja_file">
                                             </div>
                                         </div>
 
                                         <div class="col-lg-4">
                                             <div class="mb-3">
                                                 <label for="pas_foto_file" class="form-label">Pas Foto (.png / .jpg)</label><span class="text-danger">*</span>
-                                                <input type="file" id="pas_foto_file" class="form-control rounded-3" name="pas_foto_file">
+                                                <input type="file" id="pas_foto_file" class="form-control rounded-3 @error('pas_foto_file') is-invalid @enderror" name="pas_foto_file">
                                             </div>
                                         </div>
 
@@ -201,14 +201,14 @@
                                         <div class="col-lg-12">
                                             <div class="mb-3">
                                                 <label for="nama_perusahaan" class="form-label">Nama Tempat Bekerja / Perusahaan</label><span class="text-danger">*</span>
-                                                <input type="text" id="nama_perusahaan" class="form-control rounded-3" name="nama_perusahaan" placeholder="Masukkan Nama Tempat Bekerja / Perusahaan" value="{{ old('nama_perusahaan') }}">
+                                                <input type="text" id="nama_perusahaan" class="form-control rounded-3 @error('nama_perusahaan') is-invalid @enderror" name="nama_perusahaan" placeholder="Masukkan Nama Tempat Bekerja / Perusahaan" value="{{ old('nama_perusahaan') }}">
                                             </div>
                                         </div>
 
                                         <div class="col-lg-6">
                                             <div class="mb-3">
                                                 <label for="departemen" class="form-label">Departemen</label><span class="text-danger">*</span>
-                                                <select class="form-select rounded-3" id="departemen" name="departemen">
+                                                <select class="form-select rounded-3 @error('departemen') is-invalid @enderror" id="departemen" name="departemen">
                                                     <option value="" disabled selected>Pilih Departemen Anda</option>
                                                     @foreach ($dataDepartemen as $departemen)
                                                         <option value="{{ $departemen->departemen_nama }}" {{ old('departemen') === $departemen->departemen_nama ? 'selected' : '' }}>{{ $departemen->departemen_nama }}</option>
@@ -220,7 +220,7 @@
                                         <div class="col-lg-6">
                                             <div class="mb-3">
                                                 <label for="jabatan" class="form-label">Jabatan</label><span class="text-danger">*</span>
-                                                <select class="form-select rounded-3" id="jabatan" name="jabatan">
+                                                <select class="form-select rounded-3 @error('jabatan') is-invalid @enderror" id="jabatan" name="jabatan">
                                                     <option value="" disabled selected>Pilih Jabatan Anda</option>
                                                     @foreach ($dataJabatan as $jabatan)
                                                         <option value="{{ $jabatan->jabatan_nama }}" {{ old('jabatan') === $jabatan->jabatan_nama ? 'selected' : '' }} data-dept="{{ $jabatan->departement_ref }}">{{ $jabatan->jabatan_nama }}</option>
@@ -232,35 +232,35 @@
                                         <div class="col-lg-10">
                                             <div class="mb-3">
                                                 <label for="alamat_perusahaan" class="form-label">Alamat Tempat Bekerja / Perusahaan</label><span class="text-danger">*</span>
-                                                <input type="text" id="alamat_perusahaan" class="form-control rounded-3" name="alamat_perusahaan" placeholder="Masukkan Alamat Tempat Bekerja / Perusahaan" value="{{ old('alamat_perusahaan') }}">
+                                                <input type="text" id="alamat_perusahaan" class="form-control rounded-3 @error('alamat_perusahaan') is-invalid @enderror" name="alamat_perusahaan" placeholder="Masukkan Alamat Tempat Bekerja / Perusahaan" value="{{ old('alamat_perusahaan') }}">
                                             </div>
                                         </div>
 
                                         <div class="col-lg-2">
                                             <div class="mb-3">
                                                 <label for="kode_pos_perusahaan" class="form-label">Kode Pos</label><span class="text-danger">*</span>
-                                                <input type="number" id="kode_pos_perusahaan" class="form-control rounded-3" name="kode_pos_perusahaan" placeholder="Masukkan Kode Pos Alamat Tempat Bekerja / Perusahaan" value="{{ old('kode_pos_perusahaan') }}">
+                                                <input type="number" id="kode_pos_perusahaan" class="form-control rounded-3 @error('kode_pos_perusahaan') is-invalid @enderror" name="kode_pos_perusahaan" placeholder="Masukkan Kode Pos Alamat Tempat Bekerja / Perusahaan" value="{{ old('kode_pos_perusahaan') }}">
                                             </div>
                                         </div>
 
                                         <div class="col-lg-4">
                                             <div class="mb-3">
                                                 <label for="email_perusahaan" class="form-label">Email</label><span class="text-danger">*</span>
-                                                <input type="email" class="form-control rounded-3" id="email_perusahaan" name="email_perusahaan" placeholder="Masukkan Aalamt Email Perusahaan" value="{{ old('email_perusahaan') }}">
+                                                <input type="email" class="form-control rounded-3 @error('email_perusahaan') is-invalid @enderror" id="email_perusahaan" name="email_perusahaan" placeholder="Masukkan Aalamt Email Perusahaan" value="{{ old('email_perusahaan') }}">
                                             </div>
                                         </div>
 
                                         <div class="col-lg-4">
                                             <div class="mb-3">
                                                 <label for="telp_perusahaan" class="form-label">No. Telp. Tempat Bekerja / Perusahaan</label><span class="text-danger">*</span>
-                                                <input type="number" id="telp_perusahaan" class="form-control rounded-3" name="telp_perusahaan" placeholder="08xxxxxx" value="{{ old('telp_perusahaan') }}">
+                                                <input type="number" id="telp_perusahaan" class="form-control rounded-3 @error('telp_perusahaan') is-invalid @enderror" name="telp_perusahaan" placeholder="08xxxxxx" value="{{ old('telp_perusahaan') }}">
                                             </div>
                                         </div>
 
                                         <div class="col-lg-4">
                                             <div class="mb-3">
                                                 <label for="fax_perusahaan" class="form-label">No. Fax Tempat Bekerja / Perusahaan</label>
-                                                <input type="number" id="fax_perusahaan" class="form-control rounded-3" name="fax_perusahaan" placeholder="08xxxxxx" value="{{ old('fax_perusahaan') }}">
+                                                <input type="number" id="fax_perusahaan" class="form-control rounded-3 @error('fax_perusahaan') is-invalid @enderror" name="fax_perusahaan" placeholder="08xxxxxx" value="{{ old('fax_perusahaan') }}">
                                             </div>
                                         </div>
 
