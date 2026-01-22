@@ -18,9 +18,11 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/ajax/skema-by-lsp/{lspRef}', [SkemaController::class, 'getByLsp'])->name('ajax.skema.by-lsp');
 
+Route::get('/', function () {
+    return view('home');
+});
 Route::middleware('auth')->group(function () {
 
-    Route::get('/', [DashboardController::class, 'index']);
     // ################################ Dashboard
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
