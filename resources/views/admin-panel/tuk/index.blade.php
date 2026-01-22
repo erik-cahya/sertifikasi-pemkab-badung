@@ -13,7 +13,7 @@
                 </div>
                 <div class="card-body">
 
-                    <table id="datatable-buttons" class="table table-striped nowrap row-border order-column w-100">
+                    <table id="fixed-columns-datatable" class="table table-striped nowrap row-border order-column w-100">
                         <thead>
                             <tr>
                                 <th>LSP</th>
@@ -40,7 +40,26 @@
                                     <td>{{ $item->tuk_cp_nama }}</td>
                                     <td>{{ $item->tuk_cp_email }}</td>
                                     <td>{{ $item->tuk_cp_telp }}</td>
-                                    <td>@if($item->tuk_verif==0)  <a href="{{ route('tukAdmin.verifikasi',  [$item->ref, 1]) }}"><i class=" ri-close-fill fs-3 text-danger fw-bold text-center d-block"></a>@else <a href="{{ route('tukAdmin.verifikasi',  [$item->ref, 0]) }}"><i class="ri-check-fill  fs-3 text-success fw-bold text-center d-block" ></i></a> @endif</td>
+                                    {{-- <td>@if($item->tuk_verif==0)  <a href="{{ route('tukAdmin.verifikasi',  [$item->ref, 1]) }}"><i class=" ri-close-fill fs-3 text-danger fw-bold text-center d-block"></a>@else <a href="{{ route('tukAdmin.verifikasi',  [$item->ref, 0]) }}"><i class="ri-check-fill  fs-3 text-success fw-bold text-center d-block" ></i></a> @endif</td> --}}
+                                    <td class="text-center">
+                                        @if($item->tuk_verif == 0)
+                                            <a href="javascript:void(0)"
+                                            class="verifButton"
+                                            data-url="{{ route('tukAdmin.verifikasi', [$item->ref, 1]) }}"
+                                            data-nama="{{ $item->tuk_nama }}"
+                                            data-action="verifikasi">
+                                                <i class="ri-close-fill fs-3 text-danger fw-bold d-block"></i>
+                                            </a>
+                                        @else
+                                            <a href="javascript:void(0)"
+                                            class="verifButton"
+                                            data-url="{{ route('tukAdmin.verifikasi', [$item->ref, 0]) }}"
+                                            data-nama="{{ $item->tuk_nama }}"
+                                            data-action="batalkan verifikasi">
+                                                <i class="ri-check-fill fs-3 text-success fw-bold d-block"></i>
+                                            </a>
+                                        @endif
+                                    </td>
                                     <td>{{ $item->created_at->format('Y-m-d') }}</td>
                                     <td>
                                          <a href="{{ route('tukAdmin.edit', $item->ref) }}" class="text-reset fs-16 px-1">
@@ -121,6 +140,32 @@
                                     Swal.fire('Error', 'Something went wrong!',
                                         'error');
                                 });
+                        }
+                    });
+                });
+            });
+        });
+
+        // Verifikasi TUK
+        document.addEventListener('DOMContentLoaded', function () {
+            document.querySelectorAll('.verifButton').forEach(btn => {
+                btn.addEventListener('click', function (e) {
+                    e.preventDefault();
+
+                    const url   = this.dataset.url;
+                    const nama  = this.dataset.nama;
+                    const aksi  = this.dataset.action;
+
+                    Swal.fire({
+                        title: 'Konfirmasi',
+                        text: `Yakin ingin ${aksi} TUK "${nama}"?`,
+                        icon: 'question',
+                        showCancelButton: true,
+                        confirmButtonText: 'Ya',
+                        cancelButtonText: 'Batal'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            window.location.href = url;
                         }
                     });
                 });
