@@ -16,12 +16,12 @@
                     </p>
 
                     <div class="d-flex flex-wrap justify-content-center gap-3">
-                        <a href="#" class="btn btn-orange d-flex align-items-center text-white">
+                        <a href="/asesi" class="btn btn-orange d-flex align-items-center text-white">
                             Daftar Calon Asesi
                             <i class="bi bi-arrow-right ms-2"></i>
                         </a>
 
-                        <a href="#" class="btn btn-outline-orange text-white">
+                        <a href="/pegawai" class="btn btn-outline-orange text-white">
                             Pendataan Pegawai
                         </a>
                     </div>
