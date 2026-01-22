@@ -17,15 +17,15 @@ class TUKSeeder extends Seeder
      */
     public function run(): void
     {
-        $lsp = LSPModel::where('lsp_nama', 'LSP Engineering Hospitality Indonesia')->value('ref');
+        $lsp = LSPModel::where('lsp_nama', 'LSP Indonesia')->value('ref');
 
 
         $data = [
             [
                 'ref' => (string) Str::ulid(),
                 'lsp_ref' => $lsp,
-                'tuk_nama' => 'Sekretariat ACE Bali',
-                'tuk_alamat' => 'Jl. Raya Kampus Unud, Jimbaran, Kec. Kuta Sel., Kabupaten Badung, Bali 80364',
+                'tuk_nama' => 'ITB Bandung',
+                'tuk_alamat' => 'Bandung, Indonesia',
                 'tuk_email' => 'tuk@gmail.com',
                 'tuk_telp' => '08123456789',
                 'tuk_cp_nama' => 'Erik',

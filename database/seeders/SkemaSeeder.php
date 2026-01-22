@@ -16,7 +16,7 @@ class SkemaSeeder extends Seeder
     public function run(): void
     {
 
-        $lspEhi = LSPModel::where('lsp_nama', 'LSP Engineering Hospitality Indonesia')
+        $lspEhi = LSPModel::where('lsp_nama', 'LSP Indonesia')
             ->with('user')
             ->firstOrFail();
 
@@ -27,7 +27,7 @@ class SkemaSeeder extends Seeder
         $TeknisiRefrigerasi = SkemaModel::create([
             'lsp_ref' => $lspEhi->ref,
             'skema_judul' => 'Teknisi Refrigerasi Domestik',
-            'skema_kode' => 'SKM/0219/00006/2/2020/6',
+            'skema_kode' => 'SKM/0139/00306/2/1020/2',
             'skema_kategori' => 'Klaster',
             'created_by' => $lspEhi->user->ref,
         ]);
@@ -122,28 +122,28 @@ class SkemaSeeder extends Seeder
             [
                 'lsp_ref' => $lspEhi->ref,
                 'skema_judul' => 'Perawatan Mesin Pendingin / AC',
-                'skema_kode' => 'SKM/0219/00006/2/2020/6',
+                'skema_kode' => 'SKM/0219/33006/12/2020/6',
                 'skema_kategori' => 'Klaster',
                 'created_by' => $lspEhi->user->ref,
             ],
             [
                 'lsp_ref' => $lspEhi->ref,
                 'skema_judul' => 'Pelaksanaan Instalasi AC',
-                'skema_kode' => 'SKM/0219/00006/2/2020/6',
+                'skema_kode' => 'SKM/0239/32006/2/2021/6',
                 'skema_kategori' => 'Klaster',
                 'created_by' => $lspEhi->user->ref,
             ],
             [
                 'lsp_ref' => $lspEhi->ref,
                 'skema_judul' => 'Teknisi Lemari Pendingin',
-                'skema_kode' => 'SKM/0219/00006/2/2020/6',
+                'skema_kode' => 'SKM/0419/23006/2/2020/6',
                 'skema_kategori' => 'Klaster',
                 'created_by' => $lspEhi->user->ref,
             ],
             [
                 'lsp_ref' => $lspEhi->ref,
-                'skema_judul' => 'Mekanik Heating, Ventilation Dan Air Condition (HVAC)',
-                'skema_kode' => 'SKM/0219/00006/2/2020/6',
+                'skema_judul' => 'Mekanik Ventilation Dan Air Condition (HVAC)',
+                'skema_kode' => 'SKM/1119/4306/2/2020/6',
                 'skema_kategori' => 'Klaster',
                 'created_by' => $lspEhi->user->ref,
             ]
