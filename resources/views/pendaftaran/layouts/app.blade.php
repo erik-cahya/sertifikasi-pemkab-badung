@@ -52,16 +52,18 @@
     <!-- Vendor js -->
     <script src="{{ asset('admin') }}/assets/js/vendor.min.js"></script>
     <script src="{{ asset('admin') }}/assets/vendor/lucide/umd/lucide.min.js"></script>
-    <!-- Bootstrap Wizard Form js -->
+
+    {{-- <!-- Bootstrap Wizard Form js -->
     <script src="{{ asset('admin') }}/assets/vendor/twitter-bootstrap-wizard/jquery.bootstrap.wizard.min.js"></script>
     <!-- Wizard Form Demo js -->
     <script src="{{ asset('admin') }}/assets/js/pages/form-wizard.init.js"></script>
     <!-- Bootstrap Datepicker Plugin js -->
     <script src="{{ asset('admin') }}/assets/vendor/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
     <!-- Flatpickr Timepicker Plugin js -->
-    <script src="{{ asset('admin') }}/assets/vendor/flatpickr/flatpickr.min.js"></script>
+    <script src="{{ asset('admin') }}/assets/vendor/flatpickr/flatpickr.min.js"></script> --}}
 
     @stack('script')
+
     <script src="{{ asset('admin') }}/assets/js/app.min.js"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

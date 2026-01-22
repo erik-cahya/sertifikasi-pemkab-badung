@@ -18,6 +18,11 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/ajax/skema-by-lsp/{lspRef}', [SkemaController::class, 'getByLsp'])->name('ajax.skema.by-lsp');
 
+
+Route::get('/ajax/lsp-by-kegiatan/{kegiatan}', [AsesiController::class, 'getLspByKegiatan']);
+
+Route::get('/ajax/skema-by-kegiatan-lsp', [AsesiController::class, 'getSkemaByKegiatanLsp']);
+
 Route::get('/', function () {
     return view('home');
 });

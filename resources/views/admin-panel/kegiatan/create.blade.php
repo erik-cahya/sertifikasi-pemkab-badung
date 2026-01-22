@@ -149,105 +149,11 @@
 
         </div>
 
-        {{-- <div class="container-fluid" id="add_lsp">
-            <form action="{{ route('kegiatan-lsp.store') }}" method="POST" enctype="multipart/form-data">
-                @csrf
-                <div class="row">
-                    <div class="col-12">
-                        <div class="card">
-                            <div class="card-header">
-                                <h4 class=".card-title">Masukkan LSP ke Kegiatan</h4>
-                            </div>
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-lg-12 mb-3">
-                                        <label for="kegiatan_ref" class="form-label">Pilih Kegiatan</label>
-                                        <select id="kegiatan_ref" class="@error('kegiatan_ref', 'create_detail_kegiatan') is-invalid @enderror form-select" name="kegiatan_ref">
-                                            <option value="" selected disabled>Pilih Kegiatan</option>
-                                            @foreach ($dataKegiatan as $kegiatan)
-                                                <option value="{{ $kegiatan->ref }} {{ old('kegiatan_ref') == $kegiatan->ref ? 'selected' : '' }}">{{ $kegiatan->nama_kegiatan }}</option>
-                                            @endforeach
-                                        </select>
-
-                                        @error('kegiatan_ref', 'create_detail_kegiatan')
-                                            <div class="invalid-feedback" bis_skin_checked="1">
-                                                {{ $message }}
-                                            </div>
-                                        @enderror
-                                    </div>
-
-                                    <div class="col-lg-12">
-                                        <div class="card border-secondary border">
-                                            <div class="card-body kegiatan-item">
-                                                <div id="kegiatan-container">
-                                                    <!-- Item pertama -->
-                                                    @for ($i = 0; $i < 5; $i++)
-                                                        <div class="row kegiatan-row mb-3">
-
-                                                            <div class="col-lg-3">
-                                                                <label class="form-label">Nama LSP</label>
-                                                                <select class="lsp-select @error(`lsp_ref.$i`) is-invalid @enderror form-select" name="lsp_ref[{{ $i }}]">
-                                                                    <option value="" selected>Pilih LSP</option>
-                                                                    @foreach ($dataLSP as $lsp)
-                                                                        <option value="{{ $lsp->ref }}" {{ old('lsp_ref.' . $i) == $lsp->ref ? 'selected' : '' }}>{{ $lsp->lsp_nama }}</option>
-                                                                    @endforeach
-                                                                </select>
-
-                                                                @error("lsp_ref.$i")
-                                                                    <div class="invalid-feedback" bis_skin_checked="1">
-                                                                        {{ $message }}
-                                                                    </div>
-                                                                @enderror
-                                                            </div>
-
-                                                            <div class="col-lg-5">
-                                                                <label class="form-label">Skema</label>
-                                                                <select class="form-control select2 skema-select @error(`skema_ref.$i`) is-invalid @enderror" name="skema_ref[{{ $i }}][]" multiple disabled>
-                                                                </select>
-                                                                @error("skema_ref.$i")
-                                                                    <div class="invalid-feedback" bis_skin_checked="1">
-                                                                        {{ $message }}
-                                                                    </div>
-                                                                @enderror
-                                                            </div>
-
-                                                            <div class="col-lg-2">
-                                                                <label class="form-label">Kuota</label>
-                                                                <input type="number" class="form-control" name="kuota_lsp[{{ $i }}]" min="1" value="{{ old("kuota_lsp.$i") }}">
-                                                                @error("kuota_lsp.$i")
-                                                                    <div class="text-danger">{{ $message }}</div>
-                                                                @enderror
-                                                            </div>
-
-                                                            <div class="col-lg-2">
-                                                                <label class="form-label">Tanggal</label>
-                                                                <input type="text" class="form-control daterangepicker-input" name="date_range[{{ $i }}]">
-                                                            </div>
-
-                                                        </div>
-                                                    @endfor
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="mb-3 mt-3">
-                                    <button class="btn btn-primary" type="submit"><i class="ri-save-2-fill"></i> Simpan Data</button>
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </form>
-
-        </div> --}}
-
     </div>
 @endsection
 @push('script')
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="{{ asset('js/jquery-3.6.0.min.js') }}"></script>
+    <script src="{{ asset('js/select2.min.js') }}"></script>
     <!-- Daterangepicker Plugin js -->
     <script src="{{ asset('admin') }}/assets/vendor/daterangepicker/moment.min.js"></script>
     <script src="{{ asset('admin') }}/assets/vendor/daterangepicker/daterangepicker.js"></script>

@@ -7,6 +7,8 @@ use App\Models\DepartemenModel;
 use App\Models\JabatanModel;
 use App\Models\KegiatanModel;
 use App\Models\AsesiModel;
+use App\Models\KegiatanLSPModel;
+use App\Models\KegiatanSkemaModel;
 use App\Models\TUKModel;
 use Carbon\Carbon;
 use Faker\Provider\Uuid;
@@ -18,6 +20,45 @@ use Illuminate\Support\Facades\Storage;
 
 class AsesiController extends Controller
 {
+
+    public function getLspByKegiatan($kegiatanRef)
+    {
+
+        $data = KegiatanLSPModel::where('kegiatan_ref', $kegiatanRef)
+            ->with('lsp:ref,lsp_nama')
+            ->get()
+            ->map(function ($item) {
+                return [
+                    'kegiatan_lsp_ref' => $item->ref,
+                    'lsp_ref'          => $item->lsp->ref,
+                    'lsp_nama'         => $item->lsp->lsp_nama,
+                    'kuota_lsp'        => $item->kuota_lsp,
+                    'limit_kuota'      => $item->limit_kuota,
+                ];
+            });
+
+        return response()->json($data);
+    }
+
+    public function getSkemaByKegiatanLsp(Request $request)
+    {
+        $request->validate([
+            'kegiatan_ref' => 'required',
+            'lsp_ref'      => 'required',
+        ]);
+
+        return KegiatanSkemaModel::where('kegiatan_ref', $request->kegiatan_ref)
+            ->where('lsp_ref', $request->lsp_ref)
+            ->with('skema:ref,skema_judul,skema_kode')
+            ->get()
+            ->map(fn($item) => [
+                'skema_ref'   => $item->skema->ref,
+                'skema_judul' => $item->skema->skema_judul,
+                'skema_kode'  => $item->skema->skema_kode,
+            ]);
+    }
+
+
     /**
      * Display a listing of the resource.
      */
@@ -160,7 +201,6 @@ class AsesiController extends Controller
 
         AsesiModel::create($validated);
 
-
         // AsesiModel::create([
         //     'kegiatan_ref' => $request->kegiatan_ref,
         //     'lsp_ref' => $request->lsp_ref,
@@ -198,7 +238,7 @@ class AsesiController extends Controller
         return redirect()->route('asesi.index')->with('flashData', $flashData);
     }
 
-     public function list()
+    public function list()
     {
         // $asesi = AsesiModel::join('lsp', 'lsp.ref', '=', 'tuk.lsp_ref')
         // ->select('tuk.*','lsp.lsp_nama')

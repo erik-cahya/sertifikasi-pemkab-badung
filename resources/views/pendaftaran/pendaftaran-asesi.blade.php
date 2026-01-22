@@ -12,9 +12,9 @@
                             <div class="card-header rounded-top-4">
                                 <h4 class="card-title mb-3 fw-bold">FORMULIR PENDAFTARAN CALON ASESI</h4>
                                 <smal>
-                                    Formulir ini digunakan untuk pendaftaran Calon Asesi dalam rangka mengikuti Sertifikasi Profesi Tahun {{ date('Y') }}  
+                                    Formulir ini digunakan untuk pendaftaran Calon Asesi dalam rangka mengikuti Sertifikasi Profesi Tahun {{ date('Y') }}
                                     <br>
-                                    Silakan mengisi formulir pendaftaran berikut dengan data yang benar, lengkap dan dapat dipertanggungjawabkan. 
+                                    Silakan mengisi formulir pendaftaran berikut dengan data yang benar, lengkap dan dapat dipertanggungjawabkan.
                                     <br><br>
                                     Harap menyiapkan dokumen berikut sebelum mengisi formulir pendaftaran:
                                     <br>
@@ -25,7 +25,7 @@
                                     3. Scan Surat Keterangan Kerja
                                     <br>
                                     4. Pas Foto Background Merah
-                               </smal>
+                                </smal>
                             </div>
                             @if ($errors->any())
                                 <div class="alert alert-danger">
@@ -38,7 +38,7 @@
                                 </div>
                             @endif
                             <form action="{{ route('asesi.store') }}" method="POST" enctype="multipart/form-data">
-                            @csrf
+                                @csrf
                                 <div class="card-header bg-danger text-white px-4 py-2 rounded-top">
                                     <h5 class="card-title mb-1 fw-bold">A. DATA PRIBADI</h5>
                                     <small class="opacity-75">
@@ -49,106 +49,100 @@
                                     <div class="row">
                                         <div class="col-lg-12">
                                             <div class="mb-3">
-                                                <label for="simpleinput" class="form-label">Nama Lengkap</label><span class="text-danger">*</span>
-                                                <input type="text" id="simpleinput" class="form-control rounded-3" name="nama_lengkap" required placeholder="Masukkan Nama Lengkap">
-                                                {{-- <div class="input-group"> 
-                                                        <span class="input-group-text">
-                                                            <i class="ri-user-3-line"></i>
-                                                        </span>
-                                                        <input type="text" id="simpleinput" class="form-control rounded-3" name="nama_lengkap" required placeholder="Masukkan Nama Lengkap">
-                                                    </div> --}}
+                                                <label for="nama_lengkap" class="form-label">Nama Lengkap</label><span class="text-danger">*</span>
+                                                <input type="text" id="nama_lengkap" class="form-control rounded-3" name="nama_lengkap" placeholder="Masukkan Nama Lengkap" value="{{ old('nama_lengkap') }}">
                                             </div>
                                         </div>
 
                                         <div class="col-lg-12">
                                             <div class="mb-3">
-                                                <label for="example-number" class="form-label">No. KTP / NIK / Paspor</label><span class="text-danger">*</span>
-                                                <input type="number" id="example-number" class="form-control rounded-3" name="nik" required placeholder="Masukkan No. KTP/NIK/Paspor">
+                                                <label for="nik" class="form-label">No. KTP / NIK / Paspor</label><span class="text-danger">*</span>
+                                                <input type="number" id="nik" class="form-control rounded-3" name="nik" placeholder="Masukkan No. KTP/NIK/Paspor" value="{{ old('nik') }}">
                                             </div>
                                         </div>
 
                                         <div class="col-lg-6">
                                             <div class="mb-3">
-                                                <label for="simpleinput" class="form-label">Tempat Lahir (Sesuai KTP)</label><span class="text-danger">*</span>
-                                                <input type="text" id="simpleinput" class="form-control rounded-3" name="tempat_lahir" required placeholder="Masukkan Tempat Lahir">
+                                                <label for="tempat_lahir" class="form-label">Tempat Lahir (Sesuai KTP)</label><span class="text-danger">*</span>
+                                                <input type="text" id="tempat_lahir" class="form-control rounded-3" name="tempat_lahir" placeholder="Masukkan Tempat Lahir" value="{{ old('tempat_lahir') }}">
                                             </div>
                                         </div>
 
                                         <div class="col-lg-6">
                                             <div class="mb-3">
-                                                <label for="simpleinput" class="form-label">Tanggal Lahir</label><span class="text-danger">*</span>
-                                                <input type="date" id="simpleinput" class="form-control rounded-3" name="tgl_lahir" required>
+                                                <label for="tgl_lahir" class="form-label">Tanggal Lahir</label><span class="text-danger">*</span>
+                                                <input type="date" id="tgl_lahir" class="form-control rounded-3" name="tgl_lahir" value="{{ old('tgl_lahir') }}">
                                             </div>
                                         </div>
 
                                         <div class="col-lg-6">
                                             <div class="mb-3">
-                                                <label for="example-select" class="form-label">Jenis Kelamin</label><span class="text-danger">*</span>
-                                                <select class="form-select rounded-3" id="example-select" name="jenis_kelamin" required>
+                                                <label for="jenis_kelamin" class="form-label">Jenis Kelamin</label><span class="text-danger">*</span>
+                                                <select class="form-select rounded-3" id="jenis_kelamin" name="jenis_kelamin">
                                                     <option value="" disabled selected>Pilih Jenis Kelamin</option>
-                                                    <option value="Laki-laki">Laki-laki</option>
-                                                    <option value="Perempuan">Perempuan</option>
+                                                    <option value="Laki-laki" {{ old('jenis_kelamin') == 'Laki-laki' ? 'selected' : '' }}>Laki-laki</option>
+                                                    <option value="Perempuan" {{ old('jenis_kelamin') == 'Perempuan' ? 'selected' : '' }}>Perempuan</option>
                                                 </select>
                                             </div>
                                         </div>
 
                                         <div class="col-lg-6">
                                             <div class="mb-3">
-                                                <label for="example-select" class="form-label">Kewarganegaraan</label><span class="text-danger">*</span>
-                                                <select class="form-select rounded-3" id="example-select" name="kewarganegaraan" required>
+                                                <label for="kewarganergaraan" class="form-label">Kewarganegaraan</label><span class="text-danger">*</span>
+                                                <select class="form-select rounded-3" id="kewarganergaraan" name="kewarganegaraan">
                                                     <option value="" disabled selected>Pilih Kewarganegaraan</option>
-                                                    <option value="WNI">WNI</option>
-                                                    <option value="WNA">WNA</option>
+                                                    <option value="WNI" {{ old('kewarganergaraan') == 'WNI' ? 'selected' : '' }}>WNI</option>
+                                                    <option value="WNA" {{ old('kewarganergaraan') == 'WNA' ? 'selected' : '' }}>WNA</option>
                                                 </select>
                                             </div>
                                         </div>
 
                                         <div class="col-lg-10">
                                             <div class="mb-3">
-                                                <label for="simpleinput" class="form-label">Alamat Rumah</label><span class="text-danger">*</span>
-                                                <input type="text" id="simpleinput" class="form-control rounded-3" name="alamat" required placeholder="Masukkan alamat rumah" required>
+                                                <label for="alamat" class="form-label">Alamat Rumah</label><span class="text-danger">*</span>
+                                                <input type="text" id="alamat" class="form-control rounded-3" name="alamat" placeholder="Masukkan alamat rumah" value="{{ old('alamat') }}">
                                             </div>
                                         </div>
 
                                         <div class="col-lg-2">
                                             <div class="mb-3">
-                                                <label for="simpleinput" class="form-label">Kode Pos</label><span class="text-danger">*</span>
-                                                <input type="number" id="example-number" class="form-control rounded-3" name="kode_pos" required placeholder="Masukkan Kode Pos Alamat Rumah" required>
+                                                <label for="kode_pos" class="form-label">Kode Pos</label><span class="text-danger">*</span>
+                                                <input type="number" id="kode_pos" class="form-control rounded-3" name="kode_pos" placeholder="Masukkan Kode Pos Alamat Rumah" value="{{ old('kode_pos') }}">
                                             </div>
                                         </div>
 
                                         <div class="col-lg-3">
                                             <div class="mb-3">
-                                                <label for="inputEmail3" class="form-label">Email</label><span class="text-danger">*</span>
-                                                <input type="email" class="form-control rounded-3" id="inputEmail3" name="email" required placeholder="Masukkan alamat email" required>
+                                                <label for="email" class="form-label">Email</label><span class="text-danger">*</span>
+                                                <input type="email" class="form-control rounded-3" id="email" name="email" placeholder="Masukkan alamat email" value="{{ old('email') }}">
                                             </div>
                                         </div>
 
                                         <div class="col-lg-3">
                                             <div class="mb-3">
-                                                <label for="simpleinput" class="form-label">No. Telp. (Hp)</label><span class="text-danger">*</span>
-                                                <input type="number" id="example-number" class="form-control rounded-3" name="telp_hp" placeholder="08xxxxxx" required>
+                                                <label for="telp_hp" class="form-label">No. Telp. (Hp)</label><span class="text-danger">*</span>
+                                                <input type="number" id="telp_hp" class="form-control rounded-3" name="telp_hp" placeholder="08xxxxxx" value="{{ old('telp_hp') }}">
                                             </div>
                                         </div>
 
                                         <div class="col-lg-3">
                                             <div class="mb-3">
-                                                <label for="simpleinput" class="form-label">No. Telp. (Rumah)</label>
-                                                <input type="number" id="example-number" class="form-control rounded-3" name="telp_rumah" placeholder="08xxxxxx">
+                                                <label for="telp_rumah" class="form-label">No. Telp. (Rumah)</label>
+                                                <input type="number" id="telp_rumah" class="form-control rounded-3" name="telp_rumah" placeholder="08xxxxxx" value="{{ old('telp_rumah') }}">
                                             </div>
                                         </div>
 
                                         <div class="col-lg-3">
                                             <div class="mb-3">
-                                                <label for="simpleinput" class="form-label">No. Telp. (Kantor)</label>
-                                                <input type="number" id="example-number" class="form-control rounded-3" name="telp_kantor" placeholder="08xxxxxx">
+                                                <label for="telp_kantor" class="form-label">No. Telp. (Kantor)</label>
+                                                <input type="number" id="telp_kantor" class="form-control rounded-3" name="telp_kantor" placeholder="08xxxxxx" value="{{ old('telp_kantor') }}">
                                             </div>
                                         </div>
 
                                         <div class="col-lg-6">
                                             <div class="mb-3">
-                                                <label for="example-select" class="form-label">Pendidikan Terakhir</label><span class="text-danger">*</span>
-                                                <select class="form-select rounded-3" id="example-select" name="pendidikan_terakhir"  required>
+                                                <label for="pendidikan_terakhir" class="form-label">Pendidikan Terakhir</label><span class="text-danger">*</span>
+                                                <select class="form-select rounded-3" id="pendidikan_terakhir" name="pendidikan_terakhir">
                                                     <option value="" disabled selected>Pilih Pendidikan Terakhir</option>
                                                     <option value="SD">SD</option>
                                                     <option value="SMP">SMP</option>
@@ -166,29 +160,29 @@
 
                                         <div class="col-lg-6">
                                             <div class="mb-3">
-                                                <label for="simpleinput" class="form-label">Ijazah Terakhir</label><span class="text-danger">*</span>
-                                                <input type="file" id="example-fileinput" class="form-control rounded-3" name="ijazah_file" required>
+                                                <label for="ijazah_file" class="form-label">Ijazah Terakhir</label><span class="text-danger">*</span>
+                                                <input type="file" id="ijazah_file" class="form-control rounded-3" name="ijazah_file">
                                             </div>
                                         </div>
 
                                         <div class="col-lg-4">
                                             <div class="mb-3">
-                                                <label for="simpleinput" class="form-label">Sertifikat Kompetensi (opsional)</label>
-                                                <input type="file" id="example-fileinput" class="form-control rounded-3" name="sertikom_file">
+                                                <label for="sertikom_file" class="form-label">Sertifikat Kompetensi (opsional)</label>
+                                                <input type="file" id="sertikom_file" class="form-control rounded-3" name="sertikom_file">
                                             </div>
                                         </div>
 
                                         <div class="col-lg-4">
                                             <div class="mb-3">
-                                                <label for="simpleinput" class="form-label">Surat Keterangan Bekerja</label><span class="text-danger">*</span>
-                                                <input type="file" id="example-fileinput" class="form-control rounded-3" name="keterangan_kerja_file" required>
+                                                <label for="keterangan_kerja_file" class="form-label">Surat Keterangan Bekerja</label><span class="text-danger">*</span>
+                                                <input type="file" id="keterangan_kerja_file" class="form-control rounded-3" name="keterangan_kerja_file">
                                             </div>
                                         </div>
 
                                         <div class="col-lg-4">
                                             <div class="mb-3">
-                                                <label for="simpleinput" class="form-label">Pas Foto (.png / .jpg)</label><span class="text-danger">*</span>
-                                                <input type="file" id="example-fileinput" class="form-control rounded-3" name="pas_foto_file" required>
+                                                <label for="pas_foto_file" class="form-label">Pas Foto (.png / .jpg)</label><span class="text-danger">*</span>
+                                                <input type="file" id="pas_foto_file" class="form-control rounded-3" name="pas_foto_file">
                                             </div>
                                         </div>
 
@@ -206,15 +200,15 @@
                                     <div class="row">
                                         <div class="col-lg-12">
                                             <div class="mb-3">
-                                                <label for="simpleinput" class="form-label">Nama Tempat Bekerja / Perusahaan</label><span class="text-danger">*</span>
-                                                <input type="text" id="simpleinput" class="form-control rounded-3" name="nama_perusahaan" required placeholder="Masukkan Nama Tempat Bekerja / Perusahaan">
+                                                <label for="nama_perusahaan" class="form-label">Nama Tempat Bekerja / Perusahaan</label><span class="text-danger">*</span>
+                                                <input type="text" id="nama_perusahaan" class="form-control rounded-3" name="nama_perusahaan" placeholder="Masukkan Nama Tempat Bekerja / Perusahaan">
                                             </div>
                                         </div>
 
                                         <div class="col-lg-6">
                                             <div class="mb-3">
-                                                <label for="example-select" class="form-label">Departemen</label><span class="text-danger">*</span>
-                                                <select class="form-select rounded-3" id="example-select" name="departemen"  required>
+                                                <label for="departemen" class="form-label">Departemen</label><span class="text-danger">*</span>
+                                                <select class="form-select rounded-3" id="departemen" name="departemen">
                                                     <option value="" disabled selected>Pilih Departemen Anda</option>
                                                     @foreach ($dataDepartemen as $departemen)
                                                         <option value="{{ $departemen->departemen_nama }}">{{ $departemen->departemen_nama }}</option>
@@ -225,8 +219,8 @@
 
                                         <div class="col-lg-6">
                                             <div class="mb-3">
-                                                <label for="example-select" class="form-label">Jabatan</label><span class="text-danger">*</span>
-                                                <select class="form-select rounded-3" id="example-select" name="jabatan"  required>
+                                                <label for="jabatan" class="form-label">Jabatan</label><span class="text-danger">*</span>
+                                                <select class="form-select rounded-3" id="jabatan" name="jabatan">
                                                     <option value="" disabled selected>Pilih Jabatan Anda</option>
                                                     @foreach ($dataJabatan as $jabatan)
                                                         <option value="{{ $jabatan->jabatan_nama }}" data-dept="{{ $jabatan->departement_ref }}">{{ $jabatan->jabatan_nama }}</option>
@@ -237,36 +231,36 @@
 
                                         <div class="col-lg-10">
                                             <div class="mb-3">
-                                                <label for="simpleinput" class="form-label">Alamat Tempat Bekerja / Perusahaan</label><span class="text-danger">*</span>
-                                                <input type="text" id="simpleinput" class="form-control rounded-3" name="alamat_perusahaan" required placeholder="Masukkan Alamat Tempat Bekerja / Perusahaan">
+                                                <label for="alamat_perusahaan" class="form-label">Alamat Tempat Bekerja / Perusahaan</label><span class="text-danger">*</span>
+                                                <input type="text" id="alamat_perusahaan" class="form-control rounded-3" name="alamat_perusahaan" placeholder="Masukkan Alamat Tempat Bekerja / Perusahaan">
                                             </div>
                                         </div>
 
                                         <div class="col-lg-2">
                                             <div class="mb-3">
-                                                <label for="simpleinput" class="form-label">Kode Pos</label><span class="text-danger">*</span>
-                                                <input type="number" id="example-number" class="form-control rounded-3" name="kode_pos_perusahaan" required placeholder="Masukkan Kode Pos Alamat Tempat Bekerja / Perusahaan">
+                                                <label for="kode_pos_perusahaan" class="form-label">Kode Pos</label><span class="text-danger">*</span>
+                                                <input type="number" id="kode_pos_perusahaan" class="form-control rounded-3" name="kode_pos_perusahaan" placeholder="Masukkan Kode Pos Alamat Tempat Bekerja / Perusahaan">
                                             </div>
                                         </div>
 
                                         <div class="col-lg-4">
                                             <div class="mb-3">
-                                                <label for="inputEmail3" class="form-label">Email</label><span class="text-danger">*</span>
-                                                <input type="email" class="form-control rounded-3" id="inputEmail3" name="email_perusahaan" required placeholder="Masukkan Aalamt Email Perusahaan" required>
+                                                <label for="email_perusahaan" class="form-label">Email</label><span class="text-danger">*</span>
+                                                <input type="email" class="form-control rounded-3" id="email_perusahaan" name="email_perusahaan" placeholder="Masukkan Aalamt Email Perusahaan">
                                             </div>
                                         </div>
 
                                         <div class="col-lg-4">
                                             <div class="mb-3">
-                                                <label for="simpleinput" class="form-label">No. Telp. Tempat Bekerja / Perusahaan</label><span class="text-danger">*</span>
-                                                <input type="number" id="example-number" class="form-control rounded-3" name="telp_perusahaan" placeholder="08xxxxxx" required>
+                                                <label for="telp_perusahaan" class="form-label">No. Telp. Tempat Bekerja / Perusahaan</label><span class="text-danger">*</span>
+                                                <input type="number" id="telp_perusahaan" class="form-control rounded-3" name="telp_perusahaan" placeholder="08xxxxxx">
                                             </div>
                                         </div>
 
                                         <div class="col-lg-4">
                                             <div class="mb-3">
-                                                <label for="simpleinput" class="form-label">No. Fax Tempat Bekerja / Perusahaan</label>
-                                                <input type="number" id="example-number" class="form-control rounded-3" name="fax_perusahaan" placeholder="08xxxxxx">
+                                                <label for="fax_perusahaan" class="form-label">No. Fax Tempat Bekerja / Perusahaan</label>
+                                                <input type="number" id="fax_perusahaan" class="form-control rounded-3" name="fax_perusahaan" placeholder="08xxxxxx">
                                             </div>
                                         </div>
 
@@ -284,10 +278,10 @@
                                     <div class="row">
                                         <div class="col-lg-12">
                                             <div class="mb-3">
-                                                <label for="simpleinput" class="form-label">Kegiatan Sertifikasi</label><span class="text-danger">*</span>
+                                                <label for="kegiatan_ref" class="form-label">Kegiatan Sertifikasi</label><span class="text-danger">*</span>
                                                 {{-- <input type="text" id="simpleinput" class="form-control rounded-3" name="kegiatan" disabled> --}}
-                                                 <select class="form-select rounded-3" id="example-select" name="kegiatan_ref"  required>
-                                                    <option value="" disabled selected>Pilih Kegiatan</option>
+                                                <select class="form-select rounded-3" id="kegiatan_ref" name="kegiatan_ref">
+                                                    <option value="" selected>Pilih Kegiatan</option>
                                                     @foreach ($dataKegiatan as $kegiatan)
                                                         <option value="{{ $kegiatan->ref }}">{{ $kegiatan->nama_kegiatan }}</option>
                                                     @endforeach
@@ -297,31 +291,26 @@
 
                                         <div class="col-lg-6">
                                             <div class="mb-3">
-                                                <label for="example-select" class="form-label">Lembaga Sertifikasi Kompetensi (LSP)</label><span class="text-danger">*</span>
-                                                <select class="form-select rounded-3" id="example-select" name="lsp_ref"  required>
-                                                    <option value="" disabled selected>Pilih Lembaga Sertifikasi Kompetensi (LSP)</option>
-                                                    @foreach ($dataLsp as $lsp)
-                                                        <option value="{{ $lsp->ref }}">{{ $lsp->lsp_nama }}</option>
-                                                    @endforeach
+                                                <label for="lsp_ref" class="form-label">Lembaga Sertifikasi Kompetensi (LSP)</label><span class="text-danger">*</span>
+                                                <select class="form-select rounded-3" id="lsp_ref" name="lsp_ref">
+                                                    <option value="" disabled selected>Pilih LSP...</option>
                                                 </select>
                                             </div>
                                         </div>
 
                                         <div class="col-lg-6">
                                             <div class="mb-3">
-                                                <label for="example-select" class="form-label">Skema Sertifikasi Kompetensi</label><span class="text-danger">*</span>
-                                                <select class="form-select rounded-3" id="example-select" name="skema_asesmen"  required>
+                                                <label for="skema_asesmen" class="form-label">Skema Sertifikasi Kompetensi</label><span class="text-danger">*</span>
+                                                <select class="form-select rounded-3" id="skema_asesmen" name="skema_asesmen">
                                                     <option value="" disabled selected>Pilih Skema Sertifikasi Kompetensi</option>
-                                                    <option value="SKEMA X">SKEMA X</option>
-                                                    <option value="SKEMA Y">SKEMA Y</option>
                                                 </select>
                                             </div>
                                         </div>
 
                                         <div class="col-lg-6">
                                             <div class="mb-3">
-                                                <label for="example-select" class="form-label">Tempat Uji Kompetensi (TUK)</label><span class="text-danger">*</span>
-                                                <select class="form-select rounded-3" id="example-select" name="tuk_ref"  required>
+                                                <label for="tuk_ref" class="form-label">Tempat Uji Kompetensi (TUK)</label><span class="text-danger">*</span>
+                                                <select class="form-select rounded-3" id="tuk_ref" name="tuk_ref">
                                                     <option value="" disabled selected>Pilih Tempat Uji Kompetensi (TUK)</option>
                                                     @foreach ($dataTUK as $tuk)
                                                         <option value="{{ $tuk->ref }}">{{ $tuk->tuk_nama }}</option>
@@ -332,8 +321,8 @@
 
                                         <div class="col-lg-6">
                                             <div class="mb-3">
-                                                <label for="example-select" class="form-label">Tanggal Pelaksanaan Uji Kompetensi</label><span class="text-danger">*</span>
-                                                <select class="form-select rounded-3" id="example-select" name="tgl_asesmen"  required>
+                                                <label for="tgl_asesmen" class="form-label">Tanggal Pelaksanaan Uji Kompetensi</label><span class="text-danger">*</span>
+                                                <select class="form-select rounded-3" id="tgl_asesmen" name="tgl_asesmen">
                                                     <option value="" disabled selected>Pilih Tanggal Pelaksanaan Uji Kompetensi</option>
                                                     <option value="2026-01-01">01-01-2026</option>
                                                     <option value="2026-01-02">02-01-2026</option>
@@ -347,16 +336,92 @@
                                             </div>
                                         </div>
 
-                                    </div> <!-- end row #3-->
-                                </div> <!-- end card-body #3-->
+                                    </div>
+                                </div>
                             </form>
-                        </div> <!-- end card -->
-                    </div><!-- end col -->
-                </div><!-- end row -->
+                        </div>
+                    </div>
+                </div>
 
-            </div> <!-- container -->
+            </div>
 
         </div>
     </div>
-    
+
 @endsection
+@push('script')
+    <script src="{{ asset('js/jquery-3.6.0.min.js') }}"></script>
+    <script src="{{ asset('js/select2.min.js') }}"></script>
+
+
+    {{-- <script>
+        document.getElementById('kegiatan_ref').addEventListener('change', function() {
+            const kegiatanRef = this.value;
+            const lspSelect = document.getElementById('lsp_ref');
+
+            lspSelect.innerHTML = '<option value="">Loading...</option>';
+            lspSelect.disabled = true;
+
+            fetch(`/ajax/lsp-by-kegiatan/${kegiatanRef}`)
+                .then(res => res.json())
+                .then(data => {
+                    let options = '<option value="" disabled selected>Pilih LSP</option>';
+
+                    data.forEach(item => {
+                        options += `
+                    <option value="${item.lsp_ref}">
+                        ${item.lsp_nama} (Kuota: ${item.kuota_lsp})
+                    </option>
+                `;
+                    });
+
+                    lspSelect.innerHTML = options;
+                    lspSelect.disabled = false;
+                });
+        });
+    </script> --}}
+
+    <script>
+        const kegiatanSelect = document.getElementById('kegiatan_ref');
+        const lspSelect = document.getElementById('lsp_ref');
+        const skemaSelect = document.getElementById('skema_asesmen');
+
+        kegiatanSelect.addEventListener('change', function() {
+            lspSelect.innerHTML = '<option>Loading...</option>';
+            skemaSelect.innerHTML = '<option value="">Pilih Skema</option>';
+            skemaSelect.disabled = true;
+
+            fetch(`/ajax/lsp-by-kegiatan/${this.value}`)
+                .then(res => res.json())
+                .then(data => {
+                    console.table(data);
+                    let opt = '<option value="" disabled selected>Pilih LSP</option>';
+                    data.forEach(item => {
+                        opt += `<option value="${item.lsp_ref}">
+                        ${item.lsp_nama} (Kuota: ${item.kuota_lsp})
+                    </option>`;
+                    });
+                    lspSelect.innerHTML = opt;
+                    lspSelect.disabled = false;
+                });
+        });
+
+        lspSelect.addEventListener('change', function() {
+            skemaSelect.innerHTML = '<option>Loading...</option>';
+            skemaSelect.disabled = true;
+
+            fetch(`/ajax/skema-by-kegiatan-lsp?kegiatan_ref=${kegiatanSelect.value}&lsp_ref=${this.value}`)
+                .then(res => res.json())
+                .then(data => {
+                    let opt = '<option value="" disabled selected>Pilih Skema Sertifikasi</option>';
+                    data.forEach(item => {
+                        opt += `<option value="${item.skema_ref}">
+                    ${item.skema_judul} (${item.skema_kode})
+                </option>`;
+                    });
+                    skemaSelect.innerHTML = opt;
+                    skemaSelect.disabled = false;
+                });
+        });
+    </script>
+@endpush
