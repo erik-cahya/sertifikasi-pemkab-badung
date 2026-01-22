@@ -97,11 +97,13 @@ Route::middleware('auth')->group(function () {
     Route::put('tukAdmin/{id}', [TUKController::class, 'update'])->name('tukAdmin.update');
     Route::get('tukAdmin/{id}/{code}', [TUKController::class, 'verifikasi'])->name('tukAdmin.verifikasi');
     Route::delete('tukAdmin/{id}', [TUKController::class, 'destroy'])->name('tukAdmin.destroy');
+
+    // ################################ Asesi by admin
+    Route::get('asesiAdmin', [AsesiController::class, 'list'])->name('asesiAdmin.index');
 });
 
 // ################################ Pendaftaraan Asesi
 Route::get('asesi', [AsesiController::class, 'index'])->name('asesi.index');
-Route::get('asesi/create', [AsesiController::class, 'create'])->name('asesi.create');
 Route::post('asesi/store', [AsesiController::class, 'store'])->name('asesi.store');
 
 // ################################ Pendaftaraan TUK

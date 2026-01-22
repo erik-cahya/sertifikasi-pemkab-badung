@@ -7,6 +7,7 @@ use App\Models\DepartemenModel;
 use App\Models\JabatanModel;
 use App\Models\KegiatanModel;
 use App\Models\AsesiModel;
+use App\Models\TUKModel;
 use Carbon\Carbon;
 use Faker\Provider\Uuid;
 use Illuminate\Http\Request;
@@ -26,18 +27,22 @@ class AsesiController extends Controller
         $jabatan = JabatanModel::all();
         $lsp = LSPModel::all();
         $kegiatan = KegiatanModel::all();
+        $tuk = TUKModel::all();
 
         return view('pendaftaran.pendaftaran-asesi', [
             'dataDepartemen' => $departemen,
             'dataJabatan' => $jabatan,
             'dataLsp' => $lsp,
             'dataKegiatan' => $kegiatan,
+            'dataTUK' => $tuk,
         ]);
     }
 
     public function store(Request $request)
     {
-        // dd($request);
+        // dd($request->all());
+        // dd(array_keys($request->all()));
+
         $validated = $request->validate([
             'kegiatan_ref' => 'required',
             'lsp_ref' => 'required',
@@ -99,6 +104,9 @@ class AsesiController extends Controller
             'email_perusahaan.required' => 'Email perusahaan tidak boleh kosong',
             'email_perusahaan.email' => 'Format email perusahaan tidak valid',
         ]);
+
+        // dd($request->all());
+
 
         // ================== SIMPAN FILE ==================
         $nik  = $request->nik;
@@ -188,5 +196,18 @@ class AsesiController extends Controller
             'type' => 'success',
         ];
         return redirect()->route('asesi.index')->with('flashData', $flashData);
+    }
+
+     public function list()
+    {
+        // $asesi = AsesiModel::join('lsp', 'lsp.ref', '=', 'tuk.lsp_ref')
+        // ->select('tuk.*','lsp.lsp_nama')
+        // ->orderBy('tuk.created_at', 'desc')
+        // ->get();
+
+        $asesi = AsesiModel::all();
+        return view('admin-panel.asesi.index', [
+            'dataAsesi' => $asesi,
+        ]);
     }
 }

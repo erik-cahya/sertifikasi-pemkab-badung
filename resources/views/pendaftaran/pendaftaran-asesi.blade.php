@@ -37,7 +37,7 @@
                                     </ul>
                                 </div>
                             @endif
-                            <form action="{{ route('asesi.store') }}" method="POST" enctype="multipart/form-data">>
+                            <form action="{{ route('asesi.store') }}" method="POST" enctype="multipart/form-data">
                             @csrf
                                 <div class="card-header bg-danger text-white px-4 py-2 rounded-top">
                                     <h5 class="card-title mb-1 fw-bold">A. DATA PRIBADI</h5>
@@ -77,7 +77,7 @@
                                         <div class="col-lg-6">
                                             <div class="mb-3">
                                                 <label for="simpleinput" class="form-label">Tanggal Lahir</label><span class="text-danger">*</span>
-                                                <input type="date" id="simpleinput" class="form-control rounded-3" name="tanggal_lahir" required>
+                                                <input type="date" id="simpleinput" class="form-control rounded-3" name="tgl_lahir" required>
                                             </div>
                                         </div>
 
@@ -85,7 +85,7 @@
                                             <div class="mb-3">
                                                 <label for="example-select" class="form-label">Jenis Kelamin</label><span class="text-danger">*</span>
                                                 <select class="form-select rounded-3" id="example-select" name="jenis_kelamin" required>
-                                                    <option value="">Pilih Jenis Kelamin</option>
+                                                    <option value="" disabled selected>Pilih Jenis Kelamin</option>
                                                     <option value="Laki-laki">Laki-laki</option>
                                                     <option value="Perempuan">Perempuan</option>
                                                 </select>
@@ -94,9 +94,9 @@
 
                                         <div class="col-lg-6">
                                             <div class="mb-3">
-                                                <label for="example-select" class="form-label">Kewaganegaraan</label><span class="text-danger">*</span>
-                                                <select class="form-select rounded-3" id="example-select" name="kewaganegaraan" required>
-                                                    <option value="">Pilih Kewaganegaraan</option>
+                                                <label for="example-select" class="form-label">Kewarganegaraan</label><span class="text-danger">*</span>
+                                                <select class="form-select rounded-3" id="example-select" name="kewarganegaraan" required>
+                                                    <option value="" disabled selected>Pilih Kewarganegaraan</option>
                                                     <option value="WNI">WNI</option>
                                                     <option value="WNA">WNA</option>
                                                 </select>
@@ -149,7 +149,7 @@
                                             <div class="mb-3">
                                                 <label for="example-select" class="form-label">Pendidikan Terakhir</label><span class="text-danger">*</span>
                                                 <select class="form-select rounded-3" id="example-select" name="pendidikan_terakhir"  required>
-                                                    <option value="">Pilih Pendidikan Terakhir</option>
+                                                    <option value="" disabled selected>Pilih Pendidikan Terakhir</option>
                                                     <option value="SD">SD</option>
                                                     <option value="SMP">SMP</option>
                                                     <option value="SMA/SMK/Sederajat">SMA/SMK/Sederajat</option>
@@ -215,7 +215,7 @@
                                             <div class="mb-3">
                                                 <label for="example-select" class="form-label">Departemen</label><span class="text-danger">*</span>
                                                 <select class="form-select rounded-3" id="example-select" name="departemen"  required>
-                                                    <option value="">Pilih Departemen Anda</option>
+                                                    <option value="" disabled selected>Pilih Departemen Anda</option>
                                                     @foreach ($dataDepartemen as $departemen)
                                                         <option value="{{ $departemen->departemen_nama }}">{{ $departemen->departemen_nama }}</option>
                                                     @endforeach
@@ -227,7 +227,7 @@
                                             <div class="mb-3">
                                                 <label for="example-select" class="form-label">Jabatan</label><span class="text-danger">*</span>
                                                 <select class="form-select rounded-3" id="example-select" name="jabatan"  required>
-                                                    <option value="">Pilih Jabatan Anda</option>
+                                                    <option value="" disabled selected>Pilih Jabatan Anda</option>
                                                     @foreach ($dataJabatan as $jabatan)
                                                         <option value="{{ $jabatan->jabatan_nama }}" data-dept="{{ $jabatan->departement_ref }}">{{ $jabatan->jabatan_nama }}</option>
                                                     @endforeach
@@ -286,8 +286,8 @@
                                             <div class="mb-3">
                                                 <label for="simpleinput" class="form-label">Kegiatan Sertifikasi</label><span class="text-danger">*</span>
                                                 {{-- <input type="text" id="simpleinput" class="form-control rounded-3" name="kegiatan" disabled> --}}
-                                                 <select class="form-select rounded-3" id="example-select" name="lsp"  required>
-                                                    <option value="">Pilih Kegiatan</option>
+                                                 <select class="form-select rounded-3" id="example-select" name="kegiatan_ref"  required>
+                                                    <option value="" disabled selected>Pilih Kegiatan</option>
                                                     @foreach ($dataKegiatan as $kegiatan)
                                                         <option value="{{ $kegiatan->ref }}">{{ $kegiatan->nama_kegiatan }}</option>
                                                     @endforeach
@@ -295,11 +295,11 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-lg-4">
+                                        <div class="col-lg-6">
                                             <div class="mb-3">
                                                 <label for="example-select" class="form-label">Lembaga Sertifikasi Kompetensi (LSP)</label><span class="text-danger">*</span>
-                                                <select class="form-select rounded-3" id="example-select" name="lsp"  required>
-                                                    <option value="">Pilih Lembaga Sertifikasi Kompetensi (LSP)</option>
+                                                <select class="form-select rounded-3" id="example-select" name="lsp_ref"  required>
+                                                    <option value="" disabled selected>Pilih Lembaga Sertifikasi Kompetensi (LSP)</option>
                                                     @foreach ($dataLsp as $lsp)
                                                         <option value="{{ $lsp->ref }}">{{ $lsp->lsp_nama }}</option>
                                                     @endforeach
@@ -307,24 +307,36 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-lg-4">
+                                        <div class="col-lg-6">
                                             <div class="mb-3">
-                                                <label for="example-select" class="form-label">Tempat Uji Kompetensi (TUK)</label><span class="text-danger">*</span>
-                                                <select class="form-select rounded-3" id="example-select" name="tuk"  required>
-                                                    <option value="">Pilih Tempat Uji Kompetensi (TUK)</option>
-                                                    <option value="xx">xx</option>
-                                                    <option value="yy">yy</option>
+                                                <label for="example-select" class="form-label">Skema Sertifikasi Kompetensi</label><span class="text-danger">*</span>
+                                                <select class="form-select rounded-3" id="example-select" name="skema_asesmen"  required>
+                                                    <option value="" disabled selected>Pilih Skema Sertifikasi Kompetensi</option>
+                                                    <option value="SKEMA X">SKEMA X</option>
+                                                    <option value="SKEMA Y">SKEMA Y</option>
                                                 </select>
                                             </div>
                                         </div>
 
-                                        <div class="col-lg-4">
+                                        <div class="col-lg-6">
+                                            <div class="mb-3">
+                                                <label for="example-select" class="form-label">Tempat Uji Kompetensi (TUK)</label><span class="text-danger">*</span>
+                                                <select class="form-select rounded-3" id="example-select" name="tuk_ref"  required>
+                                                    <option value="" disabled selected>Pilih Tempat Uji Kompetensi (TUK)</option>
+                                                    @foreach ($dataTUK as $tuk)
+                                                        <option value="{{ $tuk->ref }}">{{ $tuk->tuk_nama }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-6">
                                             <div class="mb-3">
                                                 <label for="example-select" class="form-label">Tanggal Pelaksanaan Uji Kompetensi</label><span class="text-danger">*</span>
-                                                <select class="form-select rounded-3" id="example-select" name="kebangsaan"  required>
-                                                    <option value="">Pilih Tanggal Pelaksanaan Uji Kompetensi</option>
-                                                    <option value="xx">xx</option>
-                                                    <option value="yy">yy</option>
+                                                <select class="form-select rounded-3" id="example-select" name="tgl_asesmen"  required>
+                                                    <option value="" disabled selected>Pilih Tanggal Pelaksanaan Uji Kompetensi</option>
+                                                    <option value="2026-01-01">01-01-2026</option>
+                                                    <option value="2026-01-02">02-01-2026</option>
                                                 </select>
                                             </div>
                                         </div>
