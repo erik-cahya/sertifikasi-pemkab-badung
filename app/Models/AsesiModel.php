@@ -17,10 +17,26 @@ class AsesiModel extends Model
     {
         return ['ref'];
     }
+
     public function setRefAttribute($value)
     {
         if ($value !== null) {
             $this->attributes['ref'] = strtoupper($value);
         }
+    }
+
+    public function kegiatan()
+    {
+        return $this->belongsTo(KegiatanModel::class, 'kegiatan_ref', 'ref');
+    }
+
+    public function lsp()
+    {
+        return $this->belongsTo(LSPModel::class, 'lsp_ref', 'ref');
+    }
+
+    public function tuk()
+    {
+        return $this->belongsTo(TUKModel::class, 'tuk_ref', 'ref');
     }
 }

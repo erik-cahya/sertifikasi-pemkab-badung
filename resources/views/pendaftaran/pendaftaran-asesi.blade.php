@@ -37,7 +37,7 @@
                                     </ul>
                                 </div>
                             @endif
-                            <form action="#" method="POST">
+                            <form action="{{ route('asesi.store') }}" method="POST" enctype="multipart/form-data">>
                             @csrf
                                 <div class="card-header bg-danger text-white px-4 py-2 rounded-top">
                                     <h5 class="card-title mb-1 fw-bold">A. DATA PRIBADI</h5>
@@ -285,7 +285,13 @@
                                         <div class="col-lg-12">
                                             <div class="mb-3">
                                                 <label for="simpleinput" class="form-label">Kegiatan Sertifikasi</label><span class="text-danger">*</span>
-                                                <input type="text" id="simpleinput" class="form-control rounded-3" name="kegiatan" disabled>
+                                                {{-- <input type="text" id="simpleinput" class="form-control rounded-3" name="kegiatan" disabled> --}}
+                                                 <select class="form-select rounded-3" id="example-select" name="lsp"  required>
+                                                    <option value="">Pilih Kegiatan</option>
+                                                    @foreach ($dataKegiatan as $kegiatan)
+                                                        <option value="{{ $kegiatan->ref }}">{{ $kegiatan->nama_kegiatan }}</option>
+                                                    @endforeach
+                                                </select>
                                             </div>
                                         </div>
 

@@ -5,12 +5,15 @@ namespace App\Http\Controllers;
 use App\Models\LSPModel;
 use App\Models\DepartemenModel;
 use App\Models\JabatanModel;
+use App\Models\KegiatanModel;
 use App\Models\AsesiModel;
 use Carbon\Carbon;
 use Faker\Provider\Uuid;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
+
 
 class AsesiController extends Controller
 {
@@ -22,11 +25,168 @@ class AsesiController extends Controller
         $departemen = DepartemenModel::all();
         $jabatan = JabatanModel::all();
         $lsp = LSPModel::all();
+        $kegiatan = KegiatanModel::all();
 
         return view('pendaftaran.pendaftaran-asesi', [
             'dataDepartemen' => $departemen,
             'dataJabatan' => $jabatan,
             'dataLsp' => $lsp,
+            'dataKegiatan' => $kegiatan,
         ]);
+    }
+
+    public function store(Request $request)
+    {
+        // dd($request);
+        $validated = $request->validate([
+            'kegiatan_ref' => 'required',
+            'lsp_ref' => 'required',
+            'tuk_ref' => 'required',
+            'tgl_asesmen' => 'required|date',
+            'skema_asesmen' => 'required',
+            'nama_lengkap' => 'required',
+            'nik' => 'required',
+            'tempat_lahir' => 'required',
+            'tgl_lahir' => 'required|date',
+            'jenis_kelamin' => 'required',
+            'kewarganegaraan' => 'required',
+            'alamat' => 'required',
+            'kode_pos' => 'required',
+            'telp_rumah' => 'nullable',
+            'telp_kantor' => 'nullable',
+            'telp_hp' => 'required',
+            'email' => 'required|email',
+            'pendidikan_terakhir' => 'required',
+            'nama_perusahaan' => 'required',
+            'alamat_perusahaan' => 'required',
+            'departemen' => 'required',
+            'jabatan' => 'required',
+            'kode_pos_perusahaan' => 'required',
+            'telp_perusahaan' => 'required',
+            'fax_perusahaan' => 'nullable',
+            'email_perusahaan' => 'required|email',
+
+            // FILE VALIDATION
+            'sertikom_file' => 'nullable|file|mimes:pdf|max:2048',
+            'ijazah_file' => 'nullable|file|mimes:pdf|max:2048',
+            'ktp_file' => 'nullable|file|mimes:pdf|max:2048',
+            'keterangan_kerja_file' => 'nullable|file|mimes:pdf|max:2048',
+            'pas_foto_file' => 'nullable|file|mimes:jpg,png|max:2048',
+        ], [
+            'kegiatan_ref.required' => 'Kegiatan tidak boleh kosong',
+            'lsp_ref.required' => 'LSP tidak boleh kosong',
+            'tuk_ref.required' => 'TUK tidak boleh kosong',
+            'tgl_asesmen.required' => 'Tanggal asesmen tidak boleh kosong',
+            'skema_asesmen.required' => 'Skema asesmen tidak boleh kosong',
+            'nama_lengkap.required' => 'Nama lengkap tidak boleh kosong',
+            'nik.required' => 'NIK tidak boleh kosong',
+            'tempat_lahir.required' => 'Tempat lahir tidak boleh kosong',
+            'tgl_lahir.required' => 'Tanggal lahir tidak boleh kosong',
+            'jenis_kelamin.required' => 'Jenis kelamin tidak boleh kosong',
+            'kewarganegaraan.required' => 'Kewarganegaraan tidak boleh kosong',
+            'alamat.required' => 'Alamat tidak boleh kosong',
+            'kode_pos.required' => 'Kode pos tidak boleh kosong',
+            'telp_hp.required' => 'Nomor HP tidak boleh kosong',
+            'email.required' => 'Email tidak boleh kosong',
+            'email.email' => 'Format email tidak valid',
+            'pendidikan_terakhir.required' => 'Pendidikan terakhir tidak boleh kosong',
+            'nama_perusahaan.required' => 'Nama perusahaan tidak boleh kosong',
+            'alamat_perusahaan.required' => 'Alamat perusahaan tidak boleh kosong',
+            'departemen.required' => 'Departemen tidak boleh kosong',
+            'jabatan.required' => 'Jabatan tidak boleh kosong',
+            'kode_pos_perusahaan.required' => 'Kode pos perusahaan tidak boleh kosong',
+            'telp_perusahaan.required' => 'Telepon perusahaan tidak boleh kosong',
+            'email_perusahaan.required' => 'Email perusahaan tidak boleh kosong',
+            'email_perusahaan.email' => 'Format email perusahaan tidak valid',
+        ]);
+
+        // ================== SIMPAN FILE ==================
+        $nik  = $request->nik;
+        $time = time();
+
+        /* ================== KTP ================== */
+        if ($request->hasFile('ktp_file')) {
+            $ext = $request->file('ktp_file')->extension();
+            $filename = "{$nik}-{$time}.{$ext}";
+
+            $validated['ktp_file'] = $request->file('ktp_file')
+                ->storeAs('asesi/ktp', $filename, 'public');
+        }
+
+        /* ================== IJAZAH ================== */
+        if ($request->hasFile('ijazah_file')) {
+            $ext = $request->file('ijazah_file')->extension();
+            $filename = "{$nik}-{$time}.{$ext}";
+
+            $validated['ijazah_file'] = $request->file('ijazah_file')
+                ->storeAs('asesi/ijazah', $filename, 'public');
+        }
+
+        /* ================== SERTIFIKAT KOMPETENSI ================== */
+        if ($request->hasFile('sertikom_file')) {
+            $ext = $request->file('sertikom_file')->extension();
+            $filename = "{$nik}-{$time}.{$ext}";
+
+            $validated['sertikom_file'] = $request->file('sertikom_file')
+                ->storeAs('asesi/sertikom', $filename, 'public');
+        }
+
+        /* ================== KETERANGAN KERJA ================== */
+        if ($request->hasFile('keterangan_kerja_file')) {
+            $ext = $request->file('keterangan_kerja_file')->extension();
+            $filename = "{$nik}-{$time}.{$ext}";
+
+            $validated['keterangan_kerja_file'] = $request->file('keterangan_kerja_file')
+                ->storeAs('asesi/keterangan_kerja', $filename, 'public');
+        }
+
+        /* ================== PAS FOTO ================== */
+        if ($request->hasFile('pas_foto_file')) {
+            $ext = $request->file('pas_foto_file')->extension();
+            $filename = "{$nik}-{$time}.{$ext}";
+
+            $validated['pas_foto_file'] = $request->file('pas_foto_file')
+                ->storeAs('asesi/pas_foto', $filename, 'public');
+        }
+
+
+        AsesiModel::create($validated);
+
+
+        // AsesiModel::create([
+        //     'kegiatan_ref' => $request->kegiatan_ref,
+        //     'lsp_ref' => $request->lsp_ref,
+        //     'tuk_ref' => $request->tuk_ref,
+        //     'tgl_asesmen' => $request->tgl_asesmen,
+        //     'skema_asesmen' => $request->skema_asesmen,
+        //     'nama_lengkap' => $request->nama_lengkap,
+        //     'nik' => $request->nik,
+        //     'tempat_lahir' => $request->tempat_lahir,
+        //     'tgl_lahir' => $request->tgl_lahir,
+        //     'jenis_kelamin' => $request->jenis_kelamin,
+        //     'kewarganegaraan' => $request->kewarganegaraan,
+        //     'alamat' => $request->alamat,
+        //     'kode_pos' => $request->kode_pos,
+        //     'telp_rumah' => $request->telp_rumah,
+        //     'telp_kantor' => $request->telp_kantor,
+        //     'telp_hp' => $request->telp_hp,
+        //     'email' => $request->email,
+        //     'pendidikan_terakhir' => $request->pendidikan_terakhir,
+        //     'nama_perusahaan' => $request->nama_perusahaan,
+        //     'alamat_perusahaan' => $request->alamat_perusahaan,
+        //     'departemen' => $request->departemen,
+        //     'jabatan' => $request->jabatan,
+        //     'kode_pos_perusahaan' => $request->kode_pos_perusahaan,
+        //     'telp_perusahaan' => $request->telp_perusahaan,
+        //     'fax_perusahaan' => $request->fax_perusahaan,
+        //     'email_perusahaan' => $request->email_perusahaan,
+        // ]);
+
+        $flashData = [
+            'title' => 'Pendaftaran Calon Asesi Berhasii',
+            'message' => 'Data Berhasil Dikirim',
+            'type' => 'success',
+        ];
+        return redirect()->route('asesi.index')->with('flashData', $flashData);
     }
 }
