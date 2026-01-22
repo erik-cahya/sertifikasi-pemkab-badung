@@ -7,7 +7,7 @@
             <!-- Start Content-->
             <div class="container-fluid">
                 <div class="row justify-content-center">
-                    <div class="col-6">
+                    <div class="col-12 col-lg-6">
                         <div class="card shadow-lg border-0 rounded-4">
                             <div class="my-auto p-4 text-center text-danger">
                                 <h3 class="card-title fw-bold">FORMULIR PENDATAAN PEGAWAI</h3>
