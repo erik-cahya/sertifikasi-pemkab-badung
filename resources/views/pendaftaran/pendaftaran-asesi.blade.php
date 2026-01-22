@@ -88,11 +88,11 @@
 
                                         <div class="col-lg-6">
                                             <div class="mb-3">
-                                                <label for="kewarganergaraan" class="form-label">Kewarganegaraan</label><span class="text-danger">*</span>
-                                                <select class="form-select rounded-3" id="kewarganergaraan" name="kewarganegaraan">
+                                                <label for="kewarganegaraan" class="form-label">Kewarganegaraan</label><span class="text-danger">*</span>
+                                                <select class="form-select rounded-3" id="kewarganegaraan" name="kewarganegaraan">
                                                     <option value="" disabled selected>Pilih Kewarganegaraan</option>
-                                                    <option value="WNI" {{ old('kewarganergaraan') == 'WNI' ? 'selected' : '' }}>WNI</option>
-                                                    <option value="WNA" {{ old('kewarganergaraan') == 'WNA' ? 'selected' : '' }}>WNA</option>
+                                                    <option value="WNI" {{ old('kewarganegaraan') == 'WNI' ? 'selected' : '' }}>WNI</option>
+                                                    <option value="WNA" {{ old('kewarganegaraan') == 'WNA' ? 'selected' : '' }}>WNA</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -144,16 +144,16 @@
                                                 <label for="pendidikan_terakhir" class="form-label">Pendidikan Terakhir</label><span class="text-danger">*</span>
                                                 <select class="form-select rounded-3" id="pendidikan_terakhir" name="pendidikan_terakhir">
                                                     <option value="" disabled selected>Pilih Pendidikan Terakhir</option>
-                                                    <option value="SD">SD</option>
-                                                    <option value="SMP">SMP</option>
-                                                    <option value="SMA/SMK/Sederajat">SMA/SMK/Sederajat</option>
-                                                    <option value="D1">D1</option>
-                                                    <option value="D2">D2</option>
-                                                    <option value="D3">D3</option>
-                                                    <option value="D4">D4</option>
-                                                    <option value="S1">S1</option>
-                                                    <option value="S2">S2</option>
-                                                    <option value="S3">S3</option>
+                                                    <option value="SD" {{ old('pendidikan_terakhir') === 'SD' ? 'selected' : '' }}>SD</option>
+                                                    <option value="SMP" {{ old('pendidikan_terakhir') === 'SMP' ? 'selected' : '' }}>SMP</option>
+                                                    <option value="SMA/SMK/Sederajat" {{ old('pendidikan_terakhir') === 'SMA/SMK/Sederajat' ? 'selected' : '' }}>SMA/SMK/Sederajat</option>
+                                                    <option value="D1" {{ old('pendidikan_terakhir') === 'D1' ? 'selected' : '' }}>D1</option>
+                                                    <option value="D2" {{ old('pendidikan_terakhir') === 'D2' ? 'selected' : '' }}>D2</option>
+                                                    <option value="D3" {{ old('pendidikan_terakhir') === 'D3' ? 'selected' : '' }}>D3</option>
+                                                    <option value="D4" {{ old('pendidikan_terakhir') === 'D4' ? 'selected' : '' }}>D4</option>
+                                                    <option value="S1" {{ old('pendidikan_terakhir') === 'S1' ? 'selected' : '' }}>S1</option>
+                                                    <option value="S2" {{ old('pendidikan_terakhir') === 'S2' ? 'selected' : '' }}>S2</option>
+                                                    <option value="S3" {{ old('pendidikan_terakhir') === 'S3' ? 'selected' : '' }}>S3</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -201,7 +201,7 @@
                                         <div class="col-lg-12">
                                             <div class="mb-3">
                                                 <label for="nama_perusahaan" class="form-label">Nama Tempat Bekerja / Perusahaan</label><span class="text-danger">*</span>
-                                                <input type="text" id="nama_perusahaan" class="form-control rounded-3" name="nama_perusahaan" placeholder="Masukkan Nama Tempat Bekerja / Perusahaan">
+                                                <input type="text" id="nama_perusahaan" class="form-control rounded-3" name="nama_perusahaan" placeholder="Masukkan Nama Tempat Bekerja / Perusahaan" value="{{ old('nama_perusahaan') }}">
                                             </div>
                                         </div>
 
@@ -211,7 +211,7 @@
                                                 <select class="form-select rounded-3" id="departemen" name="departemen">
                                                     <option value="" disabled selected>Pilih Departemen Anda</option>
                                                     @foreach ($dataDepartemen as $departemen)
-                                                        <option value="{{ $departemen->departemen_nama }}">{{ $departemen->departemen_nama }}</option>
+                                                        <option value="{{ $departemen->departemen_nama }}" {{ old('departemen') === $departemen->departemen_nama ? 'selected' : '' }}>{{ $departemen->departemen_nama }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -223,7 +223,7 @@
                                                 <select class="form-select rounded-3" id="jabatan" name="jabatan">
                                                     <option value="" disabled selected>Pilih Jabatan Anda</option>
                                                     @foreach ($dataJabatan as $jabatan)
-                                                        <option value="{{ $jabatan->jabatan_nama }}" data-dept="{{ $jabatan->departement_ref }}">{{ $jabatan->jabatan_nama }}</option>
+                                                        <option value="{{ $jabatan->jabatan_nama }}" {{ old('jabatan') === $jabatan->jabatan_nama ? 'selected' : '' }} data-dept="{{ $jabatan->departement_ref }}">{{ $jabatan->jabatan_nama }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -232,35 +232,35 @@
                                         <div class="col-lg-10">
                                             <div class="mb-3">
                                                 <label for="alamat_perusahaan" class="form-label">Alamat Tempat Bekerja / Perusahaan</label><span class="text-danger">*</span>
-                                                <input type="text" id="alamat_perusahaan" class="form-control rounded-3" name="alamat_perusahaan" placeholder="Masukkan Alamat Tempat Bekerja / Perusahaan">
+                                                <input type="text" id="alamat_perusahaan" class="form-control rounded-3" name="alamat_perusahaan" placeholder="Masukkan Alamat Tempat Bekerja / Perusahaan" value="{{ old('alamat_perusahaan') }}">
                                             </div>
                                         </div>
 
                                         <div class="col-lg-2">
                                             <div class="mb-3">
                                                 <label for="kode_pos_perusahaan" class="form-label">Kode Pos</label><span class="text-danger">*</span>
-                                                <input type="number" id="kode_pos_perusahaan" class="form-control rounded-3" name="kode_pos_perusahaan" placeholder="Masukkan Kode Pos Alamat Tempat Bekerja / Perusahaan">
+                                                <input type="number" id="kode_pos_perusahaan" class="form-control rounded-3" name="kode_pos_perusahaan" placeholder="Masukkan Kode Pos Alamat Tempat Bekerja / Perusahaan" value="{{ old('kode_pos_perusahaan') }}">
                                             </div>
                                         </div>
 
                                         <div class="col-lg-4">
                                             <div class="mb-3">
                                                 <label for="email_perusahaan" class="form-label">Email</label><span class="text-danger">*</span>
-                                                <input type="email" class="form-control rounded-3" id="email_perusahaan" name="email_perusahaan" placeholder="Masukkan Aalamt Email Perusahaan">
+                                                <input type="email" class="form-control rounded-3" id="email_perusahaan" name="email_perusahaan" placeholder="Masukkan Aalamt Email Perusahaan" value="{{ old('email_perusahaan') }}">
                                             </div>
                                         </div>
 
                                         <div class="col-lg-4">
                                             <div class="mb-3">
                                                 <label for="telp_perusahaan" class="form-label">No. Telp. Tempat Bekerja / Perusahaan</label><span class="text-danger">*</span>
-                                                <input type="number" id="telp_perusahaan" class="form-control rounded-3" name="telp_perusahaan" placeholder="08xxxxxx">
+                                                <input type="number" id="telp_perusahaan" class="form-control rounded-3" name="telp_perusahaan" placeholder="08xxxxxx" value="{{ old('telp_perusahaan') }}">
                                             </div>
                                         </div>
 
                                         <div class="col-lg-4">
                                             <div class="mb-3">
                                                 <label for="fax_perusahaan" class="form-label">No. Fax Tempat Bekerja / Perusahaan</label>
-                                                <input type="number" id="fax_perusahaan" class="form-control rounded-3" name="fax_perusahaan" placeholder="08xxxxxx">
+                                                <input type="number" id="fax_perusahaan" class="form-control rounded-3" name="fax_perusahaan" placeholder="08xxxxxx" value="{{ old('fax_perusahaan') }}">
                                             </div>
                                         </div>
 
@@ -292,7 +292,7 @@
                                         <div class="col-lg-6">
                                             <div class="mb-3">
                                                 <label for="lsp_ref" class="form-label">Lembaga Sertifikasi Kompetensi (LSP)</label><span class="text-danger">*</span>
-                                                <select class="form-select rounded-3" id="lsp_ref" name="lsp_ref">
+                                                <select class="form-select rounded-3" id="lsp_ref" name="lsp_ref" disabled>
                                                     <option value="" disabled selected>Pilih LSP...</option>
                                                 </select>
                                             </div>
@@ -301,7 +301,7 @@
                                         <div class="col-lg-6">
                                             <div class="mb-3">
                                                 <label for="skema_asesmen" class="form-label">Skema Sertifikasi Kompetensi</label><span class="text-danger">*</span>
-                                                <select class="form-select rounded-3" id="skema_asesmen" name="skema_asesmen">
+                                                <select class="form-select rounded-3" id="skema_asesmen" name="skema_asesmen" disabled>
                                                     <option value="" disabled selected>Pilih Skema Sertifikasi Kompetensi</option>
                                                 </select>
                                             </div>
@@ -310,7 +310,7 @@
                                         <div class="col-lg-6">
                                             <div class="mb-3">
                                                 <label for="tuk_ref" class="form-label">Tempat Uji Kompetensi (TUK)</label><span class="text-danger">*</span>
-                                                <select class="form-select rounded-3" id="tuk_ref" name="tuk_ref">
+                                                <select class="form-select rounded-3" id="tuk_ref" name="tuk_ref" disabled>
                                                     <option value="" disabled selected>Pilih Tempat Uji Kompetensi (TUK)</option>
                                                 </select>
                                             </div>
@@ -348,41 +348,12 @@
     <script src="{{ asset('js/jquery-3.6.0.min.js') }}"></script>
     <script src="{{ asset('js/select2.min.js') }}"></script>
 
-
-    {{-- <script>
-        document.getElementById('kegiatan_ref').addEventListener('change', function() {
-            const kegiatanRef = this.value;
-            const lspSelect = document.getElementById('lsp_ref');
-
-            lspSelect.innerHTML = '<option value="">Loading...</option>';
-            lspSelect.disabled = true;
-
-            fetch(`/ajax/lsp-by-kegiatan/${kegiatanRef}`)
-                .then(res => res.json())
-                .then(data => {
-                    let options = '<option value="" disabled selected>Pilih LSP</option>';
-
-                    data.forEach(item => {
-                        options += `
-                    <option value="${item.lsp_ref}">
-                        ${item.lsp_nama} (Kuota: ${item.kuota_lsp})
-                    </option>
-                `;
-                    });
-
-                    lspSelect.innerHTML = options;
-                    lspSelect.disabled = false;
-                });
-        });
-    </script> --}}
-
     <script>
         const kegiatanSelect = document.getElementById('kegiatan_ref');
         const lspSelect = document.getElementById('lsp_ref');
         const skemaSelect = document.getElementById('skema_asesmen');
         const tglAsesmen = document.getElementById('tgl_asesmen');
         const TempatUjiKompetensi = document.getElementById('tuk_ref');
-
 
         function formatTanggalIndo(datetime) {
             const date = new Date(datetime.replace(' ', 'T'));
@@ -404,18 +375,20 @@
             skemaSelect.innerHTML = '<option value="">Pilih LSP dahulu..</option>';
             skemaSelect.disabled = true;
 
-            // reset jadwal (INI YANG KURANG ❌)
+            // reset jadwal 
             tglAsesmen.innerHTML = '<option value="">Pilih LSP dahulu..</option>';
             tglAsesmen.disabled = true;
+
+            // reset jadwal 
+            TempatUjiKompetensi.innerHTML = '<option value="">Pilih LSP dahulu..</option>';
+            TempatUjiKompetensi.disabled = true;
 
             fetch(`/ajax/lsp-by-kegiatan/${this.value}`)
                 .then(res => res.json())
                 .then(data => {
                     let opt = '<option value="" disabled selected>Pilih LSP</option>';
                     data.forEach(item => {
-                        opt += `<option value="${item.lsp_ref}">
-                    ${item.lsp_nama} (Kuota: ${item.kuota_lsp})
-                </option>`;
+                        opt += `<option value="${item.lsp_ref}">${item.lsp_nama} (Kuota: ${item.kuota_lsp})</option>`;
                     });
                     lspSelect.innerHTML = opt;
                     lspSelect.disabled = false;
@@ -440,7 +413,7 @@
 
         });
 
-        // Get Data Jdawal Asesmen pada saat LSP Dipilih
+        // Get Data Jadwal Asesmen pada saat LSP Dipilih
         lspSelect.addEventListener('change', function() {
             tglAsesmen.innerHTML = '<option>Loading...</option>';
             tglAsesmen.disabled = true;
@@ -450,14 +423,15 @@
                 .then(data => {
                     let opt = '<option value="" disabled selected>Pilih Jadwal Sertifikasi</option>';
                     data.forEach(item => {
-                        opt += `<option value="${item.mulai_asesmen}">${formatTanggalIndo(item.mulai_asesmen)}</option>`;
+                        // console.table(item);
+                        opt += `<option value="${item.ref}">${formatTanggalIndo(item.mulai_asesmen)}</option>`;
                     });
                     tglAsesmen.innerHTML = opt;
                     tglAsesmen.disabled = false;
                 });
         });
 
-        // Get Data Jdawal Asesmen pada saat LSP Dipilih
+        // Get Data TUK pada saat LSP Dipilih
         lspSelect.addEventListener('change', function() {
             TempatUjiKompetensi.innerHTML = '<option>Loading...</option>';
             TempatUjiKompetensi.disabled = true;
@@ -472,8 +446,6 @@
                     } else {
                         opt += `'<option value="" disabled>Tidak ada TUK tersedia</option>`;
                     }
-
-
 
                     TempatUjiKompetensi.innerHTML = opt;
                     TempatUjiKompetensi.disabled = false;

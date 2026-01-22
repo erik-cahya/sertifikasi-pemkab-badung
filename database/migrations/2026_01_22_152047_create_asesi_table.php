@@ -16,7 +16,9 @@ return new class extends Migration
             $table->foreignUlid('kegiatan_ref')->references('ref')->on('kegiatan')->cascadeOnDelete();
             $table->foreignUlid('lsp_ref')->references('ref')->on('lsp')->cascadeOnDelete();
             $table->foreignUlid('tuk_ref')->references('ref')->on('tuk')->cascadeOnDelete();
-            $table->dateTime('tgl_asesmen');
+            $table->foreignUlid('tgl_asesmen')->references('ref')->on('kegiatan_jadwal')->cascadeOnDelete();
+
+            // $table->dateTime('tgl_asesmen');
             $table->string('skema_asesmen');
 
             $table->string('nama_lengkap');

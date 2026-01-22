@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AsesiModel;
 use App\Models\KegiatanDetailModel;
 use App\Models\KegiatanJadwalModel;
 use App\Models\KegiatanLSPModel;
@@ -158,7 +159,7 @@ class KegiatanController extends Controller
             }
         });
 
-        return redirect('/kegiatan/create#add_lsp')
+        return redirect('/kegiatan')
             ->with('flashData', [
                 'title' => 'Tambah Data Success',
                 'message' => 'Kegiatan Baru Berhasil Ditambahkan',
@@ -177,23 +178,28 @@ class KegiatanController extends Controller
                 'kegiatanLsp.lsp',           // detail kuota + LSP
                 'kegiatanLsp.jadwal',
                 'skemaPerLsp.lsp',        // total skema per LSP
-                'kuotaPerLsp.lsp'      // total kuota per LSP
+                'kuotaPerLsp.lsp',      // total kuota per LSP
 
             ])->withSum(
                 'kegiatanLsp as total_peserta',
-                'kuota_lsp'
+                'kuota_lsp',
             )->withCount('skemas')        // total skema kegiatan
             ->firstOrFail();
 
 
         // dd($data['dataKegiatan']);
-        // dd($data['dataKegiatan']->kegiatanLsp->groupBy('lsp_ref'));
+
 
         $data['skemaPerLsp'] = $data['dataKegiatan']->skemaPerLsp->keyBy('lsp_ref'); // Mengelompokkan skema per LSP berdasarkan lsp_ref
         $data['jadwalKegiatan'] = $data['dataKegiatan']->kegiatanLsp->groupBy('lsp_ref'); // Mengelompokkan jadwal kegiatan berdasarkan lsp_ref
         $data['dataSkema'] = $data['dataKegiatan']->skemas->groupBy('lsp_ref'); // Mengelompokkan data skema berdasarkan lsp_ref
 
-        // dd($data['jadwalKegiatan']);
+        $data['dataAsesi'] = $data['dataKegiatan']->asesi->groupBy('tgl_asesmen');
+
+        $data['dataAsesiByLsp'] = AsesiModel::where('kegiatan_ref', $id)
+            ->get()
+            ->groupBy('lsp_ref');
+
 
         return view('admin-panel.kegiatan.show', $data);
     }

@@ -4,7 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 
 class KegiatanModel extends Model
 {
@@ -78,8 +80,17 @@ class KegiatanModel extends Model
             KegiatanLSPModel::class,
             'kegiatan_ref',
             'ref'
-        )
-            ->selectRaw('kegiatan_ref, lsp_ref, SUM(kuota_lsp) as total_kuota')
+        )->selectRaw('kegiatan_ref, lsp_ref, SUM(kuota_lsp) as total_kuota')
             ->groupBy('kegiatan_ref', 'lsp_ref');
+    }
+
+
+    public function asesi(): HasMany
+    {
+        return $this->hasMany(
+            AsesiModel::class,
+            'kegiatan_ref',
+            'ref'
+        );
     }
 }

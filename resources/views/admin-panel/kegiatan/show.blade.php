@@ -41,13 +41,14 @@
                         <div class="d-flex align-items-center justify-content-between">
                             <div class="">
                                 <p class="text-muted fw-semibold fs-16 mb-1">{{ $dataKegiatan->nama_kegiatan }}</p>
+
                                 <p class="text-muted">
                                     <small>Durasi Kegiatan : {{ \Carbon\Carbon::parse($dataKegiatan->mulai_kegiatan)->locale('id')->translatedFormat('d F Y') }} -\s/d {{ \Carbon\Carbon::parse($dataKegiatan->selesai_kegiatan)->locale('id')->translatedFormat('d F Y') }}</small>
                                 </p>
 
                                 <span class="badge {{ $dataKegiatan->status == 1 ? 'bg-success' : 'bg-danger' }} rounded-pill px-2 py-1">Status : {{ $dataKegiatan->status == 1 ? 'Aktif' : 'Tidak Aktif' }}</span>
                                 <span class="badge bg-info rounded-pill px-2 py-1">{{ $dataKegiatan->kegiatanLsp->pluck('lsp')->unique('ref')->count() }} LSP</span>
-                                <span class="badge bg-primary rounded-pill px-2 py-1">13/{{ $dataKegiatan->total_peserta }} Calon Asesi</span>
+                                <span class="badge bg-primary rounded-pill px-2 py-1">{{ $dataKegiatan->asesi_count }}/{{ $dataKegiatan->total_peserta }} Calon Asesi</span>
 
                             </div>
                             {{-- <div class="avatar-sm mb-4">
@@ -138,8 +139,8 @@
                             <tbody id="dataPeserta">
                                 {{-- <tbody> --}}
                                 @foreach ($dataKegiatan->kegiatanLsp as $kegiatan)
-                                    {{-- {{ dd($kegiatan->lsp) }} --}}
                                     <!-- ROW UTAMA -->
+                                    {{-- {{ dd() }} --}}
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $kegiatan->lsp->lsp_nama }}</td>
@@ -151,7 +152,7 @@
                                                 </span>
                                             @endforeach
                                         </td>
-                                        <td>{{ $kegiatan->kuota_lsp ?? 0 }} Peserta</td>
+                                        <td>{{ $kegiatan->kuota_lsp ?? 0 }} / {{ ($dataAsesiByLsp[$kegiatan->lsp->ref] ?? collect())->count() }} Peserta</td>
                                         <td>
                                             <button class="btn btn-link text-decoration-none fs-12 p-0" data-bs-toggle="collapse" data-bs-target="#jadwal-{{ $kegiatan->ref }}" aria-expanded="false" aria-controls="jadwal-{{ $kegiatan->ref }}">
                                                 Lihat Detail
@@ -181,10 +182,10 @@
                                                         <tbody id="detailJadwal-{{ $kegiatan->ref }}">
                                                             @foreach ($jadwalKegiatan[$kegiatan->lsp->ref] as $skema)
                                                                 @foreach ($skema->jadwal as $jadwal)
-                                                                    <tr>
+                                                                    <tr class="{{ count($dataAsesi[$jadwal->ref] ?? []) >= 1 ? 'bg-light' : '' }}">
                                                                         <td>{{ $loop->iteration }}</td>
-                                                                        <td>30 Peserta</td>
-                                                                        <td>{{ \Carbon\Carbon::parse($jadwal->mulai_asesmen)->locale('id')->translatedFormat('l, d F Y') }}</td>
+                                                                        <td> {{ count($dataAsesi[$jadwal->ref] ?? []) }} Peserta</td>
+                                                                        <td class="{{ count($dataAsesi[$jadwal->ref] ?? []) >= 1 ? 'fw-bold' : '' }}">{{ \Carbon\Carbon::parse($jadwal->mulai_asesmen)->locale('id')->translatedFormat('l, d F Y') }}</td>
                                                                         <td class="d-flex gap-2">
                                                                             <button class="btn btn-link text-decoration-none fs-12 p-0" data-bs-toggle="collapse" data-bs-target="#asesi_list-{{ $jadwal->ref }}" aria-expanded="false" aria-controls="asesi_list-{{ $jadwal->ref }}">
                                                                                 Lihat Detail
@@ -210,46 +211,19 @@
                                                                                             </tr>
                                                                                         </thead>
                                                                                         <tbody>
-                                                                                            <tr>
-                                                                                                <td>1</td>
-                                                                                                <td>30 Peserta</td>
-                                                                                                <td>20 Januari 2024</td>
-                                                                                                <td class="d-flex gap-2">
-                                                                                                    <button class="btn btn-link text-decoration-none fs-12 p-0">
-                                                                                                        Download Berkas
-                                                                                                    </button>
-                                                                                                </td>
-                                                                                            </tr>
-                                                                                            <tr>
-                                                                                                <td>1</td>
-                                                                                                <td>30 Peserta</td>
-                                                                                                <td>20 Januari 2024</td>
-                                                                                                <td class="d-flex gap-2">
-                                                                                                    <button class="btn btn-link text-decoration-none fs-12 p-0">
-                                                                                                        Download Berkas
-                                                                                                    </button>
-                                                                                                </td>
-                                                                                            </tr>
-                                                                                            <tr>
-                                                                                                <td>1</td>
-                                                                                                <td>30 Peserta</td>
-                                                                                                <td>20 Januari 2024</td>
-                                                                                                <td class="d-flex gap-2">
-                                                                                                    <button class="btn btn-link text-decoration-none fs-12 p-0">
-                                                                                                        Download Berkas
-                                                                                                    </button>
-                                                                                                </td>
-                                                                                            </tr>
-                                                                                            <tr>
-                                                                                                <td>1</td>
-                                                                                                <td>30 Peserta</td>
-                                                                                                <td>20 Januari 2024</td>
-                                                                                                <td class="d-flex gap-2">
-                                                                                                    <button class="btn btn-link text-decoration-none fs-12 p-0">
-                                                                                                        Download Berkas
-                                                                                                    </button>
-                                                                                                </td>
-                                                                                            </tr>
+                                                                                            @foreach ($dataAsesi[$jadwal->ref] ?? [] as $asesi)
+                                                                                                {{-- {{ dd($dataAsesi) }} --}}
+                                                                                                <tr>
+                                                                                                    <td>{{ $loop->iteration }}</td>
+                                                                                                    <td>{{ $asesi->nama_lengkap }}</td>
+                                                                                                    <td>{{ $asesi->tuk_ref }}</td>
+                                                                                                    <td class="d-flex gap-2">
+                                                                                                        <button class="btn btn-link text-decoration-none fs-12 p-0">
+                                                                                                            Download Berkas
+                                                                                                        </button>
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                            @endforeach
 
                                                                                         </tbody>
                                                                                     </table>

@@ -127,14 +127,14 @@ class AsesiController extends Controller
 
     public function store(Request $request)
     {
-        dd($request->all());
+        // dd($request->all());
         // dd(array_keys($request->all()));
 
         $validated = $request->validate([
             'kegiatan_ref' => 'required',
             'lsp_ref' => 'required',
             'tuk_ref' => 'required',
-            'tgl_asesmen' => 'required|date',
+            'tgl_asesmen' => 'required',
             'skema_asesmen' => 'required',
             'nama_lengkap' => 'required',
             'nik' => 'required',
@@ -191,9 +191,6 @@ class AsesiController extends Controller
             'email_perusahaan.required' => 'Email perusahaan tidak boleh kosong',
             'email_perusahaan.email' => 'Format email perusahaan tidak valid',
         ]);
-
-        // dd($request->all());
-
 
         // ================== SIMPAN FILE ==================
         $nik  = $request->nik;

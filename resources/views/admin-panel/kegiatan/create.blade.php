@@ -61,7 +61,7 @@
 
                                     <div class="col-lg-6 mb-3">
                                         <label class="form-label" for="mulai_kegiatan">Tanggal Mulai Kegiatan</label>
-                                        <input type="text" id="mulai_kegiatan" name="mulai_kegiatan" class="form-control single-date @error('mulai_kegiatan', 'create_kegiatan') is-invalid @enderror" value="{{ old('mulai_kegiatan') }}">
+                                        <input type="text" id="mulai_kegiatan" name="mulai_kegiatan" class="form-control single-date @error('mulai_kegiatan', 'create_kegiatan') is-invalid @enderror" value="{{ old('mulai_kegiatan') }}" autocomplete="off">
 
                                         @error('mulai_kegiatan', 'create_kegiatan')
                                             <div class="invalid-feedback" bis_skin_checked="1">
@@ -72,7 +72,7 @@
 
                                     <div class="col-lg-6 mb-3">
                                         <label class="form-label" for="selesai_kegiatan">Tanggal Selesai Kegiatan</label>
-                                        <input type="text" id="selesai_kegiatan" name="selesai_kegiatan" class="form-control single-date @error('selesai_kegiatan', 'create_kegiatan') is-invalid @enderror" value="{{ old('selesai_kegiatan') }}">
+                                        <input type="text" id="selesai_kegiatan" name="selesai_kegiatan" class="form-control single-date @error('selesai_kegiatan', 'create_kegiatan') is-invalid @enderror" value="{{ old('selesai_kegiatan') }}" autocomplete="off">
 
                                         @error('selesai_kegiatan', 'create_kegiatan')
                                             <div class="invalid-feedback" bis_skin_checked="1">
