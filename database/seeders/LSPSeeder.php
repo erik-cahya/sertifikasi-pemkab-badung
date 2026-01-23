@@ -42,7 +42,7 @@ class LSPSeeder extends Seeder
             'name' => 'LSP Teknologi Digital',
             'email' => 'lsptekno@gmail.com',
             'username' => 'lsptekno',
-            'password' => bcrypt('howtoplay123'),
+            'password' => bcrypt('lsptekno'),
             'roles' => strtolower(trim('lsp')),
             'is_active' => 1
         ]);

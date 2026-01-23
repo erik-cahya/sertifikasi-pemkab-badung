@@ -47,11 +47,11 @@
                 </div>
             </li>
 
-            <li class="d-none d-sm-inline-block">
+            {{-- <li class="d-none d-sm-inline-block">
                 <a class="nav-link" data-bs-toggle="offcanvas" href="#theme-settings-offcanvas">
                     <span class="ri-settings-3-line fs-22"></span>
                 </a>
-            </li>
+            </li> --}}
 
             <li class="d-none d-sm-inline-block">
                 <div class="nav-link" id="light-dark-mode">
@@ -63,7 +63,7 @@
                 <a class="nav-link dropdown-toggle arrow-none nav-user" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
                     <span class="account-user-avatar">
                         {{-- <img src="{{ asset('admin') }}/assets/images/users/avatar-1.jpg" alt="user-image" width="32" class="rounded-circle"> --}}
-                        <div class="rounded-circle bg-dinas text-white d-flex align-items-center justify-content-center" style="width:40px;height:40px;">
+                        <div class="rounded-circle bg-dinas d-flex align-items-center justify-content-center text-white" style="width:40px;height:40px;">
                             <i class="bi bi-person-fill fs-3"></i>
                         </div>
                     </span>

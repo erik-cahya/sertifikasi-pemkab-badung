@@ -51,11 +51,6 @@
                                 <span class="badge bg-primary rounded-pill px-2 py-1">{{ $dataKegiatan->asesi_count }}/{{ $dataKegiatan->total_peserta }} Calon Asesi</span>
 
                             </div>
-                            {{-- <div class="avatar-sm mb-4">
-                                <div class="avatar-title bg-info-subtle text-info fs-24 rounded">
-                                    <i class=" ri-information-fill"></i>
-                                </div>
-                            </div> --}}
                         </div>
                         <hr>
                         <div class="d-flex gap-2">
@@ -63,10 +58,6 @@
                                 <button class="btn-sm btn btn-warning" data-bs-toggle="modal" data-bs-target="#editModal-{{ $dataKegiatan->ref }}">
                                     <i class="mdi mdi-pencil"></i> Edit Kegiatan</button>
                             </div>
-
-                            {{-- <div class="d-flex flex-lg-nowrap justify-content-between align-items-end flex-wrap">
-                                <a href="{{ route('kegiatan.add-lsp', $dataKegiatan->ref) }}" class="btn-sm btn btn-success"><i class="mdi mdi-plus"></i> Tambah LSP</a>
-                            </div> --}}
                         </div>
 
                         <!-- Edit Data Modal -->
@@ -125,7 +116,7 @@
                     <h5 class="card-header bg-light-subtle">Data Peserta</h5>
                     <div class="card-body" bis_skin_checked="1">
 
-                        <table class="table-sm table-bordered fs-12 w-100 table">
+                        <table class="table-sm table-bordered w-100 table">
                             <thead>
                                 <tr>
                                     <th>No</th>
@@ -137,10 +128,7 @@
                             </thead>
 
                             <tbody id="dataPeserta">
-                                {{-- <tbody> --}}
                                 @foreach ($dataKegiatan->kegiatanLsp as $kegiatan)
-                                    <!-- ROW UTAMA -->
-                                    {{-- {{ dd() }} --}}
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $kegiatan->lsp->lsp_nama }}</td>
@@ -160,7 +148,6 @@
                                         </td>
                                     </tr>
 
-                                    <!-- ROW DETAIL -->
                                     <tr class="bg-light collapse" id="jadwal-{{ $kegiatan->ref }}" data-bs-parent="#dataPeserta">
 
                                         <td colspan="5" class="p-1">
@@ -174,7 +161,7 @@
                                                         <thead>
                                                             <tr>
                                                                 <th>No</th>
-                                                                <th>Peserta Terdaftar</th>
+                                                                <th>Jumlah Peserta Terdaftar</th>
                                                                 <th>Tanggal Asesmen</th>
                                                                 <th>Action</th>
                                                             </tr>
@@ -204,6 +191,7 @@
                                                                                     <table class="table-sm table-bordered table" style="font-size: 12px">
                                                                                         <thead>
                                                                                             <tr>
+                                                                                                <th>No</th>
                                                                                                 <th>Nama Asesi</th>
                                                                                                 <th>Skema Dipilih</th>
                                                                                                 <th>Lokasi TUK</th>
@@ -212,11 +200,12 @@
                                                                                         </thead>
                                                                                         <tbody>
                                                                                             @foreach ($dataAsesi[$jadwal->ref] ?? [] as $asesi)
-                                                                                                {{-- {{ dd($dataAsesi) }} --}}
+                                                                                                {{-- {{ dd($asesi) }} --}}
                                                                                                 <tr>
                                                                                                     <td>{{ $loop->iteration }}</td>
                                                                                                     <td>{{ $asesi->nama_lengkap }}</td>
-                                                                                                    <td>{{ $asesi->tuk_ref }}</td>
+                                                                                                    <td>{{ $asesi->skema->skema_judul }}</td>
+                                                                                                    <td>{{ $asesi->tuk->tuk_nama }}</td>
                                                                                                     <td class="d-flex gap-2">
                                                                                                         <button class="btn btn-link text-decoration-none fs-12 p-0">
                                                                                                             Download Berkas
@@ -236,57 +225,17 @@
                                                             @endforeach
                                                         </tbody>
                                                     </table>
-
                                                 </div>
                                             </div>
-
                                         </td>
-
                                     </tr>
                                 @endforeach
                             </tbody>
                         </table>
-
-                    </div> <!-- end card-body-->
-                </div> <!-- end card-->
+                    </div>
+                </div>
             </div>
         </div>
-
-        {{-- <div class="row">
-            <div class="col-12">
-
-            </div>
-
-            <div class="row">
-                <div class="col-xl-6">
-                    <div class="card-body">
-                        <div class="accordion accordion-flush" id="accordionFlushExample">
-
-                            <div class="accordion-item">
-                                <h2 class="accordion-header">
-                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
-                                        Accordion Item #2
-                                    </button>
-                                </h2>
-                                <div id="flush-collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-                                    <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the <code>.accordion-flush</code> class. This is the second item's accordion body. Let's imagine this being filled with some actual content.</div>
-                                </div>
-                            </div>
-                            <div class="accordion-item">
-                                <h2 class="accordion-header">
-                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
-                                        Accordion Item #3
-                                    </button>
-                                </h2>
-                                <div id="flush-collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-                                    <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the <code>.accordion-flush</code> class. This is the third item's accordion body. Nothing more exciting happening here in terms of content, but just filling up the space to make it look, at least at first glance, a bit more representative of how this would look in a real-world application.</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div> <!-- end card-body-->
-                </div> <!-- end card-->
-            </div> <!-- end col-->
-        </div> --}}
     </div>
 @endsection
 @push('script')

@@ -39,4 +39,9 @@ class AsesiModel extends Model
     {
         return $this->belongsTo(TUKModel::class, 'tuk_ref', 'ref');
     }
+
+    public function skema()
+    {
+        return $this->belongsTo(SkemaModel::class, 'skema_asesmen', 'ref');
+    }
 }

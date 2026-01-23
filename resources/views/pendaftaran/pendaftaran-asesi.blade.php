@@ -2,15 +2,15 @@
 
 @section('content')
     <!-- Simple form -->
-    <div class="container mt-2 mb-2">
+    <div class="container mb-2 mt-2">
         <div class="content">
             <!-- Start Content-->
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-12">
-                        <div class="card shadow-lg border-0 rounded-4">
+                        <div class="card rounded-4 border-0 shadow-lg">
                             <div class="card-header rounded-top-4">
-                                <h4 class="card-title mb-3 fw-bold">FORMULIR PENDAFTARAN CALON ASESI</h4>
+                                <h4 class="card-title fw-bold mb-3">FORMULIR PENDAFTARAN CALON ASESI</h4>
                                 <smal>
                                     Formulir ini digunakan untuk pendaftaran Calon Asesi dalam rangka mengikuti Sertifikasi Profesi Tahun {{ date('Y') }}
                                     <br>
@@ -39,8 +39,8 @@
                             @endif
                             <form action="{{ route('asesi.store') }}" method="POST" enctype="multipart/form-data">
                                 @csrf
-                                <div class="card-header bg-danger text-white px-4 py-2 rounded-top">
-                                    <h5 class="card-title mb-1 fw-bold">A. DATA PRIBADI</h5>
+                                <div class="card-header bg-danger rounded-top px-4 py-2 text-white">
+                                    <h5 class="card-title fw-bold mb-1">A. DATA PRIBADI</h5>
                                     <small class="opacity-75">
                                         Isilah formulir di bawah ini dengan data pribadi yang benar dan sesuai dengan dokumen resmi.
                                     </small>
@@ -78,7 +78,7 @@
                                         <div class="col-lg-6">
                                             <div class="mb-3">
                                                 <label for="jenis_kelamin" class="form-label">Jenis Kelamin</label><span class="text-danger">*</span>
-                                                <select class="form-select rounded-3 @error('jenis_kelamin') is-invalid @enderror" id="jenis_kelamin" name="jenis_kelamin">
+                                                <select class="rounded-3 @error('jenis_kelamin') is-invalid @enderror form-select" id="jenis_kelamin" name="jenis_kelamin">
                                                     <option value="" disabled selected>Pilih Jenis Kelamin</option>
                                                     <option value="Laki-laki" {{ old('jenis_kelamin') == 'Laki-laki' ? 'selected' : '' }}>Laki-laki</option>
                                                     <option value="Perempuan" {{ old('jenis_kelamin') == 'Perempuan' ? 'selected' : '' }}>Perempuan</option>
@@ -89,7 +89,7 @@
                                         <div class="col-lg-6">
                                             <div class="mb-3">
                                                 <label for="kewarganegaraan" class="form-label">Kewarganegaraan</label><span class="text-danger">*</span>
-                                                <select class="form-select rounded-3 @error('kewarganegaraan') is-invalid @enderror" id="kewarganegaraan" name="kewarganegaraan">
+                                                <select class="rounded-3 @error('kewarganegaraan') is-invalid @enderror form-select" id="kewarganegaraan" name="kewarganegaraan">
                                                     <option value="" disabled selected>Pilih Kewarganegaraan</option>
                                                     <option value="WNI" {{ old('kewarganegaraan') == 'WNI' ? 'selected' : '' }}>WNI</option>
                                                     <option value="WNA" {{ old('kewarganegaraan') == 'WNA' ? 'selected' : '' }}>WNA</option>
@@ -142,7 +142,7 @@
                                         <div class="col-lg-6">
                                             <div class="mb-3">
                                                 <label for="pendidikan_terakhir" class="form-label">Pendidikan Terakhir</label><span class="text-danger">*</span>
-                                                <select class="form-select rounded-3 @error('pendidikan_terakhir') is-invalid @enderror" id="pendidikan_terakhir" name="pendidikan_terakhir">
+                                                <select class="rounded-3 @error('pendidikan_terakhir') is-invalid @enderror form-select" id="pendidikan_terakhir" name="pendidikan_terakhir">
                                                     <option value="" disabled selected>Pilih Pendidikan Terakhir</option>
                                                     <option value="SD" {{ old('pendidikan_terakhir') === 'SD' ? 'selected' : '' }}>SD</option>
                                                     <option value="SMP" {{ old('pendidikan_terakhir') === 'SMP' ? 'selected' : '' }}>SMP</option>
@@ -189,8 +189,8 @@
                                     </div> <!-- end row-->
                                 </div> <!-- end card-body -->
 
-                                <div class="card-header bg-danger text-white px-4 py-2 rounded-top">
-                                    <h5 class="card-title mb-1 fw-bold">B. DATA PEKERJAAN</h5>
+                                <div class="card-header bg-danger rounded-top px-4 py-2 text-white">
+                                    <h5 class="card-title fw-bold mb-1">B. DATA PEKERJAAN</h5>
                                     <small class="opacity-75">
                                         Isilah formulir di bawah ini dengan data pekerjaan yang sedang dijalani saat ini.
                                     </small>
@@ -208,7 +208,7 @@
                                         <div class="col-lg-6">
                                             <div class="mb-3">
                                                 <label for="departemen" class="form-label">Departemen</label><span class="text-danger">*</span>
-                                                <select class="form-select rounded-3 @error('departemen') is-invalid @enderror" id="departemen" name="departemen">
+                                                <select class="rounded-3 @error('departemen') is-invalid @enderror form-select" id="departemen" name="departemen">
                                                     <option value="" disabled selected>Pilih Departemen Anda</option>
                                                     @foreach ($dataDepartemen as $departemen)
                                                         <option value="{{ $departemen->departemen_nama }}" {{ old('departemen') === $departemen->departemen_nama ? 'selected' : '' }}>{{ $departemen->departemen_nama }}</option>
@@ -220,7 +220,7 @@
                                         <div class="col-lg-6">
                                             <div class="mb-3">
                                                 <label for="jabatan" class="form-label">Jabatan</label><span class="text-danger">*</span>
-                                                <select class="form-select rounded-3 @error('jabatan') is-invalid @enderror" id="jabatan" name="jabatan">
+                                                <select class="rounded-3 @error('jabatan') is-invalid @enderror form-select" id="jabatan" name="jabatan">
                                                     <option value="" disabled selected>Pilih Jabatan Anda</option>
                                                     @foreach ($dataJabatan as $jabatan)
                                                         <option value="{{ $jabatan->jabatan_nama }}" {{ old('jabatan') === $jabatan->jabatan_nama ? 'selected' : '' }} data-dept="{{ $jabatan->departement_ref }}">{{ $jabatan->jabatan_nama }}</option>
@@ -267,8 +267,8 @@
                                     </div> <!-- end row #2-->
                                 </div> <!-- end card-body #2-->
 
-                                <div class="card-header bg-danger text-white px-4 py-2 rounded-top">
-                                    <h5 class="card-title mb-1 fw-bold">C. DAFTAR UJI</h5>
+                                <div class="card-header bg-danger rounded-top px-4 py-2 text-white">
+                                    <h5 class="card-title fw-bold mb-1">C. DAFTAR UJI</h5>
                                     <small class="opacity-75">
                                         Isilah formulir di bawah ini untuk memilih Lembaga Sertifikasi Profesi (LSP), Tempat Uji Kompetensi (TUK), dan jadwal pelaksanaan uji sertifikasi yang akan diikuti.
                                     </small>
@@ -280,7 +280,7 @@
                                             <div class="mb-3">
                                                 <label for="kegiatan_ref" class="form-label">Kegiatan Sertifikasi</label><span class="text-danger">*</span>
                                                 {{-- <input type="text" id="simpleinput" class="form-control rounded-3" name="kegiatan" disabled> --}}
-                                                <select class="form-select rounded-3" id="kegiatan_ref" name="kegiatan_ref">
+                                                <select class="rounded-3 form-select" id="kegiatan_ref" name="kegiatan_ref">
                                                     <option value="" selected>Pilih Kegiatan</option>
                                                     @foreach ($dataKegiatan as $kegiatan)
                                                         <option value="{{ $kegiatan->ref }}">{{ $kegiatan->nama_kegiatan }}</option>
@@ -292,7 +292,7 @@
                                         <div class="col-lg-6">
                                             <div class="mb-3">
                                                 <label for="lsp_ref" class="form-label">Lembaga Sertifikasi Kompetensi (LSP)</label><span class="text-danger">*</span>
-                                                <select class="form-select rounded-3" id="lsp_ref" name="lsp_ref" disabled>
+                                                <select class="rounded-3 form-select" id="lsp_ref" name="lsp_ref" disabled>
                                                     <option value="" disabled selected>Pilih LSP...</option>
                                                 </select>
                                             </div>
@@ -301,7 +301,7 @@
                                         <div class="col-lg-6">
                                             <div class="mb-3">
                                                 <label for="skema_asesmen" class="form-label">Skema Sertifikasi Kompetensi</label><span class="text-danger">*</span>
-                                                <select class="form-select rounded-3" id="skema_asesmen" name="skema_asesmen" disabled>
+                                                <select class="rounded-3 form-select" id="skema_asesmen" name="skema_asesmen" disabled>
                                                     <option value="" disabled selected>Pilih Skema Sertifikasi Kompetensi</option>
                                                 </select>
                                             </div>
@@ -310,7 +310,7 @@
                                         <div class="col-lg-6">
                                             <div class="mb-3">
                                                 <label for="tuk_ref" class="form-label">Tempat Uji Kompetensi (TUK)</label><span class="text-danger">*</span>
-                                                <select class="form-select rounded-3" id="tuk_ref" name="tuk_ref" disabled>
+                                                <select class="rounded-3 form-select" id="tuk_ref" name="tuk_ref" disabled>
                                                     <option value="" disabled selected>Pilih Tempat Uji Kompetensi (TUK)</option>
                                                 </select>
                                             </div>
@@ -319,7 +319,7 @@
                                         <div class="col-lg-6">
                                             <div class="mb-3">
                                                 <label for="tgl_asesmen" class="form-label">Tanggal Pelaksanaan Uji Kompetensi</label><span class="text-danger">*</span>
-                                                <select class="form-select rounded-3" id="tgl_asesmen" name="tgl_asesmen" disabled>
+                                                <select class="rounded-3 form-select" id="tgl_asesmen" name="tgl_asesmen" disabled>
                                                     <option value="" disabled selected>Pilih Jadwal Uji Kompetensi</option>
                                                 </select>
                                             </div>

@@ -51,13 +51,13 @@
                         </li>
 
                         {{-- @if (Auth::user()->roles === 'lsp') --}}
-                        {{-- @role('lsp') --}}
-                        <li class="side-nav-item {{ request()->routeIs('skema.create') ? 'menuitem-active' : '' }}">
-                            <a class="side-nav-link {{ request()->routeIs('skema.create') ? 'active' : '' }}" href="{{ route('skema.create') }}">
-                                Tambah Skema Sertifikasi
-                            </a>
-                        </li>
-                        {{-- @endrole --}}
+                        @role('lsp')
+                            <li class="side-nav-item {{ request()->routeIs('skema.create') ? 'menuitem-active' : '' }}">
+                                <a class="side-nav-link {{ request()->routeIs('skema.create') ? 'active' : '' }}" href="{{ route('skema.create') }}">
+                                    Tambah Skema Sertifikasi
+                                </a>
+                            </li>
+                        @endrole
 
                     </ul>
                 </div>
@@ -107,7 +107,7 @@
                 </div>
             </li>
 
-             <li class="side-nav-item {{ request()->routeIs('asesiAdmin.index') ? 'menuitem-active' : '' }}">
+            <li class="side-nav-item {{ request()->routeIs('asesiAdmin.index') ? 'menuitem-active' : '' }}">
                 <a data-bs-toggle="collapse" href="#asesiMenu" aria-expanded="false" aria-controls="asesiMenu" class="side-nav-link">
                     <i class="ri-contacts-line"></i>
                     <span> Calon Asesi </span>

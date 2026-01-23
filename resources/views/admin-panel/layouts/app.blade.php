@@ -41,7 +41,7 @@
     </div>
 
     <!-- Theme Settings -->
-    @include('admin-panel.layouts.setting')
+    {{-- @include('admin-panel.layouts.setting') --}}
 
     <!-- Vendor js -->
     <script src="{{ asset('admin') }}/assets/js/vendor.min.js"></script>

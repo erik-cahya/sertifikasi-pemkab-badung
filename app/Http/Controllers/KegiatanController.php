@@ -179,26 +179,26 @@ class KegiatanController extends Controller
                 'kegiatanLsp.jadwal',
                 'skemaPerLsp.lsp',        // total skema per LSP
                 'kuotaPerLsp.lsp',      // total kuota per LSP
+                'asesi.tuk',
+                'asesi.skema'
 
             ])->withSum(
                 'kegiatanLsp as total_peserta',
                 'kuota_lsp',
-            )->withCount('skemas')        // total skema kegiatan
+            )->withCount('skemas', 'asesi')        // total skema kegiatan
             ->firstOrFail();
 
 
         // dd($data['dataKegiatan']);
-
 
         $data['skemaPerLsp'] = $data['dataKegiatan']->skemaPerLsp->keyBy('lsp_ref'); // Mengelompokkan skema per LSP berdasarkan lsp_ref
         $data['jadwalKegiatan'] = $data['dataKegiatan']->kegiatanLsp->groupBy('lsp_ref'); // Mengelompokkan jadwal kegiatan berdasarkan lsp_ref
         $data['dataSkema'] = $data['dataKegiatan']->skemas->groupBy('lsp_ref'); // Mengelompokkan data skema berdasarkan lsp_ref
 
         $data['dataAsesi'] = $data['dataKegiatan']->asesi->groupBy('tgl_asesmen');
+        // dd($data['dataAsesi']);
 
-        $data['dataAsesiByLsp'] = AsesiModel::where('kegiatan_ref', $id)
-            ->get()
-            ->groupBy('lsp_ref');
+        $data['dataAsesiByLsp'] = AsesiModel::where('kegiatan_ref', $id)->get()->groupBy('lsp_ref');
 
 
         return view('admin-panel.kegiatan.show', $data);
