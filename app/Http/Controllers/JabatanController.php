@@ -11,16 +11,29 @@ use Illuminate\Support\Facades\Validator;
 class JabatanController extends Controller
 {
 
+    public function getJabatanByDepartemen($departemenNama)
+    {
+        $departemenRef = DepartemenModel::where('departemen_nama', $departemenNama)->first();
+        $data = JabatanModel::where('departemen_ref', $departemenRef->ref)
+            ->get()
+            ->map(function ($item) {
+                return [
+                    'jabatan_nama' => $item->jabatan_nama,
+                ];
+            });
+        return response()->json($data);
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
         $query = JabatanModel::join('departemen', 'departemen.ref', '=', 'jabatan.departemen_ref')
-        ->join('users', 'users.ref', '=', 'jabatan.created_by')
-        ->select('jabatan.*','departemen.departemen_nama', 'users.name')
-        ->orderBy('jabatan.created_at', 'desc')
-        ->get();
+            ->join('users', 'users.ref', '=', 'jabatan.created_by')
+            ->select('jabatan.*', 'departemen.departemen_nama', 'users.name')
+            ->orderBy('jabatan.created_at', 'desc')
+            ->get();
 
         $departemen = DepartemenModel::all();
 
@@ -33,27 +46,25 @@ class JabatanController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
-    {
-
-    }
+    public function create() {}
 
     /**
      * Function Create Skema
      */
     public function store(Request $request)
     {
-        $validated = $request->validate([
+        Validator::make($request->all(), [
             'departemen_ref' => 'required',
-            'jabatan_nama' => 'required',
+            'jabatan_nama' => 'required|unique:jabatan,jabatan_nama',
         ], [
             'departemen_ref.required' => 'Departemen tidak boleh kosong',
             'jabatan_nama.required' => 'Jabatan tidak boleh kosong',
-        ]);
+            'jabatan_nama.unique' => 'Jabatan ini sudah ada',
+        ])->validateWithBag('create_jabatan');
 
         JabatanModel::create([
             'departemen_ref' => $request->departemen_ref,
-            'jabatan_nama' => $request->jabatan_nama,
+            'jabatan_nama' => trim($request->jabatan_nama),
             'created_by' => Auth::user()->ref,
         ]);
 
@@ -68,10 +79,7 @@ class JabatanController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
-    {
-
-    }
+    public function show(string $id) {}
 
     /**
      * Show the form for editing the specified resource.
@@ -79,11 +87,11 @@ class JabatanController extends Controller
     public function edit(string $id)
     {
         $query = JabatanModel::join('departemen', 'departemen.ref', '=', 'jabatan.departemen_ref')
-        ->join('users', 'users.ref', '=', 'jabatan.created_by')
-        ->select('jabatan.*','departemen.departemen_nama', 'users.name')
-        ->orderBy('jabatan.created_at', 'desc')
-        ->where('jabatan.ref', $id)
-        ->get();
+            ->join('users', 'users.ref', '=', 'jabatan.created_by')
+            ->select('jabatan.*', 'departemen.departemen_nama', 'users.name')
+            ->orderBy('jabatan.created_at', 'desc')
+            ->where('jabatan.ref', $id)
+            ->get();
 
         $departemen = DepartemenModel::all();
 

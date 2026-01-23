@@ -4,7 +4,6 @@
     <link href="{{ asset('admin') }}/assets/vendor/datatables.net-bs5/css/dataTables.bootstrap5.min.css" rel="stylesheet" type="text/css" />
 @endpush
 @section('content')
-
     <div class="row">
         <div class="col-12">
             <div class="card">
@@ -18,7 +17,7 @@
                             <div class="col-lg-5">
                                 <div class="mb-3">
                                     <label for="example-select" class="form-label">Pilih Departemen</label><span class="text-danger">*</span>
-                                    <select class="form-select rounded-3" id="example-select" name="departemen_ref"  required>
+                                    <select class="rounded-3 form-select" id="example-select" name="departemen_ref" required>
                                         <option value="">Pilih Departemen</option>
                                         @foreach ($dataDepartemen as $departemen)
                                             <option value="{{ $departemen->ref }}">{{ $departemen->departemen_nama }}</option>
@@ -29,8 +28,13 @@
 
                             <div class="col-lg-5">
                                 <div class="mb-3">
-                                    <label for="simpleinput" class="form-label">Nama Jabatan</label><span class="text-danger">*</span>
-                                    <input type="text" id="simpleinput" class="form-control rounded-3" name="jabatan_nama" required placeholder="Masukkan nama jabatan" required>
+                                    <label for="jabatan_nama" class="form-label">Nama Jabatan</label><span class="text-danger">*</span>
+                                    <input type="text" id="jabatan_nama" class="form-control rounded-3 @error('jabatan_nama', 'create_jabatan') is-invalid @enderror" name="jabatan_nama" placeholder="Masukkan nama jabatan" value="{{ old('jabatan_nama') }}">
+                                    @error('jabatan_nama', 'create_jabatan')
+                                        <div class="invalid-feedback" bis_skin_checked="1">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
                                 </div>
                             </div>
 
@@ -54,7 +58,7 @@
                 </div>
                 <div class="card-body">
 
-                    <table id="fixed-columns-datatable" class="table table-striped nowrap row-border order-column w-100">
+                    <table id="fixed-columns-datatable" class="table-striped nowrap row-border order-column w-100 table">
                         <thead>
                             <tr>
                                 <th>Departemen</th>
@@ -70,13 +74,13 @@
                                     <td>{{ $item->jabatan_nama }}</td>
                                     <td>{{ $item->name }} <br> {{ $item->created_at->format('Y-m-d') }}</td>
                                     <td>
-                                         <a href="{{ route('jabatan.edit', $item->ref) }}" class="text-reset fs-16 px-1">
+                                        <a href="{{ route('jabatan.edit', $item->ref) }}" class="text-reset fs-16 px-1">
                                             <button type="button" class="btn btn-sm btn-outline-primary"><i class="ri-pencil-line"></i> Edit</button>
                                         </a>
 
                                         <input type="hidden" class="jabatanID" value="{{ $item->ref }}">
                                         <a href="javascript:void(0)" class="text-reset fs-16 deleteButton px-1" data-nama="{{ $item->jabatan_nama }}">
-                                            <button type="button" class="btn btn-sm btn-outline-danger"><i class=" ri-delete-bin-5-line"></i> Hapus</button>
+                                            <button type="button" class="btn btn-sm btn-outline-danger"><i class="ri-delete-bin-5-line"></i> Hapus</button>
                                         </a>
                                     </td>
                                 </tr>
@@ -89,7 +93,6 @@
             </div> <!-- end card -->
         </div><!-- end col-->
     </div> <!-- end row-->
-
 @endsection
 @push('script')
     <!-- Datatables js -->

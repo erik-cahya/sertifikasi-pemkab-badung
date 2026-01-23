@@ -8,7 +8,7 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-12">
-                        <div class="card rounded-4 border-0 shadow-lg mt-2">
+                        <div class="card rounded-4 mt-2 border-0 shadow-lg">
                             <div class="card-header rounded-top-4">
                                 <h4 class="card-title fw-bold mb-3">FORMULIR PENDAFTARAN CALON ASESI</h4>
                                 <smal>
@@ -28,7 +28,7 @@
                                 </smal>
                             </div>
                             @if ($errors->any())
-                                <div class="alert alert-danger">
+                                <div class="alert alert-danger fs-12">
                                     <strong>DATA GAGAL DISIMPAN!</strong>
                                     <ul class="mb-0 mt-2">
                                         @foreach ($errors->all() as $error)
@@ -53,6 +53,11 @@
                                             <div class="mb-3">
                                                 <label for="nama_lengkap" class="form-label">Nama Lengkap</label><span class="text-danger">*</span>
                                                 <input type="text" id="nama_lengkap" class="form-control rounded-3 @error('nama_lengkap') is-invalid @enderror" name="nama_lengkap" placeholder="Masukkan Nama Lengkap" value="{{ old('nama_lengkap') }}">
+                                                @error('nama_lengkap')
+                                                    <div class="invalid-feedback" bis_skin_checked="1">
+                                                        {{ $message }}
+                                                    </div>
+                                                @enderror
                                             </div>
                                         </div>
 
@@ -60,6 +65,11 @@
                                             <div class="mb-3">
                                                 <label for="nik" class="form-label">No. KTP / NIK / Paspor</label><span class="text-danger">*</span>
                                                 <input type="number" id="nik" class="form-control rounded-3 @error('nik') is-invalid @enderror" name="nik" placeholder="Masukkan No. KTP/NIK/Paspor" value="{{ old('nik') }}">
+                                                @error('nik')
+                                                    <div class="invalid-feedback" bis_skin_checked="1">
+                                                        {{ $message }}
+                                                    </div>
+                                                @enderror
                                             </div>
                                         </div>
 
@@ -67,6 +77,9 @@
                                             <div class="mb-3">
                                                 <label for="tempat_lahir" class="form-label">Tempat Lahir (Sesuai KTP)</label><span class="text-danger">*</span>
                                                 <input type="text" id="tempat_lahir" class="form-control rounded-3 @error('tempat_lahir') is-invalid @enderror" name="tempat_lahir" placeholder="Masukkan Tempat Lahir" value="{{ old('tempat_lahir') }}">
+                                                @error('tempat_lahir')
+                                                    <div class="invalid-feedback" bis_skin_checked="1">{{ $message }}</div>
+                                                @enderror
                                             </div>
                                         </div>
 
@@ -74,6 +87,9 @@
                                             <div class="mb-3">
                                                 <label for="tgl_lahir" class="form-label">Tanggal Lahir</label><span class="text-danger">*</span>
                                                 <input type="date" id="tgl_lahir" class="form-control rounded-3 @error('tgl_lahir') is-invalid @enderror" name="tgl_lahir" value="{{ old('tgl_lahir') }}">
+                                                @error('tgl_lahir')
+                                                    <div class="invalid-feedback" bis_skin_checked="1">{{ $message }}</div>
+                                                @enderror
                                             </div>
                                         </div>
 
@@ -85,6 +101,9 @@
                                                     <option value="Laki-laki" {{ old('jenis_kelamin') == 'Laki-laki' ? 'selected' : '' }}>Laki-laki</option>
                                                     <option value="Perempuan" {{ old('jenis_kelamin') == 'Perempuan' ? 'selected' : '' }}>Perempuan</option>
                                                 </select>
+                                                @error('jenis_kelamin')
+                                                    <div class="invalid-feedback" bis_skin_checked="1">{{ $message }}</div>
+                                                @enderror
                                             </div>
                                         </div>
 
@@ -96,6 +115,9 @@
                                                     <option value="WNI" {{ old('kewarganegaraan') == 'WNI' ? 'selected' : '' }}>WNI</option>
                                                     <option value="WNA" {{ old('kewarganegaraan') == 'WNA' ? 'selected' : '' }}>WNA</option>
                                                 </select>
+                                                @error('kewarganegaraan')
+                                                    <div class="invalid-feedback" bis_skin_checked="1">{{ $message }}</div>
+                                                @enderror
                                             </div>
                                         </div>
 
@@ -103,6 +125,9 @@
                                             <div class="mb-3">
                                                 <label for="alamat" class="form-label">Alamat Rumah</label><span class="text-danger">*</span>
                                                 <input type="text" id="alamat" class="form-control rounded-3 @error('alamat') is-invalid @enderror" name="alamat" placeholder="Masukkan alamat rumah" value="{{ old('alamat') }}">
+                                                @error('alamat')
+                                                    <div class="invalid-feedback" bis_skin_checked="1">{{ $message }}</div>
+                                                @enderror
                                             </div>
                                         </div>
 
@@ -110,6 +135,9 @@
                                             <div class="mb-3">
                                                 <label for="kode_pos" class="form-label">Kode Pos</label><span class="text-danger">*</span>
                                                 <input type="number" id="kode_pos" class="form-control rounded-3 @error('kode_pos') is-invalid @enderror" name="kode_pos" placeholder="Masukkan Kode Pos Alamat Rumah" value="{{ old('kode_pos') }}">
+                                                @error('kode_pos')
+                                                    <div class="invalid-feedback" bis_skin_checked="1">{{ $message }}</div>
+                                                @enderror
                                             </div>
                                         </div>
 
@@ -117,6 +145,9 @@
                                             <div class="mb-3">
                                                 <label for="email" class="form-label">Email</label><span class="text-danger">*</span>
                                                 <input type="email" class="form-control rounded-3 @error('email') is-invalid @enderror" id="email" name="email" placeholder="Masukkan alamat email" value="{{ old('email') }}">
+                                                @error('email')
+                                                    <div class="invalid-feedback" bis_skin_checked="1">{{ $message }}</div>
+                                                @enderror
                                             </div>
                                         </div>
 
@@ -124,6 +155,9 @@
                                             <div class="mb-3">
                                                 <label for="telp_hp" class="form-label">No. Telp. (Hp)</label><span class="text-danger">*</span>
                                                 <input type="number" id="telp_hp" class="form-control rounded-3 @error('telp_hp') is-invalid @enderror" name="telp_hp" placeholder="08xxxxxx" value="{{ old('telp_hp') }}">
+                                                @error('telp_hp')
+                                                    <div class="invalid-feedback" bis_skin_checked="1">{{ $message }}</div>
+                                                @enderror
                                             </div>
                                         </div>
 
@@ -131,6 +165,9 @@
                                             <div class="mb-3">
                                                 <label for="telp_rumah" class="form-label">No. Telp. (Rumah)</label>
                                                 <input type="number" id="telp_rumah" class="form-control rounded-3 @error('telp_rumah') is-invalid @enderror" name="telp_rumah" placeholder="08xxxxxx" value="{{ old('telp_rumah') }}">
+                                                @error('telp_rumah')
+                                                    <div class="invalid-feedback" bis_skin_checked="1">{{ $message }}</div>
+                                                @enderror
                                             </div>
                                         </div>
 
@@ -138,6 +175,9 @@
                                             <div class="mb-3">
                                                 <label for="telp_kantor" class="form-label">No. Telp. (Kantor)</label>
                                                 <input type="number" id="telp_kantor" class="form-control rounded-3 @error('telp_kantor') is-invalid @enderror" name="telp_kantor" placeholder="08xxxxxx" value="{{ old('telp_kantor') }}">
+                                                @error('telp_kantor')
+                                                    <div class="invalid-feedback" bis_skin_checked="1">{{ $message }}</div>
+                                                @enderror
                                             </div>
                                         </div>
 
@@ -157,6 +197,9 @@
                                                     <option value="S2" {{ old('pendidikan_terakhir') === 'S2' ? 'selected' : '' }}>S2</option>
                                                     <option value="S3" {{ old('pendidikan_terakhir') === 'S3' ? 'selected' : '' }}>S3</option>
                                                 </select>
+                                                @error('pendidikan_terakhir')
+                                                    <div class="invalid-feedback" bis_skin_checked="1">{{ $message }}</div>
+                                                @enderror
                                             </div>
                                         </div>
 
@@ -164,6 +207,9 @@
                                             <div class="mb-3">
                                                 <label for="ijazah_file" class="form-label">Ijazah Terakhir</label><span class="text-danger">*</span>
                                                 <input type="file" id="ijazah_file" class="form-control rounded-3 @error('ijazah_file') is-invalid @enderror" name="ijazah_file">
+                                                @error('ijazah_file')
+                                                    <div class="invalid-feedback" bis_skin_checked="1">{{ $message }}</div>
+                                                @enderror
                                             </div>
                                         </div>
 
@@ -171,6 +217,9 @@
                                             <div class="mb-3">
                                                 <label for="sertikom_file" class="form-label">Sertifikat Kompetensi (opsional)</label>
                                                 <input type="file" id="sertikom_file" class="form-control rounded-3 @error('sertikom_file') is-invalid @enderror" name="sertikom_file">
+                                                @error('sertikom_file')
+                                                    <div class="invalid-feedback" bis_skin_checked="1">{{ $message }}</div>
+                                                @enderror
                                             </div>
                                         </div>
 
@@ -178,6 +227,9 @@
                                             <div class="mb-3">
                                                 <label for="keterangan_kerja_file" class="form-label">Surat Keterangan Bekerja</label><span class="text-danger">*</span>
                                                 <input type="file" id="keterangan_kerja_file" class="form-control rounded-3 @error('keterangan_kerja_file') is-invalid @enderror" name="keterangan_kerja_file">
+                                                @error('keterangan_kerja_file')
+                                                    <div class="invalid-feedback" bis_skin_checked="1">{{ $message }}</div>
+                                                @enderror
                                             </div>
                                         </div>
 
@@ -185,6 +237,9 @@
                                             <div class="mb-3">
                                                 <label for="pas_foto_file" class="form-label">Pas Foto (.png / .jpg)</label><span class="text-danger">*</span>
                                                 <input type="file" id="pas_foto_file" class="form-control rounded-3 @error('pas_foto_file') is-invalid @enderror" name="pas_foto_file">
+                                                @error('pas_foto_file')
+                                                    <div class="invalid-feedback" bis_skin_checked="1">{{ $message }}</div>
+                                                @enderror
                                             </div>
                                         </div>
 
@@ -205,6 +260,9 @@
                                             <div class="mb-3">
                                                 <label for="nama_perusahaan" class="form-label">Nama Tempat Bekerja / Perusahaan</label><span class="text-danger">*</span>
                                                 <input type="text" id="nama_perusahaan" class="form-control rounded-3 @error('nama_perusahaan') is-invalid @enderror" name="nama_perusahaan" placeholder="Masukkan Nama Tempat Bekerja / Perusahaan" value="{{ old('nama_perusahaan') }}">
+                                                @error('nama_perusahaan')
+                                                    <div class="invalid-feedback" bis_skin_checked="1">{{ $message }}</div>
+                                                @enderror
                                             </div>
                                         </div>
 
@@ -217,18 +275,21 @@
                                                         <option value="{{ $departemen->departemen_nama }}" {{ old('departemen') === $departemen->departemen_nama ? 'selected' : '' }}>{{ $departemen->departemen_nama }}</option>
                                                     @endforeach
                                                 </select>
+                                                @error('departemen')
+                                                    <div class="invalid-feedback" bis_skin_checked="1">{{ $message }}</div>
+                                                @enderror
                                             </div>
                                         </div>
 
                                         <div class="col-lg-6">
                                             <div class="mb-3">
                                                 <label for="jabatan" class="form-label">Jabatan</label><span class="text-danger">*</span>
-                                                <select class="rounded-3 @error('jabatan') is-invalid @enderror form-select" id="jabatan" name="jabatan">
+                                                <select class="rounded-3 @error('jabatan') is-invalid @enderror form-select" id="jabatan" name="jabatan" disabled>
                                                     <option value="" disabled selected>Pilih Jabatan Anda</option>
-                                                    @foreach ($dataJabatan as $jabatan)
-                                                        <option value="{{ $jabatan->jabatan_nama }}" {{ old('jabatan') === $jabatan->jabatan_nama ? 'selected' : '' }} data-dept="{{ $jabatan->departement_ref }}">{{ $jabatan->jabatan_nama }}</option>
-                                                    @endforeach
                                                 </select>
+                                                @error('jabatan')
+                                                    <div class="invalid-feedback" bis_skin_checked="1">{{ $message }}</div>
+                                                @enderror
                                             </div>
                                         </div>
 
@@ -236,6 +297,9 @@
                                             <div class="mb-3">
                                                 <label for="alamat_perusahaan" class="form-label">Alamat Tempat Bekerja / Perusahaan</label><span class="text-danger">*</span>
                                                 <input type="text" id="alamat_perusahaan" class="form-control rounded-3 @error('alamat_perusahaan') is-invalid @enderror" name="alamat_perusahaan" placeholder="Masukkan Alamat Tempat Bekerja / Perusahaan" value="{{ old('alamat_perusahaan') }}">
+                                                @error('alamat_perusahaan')
+                                                    <div class="invalid-feedback" bis_skin_checked="1">{{ $message }}</div>
+                                                @enderror
                                             </div>
                                         </div>
 
@@ -243,6 +307,9 @@
                                             <div class="mb-3">
                                                 <label for="kode_pos_perusahaan" class="form-label">Kode Pos</label><span class="text-danger">*</span>
                                                 <input type="number" id="kode_pos_perusahaan" class="form-control rounded-3 @error('kode_pos_perusahaan') is-invalid @enderror" name="kode_pos_perusahaan" placeholder="Masukkan Kode Pos Alamat Tempat Bekerja / Perusahaan" value="{{ old('kode_pos_perusahaan') }}">
+                                                @error('kode_pos_perusahaan')
+                                                    <div class="invalid-feedback" bis_skin_checked="1">{{ $message }}</div>
+                                                @enderror
                                             </div>
                                         </div>
 
@@ -250,6 +317,9 @@
                                             <div class="mb-3">
                                                 <label for="email_perusahaan" class="form-label">Email</label><span class="text-danger">*</span>
                                                 <input type="email" class="form-control rounded-3 @error('email_perusahaan') is-invalid @enderror" id="email_perusahaan" name="email_perusahaan" placeholder="Masukkan Aalamt Email Perusahaan" value="{{ old('email_perusahaan') }}">
+                                                @error('email_perusahaan')
+                                                    <div class="invalid-feedback" bis_skin_checked="1">{{ $message }}</div>
+                                                @enderror
                                             </div>
                                         </div>
 
@@ -257,6 +327,9 @@
                                             <div class="mb-3">
                                                 <label for="telp_perusahaan" class="form-label">No. Telp. Tempat Bekerja / Perusahaan</label><span class="text-danger">*</span>
                                                 <input type="number" id="telp_perusahaan" class="form-control rounded-3 @error('telp_perusahaan') is-invalid @enderror" name="telp_perusahaan" placeholder="08xxxxxx" value="{{ old('telp_perusahaan') }}">
+                                                @error('telp_perusahaan')
+                                                    <div class="invalid-feedback" bis_skin_checked="1">{{ $message }}</div>
+                                                @enderror
                                             </div>
                                         </div>
 
@@ -264,6 +337,9 @@
                                             <div class="mb-3">
                                                 <label for="fax_perusahaan" class="form-label">No. Fax Tempat Bekerja / Perusahaan</label>
                                                 <input type="number" id="fax_perusahaan" class="form-control rounded-3 @error('fax_perusahaan') is-invalid @enderror" name="fax_perusahaan" placeholder="08xxxxxx" value="{{ old('fax_perusahaan') }}">
+                                                @error('fax_perusahaan')
+                                                    <div class="invalid-feedback" bis_skin_checked="1">{{ $message }}</div>
+                                                @enderror
                                             </div>
                                         </div>
 
@@ -283,7 +359,6 @@
                                         <div class="col-lg-12">
                                             <div class="mb-3">
                                                 <label for="kegiatan_ref" class="form-label">Kegiatan Sertifikasi</label><span class="text-danger">*</span>
-                                                {{-- <input type="text" id="simpleinput" class="form-control rounded-3" name="kegiatan" disabled> --}}
                                                 <select class="rounded-3 form-select" id="kegiatan_ref" name="kegiatan_ref">
                                                     <option value="" selected>Pilih Kegiatan</option>
                                                     @foreach ($dataKegiatan as $kegiatan)
@@ -351,6 +426,27 @@
 @push('script')
     <script src="{{ asset('js/jquery-3.6.0.min.js') }}"></script>
     <script src="{{ asset('js/select2.min.js') }}"></script>
+
+    <script>
+        const departemenSelect = document.getElementById('departemen');
+        const jabatanSelect = document.getElementById('jabatan');
+
+        departemenSelect.addEventListener('change', function() {
+            jabatanSelect.innerHTML = '<option>Loading...</option>';
+            jabatanSelect.disabled = true;
+
+            fetch(`/ajax/getJabatanByDepartemen/${this.value}`)
+                .then(res => res.json())
+                .then(data => {
+                    let opt = '<option value="" disabled selected>Pilih Jabatan</option>';
+                    data.forEach(item => {
+                        opt += `<option value="${item.jabatan_nama}">${item.jabatan_nama}</option>`;
+                    });
+                    jabatanSelect.innerHTML = opt;
+                    jabatanSelect.disabled = false;
+                });
+        });
+    </script>
 
     <script>
         const kegiatanSelect = document.getElementById('kegiatan_ref');

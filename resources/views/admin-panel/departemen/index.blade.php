@@ -4,7 +4,6 @@
     <link href="{{ asset('admin') }}/assets/vendor/datatables.net-bs5/css/dataTables.bootstrap5.min.css" rel="stylesheet" type="text/css" />
 @endpush
 @section('content')
-
     <div class="row">
         <div class="col-12">
             <div class="card">
@@ -17,8 +16,13 @@
                         <div class="row">
                             <div class="col-lg-5">
                                 <div class="mb-3">
-                                    <label for="simpleinput" class="form-label">Nama Departemen</label><span class="text-danger">*</span>
-                                    <input type="text" id="simpleinput" class="form-control rounded-3" name="departemen_nama" required placeholder="Masukkan nama departemen" required>
+                                    <label for="departemen_nama" class="form-label">Nama Departemen</label><span class="text-danger">*</span>
+                                    <input type="text" id="departemen_nama" class="form-control rounded-3 @error('departemen_nama', 'create_departemen') is-invalid @enderror" name="departemen_nama" placeholder="Masukkan nama departemen">
+                                    @error('departemen_nama', 'create_departemen')
+                                        <div class="invalid-feedback" bis_skin_checked="1">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
                                 </div>
                             </div>
 
@@ -42,7 +46,7 @@
                 </div>
                 <div class="card-body">
 
-                    <table id="fixed-columns-datatable" class="table table-striped nowrap row-border order-column w-100">
+                    <table id="fixed-columns-datatable" class="table-striped nowrap row-border order-column w-100 table">
                         <thead>
                             <tr>
                                 <th>Nama</th>
@@ -56,13 +60,13 @@
                                     <td>{{ $item->departemen_nama }}</td>
                                     <td>{{ $item->name }} <br> {{ $item->created_at->format('Y-m-d') }}</td>
                                     <td>
-                                         <a href="{{ route('departemen.edit', $item->ref) }}" class="text-reset fs-16 px-1">
+                                        <a href="{{ route('departemen.edit', $item->ref) }}" class="text-reset fs-16 px-1">
                                             <button type="button" class="btn btn-sm btn-outline-primary"><i class="ri-pencil-line"></i> Edit</button>
                                         </a>
 
                                         <input type="hidden" class="departemenID" value="{{ $item->ref }}">
                                         <a href="javascript:void(0)" class="text-reset fs-16 deleteButton px-1" data-nama="{{ $item->departemen_nama }}">
-                                            <button type="button" class="btn btn-sm btn-outline-danger"><i class=" ri-delete-bin-5-line"></i> Hapus</button>
+                                            <button type="button" class="btn btn-sm btn-outline-danger"><i class="ri-delete-bin-5-line"></i> Hapus</button>
                                         </a>
                                     </td>
                                 </tr>
@@ -75,7 +79,6 @@
             </div> <!-- end card -->
         </div><!-- end col-->
     </div> <!-- end row-->
-
 @endsection
 @push('script')
     <!-- Datatables js -->

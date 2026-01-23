@@ -17,9 +17,9 @@ class DepartemenController extends Controller
     public function index()
     {
         $query = DepartemenModel::join('users', 'users.ref', '=', 'departemen.created_by')
-        ->select('departemen.*', 'users.name')
-        ->orderBy('departemen.created_at', 'desc')
-        ->get();
+            ->select('departemen.*', 'users.name')
+            ->orderBy('departemen.created_at', 'desc')
+            ->get();
 
         return view('admin-panel.departemen.index', [
             'dataDepartemen' => $query
@@ -29,24 +29,24 @@ class DepartemenController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
-    {
-
-    }
+    public function create() {}
 
     /**
      * Function Create Skema
      */
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'departemen_nama' => 'required',
+
+
+        Validator::make($request->all(), [
+            'departemen_nama' => 'required|unique:departemen,departemen_nama',
         ], [
             'departemen_nama.required' => 'Nama departemen tidak boleh kosong',
-        ]);
+            'departemen_nama.unique' => 'Nama departemen sudah ada',
+        ])->validateWithBag('create_departemen');
 
         DepartemenModel::create([
-            'departemen_nama' => $request->departemen_nama,
+            'departemen_nama' => trim($request->departemen_nama),
             'created_by' => Auth::user()->ref,
         ]);
 
@@ -61,10 +61,7 @@ class DepartemenController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
-    {
-       
-    }
+    public function show(string $id) {}
 
     /**
      * Show the form for editing the specified resource.
@@ -72,10 +69,10 @@ class DepartemenController extends Controller
     public function edit(string $id)
     {
         $query = DepartemenModel::join('users', 'users.ref', '=', 'departemen.created_by')
-        ->select('departemen.*', 'users.name')
-        ->orderBy('departemen.created_at', 'desc')
-        ->where('departemen.ref', $id)
-        ->get();
+            ->select('departemen.*', 'users.name')
+            ->orderBy('departemen.created_at', 'desc')
+            ->where('departemen.ref', $id)
+            ->get();
 
         return view('admin-panel.departemen.edit', [
             'dataDepartemen' => $query
