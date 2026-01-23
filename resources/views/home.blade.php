@@ -12,7 +12,7 @@
 
                     <p class="fs-5 text-white mb-5">
                         Portal resmi Dinas Perindustrian dan Ketenagakerjaan Kabupaten Badung
-                        untuk pengelolaan pelatihan dan sertifikasi tenaga kerja.
+                        untuk pengelolaan pelatihan dan sertifikasi tenaga kerja wilayah Kabupaten Badung.
                     </p>
 
                     <div class="d-flex flex-wrap justify-content-center gap-3">
@@ -48,11 +48,11 @@
                 <div class="col-12 col-md-6 col-lg-4">
                     <a href="/pegawai" class="service-card text-decoration-none d-block h-100">
                         <div class="service-icon mb-4">
-                            <i class="bi bi-people fs-4"></i>
+                            <i class="bi bi-people fs-3"></i>
                         </div>
-                        <h5 class="fw-semibold mb-2">Pendataan Pegawai</h5>
+                        <h5 class="fw-semibold mb-2">Pendataan Jumlah Pegawai Hotel</h5>
                         <p class="text-muted small mb-0">
-                            Isi data anda yang bekerja sebagai pegawai di wilayah kabupaten badung.
+                            Isi data jumlah pegawai di wilayah kabupaten badung.
                         </p>
                     </a>
                 </div>
@@ -61,11 +61,11 @@
                 <div class="col-12 col-md-6 col-lg-4">
                     <a href="/asesi" class="service-card text-decoration-none d-block h-100">
                         <div class="service-icon mb-4">
-                            <i class="bi bi-clipboard-check fs-4"></i>
+                            <i class="bi bi-clipboard-check fs-3"></i>
                         </div>
                         <h5 class="fw-semibold mb-2">Daftar Calon Asesi</h5>
                         <p class="text-muted small mb-0">
-                            Daftarkan diri anda sebagai calon asesi untuk mengikuti uji kompetensi di bidang keahlian yang dipilih.
+                            Pendaftaran calon asesi untuk mengikuti uji kompetensi di bidang keahlian yang dipilih.
                         </p>
                     </a>
                 </div>
@@ -74,11 +74,11 @@
                 <div class="col-12 col-md-6 col-lg-4">
                     <a href="/tuk" class="service-card text-decoration-none d-block h-100">
                         <div class="service-icon mb-4">
-                            <i class="bi bi-building fs-4"></i>
+                            <i class="bi bi-building fs-3"></i>
                         </div>
                         <h5 class="fw-semibold mb-2">Daftar TUK</h5>
                         <p class="text-muted small mb-0">
-                            Daftarkan Tempat Uji Kompetensi (TUK) untuk menjadi mitra sertifikasi.
+                            Pendataan Tempat Uji Kompetensi (TUK) yang menjadi mitra LSP untuk sertifikasi.
                         </p>
                     </a>
                 </div>
@@ -118,7 +118,7 @@
 
                             <p class="mb-0">
                                 Melalui portal ini, masyarakat dapat mengakses berbagai layanan
-                                terkait pendaftaran sebagai calon asesi, pendaftaran Tempat Uji
+                                terkait pendaftaran sebagai calon asesi, pendataan Tempat Uji
                                 Kompetensi (TUK), serta informasi mengenai program-program
                                 sertifikasi yang tersedia.
                             </p>

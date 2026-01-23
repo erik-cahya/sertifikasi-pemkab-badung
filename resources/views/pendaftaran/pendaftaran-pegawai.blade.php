@@ -9,7 +9,7 @@
                 <div class="row justify-content-center">
                     <div class="col-12 col-lg-6">
                         <div class="card shadow-lg border-0 rounded-4 mt-2">
-                            <div class="text-center text-dinas mt-4 mb-2">
+                            <div class="text-center text-dinas mt-4 mb-2 px-3">
                                 <h3 class="card-title fw-bold">FORMULIR PENDATAAN JUMLAH PEGAWAI HOTEL</h3>
                             </div>
                             @if ($errors->any())

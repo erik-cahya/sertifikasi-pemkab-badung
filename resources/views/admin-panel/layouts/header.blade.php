@@ -7,20 +7,20 @@
                 <!-- Logo light -->
                 <a href="index.html" class="logo-light">
                     <span class="logo-lg">
-                        <img src="{{ asset('admin') }}/assets/images/logo.png" alt="logo">
+                        <img src="{{ asset('img/logo_dinas_no_title.png') }}" alt="logo">
                     </span>
                     <span class="logo-sm">
-                        <img src="{{ asset('admin') }}/assets/images/logo-sm.png" alt="small logo">
+                        <img src="{{ asset('img/logo_dinas_no_title.png') }}" alt="small logo">
                     </span>
                 </a>
 
                 <!-- Logo Dark -->
                 <a href="index.html" class="logo-dark">
                     <span class="logo-lg">
-                        <img src="{{ asset('admin') }}/assets/images/logo-dark.png" alt="dark logo">
+                        <img src="{{ asset('img/logo_dinas_no_title.png') }}" alt="dark logo">
                     </span>
                     <span class="logo-sm">
-                        <img src="{{ asset('admin') }}/assets/images/logo-sm.png" alt="small logo">
+                        <img src="{{ asset('img/logo_dinas_no_title.png') }}" alt="small logo">
                     </span>
                 </a>
             </div>

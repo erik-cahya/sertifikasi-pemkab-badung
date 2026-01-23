@@ -1,7 +1,7 @@
 <div class="leftside-menu bg-dinas">
 
     <!-- Logo Light -->
-    <a href="{{ route('dashboard') }}" class="logo logo-light">
+    <a href="{{ route('dashboard') }}" class="logo logo-light bg-dinas">
         <span class="logo-lg">
             <img src="{{ asset('img/logo_dinas_title.png') }}" style="height: 38px; margin-left: -15px" alt="logo">
             {{-- <h4 class="mt-3 text-white">Gse Management</h4> --}}
@@ -13,7 +13,7 @@
     </a>
 
     <!-- Logo Dark -->
-    <a href="{{ route('dashboard') }}" class="logo logo-dark">
+    <a href="{{ route('dashboard') }}" class="logo logo-dark bg-dinas">
         <span class="logo-lg">
             <img src="{{ asset('img/logo_dinas_title.png') }}" style="height: 38px; margin-left: -15px" alt="logo">
         </span>

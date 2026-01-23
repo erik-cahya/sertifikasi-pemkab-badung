@@ -8,7 +8,7 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-12">
-                        <div class="card rounded-4 border-0 shadow-lg">
+                        <div class="card rounded-4 border-0 shadow-lg mt-2">
                             <div class="card-header rounded-top-4">
                                 <h4 class="card-title fw-bold mb-3">FORMULIR PENDAFTARAN CALON ASESI</h4>
                                 <smal>
