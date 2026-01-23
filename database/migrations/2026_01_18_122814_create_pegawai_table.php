@@ -11,12 +11,25 @@ return new class extends Migration
      */
     public function up(): void
     {
+        // Schema::create('pegawai', function (Blueprint $table) {
+        //     $table->ulid('ref')->primary();
+        //     $table->string('pegawai_nama');
+        //     $table->string('pegawai_nik')->unique();
+        //     $table->string('pegawai_telp');
+        //     $table->string('pegawai_tempat_bekerja');
+        //     $table->timestamps();
+        // });
+
         Schema::create('pegawai', function (Blueprint $table) {
             $table->ulid('ref')->primary();
-            $table->string('pegawai_nama');
-            $table->string('pegawai_nik')->unique();
-            $table->string('pegawai_telp');
-            $table->string('pegawai_tempat_bekerja');
+            $table->string('pegawai_nama_hotel');
+            $table->unsignedInteger('pegawai_hk');
+            $table->unsignedInteger('pegawai_fbs');
+            $table->unsignedInteger('pegawai_fbp');
+            $table->unsignedInteger('pegawai_fo');
+            $table->unsignedInteger('pegawai_eng');
+            $table->unsignedInteger('pegawai_oth');
+            $table->unsignedInteger('pegawai_total');
             $table->timestamps();
         });
     }

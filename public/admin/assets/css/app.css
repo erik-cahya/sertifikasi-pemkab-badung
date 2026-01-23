@@ -20186,4 +20186,109 @@ span.flatpickr-weekday,
   color: #ec4913 !important;
 }
 
+.text-dinas{
+  --tz-text-opacity: 1;
+  color: #671919 !important;
+}
+
+.btn-dinas {
+    color: #671919;
+    border: 1px solid #671919;
+    background-color: transparent;
+    transition: all 0.2s ease-in-out;
+}
+
+.btn-dinas:hover {
+    background-color: #671919;
+    color: #ffffff;
+}
+
+.btn-dinas:focus,
+.btn-dinas:active {
+    background-color: #671919;
+    color: #ffffff;
+    box-shadow: 0 0 0 0.15rem rgba(103, 25, 25, 0.35);
+}
+
+/* ===============================
+   FORM DINAS – WARNA #671919
+   =============================== */
+
+.form-dinas label,
+.form-dinas .form-label,
+.form-dinas .text-danger {
+    color: #671919 !important;
+}
+
+/* INPUT, SELECT, TEXTAREA, FILE */
+.form-dinas .form-control,
+.form-dinas .form-select,
+.form-dinas input[type="file"] {
+    border-color: #671919;
+    color: #671919;
+    background-color: #ffffff;
+}
+
+/* PLACEHOLDER */
+.form-dinas ::placeholder {
+    color: #671919;
+    opacity: 0.85;
+}
+
+/* FOCUS STATE */
+.form-dinas .form-control:focus,
+.form-dinas .form-select:focus,
+.form-dinas input[type="file"]:focus {
+    border-color: #671919;
+    box-shadow: 0 0 0 0.15rem rgba(103, 25, 25, 0.25);
+}
+
+/* READONLY */
+.form-dinas .form-control[readonly] {
+    background-color: #fdf6f6;
+    color: #671919;
+}
+
+/* SELECT ARROW (Bootstrap) */
+.form-dinas .form-select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='%23671919' d='M7.247 11.14 2.451 5.658c-.566-.63-.106-1.658.753-1.658h9.592c.86 0 1.32 1.028.753 1.658L8.753 11.14a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+}
+
+/* INPUT NUMBER SPINNER */
+.form-dinas input[type=number]::-webkit-inner-spin-button,
+.form-dinas input[type=number]::-webkit-outer-spin-button {
+    filter: invert(21%) sepia(41%) saturate(1576%) hue-rotate(345deg);
+}
+
+/* FILE INPUT (text + button) */
+.form-dinas input[type="file"]::file-selector-button {
+    border: 1px solid #671919;
+    background-color: transparent;
+    color: #671919;
+    padding: 0.375rem 0.75rem;
+    margin-right: 0.75rem;
+    border-radius: 0.375rem;
+    transition: all 0.2s ease-in-out;
+}
+
+.form-dinas input[type="file"]::file-selector-button:hover {
+    background-color: #671919;
+    color: #ffffff;
+}
+
+/* DISABLED */
+.form-dinas .form-control:disabled,
+.form-dinas .form-select:disabled {
+    background-color: #f8f8f8;
+    color: #9a5a5a;
+}
+
+/* INVALID (Laravel validation) */
+.form-dinas .is-invalid {
+    border-color: #671919;
+    box-shadow: 0 0 0 0.15rem rgba(103, 25, 25, 0.35);
+}
+
+
+
 

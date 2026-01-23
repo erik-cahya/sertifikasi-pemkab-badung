@@ -39,7 +39,7 @@
                             @endif
                             <form action="{{ route('asesi.store') }}" method="POST" enctype="multipart/form-data">
                                 @csrf
-                                <div class="card-header bg-danger text-white px-4 py-2 rounded-top">
+                                <div class="card-header bg-dinas text-white px-4 py-2 rounded-top">
                                     <h5 class="card-title mb-1 fw-bold">A. DATA PRIBADI</h5>
                                     <small class="opacity-75">
                                         Isilah formulir di bawah ini dengan data pribadi yang benar dan sesuai dengan dokumen resmi.
@@ -189,7 +189,7 @@
                                     </div> <!-- end row-->
                                 </div> <!-- end card-body -->
 
-                                <div class="card-header bg-danger text-white px-4 py-2 rounded-top">
+                                <div class="card-header bg-dinas text-white px-4 py-2 rounded-top">
                                     <h5 class="card-title mb-1 fw-bold">B. DATA PEKERJAAN</h5>
                                     <small class="opacity-75">
                                         Isilah formulir di bawah ini dengan data pekerjaan yang sedang dijalani saat ini.
@@ -267,7 +267,7 @@
                                     </div> <!-- end row #2-->
                                 </div> <!-- end card-body #2-->
 
-                                <div class="card-header bg-danger text-white px-4 py-2 rounded-top">
+                                <div class="card-header bg-dinas text-white px-4 py-2 rounded-top">
                                     <h5 class="card-title mb-1 fw-bold">C. DAFTAR UJI</h5>
                                     <small class="opacity-75">
                                         Isilah formulir di bawah ini untuk memilih Lembaga Sertifikasi Profesi (LSP), Tempat Uji Kompetensi (TUK), dan jadwal pelaksanaan uji sertifikasi yang akan diikuti.
@@ -327,7 +327,7 @@
 
                                         <div class="col-lg-12">
                                             <div class="mb-2 mt-3">
-                                                <button type="submit" class="btn btn-outline-primary rounded-3"><i class="ri-save-3-line"></i> DAFTAR</button>
+                                                <button type="submit" class="btn btn-dinas rounded-3 px-4 py-2 fw-semibold"><i class="ri-save-3-line"></i> DAFTAR</button>
                                             </div>
                                         </div>
 

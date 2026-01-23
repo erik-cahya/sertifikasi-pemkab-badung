@@ -16,21 +16,29 @@
                     <table id="fixed-columns-datatable" class="table table-striped nowrap row-border order-column w-100">
                         <thead>
                             <tr>
-                                <th>Nama Pegawai</th>
-                                <th>NIK</th>
-                                <th>No. Telp </th>
-                                <th>Tempat Bekerja</th>
+                                <th>Nama Hotel</th>
+                                <th>Housekeeping</th>
+                                <th>F&B Service</th>
+                                <th>F&B Product</th>
+                                <th>Kantor Depan</th>
+                                <th>Engineering</th>
+                                <th>Lainnya</th>
+                                <th>Total</th>
                                 <th>Ditambahkan pada</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($dataPegawai as $item )
                                 <tr>
-                                    <td>{{ $item->pegawai_nama }}</td>
-                                    <td>{{ $item->pegawai_nik }}</td>
-                                    <td>{{ $item->pegawai_telp }}</td>
-                                    <td>{{ $item->pegawai_tempat_bekerja }}</td>
-                                    <td>{{ $item->created_at->format('Y-m-d') }}</td>
+                                    <td>{{ $item->pegawai_nama_hotel }}</td>
+                                    <td class="text-center">{{ $item->pegawai_hk }}</td>
+                                    <td class="text-center">{{ $item->pegawai_fbs }}</td>
+                                    <td class="text-center">{{ $item->pegawai_fbp }}</td>
+                                    <td class="text-center">{{ $item->pegawai_fo }}</td>
+                                    <td class="text-center">{{ $item->pegawai_eng }}</td>
+                                    <td class="text-center">{{ $item->pegawai_oth }}</td>
+                                    <td class="text-center">{{ $item->pegawai_total }}</td>
+                                    <td class="text-center">{{ $item->created_at->format('Y-m-d') }}</td>
                                 </tr>
                             @endforeach
                         </tbody>
