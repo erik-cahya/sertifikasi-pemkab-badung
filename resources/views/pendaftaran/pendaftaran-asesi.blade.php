@@ -354,6 +354,15 @@
                                     </small>
                                 </div>
 
+                                @error('lsp_ref')
+                                    <div class="alert alert-danger fs-12">
+                                        <strong>DATA GAGAL DISIMPAN!</strong>
+                                        <ul class="mb-0 mt-2">
+                                            <li>{{ $message }}</li>
+                                        </ul>
+                                    </div>
+                                @enderror
+
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col-lg-12">
@@ -383,6 +392,7 @@
                                                 <select class="rounded-3 form-select" id="skema_asesmen" name="skema_asesmen" disabled>
                                                     <option value="" disabled selected>Pilih Skema Sertifikasi Kompetensi</option>
                                                 </select>
+
                                             </div>
                                         </div>
 
@@ -488,7 +498,13 @@
                 .then(data => {
                     let opt = '<option value="" disabled selected>Pilih LSP</option>';
                     data.forEach(item => {
-                        opt += `<option value="${item.lsp_ref}">${item.lsp_nama} (Kuota: ${item.kuota_lsp})</option>`;
+                        console.table(item);
+                        const disabled = item.sisa_kuota <= 0 ? 'disabled' : '';
+                        opt += `
+                            <option value="${item.lsp_ref}" ${disabled}>
+                                ${item.lsp_nama} (Sisa Kuota: ${item.sisa_kuota})
+                            </option>
+                        `;
                     });
                     lspSelect.innerHTML = opt;
                     lspSelect.disabled = false;

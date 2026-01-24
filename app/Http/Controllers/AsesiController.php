@@ -14,8 +14,11 @@ use Carbon\Carbon;
 use Faker\Provider\Uuid;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\ValidationException;
+
 
 
 class AsesiController extends Controller
@@ -24,15 +27,27 @@ class AsesiController extends Controller
     public function getLspByKegiatan($kegiatanRef)
     {
 
+        // Hitung total asesi per LSP (1 query)
+        $asesiPerLsp = AsesiModel::where('kegiatan_ref', $kegiatanRef)
+            ->select('lsp_ref', DB::raw('COUNT(*) as total'))
+            ->groupBy('lsp_ref')
+            ->pluck('total', 'lsp_ref'); // [lsp_ref => total]
+
         $data = KegiatanLSPModel::where('kegiatan_ref', $kegiatanRef)
             ->with('lsp:ref,lsp_nama')
             ->get()
-            ->map(function ($item) {
+            ->map(function ($item) use ($asesiPerLsp) {
+
+                $totalAsesi = $asesiPerLsp[$item->lsp_ref] ?? 0;
+                $sisaKuota  = max(($item->kuota_lsp ?? 0) - $totalAsesi, 0);
+
                 return [
                     'kegiatan_lsp_ref' => $item->ref,
                     'lsp_ref'          => $item->lsp->ref,
                     'lsp_nama'         => $item->lsp->lsp_nama,
                     'kuota_lsp'        => $item->kuota_lsp,
+                    'terpakai'         => $totalAsesi,
+                    'sisa_kuota'       => $sisaKuota,
                     'limit_kuota'      => $item->limit_kuota,
                 ];
             });
@@ -127,9 +142,6 @@ class AsesiController extends Controller
 
     public function store(Request $request)
     {
-        // dd($request->all());
-        // dd(array_keys($request->all()));
-
         $validated = $request->validate([
             'kegiatan_ref' => 'required',
             'lsp_ref' => 'required',
@@ -191,6 +203,22 @@ class AsesiController extends Controller
             'email_perusahaan.required' => 'Email perusahaan tidak boleh kosong',
             'email_perusahaan.email' => 'Format email perusahaan tidak valid',
         ]);
+
+        // Validasi Kuota LSP (Jika LSP di bypass user)
+        $kegiatanRef = $request->kegiatan_ref;
+        $lspRef      = $request->lsp_ref;
+        $kuotaLsp = KegiatanLSPModel::where('kegiatan_ref', $kegiatanRef)
+            ->where('lsp_ref', $lspRef)
+            ->value('kuota_lsp');
+        $totalAsesi = AsesiModel::where('kegiatan_ref', $kegiatanRef)
+            ->where('lsp_ref', $lspRef)
+            ->count();
+
+        if ($totalAsesi >= $kuotaLsp) {
+            throw ValidationException::withMessages([
+                'lsp_ref' => 'Kuota LSP sudah penuh',
+            ]);
+        }
 
         // ================== SIMPAN FILE ==================
         $nik  = $request->nik;
