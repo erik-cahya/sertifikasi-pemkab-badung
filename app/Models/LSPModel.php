@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class LSPModel extends Model
 {
@@ -32,15 +33,34 @@ class LSPModel extends Model
     }
 
 
+    // public function kegiatanDetails()
+    // {
+    //     return $this->hasMany(
+    //         KegiatanDetailModel::class,
+    //         'lsp_ref',
+    //         'ref'
+    //     );
+    // }
 
-    public function kegiatanDetails()
+    public function skemas()
     {
-        return $this->hasMany(
-            KegiatanDetailModel::class,
-            'lsp_ref',
+        return $this->hasMany(SkemaModel::class, 'lsp_ref', 'ref');
+    }
+
+
+    public function kodeUnits()
+    {
+        return $this->hasManyThrough(
+            SkemaDetailModel::class,
+            SkemaModel::class,
+            'lsp_ref',     // FK di skema
+            'skema_ref',   // FK di kode_unit
+            'ref',
             'ref'
         );
     }
+
+
 
     protected static function booted()
     {

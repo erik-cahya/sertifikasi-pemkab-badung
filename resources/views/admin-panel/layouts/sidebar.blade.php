@@ -167,6 +167,12 @@
                                 Tambah Kegiatan
                             </a>
                         </li>
+
+                        <li class="side-nav-item {{ request()->routeIs('jadwal.asesmen') ? 'menuitem-active' : '' }}">
+                            <a class="side-nav-link {{ request()->routeIs('jadwal.asesmen') ? 'active' : '' }}" href="{{ route('jadwal.asesmen') }}">
+                                Jadwal Asesmen --dev
+                            </a>
+                        </li>
                     </ul>
                 </div>
             </li>

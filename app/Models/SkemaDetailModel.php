@@ -25,4 +25,9 @@ class SkemaDetailModel extends Model
             $this->attributes['ref'] = strtoupper($value);
         }
     }
+
+    public function skema()
+    {
+        return $this->belongsTo(SkemaModel::class, 'skema_ref', 'ref');
+    }
 }

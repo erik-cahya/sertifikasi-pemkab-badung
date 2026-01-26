@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Str;
 
 class SkemaModel extends Model
@@ -28,6 +29,11 @@ class SkemaModel extends Model
         if ($value !== null) {
             $this->attributes['ref'] = strtoupper($value);
         }
+    }
+
+    public function kodeUnits()
+    {
+        return $this->hasMany(SkemaDetailModel::class, 'skema_ref', 'ref');
     }
 
     public function details()

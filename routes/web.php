@@ -54,6 +54,9 @@ Route::middleware('auth')->group(function () {
         Route::put('kegiatan/{id}', [KegiatanController::class, 'update'])->name('kegiatan.update');
         Route::delete('kegiatan/{id}', [KegiatanController::class, 'destroy'])->name('kegiatan.destroy');
 
+
+        Route::get('jadwalAsesmen', [KegiatanController::class, 'jadwalAsesmen'])->name('jadwal.asesmen');
+
         // ################################ Asesmen by Admin
         Route::resource('asesmen', AsesmenController::class)->except('index');
 

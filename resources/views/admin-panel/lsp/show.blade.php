@@ -134,22 +134,26 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        <table id="scroll-horizontal-datatable" class="table-sm table-striped w-100 nowrap table">
+                        <table id="scroll-horizontal-datatable" class="table-sm table-striped w-100 nowrap table text-center">
                             <thead>
                                 <tr>
                                     <th>No</th>
                                     <th>Nama Skema</th>
                                     <th>Kode Skema</th>
-                                    <th>Kode Unit</th>
+                                    <th>Kategori Skema</th>
+                                    <th>Jumlah Kode Unit</th>
                                 </tr>
                             </thead>
                             <tbody style="font-size: 12px">
-                                <tr class="align-middle">
-                                    <td>1</td>
-                                    <td>Teknisi Refrigerasi Domestik</td>
-                                    <td>AC-213214.312421</td>
-                                    <td>10 Unit</td>
-                                </tr>
+                                @foreach ($dataLSP->skemas as $dataSkema)
+                                    <tr class="align-middle">
+                                        <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $dataSkema->skema_judul }}</td>
+                                        <td>{{ $dataSkema->skema_kode }}</td>
+                                        <td>{{ $dataSkema->skema_kategori }}</td>
+                                        <td>{{ $dataSkema->kode_units_count }} Unit</td>
+                                    </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>

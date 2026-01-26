@@ -101,7 +101,15 @@ class LSPController extends Controller
      */
     public function show(string $id)
     {
-        $data['dataLSP'] = LSPModel::where('ref', $id)->with('user')->firstOrFail();
+        $data['dataLSP'] = LSPModel::where('ref', $id)->with('user')->with([
+            'skemas' => function ($q) {
+                $q->withCount('kodeUnits');
+            }
+        ])
+            ->firstOrFail();
+
+        // dd($data['dataLSP']);
+
         return view('admin-panel.lsp.show', $data);
     }
 

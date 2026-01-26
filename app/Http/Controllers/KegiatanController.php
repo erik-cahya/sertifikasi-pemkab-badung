@@ -20,6 +20,13 @@ use Illuminate\Support\Str;
 
 class KegiatanController extends Controller
 {
+
+
+    public function jadwalAsesmen()
+    {
+        return view('admin-panel.kegiatan.jadwal-asesmen');
+    }
+
     /**
      * Display a listing of the resource.
      */
