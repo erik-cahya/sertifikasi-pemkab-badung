@@ -2,33 +2,10 @@
 @push('style')
     {{-- <link href="{{ asset('admin') }}/assets/vendor/select2/css/select2.min.css" rel="stylesheet" type="text/css" /> --}}
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-
-    {{-- <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" /> --}}
+    <link href="{{ asset('admin') }}/assets/vendor/datatables.net-bs5/css/dataTables.bootstrap5.min.css" rel="stylesheet" type="text/css" />
 
     <!-- Daterangepicker css -->
     <link href="{{ asset('admin') }}/assets/vendor/daterangepicker/daterangepicker.css" rel="stylesheet" type="text/css" />
-
-    <style>
-        .kegiatan-item {
-            border-radius: 8px;
-        }
-
-        .remove-kegiatan-btn {
-            transition: all 0.3s ease;
-        }
-
-        .remove-kegiatan-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 6px rgba(220, 53, 69, 0.1);
-        }
-
-        /* Untuk tampilan mobile */
-        @media (max-width: 992px) {
-            .kegiatan-item .row>div {
-                margin-bottom: 10px;
-            }
-        }
-    </style>
 @endpush
 @section('content')
     <div class="content">
@@ -36,39 +13,150 @@
         <!-- Start Content-->
         <div class="container-fluid">
 
-            <form action="{{ route('kegiatan.store') }}" method="POST" enctype="multipart/form-data">
-                @csrf
-                <div class="row">
-                    <div class="col-12">
-                        <div class="card">
-                            <div class="card-header">
-                                <h4 class=".card-title">Create Data Kegiatan</h4>
-                            </div>
-                            <div class="card-body">
-                                <div class="row">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title mb-0">Asesmen - Sertifikasi BNSP 2026</h4>
+                        </div>
+                        <div class="card-body">
+                            <div id="rootwizard">
+                                <ul class="nav nav-pills nav-justified form-wizard-header mb-3">
+                                    <li class="nav-item" data-target-form="#accountForm">
+                                        <a href="#first" data-bs-toggle="tab" data-toggle="tab" class="nav-link rounded-0 active py-2">
+                                            <i class="ri-account-circle-line fw-normal fs-20 me-1 align-middle"></i>
+                                            <span class="d-none d-sm-inline">Daftar Jadwal Asesmen</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item" data-target-form="#profileForm">
+                                        <a href="#second" data-bs-toggle="tab" data-toggle="tab" class="nav-link rounded-0 py-2">
+                                            <i class="ri-profile-line fw-normal fs-20 me-1 align-middle"></i>
+                                            <span class="d-none d-sm-inline">Buat Jadwal Asesmen</span>
+                                        </a>
+                                    </li>
 
-                                    <div class="col-lg-6 mb-3">
-                                        <label class="form-label" for="mulai_kegiatan">Tanggal Mulai Kegiatan</label>
-                                        <input type="text" id="mulai_kegiatan" name="mulai_kegiatan" class="form-control single-date @error('mulai_kegiatan', 'create_kegiatan') is-invalid @enderror" value="{{ old('mulai_kegiatan') }}" autocomplete="off">
+                                </ul>
 
-                                        @error('mulai_kegiatan', 'create_kegiatan')
-                                            <div class="invalid-feedback" bis_skin_checked="1">
-                                                {{ $message }}
+                                <div class="tab-content b-0 mb-0">
+
+                                    <div class="tab-pane show active" id="first">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <table class="table-sm table-bordered w-100 table">
+                                                    <thead>
+                                                        <tr class="text-center">
+                                                            <th>No</th>
+                                                            <th>Nama LSP</th>
+                                                            <th>Nama Skema Skema</th>
+                                                            <th>Tanggal</th>
+                                                            <th>Kuota</th>
+                                                            <th>Action</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td class="text-center">1</td>
+                                                            <td>LSP Engineering Hospitality Indonesia</td>
+                                                            <td>
+                                                                <span class="badge bg-primary-subtle text-primary">
+                                                                    Perawatan Mesin Pendingin / AC
+                                                                </span>
+                                                            </td>
+                                                            <td>Sabtu, 20 Januari 2026</td>
+                                                            <td>3/10 Peserta</td>
+                                                            <td>
+                                                                <button class="btn btn-link text-decoration-none fs-12 p-0" data-bs-toggle="collapse" data-bs-target="#jadwal-2" aria-expanded="false" aria-controls="jadwal-2">
+                                                                    Lihat Detail
+                                                                </button>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
                                             </div>
-                                        @enderror
+                                        </div>
                                     </div>
 
-                                </div>
-                                <div class="mb-3 mt-3">
-                                    <button class="btn btn-primary" type="submit"><i class="ri-add-box-fill"></i> Add New Kegiatan</button>
+                                    {{-- Buat Jadwal Asesmen --}}
+                                    <div class="tab-pane fade" id="second">
+                                        <form id="profileForm" method="post" action="#" class="form-horizontal">
+                                            <form action="{{ route('kegiatan.store') }}" method="POST" enctype="multipart/form-data">
+                                                @csrf
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <div class="card">
+                                                            <div class="card-header">
+                                                                <h4 class=".card-title mb-0">Create Jadwal Asesmen</h4>
+                                                            </div>
+                                                            <div class="card-body">
+                                                                <div class="row">
+
+                                                                    <div class="col-lg-4">
+                                                                        <div class="mb-3">
+                                                                            <label for="nama_kegiatan" class="form-label">Kegiatan Sertifikasi</label>
+                                                                            <input type="text" id="nama_kegiatan" name="nama_kegiatan" class="form-control @error('nama_kegiatan', 'create_kegiatan') is-invalid @enderror" value="Sertifikasi BNSP 2026" disabled>
+
+                                                                            @error('nama_kegiatan', 'create_kegiatan')
+                                                                                <div class="invalid-feedback" bis_skin_checked="1">
+                                                                                    {{ $message }}
+                                                                                </div>
+                                                                            @enderror
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="col-lg-4">
+                                                                        <label for="tempat_tuk" class="form-label">Pilih TUK</label>
+                                                                        <select class="select2 @error('tempat_tuk') is-invalid @enderror form-select" data-toggle="select2" id="tempat_tuk" name="tempat_tuk">
+                                                                            <option value="#" hidden disabled selected>Pilih TUK</option>
+                                                                            <option value="#">TUK 1</option>
+                                                                        </select>
+                                                                        @error('tempat_tuk')
+                                                                            <div class="invalid-feedback" bis_skin_checked="1">
+                                                                                {{ $message }}
+                                                                            </div>
+                                                                        @enderror
+                                                                    </div>
+
+                                                                    <div class="col-lg-4">
+                                                                        <label class="form-label" for="tanggal_asesmen">Tanggal Mulai Kegiatan</label>
+                                                                        <input type="text" id="tanggal_asesmen" name="tanggal_asesmen" class="form-control single-date @error('tanggal_asesmen', 'create_kegiatan') is-invalid @enderror" value="{{ old('tanggal_asesmen') }}" autocomplete="off">
+
+                                                                        @error('tanggal_asesmen', 'create_kegiatan')
+                                                                            <div class="invalid-feedback" bis_skin_checked="1">
+                                                                                {{ $message }}
+                                                                            </div>
+                                                                        @enderror
+                                                                    </div>
+
+                                                                    <div class="col-lg-4">
+                                                                        <label for="skema_sertifikasi" class="form-label">Skema Sertifikasi</label>
+                                                                        <select class="select2 @error('skema_sertifikasi') is-invalid @enderror form-select" data-toggle="select2" id="skema_sertifikasi" name="skema_sertifikasi">
+                                                                            <option value="#" hidden disabled selected>Pilih TUK</option>
+                                                                            <option value="#">TUK 1</option>
+                                                                        </select>
+                                                                        @error('skema_sertifikasi')
+                                                                            <div class="invalid-feedback" bis_skin_checked="1">
+                                                                                {{ $message }}
+                                                                            </div>
+                                                                        @enderror
+                                                                    </div>
+
+                                                                </div>
+                                                                <div class="mb-3 mt-3">
+                                                                    <button class="btn btn-primary" type="submit"><i class="ri-add-box-fill"></i> Add New Kegiatan</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-
                 </div>
-
-            </form>
+            </div>
 
         </div>
 
@@ -80,6 +168,14 @@
     <!-- Daterangepicker Plugin js -->
     <script src="{{ asset('admin') }}/assets/vendor/daterangepicker/moment.min.js"></script>
     <script src="{{ asset('admin') }}/assets/vendor/daterangepicker/daterangepicker.js"></script>
+
+    <!-- Datatables js -->
+    <script src="{{ asset('admin') }}/assets/vendor/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="{{ asset('admin') }}/assets/vendor/datatables.net-bs5/js/dataTables.bootstrap5.min.js"></script>
+    <script src="{{ asset('admin') }}/assets/vendor/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+
+    <!-- Datatable Demo App js -->
+    <script src="{{ asset('admin') }}/assets/js/pages/datatable.init.js"></script>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
