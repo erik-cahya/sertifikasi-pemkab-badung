@@ -19,6 +19,8 @@ class SkemaModel extends Model
     public $incrementing = false;
     protected $keyType = 'string';
 
+
+
     public function uniqueIds()
     {
         return ['ref'];

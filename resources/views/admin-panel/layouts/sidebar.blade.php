@@ -162,11 +162,13 @@
                             </a>
                         </li>
 
-                        <li class="side-nav-item {{ request()->routeIs('kegiatan.create') ? 'menuitem-active' : '' }}">
-                            <a class="side-nav-link {{ request()->routeIs('kegiatan.create') ? 'active' : '' }}" href="{{ route('kegiatan.create') }}">
-                                Tambah Kegiatan
-                            </a>
-                        </li>
+                        @role('dinas', 'master')
+                            <li class="side-nav-item {{ request()->routeIs('kegiatan.create') ? 'menuitem-active' : '' }}">
+                                <a class="side-nav-link {{ request()->routeIs('kegiatan.create') ? 'active' : '' }}" href="{{ route('kegiatan.create') }}">
+                                    Tambah Kegiatan
+                                </a>
+                            </li>
+                        @endrole
 
                         <li class="side-nav-item {{ request()->routeIs('jadwal.asesmen') ? 'menuitem-active' : '' }}">
                             <a class="side-nav-link {{ request()->routeIs('jadwal.asesmen') ? 'active' : '' }}" href="{{ route('jadwal.asesmen') }}">

@@ -12,6 +12,9 @@ class PegawaiModel extends Model
 
     protected $table = 'pegawai';
     protected $guarded = ['ref'];
+    protected $primaryKey = 'ref';
+    public $incrementing = false;
+    protected $keyType = 'string';
 
     public function uniqueIds()
     {

@@ -14,6 +14,9 @@ class LSPModel extends Model
 
     protected $table = 'lsp';
     protected $guarded = ['ref'];
+    protected $primaryKey = 'ref';
+    public $incrementing = false;
+    protected $keyType = 'string';
 
 
     public function uniqueIds()

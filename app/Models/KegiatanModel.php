@@ -63,6 +63,13 @@ class KegiatanModel extends Model
         )->withTimestamps();
     }
 
+    public function scopeForLsp($query, string $lspRef)
+    {
+        return $query->whereHas('kegiatanLsp', function ($q) use ($lspRef) {
+            $q->where('lsp_ref', $lspRef);
+        });
+    }
+
     public function skemaPerLsp()
     {
         return $this->hasMany(

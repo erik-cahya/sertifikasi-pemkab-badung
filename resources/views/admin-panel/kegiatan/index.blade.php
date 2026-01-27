@@ -8,7 +8,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <h4 class=".card-title">All Data LSP</h4>
+                    <h4 class=".card-title">Daftar Kegiatan</h4>
                 </div>
                 <div class="card-body">
                     <table id="scroll-horizontal-datatable" class="table-striped w-100 nowrap table">

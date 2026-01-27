@@ -12,6 +12,9 @@ class TUKModel extends Model
 
     protected $table = 'tuk';
     protected $guarded = ['ref'];
+    protected $primaryKey = 'ref';
+    public $incrementing = false;
+    protected $keyType = 'string';
     // protected $fillable = [
     //     'lsp_ref',
     //     'tuk_nama',
@@ -30,7 +33,7 @@ class TUKModel extends Model
         return ['ref'];
     }
 
-     public function setRefAttribute($value)
+    public function setRefAttribute($value)
     {
         if ($value !== null) {
             $this->attributes['ref'] = strtoupper($value);

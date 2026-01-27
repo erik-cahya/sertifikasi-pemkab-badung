@@ -32,17 +32,22 @@ class KegiatanController extends Controller
      */
     public function index()
     {
-        $data['dataKegiatan'] = KegiatanModel::with(
-            [
-                'kegiatanLsp.lsp'
-            ]
-        )->withSum(
-            'kegiatanLsp as total_kuota',
-            'kuota_lsp'
-        )->get();
+        /** @var \App\Models\User $user */
+        $user = Auth::user();
+        $user->loadMissing('lspData');
 
+        $query = KegiatanModel::with([
+            'kegiatanLsp:ref,kegiatan_ref,lsp_ref,kuota_lsp',
+            'kegiatanLsp.lsp:ref,lsp_nama'
+        ])->withSum('kegiatanLsp as total_kuota', 'kuota_lsp');
 
-        // dd($data['dataKegiatan']);
+        if ($user->roles === 'lsp' && $user->lspData) {
+            $query->whereHas('kegiatanLsp', function ($q) use ($user) {
+                $q->where('lsp_ref', $user->lspData->ref);
+            });
+        }
+
+        $data['dataKegiatan'] = $query->get();
         return view('admin-panel.kegiatan.index', $data);
     }
 
@@ -109,8 +114,6 @@ class KegiatanController extends Controller
                     'date_range.*.required'  => 'Tanggal wajib diisi',
                 ])->validate();
 
-
-
                 $lsp    = $request->lsp_ref[$i];
                 $skemas = $request->skema_ref[$i] ?? [];
                 $kuota  = (int) ($request->kuota_lsp[$i] ?? 0);
@@ -142,27 +145,13 @@ class KegiatanController extends Controller
                 $startDate = Carbon::createFromFormat('d-m-Y', $start);
                 $endDate   = Carbon::createFromFormat('d-m-Y', $end);
 
-                $dates = collect(CarbonPeriod::create($startDate, $endDate));
-                $totalDays = $dates->count();
-
-                $baseQuota = intdiv($kuota, $totalDays);
-                $remainder = $kuota % $totalDays;
-
-                // dd($baseQuota, $remainder, $kuota);
-
-                foreach ($dates as $index => $date) {
-
-                    $quotaForDay = $baseQuota + ($index < $remainder ? 1 : 0);
-
-                    // dd($quotaForDay);
-                    KegiatanJadwalModel::create([
-                        'lsp_ref'         => $lsp,
-                        'kegiatan_lsp_ref' => $kegiatanLSP->ref,
-                        'mulai_asesmen'   => $date instanceof Carbon ? $date->format('Y-m-d') : (string) $date,
-                        'selesai_asesmen' => $endDate->format('Y-m-d'),
-                        'created_by'      => Auth::user()->ref,
-                    ]);
-                }
+                KegiatanJadwalModel::create([
+                    'lsp_ref'         => $lsp,
+                    'kegiatan_lsp_ref' => $kegiatanLSP->ref,
+                    'mulai_asesmen'   => $startDate->format('Y-m-d'),
+                    'selesai_asesmen' => $endDate->format('Y-m-d'),
+                    'created_by'      => Auth::user()->ref,
+                ]);
             }
         });
 
@@ -179,6 +168,10 @@ class KegiatanController extends Controller
      */
     public function show(string $id)
     {
+        if (isset($id)) {
+            return redirect()->route('kegiatan.index');
+        }
+
         $data['dataLSP'] = LSPModel::get();
         $data['dataKegiatan'] = KegiatanModel::where('ref', $id)
             ->with([

@@ -6,6 +6,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -20,11 +21,17 @@ class User extends Authenticatable
         return ['ref'];
     }
 
+    protected $with = ['lspData'];
     public function setRefAttribute($value)
     {
         if ($value !== null) {
             $this->attributes['ref'] = strtoupper($value);
         }
+    }
+
+    public function lspData(): BelongsTo
+    {
+        return $this->belongsTo(LSPModel::class, 'ref', 'user_ref');
     }
 
     /**

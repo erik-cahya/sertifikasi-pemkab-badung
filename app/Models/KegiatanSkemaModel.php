@@ -12,6 +12,9 @@ class KegiatanSkemaModel extends Model
 
     protected $table = 'kegiatan_skema';
     protected $guarded = ['ref'];
+    protected $primaryKey = 'ref';
+    public $incrementing = false;
+    protected $keyType = 'string';
 
     public function uniqueIds()
     {

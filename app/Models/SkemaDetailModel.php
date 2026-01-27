@@ -13,6 +13,9 @@ class SkemaDetailModel extends Model
 
     protected $table = 'skema_detail';
     protected $guarded = ['ref'];
+    protected $primaryKey = 'ref';
+    public $incrementing = false;
+    protected $keyType = 'string';
 
 
     public function uniqueIds()

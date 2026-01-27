@@ -12,6 +12,9 @@ class JabatanModel extends Model
 
     protected $table = 'jabatan';
     protected $guarded = ['ref'];
+    protected $primaryKey = 'ref';
+    public $incrementing = false;
+    protected $keyType = 'string';
 
     public function uniqueIds()
     {

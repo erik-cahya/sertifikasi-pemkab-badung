@@ -12,6 +12,9 @@ class DepartemenModel extends Model
 
     protected $table = 'departemen';
     protected $guarded = ['ref'];
+    protected $primaryKey = 'ref';
+    public $incrementing = false;
+    protected $keyType = 'string';
 
     public function uniqueIds()
     {

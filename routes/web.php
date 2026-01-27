@@ -35,6 +35,16 @@ Route::middleware('auth')->group(function () {
     // ################################ Dashboard
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
+
+    // ################################ Kegiatan
+    Route::get('kegiatan', [KegiatanController::class, 'index'])->name('kegiatan.index');
+    Route::get('kegiatan/create', [KegiatanController::class, 'create'])->name('kegiatan.create');
+    Route::get('kegiatan/add-lsp/{id}', [KegiatanController::class, 'add_lsp'])->name('kegiatan.add-lsp');
+    Route::post('kegiatan/store', [KegiatanController::class, 'store'])->name('kegiatan.store');
+    Route::get('kegiatan/{id}', [KegiatanController::class, 'show'])->name('kegiatan.show');
+    Route::put('kegiatan/{id}', [KegiatanController::class, 'update'])->name('kegiatan.update');
+    Route::delete('kegiatan/{id}', [KegiatanController::class, 'destroy'])->name('kegiatan.destroy');
+
     // Selain role master & dinas, tidak bisa akses route ini
     Route::middleware(['role:master, dinas'])->group(function () {
         // ################################ LSP
@@ -43,17 +53,6 @@ Route::middleware('auth')->group(function () {
         Route::post('lsp/store', [LSPController::class, 'store'])->name('lsp.store');
         Route::get('lsp/{id}', [LSPController::class, 'show'])->name('lsp.show');
         Route::delete('lsp/{id}', [LSPController::class, 'destroy'])->name('lsp.destroy');
-
-
-        // ################################ Kegiatan
-        Route::get('kegiatan', [KegiatanController::class, 'index'])->name('kegiatan.index');
-        Route::get('kegiatan/create', [KegiatanController::class, 'create'])->name('kegiatan.create');
-        Route::get('kegiatan/add-lsp/{id}', [KegiatanController::class, 'add_lsp'])->name('kegiatan.add-lsp');
-        Route::post('kegiatan/store', [KegiatanController::class, 'store'])->name('kegiatan.store');
-        Route::get('kegiatan/{id}', [KegiatanController::class, 'show'])->name('kegiatan.show');
-        Route::put('kegiatan/{id}', [KegiatanController::class, 'update'])->name('kegiatan.update');
-        Route::delete('kegiatan/{id}', [KegiatanController::class, 'destroy'])->name('kegiatan.destroy');
-
 
         Route::get('jadwalAsesmen', [KegiatanController::class, 'jadwalAsesmen'])->name('jadwal.asesmen');
 

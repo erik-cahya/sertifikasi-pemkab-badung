@@ -14,6 +14,9 @@ class KegiatanLSPModel extends Model
 
     protected $table = 'kegiatan_lsp';
     protected $guarded = ['ref'];
+    protected $primaryKey = 'ref';
+    public $incrementing = false;
+    protected $keyType = 'string';
 
     public function uniqueIds()
     {
