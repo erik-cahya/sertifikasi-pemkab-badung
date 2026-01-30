@@ -11,8 +11,10 @@
                     </h1>
 
                     <p class="fs-5 text-white mb-5">
-                        Portal resmi Dinas Perindustrian dan Ketenagakerjaan Kabupaten Badung
-                        untuk pengelolaan pelatihan dan sertifikasi tenaga kerja wilayah Kabupaten Badung.
+                        Portal resmi Bidang Pelatihan dan Sertifikasi 
+                        <br>
+                        Dinas Perindustrian dan Ketenagakerjaan Kabupaten Badung
+                        untuk pengelolaan sertifikasi tenaga kerja wilayah Kabupaten Badung.
                     </p>
 
                     <div class="d-flex flex-wrap justify-content-center gap-3">
@@ -45,7 +47,7 @@
             <!-- Cards -->
             <div class="row g-4">
                 <!-- Pendataan Pegawai -->
-                <div class="col-12 col-md-6 col-lg-4">
+                <div class="col-12 col-md-6 col-lg-6">
                     <a href="/pegawai" class="service-card text-decoration-none d-block h-100">
                         <div class="service-icon mb-4">
                             <i class="bi bi-people fs-3"></i>
@@ -58,7 +60,7 @@
                 </div>
 
                 <!-- Daftar Calon Asesi -->
-                <div class="col-12 col-md-6 col-lg-4">
+                <div class="col-12 col-md-6 col-lg-6">
                     <a href="/asesi" class="service-card text-decoration-none d-block h-100">
                         <div class="service-icon mb-4">
                             <i class="bi bi-clipboard-check fs-3"></i>
@@ -71,7 +73,7 @@
                 </div>
 
                 <!-- Daftar TUK -->
-                <div class="col-12 col-md-6 col-lg-4">
+                {{-- <div class="col-12 col-md-6 col-lg-4">
                     <a href="/tuk" class="service-card text-decoration-none d-block h-100">
                         <div class="service-icon mb-4">
                             <i class="bi bi-building fs-3"></i>
@@ -81,7 +83,7 @@
                             Pendataan Tempat Uji Kompetensi (TUK) yang menjadi mitra LSP untuk sertifikasi.
                         </p>
                     </a>
-                </div>
+                </div> --}}
 
                 {{-- <!-- Sertifikasi -->
                 <div class="col-12 col-md-6 col-lg-3">
@@ -118,8 +120,7 @@
 
                             <p class="mb-0">
                                 Melalui portal ini, masyarakat dapat mengakses berbagai layanan
-                                terkait pendaftaran sebagai calon asesi, pendataan Tempat Uji
-                                Kompetensi (TUK), serta informasi mengenai program-program
+                                terkait pendaftaran sebagai calon asesi, serta informasi mengenai program-program
                                 sertifikasi yang tersedia.
                             </p>
                         </div>
