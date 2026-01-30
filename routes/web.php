@@ -120,7 +120,7 @@ Route::middleware('auth')->group(function () {
     // PAKAI TEST BELUM GET REF
     Route::get('daftar-hadir', [PDFController::class, 'daftarHadir'])->name('pdf.daftar-hadir');
     Route::get('daftar-penerimaan', [PDFController::class, 'daftarPenerimaan'])->name('pdf.daftar-penerimaan');
-    Route::get('tanda-terima-sertifikat', [PDFController::class, 'daftandaTerimaSertifikattarHadir'])->name('pdf.tanda-terima-sertifikat');
+    Route::get('tanda-terima-sertifikat', [PDFController::class, 'tandaTerimaSertifikat'])->name('pdf.tanda-terima-sertifikat');
 
 });
 
