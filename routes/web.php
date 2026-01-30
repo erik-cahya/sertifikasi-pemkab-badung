@@ -14,6 +14,7 @@ use App\Http\Controllers\KodeUnitController;
 use App\Http\Controllers\LSPController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SkemaController;
+use App\Http\Controllers\PDFController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/ajax/skema-by-lsp/{lspRef}', [SkemaController::class, 'getByLsp'])->name('ajax.skema.by-lsp');
@@ -111,6 +112,16 @@ Route::middleware('auth')->group(function () {
 
     // ################################ Asesi by admin
     Route::get('asesiAdmin', [AsesiController::class, 'list'])->name('asesiAdmin.index');
+
+    // ################################ Generate PDF
+    // Route::get('daftar-hadir/{id}', [PDFController::class, 'daftarHadir'])->name('pdf.daftar-hadir');
+    // Route::get('daftar-penerimaan/{id}', [PDFController::class, 'daftarPenerimaan'])->name('pdf.daftar-penerimaan');
+    // Route::get('tanda-terima-sertifikat/{id}', [PDFController::class, 'daftandaTerimaSertifikattarHadir'])->name('pdf.tanda-terima-sertifikat');
+    // PAKAI TEST BELUM GET REF
+    Route::get('daftar-hadir', [PDFController::class, 'daftarHadir'])->name('pdf.daftar-hadir');
+    Route::get('daftar-penerimaan', [PDFController::class, 'daftarPenerimaan'])->name('pdf.daftar-penerimaan');
+    Route::get('tanda-terima-sertifikat', [PDFController::class, 'daftandaTerimaSertifikattarHadir'])->name('pdf.tanda-terima-sertifikat');
+
 });
 
 // ################################ Pendaftaraan Asesi
