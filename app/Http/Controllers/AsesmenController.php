@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\KegiatanDetailModel;
+use App\Models\KegiatanLSPModel;
+use App\Models\KegiatanModel;
 use App\Models\KegiatanSkemaModel;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AsesmenController extends Controller
 {
@@ -14,7 +17,15 @@ class AsesmenController extends Controller
      */
     public function index()
     {
-        //
+        /** @var \App\Models\User $user */
+        $user = Auth::user();
+        $user->loadMissing('lspData');
+
+        dd($user);
+
+        $data['dataKegiatan'] = KegiatanModel::with('kegiatanLsp')->get();
+        dd($data['dataKegiatan']);
+        return view('admin-panel.asesmen.index');
     }
 
     /**
@@ -44,59 +55,15 @@ class AsesmenController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
-    {
-        $data['dataKegiatan'] = KegiatanDetailModel::where('ref', $id)->with('lsp')->with('kegiatan')->firstOrFail();
-        return view('admin-panel.asesmen.edit', $data);
-    }
+    public function edit(string $id) {}
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
-    {
-        // dd($request->all());
-        KegiatanDetailModel::where('ref', $id)->update([
-            'kuota_lsp' => $request->kuota_lsp,
-            'mulai_asesmen' => Carbon::createFromFormat('d/m/Y', $request->mulai_asesmen)->setTimeFrom(Carbon::now()->format('Y-m-d H:i:s')),
-            'selesai_asesmen' => Carbon::createFromFormat('d/m/Y', $request->selesai_asesmen)->setTimeFrom(Carbon::now()->format('Y-m-d H:i:s')),
-        ]);
-
-        return redirect()
-            ->route('kegiatan.index')
-            ->with('flashData', [
-                'title' => 'Edit Data Success',
-                'message' => 'Skema Berhasil Diubah',
-                'type' => 'success',
-            ]);
-    }
+    public function update(Request $request, string $id) {}
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
-    {
-        // KegiatanDetailModel::where('ref', $id)->delete();
-
-        $detail = KegiatanDetailModel::findOrFail($id);
-        $kegiatanRef = $detail->kegiatan_ref;
-
-        // 🔥 hapus detail
-        $detail->delete();
-
-        // 🔍 cek apakah masih ada detail lain
-        $remaining = KegiatanDetailModel::where('kegiatan_ref', $kegiatanRef)->count();
-
-        // ❗ jika sudah 0 → hapus skema
-        if ($remaining === 0) {
-            KegiatanSkemaModel::where('kegiatan_ref', $kegiatanRef)->delete();
-        }
-        $flashData = [
-            'judul' => 'Hapus Data Success',
-            'pesan' => 'Kegiatan Berhasil Dihapus ',
-            'type' => 'success',
-        ];
-
-        return response()->json($flashData);
-    }
+    public function destroy(string $id) {}
 }

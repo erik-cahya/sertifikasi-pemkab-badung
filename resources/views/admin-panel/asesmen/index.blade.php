@@ -17,6 +17,46 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
+                            <h4 class="card-title mb-0">Kegiatan Asesmen</h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-12">
+                                    <table class="table-sm table-bordered w-100 table">
+                                        <thead>
+                                            <tr class="text-center">
+                                                <th>No</th>
+                                                <th>Nama Kegiatan</th>
+                                                <th>Tanggal</th>
+                                                <th>Kuota</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr class="text-center">
+                                                <td class="text-center">1</td>
+                                                <td>LSP Engineering Hospitality Indonesia</td>
+                                                <td>Sabtu, 20 Januari 2026</td>
+                                                <td>3/10 Peserta</td>
+                                                <td>
+                                                    <button class="btn btn-link text-decoration-none fs-12 p-0" data-bs-toggle="collapse" data-bs-target="#jadwal-2" aria-expanded="false" aria-controls="jadwal-2">
+                                                        Lihat Detail
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
                             <h4 class="card-title mb-0">Asesmen - Sertifikasi BNSP 2026</h4>
                         </div>
                         <div class="card-body">
