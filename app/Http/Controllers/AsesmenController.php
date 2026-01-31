@@ -21,11 +21,21 @@ class AsesmenController extends Controller
         $user = Auth::user();
         $user->loadMissing('lspData');
 
-        dd($user);
+        $query = KegiatanModel::with([
+            'kegiatanLsp:ref,kegiatan_ref,lsp_ref,kuota_lsp',
+            'kegiatanLsp.lsp:ref,lsp_nama'
+        ])->withSum('kegiatanLsp as total_kuota', 'kuota_lsp');
 
-        $data['dataKegiatan'] = KegiatanModel::with('kegiatanLsp')->get();
-        dd($data['dataKegiatan']);
-        return view('admin-panel.asesmen.index');
+        if ($user->roles === 'lsp' && $user->lspData) {
+            $query->whereHas('kegiatanLsp', function ($q) use ($user) {
+                $q->where('lsp_ref', $user->lspData->ref);
+            });
+        }
+
+        $data['dataKegiatan'] = $query->get();
+
+        // dd($data['dataKegiatan']);
+        return view('admin-panel.asesmen.index', $data);
     }
 
     /**
