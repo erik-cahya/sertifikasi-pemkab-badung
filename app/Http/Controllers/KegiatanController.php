@@ -22,10 +22,10 @@ class KegiatanController extends Controller
 {
 
 
-    public function jadwalAsesmen()
-    {
-        return view('admin-panel.kegiatan.jadwal-asesmen');
-    }
+    // public function jadwalAsesmen()
+    // {
+    //     return view('admin-panel.kegiatan.jadwal-asesmen');
+    // }
 
     /**
      * Display a listing of the resource.
@@ -168,10 +168,6 @@ class KegiatanController extends Controller
      */
     public function show(string $id)
     {
-        if (isset($id)) {
-            return redirect()->route('kegiatan.index');
-        }
-
         $data['dataLSP'] = LSPModel::get();
         $data['dataKegiatan'] = KegiatanModel::where('ref', $id)
             ->with([

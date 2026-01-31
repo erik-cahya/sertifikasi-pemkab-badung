@@ -46,6 +46,8 @@ Route::middleware('auth')->group(function () {
     Route::put('kegiatan/{id}', [KegiatanController::class, 'update'])->name('kegiatan.update');
     Route::delete('kegiatan/{id}', [KegiatanController::class, 'destroy'])->name('kegiatan.destroy');
 
+    Route::get('jadwalAsesmen', [AsesmenController::class, 'index'])->name('jadwal.asesmen');
+
     // Selain role master & dinas, tidak bisa akses route ini
     Route::middleware(['role:master, dinas'])->group(function () {
         // ################################ LSP
@@ -55,10 +57,9 @@ Route::middleware('auth')->group(function () {
         Route::get('lsp/{id}', [LSPController::class, 'show'])->name('lsp.show');
         Route::delete('lsp/{id}', [LSPController::class, 'destroy'])->name('lsp.destroy');
 
-        Route::get('jadwalAsesmen', [KegiatanController::class, 'jadwalAsesmen'])->name('jadwal.asesmen');
 
         // ################################ Asesmen by Admin
-        Route::resource('asesmen', AsesmenController::class)->except('index');
+        // Route::resource('asesmen', AsesmenController::class)->except('index');
 
         // ################################ Kegiatan LSP
         Route::post('kegiatan-detail', [KegiatanLSPController::class, 'store'])->name('kegiatan-lsp.store');
