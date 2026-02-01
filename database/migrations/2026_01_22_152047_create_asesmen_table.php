@@ -21,6 +21,16 @@ return new class extends Migration
             $table->string('nama_skema');
             $table->dateTime('jadwal_asesmen');
             $table->integer('kuota_harian');
+
+            // TAMBAHAN
+            $table->string('nama_penanggung_jawab');
+            $table->string('no_penanggung_jawab');
+            $table->string('nama_penyelenggara_uji');
+            $table->string('no_penyelenggara_uji');
+            $table->string('nama_asesor');
+            $table->string('no_asesor');
+            $table->string('no_reg_asesor');
+
             $table->foreignUlid('created_by')->nullable()->references('ref')->on('users')->nullOnDelete();
             $table->timestamps();
         });

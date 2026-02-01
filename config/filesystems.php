@@ -60,6 +60,14 @@ return [
             'report' => false,
         ],
 
+        'logo-lsp' => [
+            'driver' => 'local',
+            'root' => public_path('img'),
+            'url' => rtrim(env('APP_URL'), '/').'/img',
+            'visibility' => 'public',
+            'throw' => false,
+        ],
+
     ],
 
     /*
