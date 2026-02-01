@@ -100,8 +100,7 @@
                 <div class="title">KEGIATAN UJI KOMPETENSI TENAGA KERJA TAHUN <span class="value">GET TAHUN KEGIATAN</span></div>
             </td>
             <td width="15%" class="center">
-                <img src="{{ asset('storage/'.str_replace(' ', '%20', 'LSP/LSP BETA/lsp-beta-BNSP-000-ID.png')) }}" width="80px">
-
+                <img src="{{public_path('img/logo-lsp/lsp-beta-BNSP-000-ID.png') }}"  width="80px">
             </td>
         </tr>
     </table>

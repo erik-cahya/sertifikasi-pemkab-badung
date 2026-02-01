@@ -7,6 +7,8 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
+
 
 class LSPController extends Controller
 {
@@ -71,15 +73,6 @@ class LSPController extends Controller
             'lsp_logo.mimes' => 'Format logo harus PNG',
         ]);
 
-        $userCreated = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'username' => $request->username,
-            'password' => bcrypt($request->password),
-            'roles' => strtolower(trim('lsp')),
-            'is_active' => 1
-        ]);
-
         // ================== SIMPAN FILE ==================
         $lsp_nama  = Str::slug($request->lsp_nama);
         $lsp_no_lisensi  = $request->lsp_no_lisensi;
@@ -89,11 +82,21 @@ class LSPController extends Controller
         if ($request->hasFile('lsp_logo')) {
             $ext = $request->file('lsp_logo')->extension();
             $filename = "{$lsp_nama}-{$lsp_no_lisensi}.{$ext}";
+            $lsp_logo = Storage::disk('logo-lsp')->putFileAs("logo-lsp",$request->file('lsp_logo'),$filename);
 
-             $lsp_logo = $request->file('lsp_logo')
-            ->storeAs("LSP/{$request->lsp_nama}", $filename, 'public');
+            //  $lsp_logo = $request->file('lsp_logo')
+            // ->storeAs("LSP/{$request->lsp_nama}", $filename, 'public');
+                
         }
 
+        $userCreated = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'username' => $request->username,
+            'password' => bcrypt($request->password),
+            'roles' => strtolower(trim('lsp')),
+            'is_active' => 1
+        ]);
 
         LSPModel::create([
             'user_ref' => $userCreated->ref,

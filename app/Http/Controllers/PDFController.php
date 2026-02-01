@@ -5,12 +5,16 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
+
 
 
 class PDFController extends Controller
 {
     public function daftarHadir()
     {
+        // dd(Storage::disk('public')->exists('logo-lsp/lsp-beta-BNSP-000-ID.png'));
+
         return Pdf::loadView('admin-panel.pdf.daftar-hadir')
             ->setPaper('A4', 'portrait')
             ->stream('Daftar-Hadir.pdf');

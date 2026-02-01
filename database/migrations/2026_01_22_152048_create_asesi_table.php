@@ -15,11 +15,13 @@ return new class extends Migration
             $table->ulid('ref')->primary();
             $table->foreignUlid('kegiatan_ref')->references('ref')->on('kegiatan')->cascadeOnDelete();
             $table->foreignUlid('lsp_ref')->references('ref')->on('lsp')->cascadeOnDelete();
-            $table->foreignUlid('tuk_ref')->references('ref')->on('tuk')->cascadeOnDelete();
-            $table->foreignUlid('tgl_asesmen')->references('ref')->on('kegiatan_jadwal')->cascadeOnDelete();
+            // GANTI MENJADI FK DENGAN JADWAL ASSEMEN
+            $table->foreignUlid('asesmen_ref')->references('ref')->on('asesmen')->cascadeOnDelete();
 
+            // $table->foreignUlid('tuk_ref')->references('ref')->on('tuk')->cascadeOnDelete();
+            // $table->foreignUlid('tgl_asesmen')->references('ref')->on('kegiatan_jadwal')->cascadeOnDelete();
             // $table->dateTime('tgl_asesmen');
-            $table->string('skema_asesmen');
+            // $table->string('skema_asesmen');
 
             $table->string('nama_lengkap');
             $table->string('nik');
