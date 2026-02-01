@@ -119,7 +119,6 @@ class AsesiController extends Controller
         return response()->json($dataTUK);
     }
 
-
     /**
      * Display a listing of the resource.
      */

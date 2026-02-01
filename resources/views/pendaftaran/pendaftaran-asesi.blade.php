@@ -386,7 +386,16 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-lg-6">
+                                         <div class="col-lg-6">
+                                            <div class="mb-3">
+                                                <label for="asesmen_ref" class="form-label">Jadwal Asesmen</label><span class="text-danger">*</span>
+                                                <select class="rounded-3 form-select" id="asesmen_ref" name="asesmen_ref" disabled>
+                                                    <option value="" disabled selected>Pilih Jadwal Asesmen...</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        {{-- <div class="col-lg-6">
                                             <div class="mb-3">
                                                 <label for="skema_asesmen" class="form-label">Skema Sertifikasi Kompetensi</label><span class="text-danger">*</span>
                                                 <select class="rounded-3 form-select" id="skema_asesmen" name="skema_asesmen" disabled>
@@ -412,7 +421,7 @@
                                                     <option value="" disabled selected>Pilih Jadwal Uji Kompetensi</option>
                                                 </select>
                                             </div>
-                                        </div>
+                                        </div> --}}
 
                                         <div class="col-lg-12">
                                             <div class="mb-2 mt-3">

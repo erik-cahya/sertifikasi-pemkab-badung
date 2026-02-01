@@ -25,6 +25,7 @@ Route::get('/ajax/lsp-by-kegiatan/{kegiatan}', [AsesiController::class, 'getLspB
 Route::get('/ajax/skema-by-kegiatan-lsp', [AsesiController::class, 'getSkemaByKegiatanLsp']);
 Route::get('/ajax/jadwal-by-lsp', [AsesiController::class, 'getJadwalByLsp']);
 Route::get('/ajax/tuk-by-lsp', [AsesiController::class, 'getTukByLsp']);
+Route::get('/ajax/asesmen-by-lsp', [AsesiController::class, 'getAsesmenByLsp']);
 
 Route::get('/ajax/getJabatanByDepartemen/{departemenNama}', [JabatanController::class, 'getJabatanByDepartemen']);
 
