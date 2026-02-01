@@ -45,6 +45,9 @@ class LSPController extends Controller
     public function store(Request $request)
     {
         // dd($request->all());
+        // dd($request->hasFile('lsp_logo'), $request->file('lsp_logo'));
+
+
         $validated = $request->validate([
             'lsp_nama' => 'required',
             'lsp_no_lisensi' => 'required',
@@ -59,8 +62,13 @@ class LSPController extends Controller
             'name' => 'required',
             'username' => 'required',
             'password' => 'required|confirmed',
+
+              // FILE VALIDATION
+            'lsp_logo' => 'nullable|mimes:png|max:2048',
         ], [
             'lsp_nama.required' => 'Silahkan inputkan nama LSP',
+            'lsp_logo.max'   => 'Logo maksimal 2 MB',
+            'lsp_logo.mimes' => 'Format logo harus PNG',
         ]);
 
         $userCreated = User::create([
@@ -72,6 +80,21 @@ class LSPController extends Controller
             'is_active' => 1
         ]);
 
+        // ================== SIMPAN FILE ==================
+        $lsp_nama  = Str::slug($request->lsp_nama);
+        $lsp_no_lisensi  = $request->lsp_no_lisensi;
+        $lsp_logo = null;
+
+        /* ================== LOGO LSP ================== */
+        if ($request->hasFile('lsp_logo')) {
+            $ext = $request->file('lsp_logo')->extension();
+            $filename = "{$lsp_nama}-{$lsp_no_lisensi}.{$ext}";
+
+             $lsp_logo = $request->file('lsp_logo')
+            ->storeAs("LSP/{$request->lsp_nama}", $filename, 'public');
+        }
+
+
         LSPModel::create([
             'user_ref' => $userCreated->ref,
             'lsp_nama' => trim($request->lsp_nama),
@@ -81,7 +104,7 @@ class LSPController extends Controller
             'lsp_telp' => $request->lsp_telp,
             'lsp_direktur' => $request->lsp_direktur,
             'lsp_direktur_telp' => $request->lsp_direktur_telp,
-            'lsp_logo' => NULL,
+            'lsp_logo' => $lsp_logo,
             'lsp_tanggal_lisensi' => $request->lsp_tanggal_lisensi,
             'lsp_expired_lisensi' => $request->lsp_expired_lisensi,
             'created_by' => Auth::user()->ref,

@@ -11,7 +11,7 @@
                             <h4 class="card-title">Create LSP Baru</h4>
                             <p class="text-muted mb-0">Tambahkan data LSP baru pada form berikut.</p>
                         </div>
-                        <form action="{{ route('lsp.store') }}" method="POST">
+                        <form action="{{ route('lsp.store') }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="card-body">
 
