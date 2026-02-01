@@ -16,7 +16,14 @@ class AsesmenModel extends Model
     public $incrementing = false;
     protected $keyType = 'string';
 
-     public function kegiatan()
+    public function setRefAttribute($value)
+    {
+        if ($value !== null) {
+            $this->attributes['ref'] = strtoupper($value);
+        }
+    }
+
+    public function kegiatan()
     {
         return $this->belongsTo(KegiatanModel::class, 'kegiatan_ref', 'ref');
     }
