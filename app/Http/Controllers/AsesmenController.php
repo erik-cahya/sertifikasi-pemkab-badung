@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AsesmenModel;
 use App\Models\KegiatanDetailModel;
+use App\Models\KegiatanJadwalModel;
 use App\Models\KegiatanLSPModel;
 use App\Models\KegiatanModel;
 use App\Models\TUKModel;
@@ -47,9 +49,11 @@ class AsesmenController extends Controller
      */
     public function create($id)
     {
-        // //
+        /** @var \App\Models\User $user */
         $user = Auth::user();
-        // $user->loadMissing('lspData');
+        $user->loadMissing('lspData');
+
+        // dd($user->lspData->ref);
 
         // $query = KegiatanModel::with([
         //     'kegiatanLsp:ref,kegiatan_ref,lsp_ref,kuota_lsp',
@@ -63,28 +67,35 @@ class AsesmenController extends Controller
         // }
 
         $data['dataKegiatan'] = KegiatanModel::where('ref', $id)
-        ->with([
-            'kegiatanLsp.lsp',           // detail kuota + LSP
-            'kegiatanLsp.jadwal',
-            'skemaPerLsp.lsp',        // total skema per LSP
-            'kuotaPerLsp.lsp',      // total kuota per LSP
-            'asesi.tuk',
-            'asesi.skema'
-        ])->withSum(
-            'kegiatanLsp as total_peserta',
-            'kuota_lsp',
-        )->withCount('skemas', 'asesi')        // total skema kegiatan
-        ->firstOrFail();
+            ->with([
+                'kegiatanLsp.lsp',           // detail kuota + LSP
+                'kegiatanLsp.jadwal',
+                'skemaPerLsp.lsp',        // total skema per LSP
+                'kuotaPerLsp.lsp',      // total kuota per LSP
+                'asesi.tuk',
+                'asesi.skema'
+            ])->withSum(
+                'kegiatanLsp as total_peserta',
+                'kuota_lsp',
+            )->withCount('skemas', 'asesi')        // total skema kegiatan
+            ->firstOrFail();
+
         $data['dataTUK'] = TUKModel::where('lsp_ref', $user->lspData->ref)->get();
-        $data['dataSkema'] = KegiatanSkemaModel::with('skema')
-        ->where('kegiatan_ref', $id)
-        ->where('lsp_ref', $user->lspData->ref)
-        ->get();
-// dd($data['dataSkema']->pluck('skema_ref'));
+        $data['dataSkema'] = KegiatanSkemaModel::with('skema')->where('kegiatan_ref', $id)->where('lsp_ref', $user->lspData->ref)
+            ->get();
+
+        // dd($data['dataSkema']);
+        $jadwalKegiatan = KegiatanJadwalModel::where('kegiatan_ref', $id)->where('lsp_ref', $user->lspData->ref)->firstOrFail();
+
+        // dd($jadwalKegiatan);
+        $data['mulaiKegiatan']   = $jadwalKegiatan->mulai_asesmen;
+        $data['selesaiKegiatan'] = $jadwalKegiatan->selesai_asesmen;
+
+        $data['kegiatan_jadwal_ref'] = $jadwalKegiatan->ref;
+        $data['kegiatan_ref'] = $jadwalKegiatan->kegiatan_ref;
+        $data['kegiatan_lsp_ref'] = $jadwalKegiatan->kegiatan_lsp_ref;
 
 
-
-        // // dd($data['dataKegiatan']);
         return view('admin-panel.asesmen.create', $data);
     }
 
@@ -93,7 +104,41 @@ class AsesmenController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        // dd(Auth::user()->lspData->lsp_nama);
+        // $validated = $request->validate([
+        //     'nama_tuk' => 'required',
+        //     'skema_sertifikasi' => 'required',
+        //     'nama_penanggung_jawab' => 'required',
+        //     'no_penanggung_jawab' => 'required',
+        //     'nama_penyelenggara_uji' => 'required',
+        //     'no_penyelenggara_uji' => 'required',
+        //     'nama_asesor' => 'required',
+        //     'no_asesor' => 'required',
+        //     'no_reg_asesor' => 'required',
+        // ]);
+
+        AsesmenModel::create([
+            'kegiatan_ref' => $request->kegiatan_ref,
+            'kegiatan_lsp_ref' => $request->kegiatan_lsp_ref,
+            'kegiatan_jadwal_ref' => $request->kegiatan_jadwal_ref,
+
+            'nama_lsp' => Auth::user()->lspData->lsp_nama,
+            'nama_tuk' => $request->nama_tuk,
+            'nama_skema' => $request->skema_sertifikasi,
+            'jadwal_asesmen' => Carbon::createFromFormat('d/m/Y', $request->jadwal_asesmen)->format('Y-m-d'),
+            'kuota_harian' => 10,
+            'nama_penanggung_jawab' => $request->nama_penanggung_jawab,
+            'no_penanggung_jawab' => $request->no_penanggung_jawab,
+            'nama_penyelenggara_uji' => $request->nama_penyelenggara_uji,
+            'no_penyelenggara_uji' => $request->no_penyelenggara_uji,
+            'nama_asesor' => $request->nama_asesor,
+            'no_asesor' => $request->no_asesor,
+            'no_reg_asesor' => $request->no_reg_asesor,
+            'created_by' => Auth::user()->ref,
+        ]);
+
+        dd('Data MASOKK');
     }
 
     /**

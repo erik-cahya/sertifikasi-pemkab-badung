@@ -147,6 +147,7 @@ class KegiatanController extends Controller
 
                 KegiatanJadwalModel::create([
                     'lsp_ref'         => $lsp,
+                    'kegiatan_ref' => $kegiatan->ref,
                     'kegiatan_lsp_ref' => $kegiatanLSP->ref,
                     'mulai_asesmen'   => $startDate->format('Y-m-d'),
                     'selesai_asesmen' => $endDate->format('Y-m-d'),

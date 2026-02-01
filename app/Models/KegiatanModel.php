@@ -37,6 +37,11 @@ class KegiatanModel extends Model
         return $this->hasMany(KegiatanJadwalModel::class, 'kegiatan_ref', 'ref');
     }
 
+    public function kegiatanJadwal(): HasMany
+    {
+        return $this->hasMany(KegiatanJadwalModel::class, 'kegiatan_ref', 'ref');
+    }
+
     public function kegiatanLsp(): HasMany
     {
         return $this->hasMany(

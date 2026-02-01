@@ -16,8 +16,10 @@
                             <tr>
                                 <th>Nomor</th>
                                 <th>Nama Kegiatan</th>
-                                <th>LSP Terlibat</th>
-                                <th>Kuota Peserta</th>
+                                @role('master')
+                                    <th>LSP Terlibat</th>
+                                    <th>Kuota Peserta</th>
+                                @endrole
                                 <th>Mulai Kegiatan</th>
                                 <th>Kegiatan Selesai</th>
                                 <th>Status Kegiatan</th>
@@ -34,29 +36,32 @@
                                         <span class="badge {{ $kegiatan->status == 1 ? 'bg-success' : 'bg-danger' }} rounded-circle p-1"><small></small></span>
                                         {{ $kegiatan->nama_kegiatan }}
                                     </td>
-                                    <td>
-                                        @php
-                                            $lsps = $kegiatan->kegiatanLsp
-                                                ->map(fn($item) => $item->lsp) // ambil model LSP
-                                                ->filter() // buang null
-                                                ->unique('ref'); // unik per LSP
-                                        @endphp
 
-                                        <div class="d-flex flex-column gap-1">
-                                            @if ($lsps->isEmpty())
-                                                <span class="badge bg-danger-subtle text-danger">
-                                                    Tidak ada LSP yang terlibat
-                                                </span>
-                                            @else
-                                                @foreach ($lsps as $lsp)
-                                                    <span class="badge bg-primary-subtle text-primary">
-                                                        {{ $lsp->lsp_nama }}
+                                    @role('master')
+                                        <td>
+                                            @php
+                                                $lsps = $kegiatan->kegiatanLsp
+                                                    ->map(fn($item) => $item->lsp) // ambil model LSP
+                                                    ->filter() // buang null
+                                                    ->unique('ref'); // unik per LSP
+                                            @endphp
+
+                                            <div class="d-flex flex-column gap-1">
+                                                @if ($lsps->isEmpty())
+                                                    <span class="badge bg-danger-subtle text-danger">
+                                                        Tidak ada LSP yang terlibat
                                                     </span>
-                                                @endforeach
-                                            @endif
-                                        </div>
-                                    </td>
-                                    <td>{{ $kegiatan->total_kuota ?? '0' }} Peserta</td>
+                                                @else
+                                                    @foreach ($lsps as $lsp)
+                                                        <span class="badge bg-primary-subtle text-primary">
+                                                            {{ $lsp->lsp_nama }}
+                                                        </span>
+                                                    @endforeach
+                                                @endif
+                                            </div>
+                                        </td>
+                                        <td>{{ $kegiatan->total_kuota ?? '0' }} Peserta</td>
+                                    @endrole('master')
                                     <td>{{ \Carbon\Carbon::parse($kegiatan->mulai_kegiatan)->locale('id')->translatedFormat('l, d F Y') }}</td>
                                     <td>{{ \Carbon\Carbon::parse($kegiatan->selesai_kegiatan)->locale('id')->translatedFormat('l, d F Y') }}</td>
                                     <td><span class="badge {{ $kegiatan->status == 1 ? 'bg-success' : 'bg-danger' }}">{{ $kegiatan->status == 1 ? 'Aktif' : 'Tidak Aktif' }}</span></td>
