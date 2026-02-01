@@ -50,14 +50,18 @@ Route::middleware('auth')->group(function () {
     Route::get('asesmen/create/{id}', [AsesmenController::class, 'create'])->name('asesmen.create');
 
 
+    // ################################ LSP
+    Route::post('lsp/change-password/{id}', [LSPController::class, 'changePassword'])->name('lsp.change-password');
+    Route::get('lsp', [LSPController::class, 'index'])->name('lsp.index')->middleware('role:dinas,master');
+    Route::get('lsp/create', [LSPController::class, 'create'])->name('lsp.create')->middleware('role:dinas,master');
+    Route::post('lsp/store', [LSPController::class, 'store'])->name('lsp.store')->middleware('role:dinas,master');
+    Route::put('lsp/{id}', [LSPController::class, 'update'])->name('lsp.update')->middleware('role:dinas,master');
+    Route::get('lsp/{id}', [LSPController::class, 'show'])->name('lsp.show')->middleware('role:dinas,master');
+    Route::delete('lsp/{id}', [LSPController::class, 'destroy'])->name('lsp.destroy')->middleware('role:dinas,master');
+
     // Selain role master & dinas, tidak bisa akses route ini
     Route::middleware(['role:master, dinas'])->group(function () {
-        // ################################ LSP
-        Route::get('lsp', [LSPController::class, 'index'])->name('lsp.index');
-        Route::get('lsp/create', [LSPController::class, 'create'])->name('lsp.create');
-        Route::post('lsp/store', [LSPController::class, 'store'])->name('lsp.store');
-        Route::get('lsp/{id}', [LSPController::class, 'show'])->name('lsp.show');
-        Route::delete('lsp/{id}', [LSPController::class, 'destroy'])->name('lsp.destroy');
+
 
 
         // ################################ Asesmen by Admin
@@ -82,7 +86,7 @@ Route::middleware('auth')->group(function () {
     });
 
     // Role LSP
-    Route::middleware(['role:lsp,master, dinas'])->group(function () {
+    Route::middleware(['role:lsp,master,dinas'])->group(function () {
         // ################################ Skema
         Route::get('skema', [SkemaController::class, 'index'])->name('skema.index');
         Route::get('skema/create', [SkemaController::class, 'create'])->name('skema.create');
@@ -100,8 +104,8 @@ Route::middleware('auth')->group(function () {
 
 
     // ################################ Profile
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
+    Route::put('/profile/{id}', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     // ################################ TUK by admin
@@ -124,7 +128,6 @@ Route::middleware('auth')->group(function () {
     Route::get('daftar-hadir', [PDFController::class, 'daftarHadir'])->name('pdf.daftar-hadir');
     Route::get('daftar-penerimaan', [PDFController::class, 'daftarPenerimaan'])->name('pdf.daftar-penerimaan');
     Route::get('tanda-terima-sertifikat', [PDFController::class, 'tandaTerimaSertifikat'])->name('pdf.tanda-terima-sertifikat');
-
 });
 
 // ################################ Pendaftaraan Asesi

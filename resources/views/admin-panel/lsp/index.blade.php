@@ -12,7 +12,7 @@
                 </div>
                 <div class="card-body">
 
-                    <table id="scroll-horizontal-datatable" class="table-striped w-100 nowrap table">
+                    <table id="scroll-horizontal-datatable" class="table-striped table-bordered w-100 nowrap table">
                         <thead>
                             <tr>
                                 <th>No</th>
@@ -35,12 +35,10 @@
                                         <span>
                                             {{ $lsp->lsp_nama }}
                                             <hr class="m-1">
-                                            <span class="font-size-6 fw-bold gap-1">
-                                                <small>TUK : 12</small>
+                                            <span class="font-size-6 fw-bold d-flex justify-content-evenly">
+                                                <small>TUK : {{ $lsp->tuk_count }}</small>
                                                 <small>|</small>
-                                                <small>Skema : 12</small>
-                                                <small>|</small>
-                                                <small>Asesor : 12</small>
+                                                <small>Skema : {{ $lsp->skemas_count }}</small>
                                             </span>
                                         </span>
                                     </td>
@@ -58,7 +56,7 @@
 
                                             <a href="{{ route('lsp.show', $lsp->ref) }}" class="btn btn-sm btn-success" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="See Details" data-bs-custom-class="success-tooltip"><i class="mdi mdi-eye"></i> </a>
 
-                                            <a href="#" class="btn btn-sm btn-warning" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Edit Data" data-bs-custom-class="warning-tooltip"><i class="mdi mdi-lead-pencil"></i> </a>
+                                            {{-- <a href="#" class="btn btn-sm btn-warning" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Edit Data" data-bs-custom-class="warning-tooltip"><i class="mdi mdi-lead-pencil"></i> </a> --}}
 
                                             <input type="hidden" class="dataID" value="{{ $lsp->ref }}">
                                             <button type="button" class="btn btn-sm btn-danger deleteButton" data-nama="{{ $lsp->lsp_nama }}" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Delete Data" data-bs-custom-class="danger-tooltip">

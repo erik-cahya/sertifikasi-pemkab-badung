@@ -50,6 +50,11 @@ class LSPModel extends Model
         return $this->hasMany(SkemaModel::class, 'lsp_ref', 'ref');
     }
 
+    public function tuk(): HasMany
+    {
+        return $this->hasMany(TUKModel::class, 'lsp_ref', 'ref');
+    }
+
 
     public function kodeUnits()
     {

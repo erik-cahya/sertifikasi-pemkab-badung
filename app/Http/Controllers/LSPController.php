@@ -6,9 +6,11 @@ use App\Models\LSPModel;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
-
+use Illuminate\Support\Facades\Validator;
 
 class LSPController extends Controller
 {
@@ -17,6 +19,7 @@ class LSPController extends Controller
      */
     public function index()
     {
+
         $data['dataLSP'] = LSPModel::select(
             'lsp.ref',
             'lsp.lsp_nama',
@@ -26,9 +29,11 @@ class LSPController extends Controller
 
             'users.is_active',
             'users.username',
-        )
+        )->withCount('skemas', 'tuk')
             ->join('users', 'users.ref', '=', 'lsp.user_ref')
             ->get();
+
+        // dd($data['dataLSP']);
 
         return view('admin-panel.lsp.index', $data);
     }
@@ -53,11 +58,11 @@ class LSPController extends Controller
         $validated = $request->validate([
             'lsp_nama' => 'required',
             'lsp_no_lisensi' => 'required',
-            'lsp_email' => 'required',
-            'lsp_alamat' => 'required',
-            'lsp_telp' => 'required',
-            'lsp_direktur' => 'required',
-            'lsp_direktur_telp' => 'required',
+            // 'lsp_email' => 'required',
+            // 'lsp_alamat' => 'required',
+            // 'lsp_telp' => 'required',
+            // 'lsp_direktur' => 'required',
+            // 'lsp_direktur_telp' => 'required',
             'lsp_tanggal_lisensi' => 'required',
             'lsp_expired_lisensi' => 'required',
 
@@ -65,7 +70,7 @@ class LSPController extends Controller
             'username' => 'required',
             'password' => 'required|confirmed',
 
-              // FILE VALIDATION
+            // FILE VALIDATION
             'lsp_logo' => 'nullable|mimes:png|max:2048',
         ], [
             'lsp_nama.required' => 'Silahkan inputkan nama LSP',
@@ -82,11 +87,11 @@ class LSPController extends Controller
         if ($request->hasFile('lsp_logo')) {
             $ext = $request->file('lsp_logo')->extension();
             $filename = "{$lsp_nama}-{$lsp_no_lisensi}.{$ext}";
-            $lsp_logo = Storage::disk('logo-lsp')->putFileAs("logo-lsp",$request->file('lsp_logo'),$filename);
+            $lsp_logo = Storage::disk('logo-lsp')->putFileAs("logo-lsp", $request->file('lsp_logo'), $filename);
 
             //  $lsp_logo = $request->file('lsp_logo')
             // ->storeAs("LSP/{$request->lsp_nama}", $filename, 'public');
-                
+
         }
 
         $userCreated = User::create([
@@ -152,7 +157,33 @@ class LSPController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        // dd($request->all());
+
+        Validator::make($request->all(), [
+            'lsp_nama' => 'required|unique:lsp,lsp_nama,' . $id . ',ref',
+            'lsp_no_lisensi' => 'required|unique:lsp,lsp_no_lisensi,' . $id . ',ref',
+            'lsp_email' => 'required|unique:lsp,lsp_email,' . $id . ',ref',
+        ])->validateWithBag('update_lsp');
+
+        LSPModel::where('ref', $id)->update([
+            'lsp_nama' => $request->lsp_nama,
+            'lsp_no_lisensi' => $request->lsp_no_lisensi,
+            'lsp_alamat' => $request->lsp_alamat,
+            'lsp_telp' => $request->lsp_telp,
+            'lsp_email' => $request->lsp_email,
+            'lsp_telp' => $request->lsp_telp,
+            'lsp_direktur' => $request->lsp_direktur,
+            'lsp_direktur_telp' => $request->lsp_direktur_telp,
+            'lsp_tanggal_lisensi' => $request->lsp_tanggal_lisensi,
+            'lsp_expired_lisensi' => $request->lsp_expired_lisensi,
+        ]);
+
+        $flashData = [
+            'title' => 'Edit Success',
+            'message' => 'Data LSP berhasil diubah',
+            'type' => 'success',
+        ];;
+        return redirect()->route('lsp.show', $id)->with('flashData', $flashData);
     }
 
     /**
@@ -169,5 +200,36 @@ class LSPController extends Controller
             'pesan' => 'Data LSP Berhasil Dihapus',
             'type'  => 'success',
         ], 200);
+    }
+
+    public function changePassword(Request $request, $id)
+    {
+
+        $request->validate([
+            'password' => ['required', 'confirmed'],
+        ]);
+
+        $lsp = LSPModel::with('user')
+            ->where('ref', $id)
+            ->firstOrFail();
+
+        $user = $lsp->user;
+
+        // Update password
+        $user->update([
+            'password' => Hash::make($request->password),
+        ]);
+
+        // 🔥 FORCE LOGOUT: hapus semua session user ini
+        DB::table('sessions')
+            ->where('user_id', $user->id) // atau ref, tergantung auth
+            ->delete();
+
+        $flashData = [
+            'title' => 'Edit Success',
+            'message' => 'Password LSP berhasil diubah',
+            'type' => 'success',
+        ];;
+        return redirect()->route('lsp.show', $id)->with('flashData', $flashData);
     }
 }

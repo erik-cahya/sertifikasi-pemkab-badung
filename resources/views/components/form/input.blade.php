@@ -8,19 +8,27 @@
     'required' => false,
     'value',
     'placeholder',
+    'errorBag' => null, // ⬅️ TAMBAHKAN
 ])
 
-{{-- Jika tidak diberikan atribut placeholder, maka akan menggunakan Input + label --}}
 <div class="{{ $className }} mb-1" id="group_{{ $name }}">
     <label for="{{ $name }}" class="form-label">{{ $label }}</label>
 
-    <input type="{{ $type }}" id="{{ $name }}" name="{{ $name }}" class="rounded-3 form-control {{ $inputClassName }} @error($name) validation-form @enderror" placeholder="{{ isset($placeholder) ? $placeholder : 'Input ' . $label }}" value="{{ isset($value) ? old($name, $value) : old($name) }}" {{ $disabled ? 'disabled' : '' }} {{ $required ? 'required' : '' }}>
+    <input
+        type="{{ $type }}"
+        id="{{ $name }}"
+        name="{{ $name }}"
+        class="rounded-3 form-control {{ $inputClassName }} {{ $errors->{$errorBag ?? 'default'}->has($name) ? 'is-invalid' : '' }}"
+        placeholder="{{ $placeholder ?? 'Input ' . $label }}"
+        value="{{ isset($value) ? old($name, $value) : old($name) }}"
+        {{ $disabled ? 'disabled' : '' }}
+        {{ $required ? 'required' : '' }}>
 
-    @error($name)
-        <div class="alert alert-danger fs-11 m-0 p-1">
-            {{ $message }}
+    @if ($errors->{$errorBag ?? 'default'}->has($name))
+        <div class="invalid-feedback" bis_skin_checked="1">
+            {{ $errors->{$errorBag ?? 'default'}->first($name) }}
         </div>
-    @enderror
+    @endif
 </div>
 
 {{-- 

@@ -386,7 +386,7 @@
                                             </div>
                                         </div>
 
-                                         <div class="col-lg-6">
+                                        <div class="col-lg-6">
                                             <div class="mb-3">
                                                 <label for="asesmen_ref" class="form-label">Jadwal Asesmen</label><span class="text-danger">*</span>
                                                 <select class="rounded-3 form-select" id="asesmen_ref" name="asesmen_ref" disabled>

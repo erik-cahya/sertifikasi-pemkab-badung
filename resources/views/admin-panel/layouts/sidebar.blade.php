@@ -124,29 +124,30 @@
                 </div>
             </li>
 
-            {{-- @role('master') --}}
-            <li class="side-nav-item {{ request()->routeIs('lsp.*') ? 'menuitem-active' : '' }}">
-                <a data-bs-toggle="collapse" href="#lspMenu" aria-expanded="false" aria-controls="lspMenu" class="side-nav-link">
-                    <i class="ri-team-line"></i>
-                    <span> LSP </span>
-                    <span class="menu-arrow"></span>
-                </a>
-                <div class="{{ request()->routeIs('lsp.*') ? 'show' : '' }} collapse" id="lspMenu">
-                    <ul class="side-nav-second-level">
-                        <li class="side-nav-item {{ request()->routeIs('lsp.index') ? 'menuitem-active' : '' }}">
-                            <a class="side-nav-link {{ request()->routeIs('lsp.index') ? 'active' : '' }}" href="{{ route('lsp.index') }}">
-                                Daftar LSP
-                            </a>
-                        </li>
+            @role('master')
+                <li class="side-nav-item {{ request()->routeIs('lsp.*') ? 'menuitem-active' : '' }}">
+                    <a data-bs-toggle="collapse" href="#lspMenu" aria-expanded="false" aria-controls="lspMenu" class="side-nav-link">
+                        <i class="ri-team-line"></i>
+                        <span> LSP </span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <div class="{{ request()->routeIs('lsp.*') ? 'show' : '' }} collapse" id="lspMenu">
+                        <ul class="side-nav-second-level">
+                            <li class="side-nav-item {{ request()->routeIs('lsp.index') ? 'menuitem-active' : '' }}">
+                                <a class="side-nav-link {{ request()->routeIs('lsp.index') ? 'active' : '' }}" href="{{ route('lsp.index') }}">
+                                    Daftar LSP
+                                </a>
+                            </li>
 
-                        <li class="side-nav-item {{ request()->routeIs('lsp.create') ? 'menuitem-active' : '' }}">
-                            <a class="side-nav-link {{ request()->routeIs('lsp.create') ? 'active' : '' }}" href="{{ route('lsp.create') }}">
-                                Tambah LSP
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </li>
+                            <li class="side-nav-item {{ request()->routeIs('lsp.create') ? 'menuitem-active' : '' }}">
+                                <a class="side-nav-link {{ request()->routeIs('lsp.create') ? 'active' : '' }}" href="{{ route('lsp.create') }}">
+                                    Tambah LSP
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+            @endrole
 
             <li class="side-nav-item {{ request()->routeIs('kegiatan.*') ? 'menuitem-active' : '' }}">
                 <a data-bs-toggle="collapse" href="#kegiatanMenu" aria-expanded="false" aria-controls="kegiatanMenu" class="side-nav-link">
@@ -200,6 +201,17 @@
                     </ul>
                 </div>
             </li>
+
+            @role('lsp')
+                <li class="side-nav-title">Profile</li>
+                <li class="side-nav-item {{ request()->routeIs('profile.index') ? 'menuitem-active' : '' }}">
+                    <a href="{{ route('profile.index') }}" class="side-nav-link">
+                        <i class="ri-dashboard-2-line"></i>
+                        <span> Profile LSP </span>
+                    </a>
+                </li>
+            @endrole
+
             {{-- @endrole --}}
 
             {{-- <li class="side-nav-item {{ request()->routeIs('violation.*') ? 'menuitem-active' : '' }}">
