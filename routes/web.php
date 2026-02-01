@@ -47,7 +47,8 @@ Route::middleware('auth')->group(function () {
     Route::put('kegiatan/{id}', [KegiatanController::class, 'update'])->name('kegiatan.update');
     Route::delete('kegiatan/{id}', [KegiatanController::class, 'destroy'])->name('kegiatan.destroy');
 
-    Route::get('jadwalAsesmen', [AsesmenController::class, 'index'])->name('jadwal.asesmen');
+    Route::get('asesmen/create/{id}', [AsesmenController::class, 'create'])->name('asesmen.create');
+
 
     // Selain role master & dinas, tidak bisa akses route ini
     Route::middleware(['role:master, dinas'])->group(function () {

@@ -13,44 +13,39 @@
         <div class="container-fluid">
 
             <div class="row">
+                <div class="col-lg-12">
+                <div class="card border-top-0 overflow-hidden">
+                    <div class="progress progress-sm rounded-0 bg-light" role="progressbar" aria-valuenow="88" aria-valuemin="0" aria-valuemax="100">
+                        <div class="progress-bar bg-success" style="width: 60%"></div>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <div class="">
+                                <p class="text-muted fw-semibold fs-16 mb-1">{{ $dataKegiatan->nama_kegiatan }}</p>
+
+                                <p class="text-muted">
+                                    <small>Durasi Kegiatan : {{ \Carbon\Carbon::parse($dataKegiatan->mulai_kegiatan)->locale('id')->translatedFormat('d F Y') }} s/d {{ \Carbon\Carbon::parse($dataKegiatan->selesai_kegiatan)->locale('id')->translatedFormat('d F Y') }}</small>
+                                </p>
+
+                                <span class="badge {{ $dataKegiatan->status == 1 ? 'bg-success' : 'bg-danger' }} rounded-pill px-2 py-1">Status : {{ $dataKegiatan->status == 1 ? 'Aktif' : 'Tidak Aktif' }}</span>
+                                <span class="badge bg-info rounded-pill px-2 py-1">{{ $dataKegiatan->kegiatanLsp->pluck('lsp')->unique('ref')->count() }} LSP</span>
+                                <span class="badge bg-primary rounded-pill px-2 py-1">{{ $dataKegiatan->asesi_count }}/{{ $dataKegiatan->total_peserta }} Calon Asesi</span>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
                             <h4 class="card-title mb-0"> <i class="ri-profile-line fw-normal fs-20 me-1 align-middle"></i>
-                                Create Data Asesmen</h4>
+                                Buat Data Asesmen</h4>
                         </div>
                         <div class="card-body">
                             <div class="row">
-
-                                <div class="col-lg-12 mb-3">
-                                    <label for="kegiatan_ref" class="form-label">Pilih Kegiatan</label>
-                                    <select class="select2 @error('kegiatan_ref') is-invalid @enderror form-select" data-toggle="select2" id="kegiatan_ref" name="kegiatan_ref">
-                                        <option value="#" hidden disabled selected>Pilih Kegiatan</option>
-                                        @foreach ($dataKegiatan as $kegiatan)
-                                            <option value="{{ $kegiatan->ref }}" data-mulai="{{ $kegiatan->mulai_asesmen }}" data-selesai="{{ $kegiatan->selesai_asesmen }}">{{ $kegiatan->nama_kegiatan }}</option>
-                                        @endforeach
-                                    </select>
-                                    @error('kegiatan')
-                                        <div class="invalid-feedback" bis_skin_checked="1">
-                                            {{ $message }}
-                                        </div>
-                                    @enderror
-                                </div>
-
-                                <!-- Jika di master, tampilkan ini. Jika di lsp, jangan tampilkan -->
-                                 {{-- <div class="col-lg-6 mb-3">
-                                    <label for="kegiatan_lsp_ref" class="form-label">Pilih LSP</label>
-                                    <select class="select2 @error('kegiatan_lsp_ref') is-invalid @enderror form-select" data-toggle="select2" id="kegiatan_lsp_ref" name="kegiatan_lsp_ref">
-                                        <option value="#" hidden disabled selected>Pilih LSP</option>
-                                        
-                                    </select>
-                                    @error('kegiatan')
-                                        <div class="invalid-feedback" bis_skin_checked="1">
-                                            {{ $message }}
-                                        </div>
-                                    @enderror
-                                </div> --}}
-
                                 <div class="col-lg-4 mb-3">
                                     <label for="nama_tuk" class="form-label">Pilih TUK</label>
                                     <select class="select2 @error('nama_tuk') is-invalid @enderror form-select" data-toggle="select2" id="nama_tuk" name="nama_tuk">
@@ -171,7 +166,7 @@
 
                             </div>
                             <div class="mb-3 mt-3">
-                                <button class="btn btn-primary" type="submit"><i class="ri-add-box-fill"></i> Add Jadwal Asesmen</button>
+                                <button class="btn btn-primary" type="submit"><i class="ri-add-box-fill"></i> Buat Jadwal</button>
                             </div>
                         </div>
                     </div>

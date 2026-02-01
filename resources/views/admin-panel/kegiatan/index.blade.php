@@ -62,6 +62,7 @@
                                     <td><span class="badge {{ $kegiatan->status == 1 ? 'bg-success' : 'bg-danger' }}">{{ $kegiatan->status == 1 ? 'Aktif' : 'Tidak Aktif' }}</span></td>
                                     <td>
                                         <div class="btn-group" role="group" aria-label="Basic outlined example">
+                                            <a href="{{ route('asesmen.create', $kegiatan->ref) }}" class="btn btn-sm btn-info" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Buat Jadwal Asesmen" data-bs-custom-class="info-tooltip"><i class="mdi mdi-calendar-edit"></i> </a>
                                             <a href="{{ route('kegiatan.show', $kegiatan->ref) }}" class="btn btn-sm btn-success" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="See Details" data-bs-custom-class="success-tooltip"><i class="mdi mdi-eye"></i> </a>
 
                                             <input type="hidden" class="valueID" value="{{ $kegiatan->ref }}">
