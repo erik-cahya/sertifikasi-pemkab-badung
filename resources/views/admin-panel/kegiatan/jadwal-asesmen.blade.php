@@ -89,8 +89,7 @@
                                                             </div>
                                                             <div class="card-body">
                                                                 <div class="row">
-
-                                                                    <div class="col-lg-4">
+                                                                    <div class="col-lg-3">
                                                                         <div class="mb-3">
                                                                             <label for="nama_kegiatan" class="form-label">Kegiatan Sertifikasi</label>
                                                                             <input type="text" id="nama_kegiatan" name="nama_kegiatan" class="form-control @error('nama_kegiatan', 'create_kegiatan') is-invalid @enderror" value="Sertifikasi BNSP 2026" disabled>
@@ -103,7 +102,7 @@
                                                                         </div>
                                                                     </div>
 
-                                                                    <div class="col-lg-4">
+                                                                    <div class="col-lg-3">
                                                                         <label for="tempat_tuk" class="form-label">Pilih TUK</label>
                                                                         <select class="select2 @error('tempat_tuk') is-invalid @enderror form-select" data-toggle="select2" id="tempat_tuk" name="tempat_tuk">
                                                                             <option value="#" hidden disabled selected>Pilih TUK</option>
@@ -116,7 +115,7 @@
                                                                         @enderror
                                                                     </div>
 
-                                                                    <div class="col-lg-4">
+                                                                    <div class="col-lg-3">
                                                                         <label class="form-label" for="tanggal_asesmen">Tanggal Mulai Kegiatan</label>
                                                                         <input type="text" id="tanggal_asesmen" name="tanggal_asesmen" class="form-control single-date @error('tanggal_asesmen', 'create_kegiatan') is-invalid @enderror" value="{{ old('tanggal_asesmen') }}" autocomplete="off">
 
@@ -127,7 +126,7 @@
                                                                         @enderror
                                                                     </div>
 
-                                                                    <div class="col-lg-4">
+                                                                    <div class="col-lg-3">
                                                                         <label for="skema_sertifikasi" class="form-label">Skema Sertifikasi</label>
                                                                         <select class="select2 @error('skema_sertifikasi') is-invalid @enderror form-select" data-toggle="select2" id="skema_sertifikasi" name="skema_sertifikasi">
                                                                             <option value="#" hidden disabled selected>Pilih TUK</option>
@@ -139,10 +138,81 @@
                                                                             </div>
                                                                         @enderror
                                                                     </div>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <div class="col-lg-3">
+                                                                        <label for="nama_penanggung_jawab" class="form-label">Nama Penanggung Jawab</label>
+                                                                        <input type="text" id="nama_penanggung_jawab" name="nama_penanggung_jawab" class="form-control single-date @error('nama_penanggung_jawab', 'create_kegiatan') is-invalid @enderror" value="{{ old('nama_penanggung_jawab') }}" autocomplete="off">
+                                                                        @error('nama_penanggung_jawab', 'create_kegiatan')
+                                                                            <div class="invalid-feedback" bis_skin_checked="1">
+                                                                                {{ $message }}
+                                                                            </div>
+                                                                        @enderror
+                                                                    </div>
 
+                                                                    <div class="col-lg-3">
+                                                                        <label for="no_penanggung_jawab" class="form-label">No HP Penanggung Jawab</label>
+                                                                        <input type="text" id="no_penanggung_jawab" name="no_penanggung_jawab" class="form-control single-date @error('no_penanggung_jawab', 'create_kegiatan') is-invalid @enderror" value="{{ old('no_penanggung_jawab') }}" autocomplete="off">
+                                                                        @error('no_penanggung_jawab', 'create_kegiatan')
+                                                                            <div class="invalid-feedback" bis_skin_checked="1">
+                                                                                {{ $message }}
+                                                                            </div>
+                                                                        @enderror
+                                                                    </div>
+
+                                                                    <div class="col-lg-3">
+                                                                        <label for="nama_penyelenggara_uji" class="form-label">Nama Penyelenggara Uji</label>
+                                                                        <input type="text" id="nama_penyelenggara_uji" name="nama_penyelenggara_uji" class="form-control single-date @error('nama_penyelenggara_uji', 'create_kegiatan') is-invalid @enderror" value="{{ old('nama_penyelenggara_uji') }}" autocomplete="off">
+                                                                        @error('nama_penyelenggara_uji', 'create_kegiatan')
+                                                                            <div class="invalid-feedback" bis_skin_checked="1">
+                                                                                {{ $message }}
+                                                                            </div>
+                                                                        @enderror
+                                                                    </div>
+
+                                                                    <div class="col-lg-3">
+                                                                        <label for="no_penyelenggara_uji" class="form-label">No HP Penyelenggara Uji</label>
+                                                                        <input type="text" id="no_penyelenggara_uji" name="no_penyelenggara_uji" class="form-control single-date @error('no_penyelenggara_uji', 'create_kegiatan') is-invalid @enderror" value="{{ old('no_penyelenggara_uji') }}" autocomplete="off">
+                                                                        @error('no_penyelenggara_uji', 'create_kegiatan')
+                                                                            <div class="invalid-feedback" bis_skin_checked="1">
+                                                                                {{ $message }}
+                                                                            </div>
+                                                                        @enderror
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <div class="col-lg-4">
+                                                                        <label for="nama_asesor" class="form-label">Nama Asesor</label>
+                                                                        <input type="text" id="nama_asesor" name="nama_asesor" class="form-control single-date @error('nama_asesor', 'create_kegiatan') is-invalid @enderror" value="{{ old('nama_asesor') }}" autocomplete="off">
+                                                                        @error('nama_asesor', 'create_kegiatan')
+                                                                            <div class="invalid-feedback" bis_skin_checked="1">
+                                                                                {{ $message }}
+                                                                            </div>
+                                                                        @enderror
+                                                                    </div>
+
+                                                                    <div class="col-lg-4">
+                                                                        <label for="no_asesor" class="form-label">No HP Asesor</label>
+                                                                        <input type="text" id="no_asesor" name="no_asesor" class="form-control single-date @error('no_asesor', 'create_kegiatan') is-invalid @enderror" value="{{ old('no_asesor') }}" autocomplete="off">
+                                                                        @error('no_asesor', 'create_kegiatan')
+                                                                            <div class="invalid-feedback" bis_skin_checked="1">
+                                                                                {{ $message }}
+                                                                            </div>
+                                                                        @enderror
+                                                                    </div>
+
+                                                                     <div class="col-lg-4">
+                                                                        <label for="no_reg_asesor" class="form-label">No Reg Asesor</label>
+                                                                        <input type="text" id="no_reg_asesor" name="no_reg_asesor" class="form-control single-date @error('no_reg_asesor', 'create_kegiatan') is-invalid @enderror" value="{{ old('no_reg_asesor') }}" autocomplete="off">
+                                                                        @error('no_reg_asesor', 'create_kegiatan')
+                                                                            <div class="invalid-feedback" bis_skin_checked="1">
+                                                                                {{ $message }}
+                                                                            </div>
+                                                                        @enderror
+                                                                    </div>
                                                                 </div>
                                                                 <div class="mb-3 mt-3">
-                                                                    <button class="btn btn-primary" type="submit"><i class="ri-add-box-fill"></i> Add New Kegiatan</button>
+                                                                    <button class="btn btn-primary" type="submit"><i class="ri-add-box-fill"></i> Add Jadwal Asesmen</button>
                                                                 </div>
                                                             </div>
                                                         </div>
