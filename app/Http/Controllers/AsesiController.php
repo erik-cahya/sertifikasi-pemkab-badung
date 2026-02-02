@@ -7,6 +7,7 @@ use App\Models\DepartemenModel;
 use App\Models\JabatanModel;
 use App\Models\KegiatanModel;
 use App\Models\AsesiModel;
+use App\Models\AsesmenModel;
 use App\Models\KegiatanLSPModel;
 use App\Models\KegiatanSkemaModel;
 use App\Models\TUKModel;
@@ -27,52 +28,9 @@ class AsesiController extends Controller
     public function getLspByKegiatan($kegiatanRef)
     {
 
-        // Hitung total asesi per LSP (1 query)
-        $asesiPerLsp = AsesiModel::where('kegiatan_ref', $kegiatanRef)
-            ->select('lsp_ref', DB::raw('COUNT(*) as total'))
-            ->groupBy('lsp_ref')
-            ->pluck('total', 'lsp_ref'); // [lsp_ref => total]
-
-        $data = KegiatanLSPModel::where('kegiatan_ref', $kegiatanRef)
-            ->with('lsp:ref,lsp_nama')
-            ->get()
-            ->map(function ($item) use ($asesiPerLsp) {
-
-                $totalAsesi = $asesiPerLsp[$item->lsp_ref] ?? 0;
-                $sisaKuota  = max(($item->kuota_lsp ?? 0) - $totalAsesi, 0);
-
-                return [
-                    'kegiatan_lsp_ref' => $item->ref,
-                    'lsp_ref'          => $item->lsp->ref,
-                    'lsp_nama'         => $item->lsp->lsp_nama,
-                    'kuota_lsp'        => $item->kuota_lsp,
-                    'terpakai'         => $totalAsesi,
-                    'sisa_kuota'       => $sisaKuota,
-                    'limit_kuota'      => $item->limit_kuota,
-                ];
-            });
-
+        $data = AsesmenModel::where('kegiatan_ref', $kegiatanRef)->select('nama_lsp')->groupBy('nama_lsp')->get();
         return response()->json($data);
     }
-
-    public function getSkemaByKegiatanLsp(Request $request)
-    {
-        $request->validate([
-            'kegiatan_ref' => 'required',
-            'lsp_ref'      => 'required',
-        ]);
-
-        return KegiatanSkemaModel::where('kegiatan_ref', $request->kegiatan_ref)
-            ->where('lsp_ref', $request->lsp_ref)
-            ->with('skema:ref,skema_judul,skema_kode')
-            ->get()
-            ->map(fn($item) => [
-                'skema_ref'   => $item->skema->ref,
-                'skema_judul' => $item->skema->skema_judul,
-                'skema_kode'  => $item->skema->skema_kode,
-            ]);
-    }
-
 
     public function getJadwalByLsp(Request $request)
     {
@@ -82,42 +40,89 @@ class AsesiController extends Controller
             'lsp_ref'      => 'required',
         ]);
 
+        $asesiPerAsesmen = AsesiModel::where('kegiatan_ref', $request->kegiatan_ref)
+            ->select('asesmen_ref', DB::raw('COUNT(*) as total'))
+            ->groupBy('asesmen_ref')
+            ->pluck('total', 'asesmen_ref');
 
-        $kegiatanLsp = KegiatanLSPModel::where('kegiatan_ref', $request->kegiatan_ref)
-            ->where('lsp_ref', $request->lsp_ref)
-            ->with('jadwal:ref,kegiatan_lsp_ref,mulai_asesmen,selesai_asesmen')
-            ->first();
 
-        if (! $kegiatanLsp) {
-            return response()->json([]);
-        }
+        $data = AsesmenModel::where('kegiatan_ref', $request->kegiatan_ref)->where('nama_lsp', $request->lsp_ref)
+            ->get()
+            ->map(function ($asesmen) use ($asesiPerAsesmen) {
 
-        return response()->json(
-            $kegiatanLsp->jadwal->map(fn($jadwal) => [
-                'ref'            => $jadwal->ref,
-                'mulai_asesmen'  => $jadwal->mulai_asesmen,
-                'selesai_asesmen' => $jadwal->selesai_asesmen,
-            ])
-        );
+                $terpakai = $asesiPerAsesmen[$asesmen->ref] ?? 0;
+                $sisa     = max($asesmen->kuota_harian - $terpakai, 0);
+
+                return [
+                    'asesmen_ref'     => $asesmen->ref,
+                    'jadwal_asesmen'  => $asesmen->jadwal_asesmen,
+                    'kuota_harian'    => $asesmen->kuota_harian,
+                    'terpakai'        => $terpakai,
+                    'sisa_kuota'      => $sisa,
+                    'nama_tuk' => $asesmen->nama_tuk,
+                    'nama_skema' => $asesmen->nama_skema,
+
+                ];
+            });
+        return response()->json($data);
+
+
+        // $kegiatanLsp = KegiatanLSPModel::where('kegiatan_ref', $request->kegiatan_ref)
+        //     ->where('lsp_ref', $request->lsp_ref)
+        //     ->with('jadwal:ref,kegiatan_lsp_ref,mulai_asesmen,selesai_asesmen')
+        //     ->first();
+
+        // if (! $kegiatanLsp) {
+        //     return response()->json([]);
+        // }
+
+        // return response()->json(
+        //     $kegiatanLsp->jadwal->map(fn($jadwal) => [
+        //         'ref'            => $jadwal->ref,
+        //         'mulai_asesmen'  => $jadwal->mulai_asesmen,
+        //         'selesai_asesmen' => $jadwal->selesai_asesmen,
+        //     ])
+        // );
     }
 
-    public function getTukByLsp(Request $request)
-    {
-        // dd($request->all());
-        $request->validate([
-            'kegiatan_ref' => 'required',
-            'lsp_ref'      => 'required',
-        ]);
+    // public function getSkemaByKegiatanLsp(Request $request)
+    // {
+    //     $request->validate([
+    //         'kegiatan_ref' => 'required',
+    //         'lsp_ref'      => 'required',
+    //     ]);
+
+    //     return KegiatanSkemaModel::where('kegiatan_ref', $request->kegiatan_ref)
+    //         ->where('lsp_ref', $request->lsp_ref)
+    //         ->with('skema:ref,skema_judul,skema_kode')
+    //         ->get()
+    //         ->map(fn($item) => [
+    //             'skema_ref'   => $item->skema->ref,
+    //             'skema_judul' => $item->skema->skema_judul,
+    //             'skema_kode'  => $item->skema->skema_kode,
+    //         ]);
+    // }
 
 
-        $dataTUK = TUKModel::where('lsp_ref', $request->lsp_ref)->first();
 
-        if (!$dataTUK) {
-            return response()->json([]);
-        }
 
-        return response()->json($dataTUK);
-    }
+    // public function getTukByLsp(Request $request)
+    // {
+    //     // dd($request->all());
+    //     $request->validate([
+    //         'kegiatan_ref' => 'required',
+    //         'lsp_ref'      => 'required',
+    //     ]);
+
+
+    //     $dataTUK = TUKModel::where('lsp_ref', $request->lsp_ref)->first();
+
+    //     if (!$dataTUK) {
+    //         return response()->json([]);
+    //     }
+
+    //     return response()->json($dataTUK);
+    // }
 
     /**
      * Display a listing of the resource.
@@ -141,12 +146,14 @@ class AsesiController extends Controller
 
     public function store(Request $request)
     {
+
+        // dd($request->asesmen_ref);
         $validated = $request->validate([
             'kegiatan_ref' => 'required',
             'lsp_ref' => 'required',
-            'tuk_ref' => 'required',
-            'tgl_asesmen' => 'required',
-            'skema_asesmen' => 'required',
+            // 'tuk_ref' => 'required',
+            // 'tgl_asesmen' => 'required',
+            // 'skema_asesmen' => 'required',
             'nama_lengkap' => 'required',
             'nik' => 'required',
             'tempat_lahir' => 'required',
@@ -213,11 +220,11 @@ class AsesiController extends Controller
             ->where('lsp_ref', $lspRef)
             ->count();
 
-        if ($totalAsesi >= $kuotaLsp) {
-            throw ValidationException::withMessages([
-                'lsp_ref' => 'Kuota LSP sudah penuh',
-            ]);
-        }
+        // if ($totalAsesi >= $kuotaLsp) {
+        //     throw ValidationException::withMessages([
+        //         'lsp_ref' => 'Kuota LSP sudah penuh',
+        //     ]);
+        // }
 
         // ================== SIMPAN FILE ==================
         $nik  = $request->nik;
@@ -269,36 +276,44 @@ class AsesiController extends Controller
         }
 
 
-        AsesiModel::create($validated);
+        // AsesiModel::create($validated);
+        $lspData = LSPModel::where('lsp_nama', $request->lsp_ref)->select('ref')->first();
 
-        // AsesiModel::create([
-        //     'kegiatan_ref' => $request->kegiatan_ref,
-        //     'lsp_ref' => $request->lsp_ref,
-        //     'tuk_ref' => $request->tuk_ref,
-        //     'tgl_asesmen' => $request->tgl_asesmen,
-        //     'skema_asesmen' => $request->skema_asesmen,
-        //     'nama_lengkap' => $request->nama_lengkap,
-        //     'nik' => $request->nik,
-        //     'tempat_lahir' => $request->tempat_lahir,
-        //     'tgl_lahir' => $request->tgl_lahir,
-        //     'jenis_kelamin' => $request->jenis_kelamin,
-        //     'kewarganegaraan' => $request->kewarganegaraan,
-        //     'alamat' => $request->alamat,
-        //     'kode_pos' => $request->kode_pos,
-        //     'telp_rumah' => $request->telp_rumah,
-        //     'telp_kantor' => $request->telp_kantor,
-        //     'telp_hp' => $request->telp_hp,
-        //     'email' => $request->email,
-        //     'pendidikan_terakhir' => $request->pendidikan_terakhir,
-        //     'nama_perusahaan' => $request->nama_perusahaan,
-        //     'alamat_perusahaan' => $request->alamat_perusahaan,
-        //     'departemen' => $request->departemen,
-        //     'jabatan' => $request->jabatan,
-        //     'kode_pos_perusahaan' => $request->kode_pos_perusahaan,
-        //     'telp_perusahaan' => $request->telp_perusahaan,
-        //     'fax_perusahaan' => $request->fax_perusahaan,
-        //     'email_perusahaan' => $request->email_perusahaan,
-        // ]);
+        AsesiModel::create([
+            'kegiatan_ref' => $request->kegiatan_ref,
+            'lsp_ref' => $lspData->ref,
+            'asesmen_ref' => $request->asesmen_ref,
+
+            'nama_lengkap' => $request->nama_lengkap,
+            'nik' => $request->nik,
+            'tempat_lahir' => $request->tempat_lahir,
+            'tgl_lahir' => $request->tgl_lahir,
+            'jenis_kelamin' => $request->jenis_kelamin,
+            'kewarganegaraan' => $request->kewarganegaraan,
+            'alamat' => $request->alamat,
+            'kode_pos' => $request->kode_pos,
+            'telp_rumah' => $request->telp_rumah,
+            'telp_kantor' => $request->telp_kantor,
+            'telp_hp' => $request->telp_hp,
+            'email' => $request->email,
+            'pendidikan_terakhir' => $request->pendidikan_terakhir,
+            'nama_perusahaan' => $request->nama_perusahaan,
+            'alamat_perusahaan' => $request->alamat_perusahaan,
+            'departemen' => $request->departemen,
+            'jabatan' => $request->jabatan,
+            'kode_pos_perusahaan' => $request->kode_pos_perusahaan,
+            'telp_perusahaan' => $request->telp_perusahaan,
+            'fax_perusahaan' => $request->fax_perusahaan,
+            'email_perusahaan' => $request->email_perusahaan,
+
+            'sertikom_file' => NULL,
+            'ijazah_file' => NULL,
+            'ktp_file' => NULL,
+            'keterangan_kerja_file' => NULL,
+            'pas_foto_file' => NULL,
+            'status' => NULL,
+            'kompeten' => NULL,
+        ]);
 
         $flashData = [
             'title' => 'Pendaftaran Calon Asesi Berhasii',

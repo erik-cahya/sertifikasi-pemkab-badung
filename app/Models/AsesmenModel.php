@@ -37,4 +37,9 @@ class AsesmenModel extends Model
     {
         return $this->belongsTo(KegiatanJadwalModel::class, 'kegiatan_jadwal_ref', 'ref');
     }
+
+    public function asesis()
+    {
+        return $this->hasMany(AsesiModel::class, 'asesmen_ref', 'ref');
+    }
 }

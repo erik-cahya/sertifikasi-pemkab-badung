@@ -136,7 +136,6 @@ class KegiatanController extends Controller
                     'kegiatan_ref' => $kegiatan->ref,
                     'lsp_ref' => $lsp,
                     'kuota_lsp' => $kuota,
-                    'limit_kuota' => 50,
                     'created_by'   => Auth::user()->ref,
 
                 ]);

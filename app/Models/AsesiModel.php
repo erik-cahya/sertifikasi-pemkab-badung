@@ -47,4 +47,8 @@ class AsesiModel extends Model
     {
         return $this->belongsTo(SkemaModel::class, 'skema_asesmen', 'ref');
     }
+    public function asesmen()
+    {
+        return $this->belongsTo(AsesmenModel::class, 'asesmen_ref', 'ref');
+    }
 }

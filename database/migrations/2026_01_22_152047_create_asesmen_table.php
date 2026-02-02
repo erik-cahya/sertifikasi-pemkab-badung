@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('nama_lsp');
             $table->string('nama_tuk');
             $table->string('nama_skema');
-            $table->dateTime('jadwal_asesmen');
+            $table->date('jadwal_asesmen');
             $table->integer('kuota_harian');
 
             // TAMBAHAN

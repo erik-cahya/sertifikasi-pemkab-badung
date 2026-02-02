@@ -388,8 +388,8 @@
 
                                         <div class="col-lg-6">
                                             <div class="mb-3">
-                                                <label for="asesmen_ref" class="form-label">Jadwal Asesmen</label><span class="text-danger">*</span>
-                                                <select class="rounded-3 form-select" id="asesmen_ref" name="asesmen_ref" disabled>
+                                                <label for="jadwal_asesmen" class="form-label">Jadwal Asesmen</label><span class="text-danger">*</span>
+                                                <select class="rounded-3 form-select" id="jadwal_asesmen" name="asesmen_ref" disabled>
                                                     <option value="" disabled selected>Pilih Jadwal Asesmen...</option>
                                                 </select>
                                             </div>
@@ -446,6 +446,7 @@
     <script src="{{ asset('js/jquery-3.6.0.min.js') }}"></script>
     <script src="{{ asset('js/select2.min.js') }}"></script>
 
+    {{-- Pilih Departemen & Jabatan --}}
     <script>
         const departemenSelect = document.getElementById('departemen');
         const jabatanSelect = document.getElementById('jabatan');
@@ -470,9 +471,9 @@
     <script>
         const kegiatanSelect = document.getElementById('kegiatan_ref');
         const lspSelect = document.getElementById('lsp_ref');
-        const skemaSelect = document.getElementById('skema_asesmen');
-        const tglAsesmen = document.getElementById('tgl_asesmen');
-        const TempatUjiKompetensi = document.getElementById('tuk_ref');
+        // const skemaSelect = document.getElementById('skema_asesmen');
+        // const tglAsesmen = document.getElementById('tgl_asesmen');
+        const jadwalAsesmen = document.getElementById('jadwal_asesmen');
 
         function formatTanggalIndo(datetime) {
             const date = new Date(datetime.replace(' ', 'T'));
@@ -490,28 +491,27 @@
             lspSelect.innerHTML = '<option>Loading...</option>';
             lspSelect.disabled = true;
 
-            // reset skema
-            skemaSelect.innerHTML = '<option value="">Pilih LSP dahulu..</option>';
-            skemaSelect.disabled = true;
+            // // reset skema
+            // skemaSelect.innerHTML = '<option value="">Pilih LSP dahulu..</option>';
+            // skemaSelect.disabled = true;
 
             // reset jadwal 
-            tglAsesmen.innerHTML = '<option value="">Pilih LSP dahulu..</option>';
-            tglAsesmen.disabled = true;
+            // tglAsesmen.innerHTML = '<option value="">Pilih LSP dahulu..</option>';
+            // tglAsesmen.disabled = true;
 
             // reset jadwal 
-            TempatUjiKompetensi.innerHTML = '<option value="">Pilih LSP dahulu..</option>';
-            TempatUjiKompetensi.disabled = true;
+            // TempatUjiKompetensi.innerHTML = '<option value="">Pilih LSP dahulu..</option>';
+            // TempatUjiKompetensi.disabled = true;
 
             fetch(`/ajax/lsp-by-kegiatan/${this.value}`)
                 .then(res => res.json())
                 .then(data => {
                     let opt = '<option value="" disabled selected>Pilih LSP</option>';
                     data.forEach(item => {
-                        console.table(item);
                         const disabled = item.sisa_kuota <= 0 ? 'disabled' : '';
                         opt += `
-                            <option value="${item.lsp_ref}" ${disabled}>
-                                ${item.lsp_nama} (Sisa Kuota: ${item.sisa_kuota})
+                            <option value="${item.nama_lsp}" ${disabled}>
+                                ${item.nama_lsp}
                             </option>
                         `;
                     });
@@ -519,62 +519,62 @@
                     lspSelect.disabled = false;
                 });
         });
-        // Get Data Skema pada saat LSP di pilih
-        lspSelect.addEventListener('change', function() {
-            skemaSelect.innerHTML = '<option>Loading...</option>';
-            skemaSelect.disabled = true;
-
-            fetch(`/ajax/skema-by-kegiatan-lsp?kegiatan_ref=${kegiatanSelect.value}&lsp_ref=${this.value}`)
-                .then(res => res.json())
-                .then(data => {
-                    let opt = '<option value="" disabled selected>Pilih Skema Sertifikasi</option>';
-                    data.forEach(item => {
-                        opt += `<option value="${item.skema_ref}">${item.skema_judul}</option>`;
-                    });
-                    skemaSelect.innerHTML = opt;
-                    skemaSelect.disabled = false;
-                });
-
-
-        });
-
         // Get Data Jadwal Asesmen pada saat LSP Dipilih
         lspSelect.addEventListener('change', function() {
-            tglAsesmen.innerHTML = '<option>Loading...</option>';
-            tglAsesmen.disabled = true;
+            jadwalAsesmen.innerHTML = '<option>Loading...</option>';
+            jadwalAsesmen.disabled = true;
 
             fetch(`/ajax/jadwal-by-lsp?kegiatan_ref=${kegiatanSelect.value}&lsp_ref=${this.value}`)
                 .then(res => res.json())
                 .then(data => {
                     let opt = '<option value="" disabled selected>Pilih Jadwal Sertifikasi</option>';
+                    console.table(data);
                     data.forEach(item => {
-                        // console.table(item);
-                        opt += `<option value="${item.ref}">${formatTanggalIndo(item.mulai_asesmen)}</option>`;
+                        opt += `<option value="${item.ref}">${item.nama_tuk} - ${item.nama_skema} | ${formatTanggalIndo(item.jadwal_asesmen)} | Kuota: ${item.sisa_kuota}</option>`;
                     });
-                    tglAsesmen.innerHTML = opt;
-                    tglAsesmen.disabled = false;
+                    jadwalAsesmen.innerHTML = opt;
+                    jadwalAsesmen.disabled = false;
                 });
         });
 
-        // Get Data TUK pada saat LSP Dipilih
-        lspSelect.addEventListener('change', function() {
-            TempatUjiKompetensi.innerHTML = '<option>Loading...</option>';
-            TempatUjiKompetensi.disabled = true;
+        // Get Data Skema pada saat LSP di pilih
+        // lspSelect.addEventListener('change', function() {
+        //     skemaSelect.innerHTML = '<option>Loading...</option>';
+        //     skemaSelect.disabled = true;
 
-            fetch(`/ajax/tuk-by-lsp?kegiatan_ref=${kegiatanSelect.value}&lsp_ref=${this.value}`)
-                .then(res => res.json())
-                .then(data => {
-                    let opt = '<option value="" disabled selected>Pilih Tempat Uji Kompetensi</option>';
+        //     fetch(`/ajax/skema-by-kegiatan-lsp?kegiatan_ref=${kegiatanSelect.value}&lsp_ref=${this.value}`)
+        //         .then(res => res.json())
+        //         .then(data => {
+        //             let opt = '<option value="" disabled selected>Pilih Skema Sertifikasi</option>';
+        //             data.forEach(item => {
+        //                 opt += `<option value="${item.skema_ref}">${item.skema_judul}</option>`;
+        //             });
+        //             skemaSelect.innerHTML = opt;
+        //             skemaSelect.disabled = false;
+        //         });
+        // });
 
-                    if (data.tuk_nama !== undefined) {
-                        opt += `<option value="${data.ref}">${data.tuk_nama}</option>`;
-                    } else {
-                        opt += `'<option value="" disabled>Tidak ada TUK tersedia</option>`;
-                    }
 
-                    TempatUjiKompetensi.innerHTML = opt;
-                    TempatUjiKompetensi.disabled = false;
-                });
-        });
+
+        // // Get Data TUK pada saat LSP Dipilih
+        // lspSelect.addEventListener('change', function() {
+        //     TempatUjiKompetensi.innerHTML = '<option>Loading...</option>';
+        //     TempatUjiKompetensi.disabled = true;
+
+        //     fetch(`/ajax/tuk-by-lsp?kegiatan_ref=${kegiatanSelect.value}&lsp_ref=${this.value}`)
+        //         .then(res => res.json())
+        //         .then(data => {
+        //             let opt = '<option value="" disabled selected>Pilih Tempat Uji Kompetensi</option>';
+
+        //             if (data.tuk_nama !== undefined) {
+        //                 opt += `<option value="${data.ref}">${data.tuk_nama}</option>`;
+        //             } else {
+        //                 opt += `'<option value="" disabled>Tidak ada TUK tersedia</option>`;
+        //             }
+
+        //             TempatUjiKompetensi.innerHTML = opt;
+        //             TempatUjiKompetensi.disabled = false;
+        //         });
+        // });
     </script>
 @endpush

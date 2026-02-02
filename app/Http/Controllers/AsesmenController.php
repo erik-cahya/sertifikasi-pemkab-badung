@@ -95,7 +95,6 @@ class AsesmenController extends Controller
         $data['kegiatan_ref'] = $jadwalKegiatan->kegiatan_ref;
         $data['kegiatan_lsp_ref'] = $jadwalKegiatan->kegiatan_lsp_ref;
 
-
         return view('admin-panel.asesmen.create', $data);
     }
 
@@ -104,19 +103,19 @@ class AsesmenController extends Controller
      */
     public function store(Request $request)
     {
+        $validated = $request->validate([
+            'nama_tuk' => 'required',
+            'skema_sertifikasi' => 'required',
+            'nama_penanggung_jawab' => 'required',
+            'no_penanggung_jawab' => 'required',
+            'nama_penyelenggara_uji' => 'required',
+            'no_penyelenggara_uji' => 'required',
+            'nama_asesor' => 'required',
+            'no_asesor' => 'required',
+            'no_reg_asesor' => 'required',
+        ]);
 
-        // dd(Auth::user()->lspData->lsp_nama);
-        // $validated = $request->validate([
-        //     'nama_tuk' => 'required',
-        //     'skema_sertifikasi' => 'required',
-        //     'nama_penanggung_jawab' => 'required',
-        //     'no_penanggung_jawab' => 'required',
-        //     'nama_penyelenggara_uji' => 'required',
-        //     'no_penyelenggara_uji' => 'required',
-        //     'nama_asesor' => 'required',
-        //     'no_asesor' => 'required',
-        //     'no_reg_asesor' => 'required',
-        // ]);
+        $kuotaHarian = 10;
 
         AsesmenModel::create([
             'kegiatan_ref' => $request->kegiatan_ref,
@@ -127,7 +126,7 @@ class AsesmenController extends Controller
             'nama_tuk' => $request->nama_tuk,
             'nama_skema' => $request->skema_sertifikasi,
             'jadwal_asesmen' => Carbon::createFromFormat('d/m/Y', $request->jadwal_asesmen)->format('Y-m-d'),
-            'kuota_harian' => 10,
+            'kuota_harian' => $kuotaHarian, // Kuota perhari
             'nama_penanggung_jawab' => $request->nama_penanggung_jawab,
             'no_penanggung_jawab' => $request->no_penanggung_jawab,
             'nama_penyelenggara_uji' => $request->nama_penyelenggara_uji,
@@ -138,7 +137,13 @@ class AsesmenController extends Controller
             'created_by' => Auth::user()->ref,
         ]);
 
-        dd('Data MASOKK');
+        return redirect()
+            ->route('kegiatan.index')
+            ->with('flashData', [
+                'title' => 'Tambah Data Success',
+                'message' => 'Jadwal Asesmen Berhasil Diubah Diubah',
+                'type' => 'success',
+            ]);
     }
 
     /**
