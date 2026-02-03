@@ -132,7 +132,8 @@ class AsesiController extends Controller
         $departemen = DepartemenModel::all();
         $jabatan = JabatanModel::all();
         $lsp = LSPModel::all();
-        $kegiatan = KegiatanModel::all();
+        // $kegiatan = KegiatanModel::all();
+        $kegiatan = KegiatanModel::whereStatus(1)->get();
         $tuk = TUKModel::all();
 
         return view('pendaftaran.pendaftaran-asesi', [
