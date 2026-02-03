@@ -116,40 +116,41 @@
                         <div class="card">
                             <div class="card-header">
                                 <h4 class="card-title mb-0"> <i class="ri-account-circle-line fw-normal fs-20 me-1 align-middle"></i>
-                                    List Data Asesmen</h4>
+                                    List Data Jadwal Asesmen</h4>
                             </div>
                             <div class="card-body">
                                 <table class="table-sm table-bordered w-100 fs-12 table">
                                     <thead>
                                         <tr class="text-center">
                                             <th>No</th>
-                                            <th>Nama Kegiatan</th>
-                                            <th>Skema</th>
                                             <th>TUK</th>
+                                            <th>Skema</th>
                                             <th>Tanggal</th>
                                             <th>Kuota</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td class="text-center">1</td>
-                                            <td>LSP Engineering Hospitality Indonesia</td>
-                                            <td>
-                                                <span class="badge bg-primary-subtle text-primary">
-                                                    Perawatan Mesin Pendingin / AC
-                                                </span>
-                                            </td>
-                                            <td>LSP Engineering Hospitality Indonesia</td>
+                                        @foreach ($dataAsesmen as $asesmen)
+                                            <tr>
+                                                <td class="text-center">1</td>
+                                                <td>{{ $asesmen->nama_tuk }}</td>
+                                                <td>{{ $asesmen->nama_skema }}</td>
+                                                <td>{{ date('Y/m/d', strtotime($asesmen->jadwal_asesmen)) }}</td>
+                                                <td>{{ $asesmen->kuota_harian }} Asesi</td>
+                                                <td>
+                                                    <div class="btn-group" role="group" aria-label="Basic outlined example">
+                                                        <a href="{{ route('pdf.daftar-hadir', $asesmen->kegiatan_ref) }}" target="_blank" class="btn btn-sm btn-info" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Download Daftar Hadir" data-bs-custom-class="info-tooltip"><i class="mdi mdi-download"></i> </a>
+                                                        <a href="{{ route('pdf.daftar-penerimaan', $asesmen->kegiatan_ref) }}" target="_blank" class="btn btn-sm btn-info" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Download Daftar Penerimaan" data-bs-custom-class="info-tooltip"><i class="mdi mdi-download"></i> </a>
+                                                        <input type="hidden" class="valueID" value="#">
+                                                        <button type="button" class="btn btn-sm btn-danger deleteButton" data-nama="#" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Hapus Jadwal Asesmen" data-bs-custom-class="danger-tooltip">
+                                                            <i class="mdi mdi-trash-can"></i>
+                                                        </button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        @endforeach
 
-                                            <td>Sabtu, 20 Januari 2026</td>
-                                            <td>3/10 Peserta</td>
-                                            <td>
-                                                <button class="btn btn-link text-decoration-none fs-12 p-0" data-bs-toggle="collapse" data-bs-target="#jadwal-2" aria-expanded="false" aria-controls="jadwal-2">
-                                                    Lihat Detail
-                                                </button>
-                                            </td>
-                                        </tr>
                                     </tbody>
                                 </table>
                             </div>

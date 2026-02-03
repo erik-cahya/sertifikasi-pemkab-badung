@@ -83,13 +83,20 @@
             text-align: center;
         }
         .value{
-            color: RED;
+            /* color: RED; */
+            color: #000;
         }
          .page-break {
             page-break-before: always;
         }
     </style>
 </head>
+@foreach ($asesmen as $item)
+
+@php
+    $maxRow = 13;
+@endphp
+
 <body>
     {{-- ############# DAFTAR HADIR ASESI --}}
 
@@ -102,10 +109,11 @@
             <td width="75%" class="center">
                 <div class="title">DINAS PERINDUSTRIAN & TENAGA KERJA KABUPATEN BADUNG</div>
                 <div class="title">DAFTAR HADIR PESERTA</div>
-                <div class="title">KEGIATAN UJI KOMPETENSI TENAGA KERJA TAHUN <span class="value">GET TAHUN KEGIATAN</span></div>
+                <div class="title">KEGIATAN UJI KOMPETENSI TENAGA KERJA TAHUN <span class="value">{{ date('Y', strtotime($item->jadwal_asesmen)) }}</span></div>
             </td>
             <td width="15%" class="center">
-                <img src="{{ public_path('img/logo_dinas_no_title.png') }}" width="80px">
+                {{-- <img src="{{ public_path('img/logo_dinas_no_title.png') }}" width="80px"> --}}
+                <img src="{{public_path('img/'.$item->kegiatanLsp->lsp->lsp_logo) }}"  width="80px">
             </td>
         </tr>
     </table>
@@ -114,23 +122,23 @@
     <table class="info-table">
         <tr>
             <td class="info-label">1. Skema</td>
-            <td class="value">: Get skema di jadwal asesmen</td>
+            <td class="value">: {{ $item->nama_skema }}</td>
         </tr>
         <tr>
             <td class="info-label">2. TUK</td>
-            <td class="value">: Get TUK di jadwal asesmen</td>
+            <td class="value">: {{ $item->nama_tuk }}</td>
         </tr>
         <tr>
             <td class="info-label">3. Alamat</td>
-            <td class="value">: Get alamat TUK</td>
+            <td class="value">: {{ $item->alamat_tuk }}</td>
         </tr>
         <tr>
             <td class="info-label">4. Tanggal</td>
-            <td class="value">: Get tanggal asesmen</td>
+            <td class="value">: {{ date('Y/m/d', strtotime($item->jadwal_asesmen)) }}</td>
         </tr>
         <tr>
             <td class="info-label">5. Jumlah Peserta</td>
-            <td class="value">: 10 Orang</td>
+            <td class="value">: {{ $item->kuota_harian }} Orang</td>
         </tr>
     </table>
 
@@ -152,130 +160,37 @@
             </tr>
         </thead>
         <tbody class="value">
-            <tr>
-                <td class="center">1</td>
-                <td>GET NAMA ASESI</td>
-                <td class="center">GET TEMPAT BEKERJA</td>
-                <td class="signature"> 1.</td>
-                <td class="signature"> 1.</td>
-                <td class="signature"> 1.</td>
-                <td class="signature"> 1.</td>
-                <td class="signature"> 1.</td>
-            </tr>
-             <tr>
-                <td class="center">2</td>
-                <td>GET NAMA ASESI</td>
-                <td class="center">GET TEMPAT BEKERJA</td>
-                <td class="signature"> 2.</td>
-                <td class="signature"> 2.</td>
-                <td class="signature"> 2.</td>
-                <td class="signature"> 2.</td>
-                <td class="signature"> 2.</td>
-            </tr>
-             <tr>
-                <td class="center">3</td>
-                <td>GET NAMA ASESI</td>
-                <td class="center">GET TEMPAT BEKERJA</td>
-                <td class="signature"> 3.</td>
-                <td class="signature"> 3.</td>
-                <td class="signature"> 3.</td>
-                <td class="signature"> 3.</td>
-                <td class="signature"> 3.</td>
-            </tr>
-            <tr>
-                <td class="center">4</td>
-                <td>GET NAMA ASESI</td>
-                <td class="center">GET TEMPAT BEKERJA</td>
-                <td class="signature"> 4.</td>
-                <td class="signature"> 4.</td>
-                <td class="signature"> 4.</td>
-                <td class="signature"> 4.</td>
-                <td class="signature"> 4.</td>
-            </tr>
-             <tr>
-                <td class="center">5</td>
-                <td>GET NAMA ASESI</td>
-                <td class="center">GET TEMPAT BEKERJA</td>
-                <td class="signature"> 5.</td>
-                <td class="signature"> 5.</td>
-                <td class="signature"> 5.</td>
-                <td class="signature"> 5.</td>
-                <td class="signature"> 5.</td>
-            </tr>
-             <tr>
-                <td class="center">6</td>
-                <td>GET NAMA ASESI</td>
-                <td class="center">GET TEMPAT BEKERJA</td>
-                <td class="signature"> 6.</td>
-                <td class="signature"> 6.</td>
-                <td class="signature"> 6.</td>
-                <td class="signature"> 6.</td>
-                <td class="signature"> 6.</td>
-            </tr>
-            <tr>
-                <td class="center">7</td>
-                <td>GET NAMA ASESI</td>
-                <td class="center">GET TEMPAT BEKERJA</td>
-                <td class="signature"> 7.</td>
-                <td class="signature"> 7.</td>
-                <td class="signature"> 7.</td>
-                <td class="signature"> 7.</td>
-                <td class="signature"> 7.</td>
-            </tr>
-             <tr>
-                <td class="center">8</td>
-                <td>GET NAMA ASESI</td>
-                <td class="center">GET TEMPAT BEKERJA</td>
-                <td class="signature"> 8.</td>
-                <td class="signature"> 8.</td>
-                <td class="signature"> 8.</td>
-                <td class="signature"> 8.</td>
-                <td class="signature"> 8.</td>
-            </tr>
-             <tr>
-                <td class="center">9</td>
-                <td>GET NAMA ASESI</td>
-                <td class="center">GET TEMPAT BEKERJA</td>
-                <td class="signature"> 9.</td>
-                <td class="signature"> 9.</td>
-                <td class="signature"> 9.</td>
-                <td class="signature"> 9.</td>
-                <td class="signature"> 9.</td>
-            </tr>
-            <tr>
-                <td class="center">10</td>
-                <td>GET NAMA ASESI</td>
-                <td class="center">GET TEMPAT BEKERJA</td>
-                <td class="signature"> 10.</td>
-                <td class="signature"> 10.</td>
-                <td class="signature"> 10.</td>
-                <td class="signature"> 10.</td>
-                <td class="signature"> 10.</td>
-            </tr>
-            <tr>
-                <td class="center">11</td>
-                <td>PENANGGUNG JAWAB <br> GET NAMA PENANGGUNG JAWAB</td>
-                <td class="center">GET NAMA LSP</td>
-                <td class="signature" colspan="4"></td>
-                <td class="signature"> 11.</td>
-            </tr>
-             <tr>
-                <td class="center">12</td>
-                <td>SEKRETARIAT PENYELENGGARA UJI <br> GET NAMA SEKRETARIAT PENYELENGGARA UJI</td>
-                <td class="center">GET NAMA LSP</td>
-                <td class="signature" colspan="4"></td>
-                <td class="signature"> 12.</td>
-            </tr>
-             <tr>
-                <td class="center">13</td>
-                <td>ASESOR <br> GET NAMA ASESOR</td>
-                <td class="center">GET NAMA LSP</td>
-                <td class="signature" colspan="4"></td>
-                <td class="signature"> 13.</td>
-            </tr>   
+            @foreach ($item->asesis as $asesi)
+                @if ($loop->iteration <= $maxRow)
+                    <tr>
+                        <td class="center">{{ $loop->iteration }}</td>
+                        <td>{{ $asesi->nama_lengkap }}</td>
+                        <td>{{ $asesi->nama_perusahaan }}</td>
+                        <td class="signature"> {{ $loop->iteration }}.</td>
+                        <td class="signature"> {{ $loop->iteration }}.</td>
+                        <td class="signature"> {{ $loop->iteration }}.</td>
+                        <td class="signature"> {{ $loop->iteration }}.</td>
+                        <td class="signature"> {{ $loop->iteration }}.</td>
+                    </tr>
+                @endif
+            @endforeach
+
+            @for ($i = $item->asesis->count() + 1; $i <= $maxRow; $i++)
+                <tr>
+                    <td class="center">{{ $i }}</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td class="signature">{{ $i }}.</td>
+                    <td class="signature">{{ $i }}.</td>
+                    <td class="signature">{{ $i }}.</td>
+                    <td class="signature">{{ $i }}.</td>
+                    <td class="signature">{{ $i }}.</td>
+                </tr>
+            @endfor
         </tbody>
     </table>
 
 
+    @endforeach
 </body>
 </html>

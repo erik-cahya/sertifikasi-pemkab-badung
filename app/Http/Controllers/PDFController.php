@@ -6,23 +6,37 @@ use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use App\Models\AsesmenModel;
 
 
 
 class PDFController extends Controller
 {
-    public function daftarHadir()
+    public function daftarHadir($id)
     {
         // dd(Storage::disk('public')->exists('logo-lsp/lsp-beta-BNSP-000-ID.png'));
+        $asesmen = AsesmenModel::with([
+            'asesis',
+            'kegiatanLsp.lsp',
+        ])
+        ->where('kegiatan_ref', $id)
+        ->get();
 
-        return Pdf::loadView('admin-panel.pdf.daftar-hadir')
+        return Pdf::loadView('admin-panel.pdf.daftar-hadir', compact('asesmen'))
             ->setPaper('A4', 'portrait')
             ->stream('Daftar-Hadir.pdf');
     }
 
-    public function daftarPenerimaan()
+    public function daftarPenerimaan($id)
     {
-        return Pdf::loadView('admin-panel.pdf.daftar-penerimaan')
+        $asesmen = AsesmenModel::with([
+            'asesis',
+            'kegiatanLsp.lsp',
+        ])
+        ->where('kegiatan_ref', $id)
+        ->get();
+
+        return Pdf::loadView('admin-panel.pdf.daftar-penerimaan', compact('asesmen'))
             ->setPaper('A4', 'landscape')
             ->stream('Daftar-Penerimaan.pdf');
     }

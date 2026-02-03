@@ -32,7 +32,7 @@ class LSPSeeder extends Seeder
             'lsp_telp' => '089599497',
             'lsp_direktur' => 'Pak Ahmad',
             'lsp_direktur_telp' => '9120940392',
-            'lsp_logo' => NULL,
+            'lsp_logo' => 'logo-lsp/lsp-beta-BNSP-000-ID.png',
             'lsp_tanggal_lisensi' => '2026-01-01',
             'lsp_expired_lisensi' => '2026-10-01',
             'created_by' => $userCreated->ref,

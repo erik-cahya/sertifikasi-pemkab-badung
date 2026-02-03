@@ -18,6 +18,7 @@ return new class extends Migration
             $table->foreignUlid('kegiatan_jadwal_ref')->nullable()->references('ref')->on('kegiatan_jadwal')->nullOnDelete();
             $table->string('nama_lsp');
             $table->string('nama_tuk');
+            $table->string('alamat_tuk');
             $table->string('nama_skema');
             $table->date('jadwal_asesmen');
             $table->integer('kuota_harian');

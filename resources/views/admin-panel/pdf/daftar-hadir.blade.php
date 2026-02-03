@@ -79,12 +79,19 @@
         }
         .value{
             color: RED;
+            color: #000;
         }
          .page-break {
             page-break-before: always;
         }
     </style>
 </head>
+@foreach ($asesmen as $item)
+
+@php
+    $maxRow = 10;
+@endphp
+
 <body>
     {{-- ############# DAFTAR HADIR ASESI --}}
 
@@ -97,10 +104,10 @@
             <td width="75%" class="center">
                 <div class="title">DINAS PERINDUSTRIAN & TENAGA KERJA KABUPATEN BADUNG</div>
                 <div class="title">DAFTAR HADIR PESERTA</div>
-                <div class="title">KEGIATAN UJI KOMPETENSI TENAGA KERJA TAHUN <span class="value">GET TAHUN KEGIATAN</span></div>
+                <div class="title">KEGIATAN UJI KOMPETENSI TENAGA KERJA TAHUN <span class="value">{{ date('Y', strtotime($item->jadwal_asesmen)) }}</span></div>
             </td>
             <td width="15%" class="center">
-                <img src="{{public_path('img/logo-lsp/lsp-beta-BNSP-000-ID.png') }}"  width="80px">
+                <img src="{{public_path('img/'.$item->kegiatanLsp->lsp->lsp_logo) }}"  width="80px">
             </td>
         </tr>
     </table>
@@ -109,23 +116,23 @@
     <table class="info-table">
         <tr>
             <td class="info-label">1. Skema</td>
-            <td class="value">: Get skema di jadwal asesmen</td>
+            <td class="value">: {{ $item->nama_skema }}</td>
         </tr>
         <tr>
             <td class="info-label">2. TUK</td>
-            <td class="value">: Get TUK di jadwal asesmen</td>
+            <td class="value">: {{ $item->nama_tuk }}</td>
         </tr>
         <tr>
             <td class="info-label">3. Alamat</td>
-            <td class="value">: Get alamat TUK</td>
+            <td class="value">: {{ $item->alamat_tuk }}</td>
         </tr>
         <tr>
             <td class="info-label">4. Tanggal</td>
-            <td class="value">: Get tanggal asesmen</td>
+            <td class="value">: {{ date('Y/m/d', strtotime($item->jadwal_asesmen)) }}</td>
         </tr>
         <tr>
             <td class="info-label">5. Jumlah Peserta</td>
-            <td class="value">: 10 Orang</td>
+            <td class="value">: {{ $item->kuota_harian }} Orang</td>
         </tr>
     </table>
 
@@ -140,66 +147,25 @@
             </tr>
         </thead>
         <tbody class="value">
-            <tr>
-                <td class="center">1</td>
-                <td>GET NAMA ASESI</td>
-                <td class="center">GET TEMPAT BEKERJA ASESI</td>
-                <td class="signature"> 1.</td>
-            </tr>
-             <tr>
-                <td class="center">2</td>
-                <td>GET NAMA ASESI</td>
-                <td class="center">GET TEMPAT BEKERJA ASESI</td>
-                <td class="signature"> 2.</td>
-            </tr>
-             <tr>
-                <td class="center">3</td>
-                <td>GET NAMA ASESI</td>
-                <td class="center">GET TEMPAT BEKERJA ASESI</td>
-                <td class="signature"> 3.</td>
-            </tr>
-             <tr>
-                <td class="center">4</td>
-                <td>GET NAMA ASESI</td>
-                <td class="center">GET TEMPAT BEKERJA ASESI</td>
-                <td class="signature"> 4.</td>
-            </tr>
-             <tr>
-                <td class="center">5</td>
-                <td>GET NAMA ASESI</td>
-                <td class="center">GET TEMPAT BEKERJA ASESI</td>
-                <td class="signature"> 5.</td>
-            </tr>
-             <tr>
-                <td class="center">6</td>
-                <td>GET NAMA ASESI</td>
-                <td class="center">GET TEMPAT BEKERJA ASESI</td>
-                <td class="signature"> 6.</td>
-            </tr>
-             <tr>
-                <td class="center">7</td>
-                <td>GET NAMA ASESI</td>
-                <td class="center">GET TEMPAT BEKERJA ASESI</td>
-                <td class="signature"> 7.</td>
-            </tr>
-             <tr>
-                <td class="center">8</td>
-                <td>GET NAMA ASESI</td>
-                <td class="center">GET TEMPAT BEKERJA ASESI</td>
-                <td class="signature"> 8.</td>
-            </tr>
-             <tr>
-                <td class="center">9</td>
-                <td>GET NAMA ASESI</td>
-                <td class="center">GET TEMPAT BEKERJA ASESI</td>
-                <td class="signature"> 9.</td>
-            </tr>
-             <tr>
-                <td class="center">10</td>
-                <td>GET NAMA ASESI</td>
-                <td class="center">GET TEMPAT BEKERJA ASESI</td>
-                <td class="signature"> 10.</td>
-            </tr>
+            @foreach ($item->asesis as $asesi)
+                @if ($loop->iteration <= $maxRow)
+                    <tr>
+                        <td class="center">{{ $loop->iteration }}</td>
+                        <td>{{ $asesi->nama_lengkap }}</td>
+                        <td>{{ $asesi->nama_perusahaan }}</td>
+                        <td class="signature"> {{ $loop->iteration }}.</td>
+                    </tr>
+                @endif
+            @endforeach
+
+            @for ($i = $item->asesis->count() + 1; $i <= $maxRow; $i++)
+                <tr>
+                    <td class="center">{{ $i }}</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td class="signature">{{ $i }}.</td>
+                </tr>
+            @endfor
         </tbody>
     </table>
 
@@ -210,7 +176,7 @@
             <td style="width:300px; text-align:center;">
                 Panitia Penyelenggara
                 <br><br><br><br><br><br>
-                <u class="value" style="font-weight: bold;">( GET NAMA PENYELENGGARA )</u>
+                <u class="value" style="font-weight: bold;">( {{ $item->nama_penyelenggara_uji }} )</u>
                 <br>
             </td>
         </tr>
@@ -229,10 +195,11 @@
             <td width="75%" class="center">
                 <div class="title">DINAS PERINDUSTRIAN & TENAGA KERJA KABUPATEN BADUNG</div>
                 <div class="title">DAFTAR HADIR PESERTA</div>
-                <div class="title">KEGIATAN UJI KOMPETENSI TENAGA KERJA TAHUN {{ date('Y') }}</div>
+                <div class="title">KEGIATAN UJI KOMPETENSI TENAGA KERJA TAHUN {{ date('Y', strtotime($item->jadwal_asesmen)) }}</div>
             </td>
             <td width="15%" class="center">
-                <img src="{{ public_path('img/logo_dinas_no_title.png') }}" width="80px">
+                <img src="{{public_path('img/'.$item->kegiatanLsp->lsp->lsp_logo) }}"  width="80px">
+                {{-- <img src="{{ public_path('img/logo_dinas_no_title.png') }}" width="80px"> --}}
             </td>
         </tr>
     </table>
@@ -241,23 +208,23 @@
     <table class="info-table">
         <tr>
             <td class="info-label">1. Skema</td>
-            <td class="value">: Get skema di jadwal asesmen</td>
+            <td class="value">: {{ $item->nama_skema }}</td>
         </tr>
         <tr>
             <td class="info-label">2. TUK</td>
-            <td class="value">: Get TUK di jadwal asesmen</td>
+            <td class="value">: {{ $item->nama_tuk }}</td>
         </tr>
         <tr>
             <td class="info-label">3. Alamat</td>
-            <td class="value">: Get alamat TUK</td>
+            <td class="value">: {{ $item->alamat_tuk }}</td>
         </tr>
         <tr>
             <td class="info-label">4. Tanggal</td>
-            <td class="value">: Get tanggal asesmen</td>
+            <td class="value">: {{ date('Y/m/d', strtotime($item->jadwal_asesmen)) }}</td>
         </tr>
         <tr>
             <td class="info-label">5. Jumlah Peserta</td>
-            <td class="value">: 10 Orang</td>
+            <td class="value">: {{ $item->kuota_harian }} Orang</td>
         </tr>
     </table>
 
@@ -275,23 +242,23 @@
         <tbody class="value">
             <tr>
                 <td class="center">1</td>
-                <td>Get Nama Penanggung Jawab</td>
+                <td>{{ $item->nama_penanggung_jawab }}</td>
                 <td class="center">Penanggung Jawab</td>
-                <td class="center">Get Nomor Hp</td>
+                <td class="center">{{ $item->no_penanggung_jawab }}</td>
                 <td class="signature"> 1.</td>
             </tr>
              <tr>
                 <td class="center">2</td>
-                <td>Get Nama Sekretariat Penyelenggara UJK</td>
+                <td>{{ $item->nama_penyelenggara_uji }}</td>
                 <td class="center">Sekretariat Penyelenggara UJK</td>
-                <td class="center">Get Nomor Hp</td>
+                <td class="center">{{ $item->no_penyelenggara_uji }}</td>
                 <td class="signature"> 2.</td>
             </tr>
              <tr>
                 <td class="center">3</td>
-                <td>Get Nama Asesor</td>
+                <td>{{ $item->nama_asesor }}</td>
                 <td class="center">Asesor</td>
-                <td class="center">Get Nomor Hp</td>
+                <td class="center">{{ $item->no_asesor }}</td>
                 <td class="signature"> 3.</td>
             </tr>
         </tbody>
@@ -303,9 +270,9 @@
             {{-- KIRI --}}
             <td width="60%" style="vertical-align:top;">
                 Mengetahui,<br>
-                <span class="value">Direktur Get nama LSP</span>
+                <span class="value">Direktur {{ $item->kegiatanLsp->lsp->lsp_nama}}</span>
                 <br><br><br><br><br><br>
-                <u class="value" style="font-weight: bold;">Get nama direktur</u>
+                <u class="value" style="font-weight: bold;">{{ $item->kegiatanLsp->lsp->lsp_direktur}}</u>
             </td>
 
             {{-- KANAN --}}
@@ -313,13 +280,13 @@
                 <br>
                 Panitia Penyelenggara
                 <br><br><br><br><br><br>
-                <u class="value" style="font-weight: bold;">Get nama sekretariat penyelenggara</u>
+                <u class="value" style="font-weight: bold;">{{ $item->nama_penyelenggara_uji }}</u>
             </td>
         </tr>
     </table>
 
 
     
-
+@endforeach
 </body>
 </html>

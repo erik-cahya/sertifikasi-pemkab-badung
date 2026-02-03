@@ -123,13 +123,9 @@ Route::middleware('auth')->group(function () {
     Route::get('asesiAdmin', [AsesiController::class, 'list'])->name('asesiAdmin.index');
 
     // ################################ Generate PDF
-    // Route::get('daftar-hadir/{id}', [PDFController::class, 'daftarHadir'])->name('pdf.daftar-hadir');
-    // Route::get('daftar-penerimaan/{id}', [PDFController::class, 'daftarPenerimaan'])->name('pdf.daftar-penerimaan');
-    // Route::get('tanda-terima-sertifikat/{id}', [PDFController::class, 'daftandaTerimaSertifikattarHadir'])->name('pdf.tanda-terima-sertifikat');
-    // PAKAI TEST BELUM GET REF
-    Route::get('daftar-hadir', [PDFController::class, 'daftarHadir'])->name('pdf.daftar-hadir');
-    Route::get('daftar-penerimaan', [PDFController::class, 'daftarPenerimaan'])->name('pdf.daftar-penerimaan');
-    Route::get('tanda-terima-sertifikat', [PDFController::class, 'tandaTerimaSertifikat'])->name('pdf.tanda-terima-sertifikat');
+    Route::get('daftar-hadir/{id}', [PDFController::class, 'daftarHadir'])->name('pdf.daftar-hadir');
+    Route::get('daftar-penerimaan/{id}', [PDFController::class, 'daftarPenerimaan'])->name('pdf.daftar-penerimaan');
+    Route::get('tanda-terima-sertifikat/{id}', [PDFController::class, 'tandaTerimaSertifikat'])->name('pdf.tanda-terima-sertifikat');
 });
 
 // ################################ Pendaftaraan Asesi

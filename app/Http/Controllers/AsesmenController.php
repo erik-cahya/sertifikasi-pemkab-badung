@@ -95,6 +95,9 @@ class AsesmenController extends Controller
         $data['kegiatan_ref'] = $jadwalKegiatan->kegiatan_ref;
         $data['kegiatan_lsp_ref'] = $jadwalKegiatan->kegiatan_lsp_ref;
 
+        $data['dataAsesmen'] = AsesmenModel::where('kegiatan_ref', $id)->get();
+
+
         return view('admin-panel.asesmen.create', $data);
     }
 
@@ -116,6 +119,7 @@ class AsesmenController extends Controller
         ]);
 
         $kuotaHarian = 10;
+        $alamatTUK = TUKModel::where('tuk_nama', $request->nama_tuk)->value('tuk_alamat');
 
         AsesmenModel::create([
             'kegiatan_ref' => $request->kegiatan_ref,
@@ -124,6 +128,7 @@ class AsesmenController extends Controller
 
             'nama_lsp' => Auth::user()->lspData->lsp_nama,
             'nama_tuk' => $request->nama_tuk,
+            'alamat_tuk' => $alamatTUK,
             'nama_skema' => $request->skema_sertifikasi,
             'jadwal_asesmen' => Carbon::createFromFormat('d/m/Y', $request->jadwal_asesmen)->format('Y-m-d'),
             'kuota_harian' => $kuotaHarian, // Kuota perhari
