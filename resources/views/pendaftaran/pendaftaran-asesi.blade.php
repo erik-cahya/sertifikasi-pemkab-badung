@@ -528,9 +528,9 @@
                 .then(res => res.json())
                 .then(data => {
                     let opt = '<option value="" disabled selected>Pilih Jadwal Sertifikasi</option>';
-                    // console.table(data);
                     data.forEach(item => {
-                        opt += `<option value="${item.ref}">${item.nama_tuk} - ${item.nama_skema} | ${formatTanggalIndo(item.jadwal_asesmen)} | Kuota: ${item.sisa_kuota}</option>`;
+                        console.table(item);
+                        opt += `<option value="${item.asesmen_ref}">${item.nama_tuk} - ${item.nama_skema} | ${formatTanggalIndo(item.jadwal_asesmen)} | Kuota: ${item.sisa_kuota}</option>`;
                     });
                     jadwalAsesmen.innerHTML = opt;
                     jadwalAsesmen.disabled = false;

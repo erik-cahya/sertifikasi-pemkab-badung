@@ -148,7 +148,6 @@ class AsesiController extends Controller
     public function store(Request $request)
     {
 
-        // dd($request->asesmen_ref);
         $validated = $request->validate([
             'kegiatan_ref' => 'required',
             'lsp_ref' => 'required',
@@ -279,6 +278,7 @@ class AsesiController extends Controller
 
         // AsesiModel::create($validated);
         $lspData = LSPModel::where('lsp_nama', $request->lsp_ref)->select('ref')->first();
+
 
         AsesiModel::create([
             'kegiatan_ref' => $request->kegiatan_ref,
