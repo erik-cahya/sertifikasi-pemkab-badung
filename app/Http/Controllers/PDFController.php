@@ -41,9 +41,16 @@ class PDFController extends Controller
             ->stream('Daftar-Penerimaan.pdf');
     }
 
-    public function tandaTerimaSertifikat()
+    public function tandaTerimaSertifikat($id)
     {
-        return Pdf::loadView('admin-panel.pdf.tanda-terima-sertifikat')
+        $asesmen = AsesmenModel::with([
+            'asesis',
+            'kegiatanLsp.lsp',
+        ])
+        ->where('kegiatan_ref', $id)
+        ->get();
+
+        return Pdf::loadView('admin-panel.pdf.tanda-terima-sertifikat', compact('asesmen'))
             ->setPaper('A4', 'portrait')
             ->stream('Tanda-Terima-Sertifikat.pdf');
     }

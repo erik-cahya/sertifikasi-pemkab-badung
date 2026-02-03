@@ -94,7 +94,7 @@
 @foreach ($asesmen as $item)
 
 @php
-    $maxRow = 13;
+    $maxRow = 10;
 @endphp
 
 <body>
@@ -134,7 +134,7 @@
         </tr>
         <tr>
             <td class="info-label">4. Tanggal</td>
-            <td class="value">: {{ date('Y/m/d', strtotime($item->jadwal_asesmen)) }}</td>
+            <td class="value">: {{ \Carbon\Carbon::parse($item->jadwal_asesmen)->locale('id')->translatedFormat('j F Y') }}</td>
         </tr>
         <tr>
             <td class="info-label">5. Jumlah Peserta</td>
@@ -180,13 +180,34 @@
                     <td class="center">{{ $i }}</td>
                     <td>&nbsp;</td>
                     <td>&nbsp;</td>
-                    <td class="signature">{{ $i }}.</td>
-                    <td class="signature">{{ $i }}.</td>
-                    <td class="signature">{{ $i }}.</td>
-                    <td class="signature">{{ $i }}.</td>
-                    <td class="signature">{{ $i }}.</td>
+                    <td class="signature"> {{ $i }}.</td>
+                    <td class="signature"> {{ $i }}.</td>
+                    <td class="signature"> {{ $i }}.</td>
+                    <td class="signature"> {{ $i }}.</td>
+                    <td class="signature"> {{ $i }}.</td>
                 </tr>
             @endfor
+            <tr>
+                <td class="center">11</td>
+                <td>Penanggung Jawab <br> {{ $item->nama_penanggung_jawab }}</td>
+                <td>{{ $item->kegiatanLsp->lsp->lsp_nama }}</td>
+                <td class="signature" colspan = '4'></td>
+                <td class="signature"> 11.</td>
+            </tr>
+            <tr>
+                <td class="center">12</td>
+                <td>Sekretariat Penyelenggara Uji <br> {{ $item->nama_penyelenggara_uji }}</td>
+                <td>{{ $item->kegiatanLsp->lsp->lsp_nama }}</td>
+                <td class="signature" colspan = '4'></td>
+                <td class="signature"> 12.</td>
+            </tr>
+             <tr>
+                <td class="center">13</td>
+                <td>Asesor <br> {{ $item->nama_asesor }}</td>
+                <td>{{ $item->kegiatanLsp->lsp->lsp_nama }}</td>
+                <td class="signature" colspan = '4'></td>
+                <td class="signature"> 13.</td>
+            </tr>
         </tbody>
     </table>
 
