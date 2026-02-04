@@ -133,8 +133,7 @@
                             </thead>
 
                             <tbody id="dataPeserta">
-                                @foreach ($dataKegiatan->kegiatanJadwal as $kegiatan)
-                                    {{-- {{ dd($kegiatan) }} --}}
+                                @foreach ($dataKegiatan->kegiatanLsp as $kegiatan)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $kegiatan->lsp->lsp_nama }}</td>
@@ -155,6 +154,7 @@
                                             </button>
                                         </td>
                                     </tr>
+
                                     <tr class="bg-light collapse" id="jadwal-{{ $kegiatan->ref }}" data-bs-parent="#dataPeserta">
 
                                         <td colspan="5" class="p-1">
@@ -168,65 +168,67 @@
                                                         <thead>
                                                             <tr>
                                                                 <th>No</th>
-                                                                <th>Jumlah Peserta Mendaftar</th>
+                                                                <th>Jumlah Peserta Terdaftar</th>
                                                                 <th>Tanggal Asesmen</th>
                                                                 <th>Action</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody id="detailJadwal-{{ $kegiatan->ref }}">
-                                                            {{-- {{ dd($kegiatan->lsp->lsp_nama) }} --}}
-                                                            @foreach ($jadwalKegiatan[$kegiatan->lsp->lsp_nama] ?? [] as $asesmen)
-                                                                <tr>
-                                                                    <td>{{ $loop->iteration }}</td>
-                                                                    <td>{{ count($dataAsesi[$asesmen->ref] ?? []) }}</td>
-                                                                    <td class={{ count($dataAsesi[$asesmen->ref] ?? []) >= 1 ? 'fw-bold' : '' }}>{{ \Carbon\Carbon::parse($asesmen->jadwal_asesmen)->locale('id')->translatedFormat('l, d F Y') }}</td>
-                                                                    <td class="d-flex gap-2">
-                                                                        <button class="btn btn-link text-decoration-none fs-12 p-0" data-bs-toggle="collapse" data-bs-target="#asesi_list-{{ $asesmen->ref }}" aria-expanded="false" aria-controls="asesi_list-{{ $asesmen->ref }}">
-                                                                            Lihat Detail
-                                                                        </button>
-                                                                    </td>
-                                                                </tr>
-                                                                <tr class="bg-light collapse" id="asesi_list-{{ $asesmen->ref }}" data-bs-parent="#detailJadwal-{{ $kegiatan->ref }}">
-                                                                    <td colspan="4" class="p-3">
-                                                                        <div class="card mb-0 border-0 shadow-sm">
-                                                                            <div class="card-body">
-                                                                                <div class="card-header text-bg-primary px-3" bis_skin_checked="1">
-                                                                                    <h4 class="card-title"> List Asesi</h4>
-                                                                                    <h6>{{ \Carbon\Carbon::parse($asesmen->jadwal_asesmen)->locale('id')->translatedFormat('l, d F Y') }}</h6>
-                                                                                </div>
-                                                                                <table class="table-sm table-bordered table" style="font-size: 12px">
-                                                                                    <thead>
-                                                                                        <tr>
-                                                                                            <th>No</th>
-                                                                                            <th>Nama Asesi</th>
-                                                                                            <th>Skema Dipilih</th>
-                                                                                            <th>Lokasi TUK</th>
-                                                                                            <th>Upload Berkas</th>
-                                                                                        </tr>
-                                                                                    </thead>
-                                                                                    <tbody>
-                                                                                        @foreach ($dataAsesi[$asesmen->ref] ?? [] as $asesi)
-                                                                                            {{-- {{ dd($asesi) }} --}}
+                                                            @foreach ($jadwalKegiatan[$kegiatan->lsp->ref] as $skema)
+                                                                @foreach ($skema->jadwal as $jadwal)
+                                                                    <tr class="{{ count($dataAsesi[$jadwal->ref] ?? []) >= 1 ? 'bg-light' : '' }}">
+                                                                        <td>{{ $loop->iteration }}</td>
+                                                                        <td> {{ count($dataAsesi[$jadwal->ref] ?? []) }} Peserta</td>
+                                                                        <td class="{{ count($dataAsesi[$jadwal->ref] ?? []) >= 1 ? 'fw-bold' : '' }}">{{ \Carbon\Carbon::parse($jadwal->mulai_asesmen)->locale('id')->translatedFormat('l, d F Y') }}</td>
+                                                                        <td class="d-flex gap-2">
+                                                                            <button class="btn btn-link text-decoration-none fs-12 p-0" data-bs-toggle="collapse" data-bs-target="#asesi_list-{{ $jadwal->ref }}" aria-expanded="false" aria-controls="asesi_list-{{ $jadwal->ref }}">
+                                                                                Lihat Detail
+                                                                            </button>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr class="bg-light collapse" id="asesi_list-{{ $jadwal->ref }}" data-bs-parent="#detailJadwal-{{ $kegiatan->ref }}">
+                                                                        <td colspan="4" class="p-3">
+                                                                            <div class="card mb-0 border-0 shadow-sm">
+                                                                                <div class="card-body">
+                                                                                    <div class="card-header text-bg-primary px-3" bis_skin_checked="1">
+                                                                                        <h4 class="card-title"> List Asesi</h4>
+                                                                                        <h6>{{ \Carbon\Carbon::parse($jadwal->mulai_asesmen)->locale('id')->translatedFormat('l, d F Y') }}</h6>
+                                                                                    </div>
+
+                                                                                    <table class="table-sm table-bordered table" style="font-size: 12px">
+                                                                                        <thead>
                                                                                             <tr>
-                                                                                                <td>{{ $loop->iteration }}</td>
-                                                                                                <td>{{ $asesi->nama_lengkap }}</td>
-                                                                                                <td>{{ $asesi->asesmen->nama_skema }}</td>
-                                                                                                <td>{{ $asesi->asesmen->nama_tuk }}</td>
-                                                                                                <td class="d-flex gap-2">
-                                                                                                    <button class="btn btn-link text-decoration-none fs-12 p-0">
-                                                                                                        Download Berkas
-                                                                                                    </button>
-                                                                                                </td>
+                                                                                                <th>No</th>
+                                                                                                <th>Nama Asesi</th>
+                                                                                                <th>Skema Dipilih</th>
+                                                                                                <th>Lokasi TUK</th>
+                                                                                                <th>Upload Berkas</th>
                                                                                             </tr>
-                                                                                        @endforeach
+                                                                                        </thead>
+                                                                                        <tbody>
+                                                                                            @foreach ($dataAsesi[$jadwal->ref] ?? [] as $asesi)
+                                                                                                {{-- {{ dd($asesi) }} --}}
+                                                                                                <tr>
+                                                                                                    <td>{{ $loop->iteration }}</td>
+                                                                                                    <td>{{ $asesi->nama_lengkap }}</td>
+                                                                                                    <td>{{ $asesi->skema->skema_judul }}</td>
+                                                                                                    <td>{{ $asesi->tuk->tuk_nama }}</td>
+                                                                                                    <td class="d-flex gap-2">
+                                                                                                        <button class="btn btn-link text-decoration-none fs-12 p-0">
+                                                                                                            Download Berkas
+                                                                                                        </button>
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                            @endforeach
 
-                                                                                    </tbody>
-                                                                                </table>
+                                                                                        </tbody>
+                                                                                    </table>
 
+                                                                                </div>
                                                                             </div>
-                                                                        </div>
-                                                                    </td>
-                                                                </tr>
+                                                                        </td>
+                                                                    </tr>
+                                                                @endforeach
                                                             @endforeach
                                                         </tbody>
                                                     </table>

@@ -169,14 +169,20 @@ class KegiatanController extends Controller
     public function show(string $id)
     {
         $data['dataLSP'] = LSPModel::get();
+
         $data['dataKegiatan'] = KegiatanModel::where('ref', $id)
             ->with([
-                'kegiatanLsp.lsp',           // detail kuota + LSP
-                'kegiatanLsp.jadwal',
+                // 'kegiatanLsp.lsp',           // detail kuota + LSP
+                // 'kegiatanLsp.jadwal',
+
                 'skemaPerLsp.lsp',        // total skema per LSP
                 'kuotaPerLsp.lsp',      // total kuota per LSP
                 'asesi.tuk',
-                'asesi.skema'
+                'asesi.skema',
+                'kegiatanJadwal.lsp',
+
+                'kegiatanLsp',
+                'jadwalAsesmen',
 
             ])->withSum(
                 'kegiatanLsp as total_peserta',
@@ -184,17 +190,19 @@ class KegiatanController extends Controller
             )->withCount('skemas', 'asesi')        // total skema kegiatan
             ->firstOrFail();
 
-
         // dd($data['dataKegiatan']);
 
         $data['skemaPerLsp'] = $data['dataKegiatan']->skemaPerLsp->keyBy('lsp_ref'); // Mengelompokkan skema per LSP berdasarkan lsp_ref
-        $data['jadwalKegiatan'] = $data['dataKegiatan']->kegiatanLsp->groupBy('lsp_ref'); // Mengelompokkan jadwal kegiatan berdasarkan lsp_ref
         $data['dataSkema'] = $data['dataKegiatan']->skemas->groupBy('lsp_ref'); // Mengelompokkan data skema berdasarkan lsp_ref
-
-        $data['dataAsesi'] = $data['dataKegiatan']->asesi->groupBy('tgl_asesmen');
-        // dd($data['dataAsesi']);
+        // $data['dataAsesi'] = $data['dataKegiatan']->asesi->groupBy('tgl_asesmen');
 
         $data['dataAsesiByLsp'] = AsesiModel::where('kegiatan_ref', $id)->get()->groupBy('lsp_ref');
+
+        // $data['jadwalKegiatan'] = $data['dataKegiatan']->kegiatanLsp->groupBy('lsp_ref'); // Mengelompokkan jadwal kegiatan berdasarkan lsp_ref
+
+        $data['dataAsesi'] = AsesiModel::with('asesmen')->get()->groupBy('asesmen_ref');
+        $data['jadwalKegiatan'] = $data['dataKegiatan']->jadwalAsesmen->groupBy('nama_lsp');
+        // dd($data['dataAsesi']);
 
 
         return view('admin-panel.kegiatan.show', $data);

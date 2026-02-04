@@ -39,11 +39,7 @@ class KegiatanJadwalModel extends Model
 
     public function lsp(): BelongsTo
     {
-        return $this->belongsTo(
-            LSPModel::class,
-            'lsp_ref',
-            'ref'
-        );
+        return $this->belongsTo(LSPModel::class, 'lsp_ref', 'ref');
     }
 
     public function kegiatanLsp()

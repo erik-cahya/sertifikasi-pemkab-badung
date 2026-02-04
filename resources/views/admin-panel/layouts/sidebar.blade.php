@@ -180,27 +180,29 @@
                 </div>
             </li>
 
-            <li class="side-nav-item {{ request()->routeIs('item.*') ? 'menuitem-active' : '' }}">
-                <a data-bs-toggle="collapse" href="#itemMenu" aria-expanded="false" aria-controls="itemMenu" class="side-nav-link">
-                    <i class="ri-settings-2-line"></i>
-                    <span> Option </span>
-                    <span class="menu-arrow"></span>
-                </a>
-                <div class="{{ request()->routeIs('item.*') ? 'show' : '' }} collapse" id="itemMenu">
-                    <ul class="side-nav-second-level">
-                        <li class="side-nav-departemen {{ request()->routeIs('departemen.index') ? 'menudepartemen-active' : '' }}">
-                            <a class="side-nav-link {{ request()->routeIs('departemen.index') ? 'active' : '' }}" href="{{ route('departemen.index') }}">
-                                Departemen
-                            </a>
-                        </li>
-                        <li class="side-nav-jabatan {{ request()->routeIs('jabatan.index') ? 'menujabatan-active' : '' }}">
-                            <a class="side-nav-link {{ request()->routeIs('jabatan.index') ? 'active' : '' }}" href="{{ route('jabatan.index') }}">
-                                Jabatan
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </li>
+            @role('master')
+                <li class="side-nav-item {{ request()->routeIs('item.*') ? 'menuitem-active' : '' }}">
+                    <a data-bs-toggle="collapse" href="#itemMenu" aria-expanded="false" aria-controls="itemMenu" class="side-nav-link">
+                        <i class="ri-settings-2-line"></i>
+                        <span> Option </span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <div class="{{ request()->routeIs('item.*') ? 'show' : '' }} collapse" id="itemMenu">
+                        <ul class="side-nav-second-level">
+                            <li class="side-nav-departemen {{ request()->routeIs('departemen.index') ? 'menudepartemen-active' : '' }}">
+                                <a class="side-nav-link {{ request()->routeIs('departemen.index') ? 'active' : '' }}" href="{{ route('departemen.index') }}">
+                                    Departemen
+                                </a>
+                            </li>
+                            <li class="side-nav-jabatan {{ request()->routeIs('jabatan.index') ? 'menujabatan-active' : '' }}">
+                                <a class="side-nav-link {{ request()->routeIs('jabatan.index') ? 'active' : '' }}" href="{{ route('jabatan.index') }}">
+                                    Jabatan
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+            @endrole
 
             @role('lsp')
                 <li class="side-nav-title">Profile</li>
