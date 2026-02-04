@@ -52,6 +52,7 @@
 
                             </div>
                         </div>
+                        @unlessrole('lsp')
                         <hr>
                         <div class="d-flex gap-2">
                             <div class="d-flex flex-lg-nowrap justify-content-between align-items-end flex-wrap">
@@ -106,7 +107,8 @@
                             </div>
                         </div>
                         <!-- End Edit Data Modal -->
-
+                        @endunlessrole
+                        @endauth
                     </div>
                 </div>
             </div>

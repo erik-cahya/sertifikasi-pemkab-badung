@@ -133,11 +133,11 @@
                                     <tbody>
                                         @foreach ($dataAsesmen as $asesmen)
                                             <tr>
-                                                <td class="text-center">1</td>
+                                                <td class="text-center">{{ $loop->iteration }}</td>
                                                 <td>{{ $asesmen->nama_tuk }}</td>
                                                 <td>{{ $asesmen->nama_skema }}</td>
-                                                <td>{{ date('Y/m/d', strtotime($asesmen->jadwal_asesmen)) }}</td>
-                                                <td>{{ $asesmen->kuota_harian }} Asesi</td>
+                                                <td class="text-center">{{ date('Y/m/d', strtotime($asesmen->jadwal_asesmen)) }}</td>
+                                                <td class="text-center">{{ $asesmen->asesis_count }}/{{ $asesmen->kuota_harian }} Asesi</td>
                                                 <td>
                                                     <div class="btn-group" role="group" aria-label="Basic outlined example">
                                                         <a href="{{ route('pdf.daftar-hadir', $asesmen->kegiatan_ref) }}" target="_blank" class="btn btn-sm btn-info" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Download Daftar Hadir" data-bs-custom-class="info-tooltip"><i class="mdi mdi-download"></i> </a>

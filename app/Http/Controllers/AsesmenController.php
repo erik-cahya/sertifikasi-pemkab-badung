@@ -82,8 +82,7 @@ class AsesmenController extends Controller
             ->firstOrFail();
 
         $data['dataTUK'] = TUKModel::where('lsp_ref', $user->lspData->ref)->get();
-        $data['dataSkema'] = KegiatanSkemaModel::with('skema')->where('kegiatan_ref', $id)->where('lsp_ref', $user->lspData->ref)
-            ->get();
+        $data['dataSkema'] = KegiatanSkemaModel::with('skema')->where('kegiatan_ref', $id)->where('lsp_ref', $user->lspData->ref)->get();
 
         // dd($data['dataSkema']);
         $jadwalKegiatan = KegiatanJadwalModel::where('kegiatan_ref', $id)->where('lsp_ref', $user->lspData->ref)->firstOrFail();
@@ -96,7 +95,7 @@ class AsesmenController extends Controller
         $data['kegiatan_ref'] = $jadwalKegiatan->kegiatan_ref;
         $data['kegiatan_lsp_ref'] = $jadwalKegiatan->kegiatan_lsp_ref;
 
-        $data['dataAsesmen'] = AsesmenModel::where('kegiatan_ref', $id)->get();
+        $data['dataAsesmen'] = AsesmenModel::where('kegiatan_ref', $id)->withCount('asesis')->get();
 
         return view('admin-panel.asesmen.create', $data);
     }
