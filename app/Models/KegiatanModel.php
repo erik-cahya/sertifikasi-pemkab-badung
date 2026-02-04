@@ -42,15 +42,6 @@ class KegiatanModel extends Model
         return $this->hasMany(KegiatanJadwalModel::class, 'kegiatan_ref', 'ref');
     }
 
-    public function kegiatanLsp(): HasMany
-    {
-        return $this->hasMany(
-            KegiatanLSPModel::class,
-            'kegiatan_ref', // FK di kegiatan_lsp
-            'ref'           // PK di kegiatan
-        );
-    }
-
     public function detailsGroupedByLsp()
     {
         return $this->hasMany(KegiatanJadwalModel::class, 'kegiatan_ref', 'ref')
@@ -104,5 +95,19 @@ class KegiatanModel extends Model
             'kegiatan_ref',
             'ref'
         );
+    }
+
+    public function kegiatanLsp(): HasMany
+    {
+        return $this->hasMany(
+            KegiatanLSPModel::class,
+            'kegiatan_ref', // FK di kegiatan_lsp
+            'ref'           // PK di kegiatan
+        );
+    }
+
+    public function jadwalAsesmen(): HasMany
+    {
+        return $this->hasMany(AsesmenModel::class, 'kegiatan_ref', 'ref');
     }
 }

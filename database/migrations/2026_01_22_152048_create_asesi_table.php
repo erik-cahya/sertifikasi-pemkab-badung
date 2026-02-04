@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('asesi', function (Blueprint $table) {
             $table->ulid('ref')->primary();
             $table->foreignUlid('kegiatan_ref')->references('ref')->on('kegiatan')->cascadeOnDelete();
-            $table->foreignUlid('lsp_ref')->references('ref')->on('lsp')->cascadeOnDelete();
+            $table->foreignUlid('lsp_ref')->nullable()->references('ref')->on('lsp')->nullOnDelete();
 
             // GANTI MENJADI FK DENGAN JADWAL ASSEMEN
             $table->foreignUlid('asesmen_ref')->references('ref')->on('asesmen')->cascadeOnDelete();
