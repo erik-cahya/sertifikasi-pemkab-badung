@@ -204,6 +204,16 @@
                 </li>
             @endrole
 
+            @role('master', 'dinas')
+                <li class="side-nav-title">Settings</li>
+                <li class="side-nav-item {{ request()->routeIs('profile.index') ? 'menuitem-active' : '' }}">
+                    <a href="{{ route('profile.index') }}" class="side-nav-link">
+                        <i class="ri-user-2-line"></i>
+                        <span> Account Management </span>
+                    </a>
+                </li>
+            @endrole
+
             @role('lsp')
                 <li class="side-nav-title">Profile</li>
                 <li class="side-nav-item {{ request()->routeIs('profile.index') ? 'menuitem-active' : '' }}">

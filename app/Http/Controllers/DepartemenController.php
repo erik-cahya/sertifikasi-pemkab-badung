@@ -11,6 +11,11 @@ use Illuminate\Support\Facades\Validator;
 class DepartemenController extends Controller
 {
 
+    public function __construct()
+    {
+        View()->share('title', 'Departemen');
+    }
+
     /**
      * Display a listing of the resource.
      */

@@ -24,6 +24,10 @@ use Illuminate\Validation\ValidationException;
 
 class AsesiController extends Controller
 {
+    public function __construct()
+    {
+        View()->share('title', 'Data Asesi');
+    }
 
     public function getLspByKegiatan($kegiatanRef)
     {
@@ -65,64 +69,9 @@ class AsesiController extends Controller
                 ];
             });
         return response()->json($data);
-
-
-        // $kegiatanLsp = KegiatanLSPModel::where('kegiatan_ref', $request->kegiatan_ref)
-        //     ->where('lsp_ref', $request->lsp_ref)
-        //     ->with('jadwal:ref,kegiatan_lsp_ref,mulai_asesmen,selesai_asesmen')
-        //     ->first();
-
-        // if (! $kegiatanLsp) {
-        //     return response()->json([]);
-        // }
-
-        // return response()->json(
-        //     $kegiatanLsp->jadwal->map(fn($jadwal) => [
-        //         'ref'            => $jadwal->ref,
-        //         'mulai_asesmen'  => $jadwal->mulai_asesmen,
-        //         'selesai_asesmen' => $jadwal->selesai_asesmen,
-        //     ])
-        // );
     }
 
-    // public function getSkemaByKegiatanLsp(Request $request)
-    // {
-    //     $request->validate([
-    //         'kegiatan_ref' => 'required',
-    //         'lsp_ref'      => 'required',
-    //     ]);
 
-    //     return KegiatanSkemaModel::where('kegiatan_ref', $request->kegiatan_ref)
-    //         ->where('lsp_ref', $request->lsp_ref)
-    //         ->with('skema:ref,skema_judul,skema_kode')
-    //         ->get()
-    //         ->map(fn($item) => [
-    //             'skema_ref'   => $item->skema->ref,
-    //             'skema_judul' => $item->skema->skema_judul,
-    //             'skema_kode'  => $item->skema->skema_kode,
-    //         ]);
-    // }
-
-
-
-
-    // public function getTukByLsp(Request $request)
-    // {
-    //     // dd($request->all());
-    //     $request->validate([
-    //         'kegiatan_ref' => 'required',
-    //         'lsp_ref'      => 'required',
-    //     ]);
-
-
-    //     $dataTUK = TUKModel::where('lsp_ref', $request->lsp_ref)->first();
-
-    //     if (!$dataTUK) {
-    //         return response()->json([]);
-    //     }
-
-    //     return response()->json($dataTUK);
-    // }
 
     /**
      * Display a listing of the resource.
@@ -239,7 +188,7 @@ class AsesiController extends Controller
 
             // $validated['ktp_file'] = $request->file('ktp_file')
             //     ->storeAs('asesi/ktp', $filename, 'public');
-            
+
         }
 
         /* ================== IJAZAH ================== */
@@ -249,7 +198,7 @@ class AsesiController extends Controller
             $ijazah = Storage::disk('ijazah')->putFileAs("ijazah", $request->file('ijazah_file'), $filename);
 
             // $validated['ijazah_file'] = $request->file('ijazah_file')
-                // ->storeAs('asesi/ijazah', $filename, 'public');
+            // ->storeAs('asesi/ijazah', $filename, 'public');
 
         }
 

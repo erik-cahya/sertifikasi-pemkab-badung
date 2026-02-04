@@ -11,6 +11,11 @@ use Illuminate\Support\Facades\Validator;
 class JabatanController extends Controller
 {
 
+    public function __construct()
+    {
+        View()->share('title', 'Jabatan');
+    }
+
     public function getJabatanByDepartemen($departemenNama)
     {
         $departemenRef = DepartemenModel::where('departemen_nama', $departemenNama)->first();

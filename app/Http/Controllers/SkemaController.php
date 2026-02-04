@@ -11,6 +11,10 @@ use Illuminate\Support\Facades\Validator;
 
 class SkemaController extends Controller
 {
+    public function __construct()
+    {
+        View()->share('title', 'Skema');
+    }
 
     public function getByLsp(string $lspRef)
     {

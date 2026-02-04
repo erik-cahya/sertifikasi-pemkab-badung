@@ -14,6 +14,10 @@ use Illuminate\Support\Facades\Validator;
 
 class LSPController extends Controller
 {
+    public function __construct()
+    {
+        View()->share('title', 'Data LSP');
+    }
     /**
      * Display a listing of the resource.
      */

@@ -20,7 +20,10 @@ use Illuminate\Support\Str;
 
 class KegiatanController extends Controller
 {
-
+    public function __construct()
+    {
+        View()->share('title', 'Kegiatan');
+    }
 
     // public function jadwalAsesmen()
     // {

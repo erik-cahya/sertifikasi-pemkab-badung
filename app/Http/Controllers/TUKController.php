@@ -12,6 +12,10 @@ use App\Models\LSPModel;
 
 class TUKController extends Controller
 {
+    public function __construct()
+    {
+        View()->share('title', 'Data TUK');
+    }
     /**
      * Display a listing of the resource.
      */
@@ -29,23 +33,23 @@ class TUKController extends Controller
         $validated = $request->validate([
             'lsp_ref' => 'required|exists:lsp,ref',
             'tuk_nama' => 'required',
-            'tuk_alamat' => 'required', 
-            'tuk_email' => 'required', 
-            'tuk_telp' => 'required', 
-            'tuk_cp_nama' => 'required', 
-            'tuk_cp_email' => 'required', 
-            'tuk_cp_telp' => 'required', 
+            'tuk_alamat' => 'required',
+            'tuk_email' => 'required',
+            'tuk_telp' => 'required',
+            'tuk_cp_nama' => 'required',
+            'tuk_cp_email' => 'required',
+            'tuk_cp_telp' => 'required',
         ], [
             'lsp_ref.required' => 'TUK harus memiliki LSP Induk tidak boleh kosong',
             'tuk_nama.required' => 'Nama TUK tidak boleh kosong',
-            'tuk_alamat.required' => 'Alamat TUK tidak boleh kosong', 
-            'tuk_telp.required' => 'Telp TUK tidak boleh kosong', 
-            'tuk_email.required' => 'Email TUK tidak boleh kosong', 
-            'tuk_cp_nama.required' => 'Nama Kontak Person TUK tidak boleh kosong', 
-            'tuk_cp_email.required' => 'Email Kontak Person TUK tidak boleh kosong', 
+            'tuk_alamat.required' => 'Alamat TUK tidak boleh kosong',
+            'tuk_telp.required' => 'Telp TUK tidak boleh kosong',
+            'tuk_email.required' => 'Email TUK tidak boleh kosong',
+            'tuk_cp_nama.required' => 'Nama Kontak Person TUK tidak boleh kosong',
+            'tuk_cp_email.required' => 'Email Kontak Person TUK tidak boleh kosong',
         ]);
 
-       TUKModel::create([
+        TUKModel::create([
             'lsp_ref' => $request->lsp_ref,
             'tuk_nama' => $request->tuk_nama,
             'tuk_alamat' => $request->tuk_alamat,
@@ -63,16 +67,15 @@ class TUKController extends Controller
             'type' => 'success',
         ];
         return redirect()->route('tuk.index')->with('flashData', $flashData);
-        
     }
 
     // TUK ADMIN PANEL
     public function list()
     {
         $tuk = TUKModel::join('lsp', 'lsp.ref', '=', 'tuk.lsp_ref')
-        ->select('tuk.*','lsp.lsp_nama')
-        ->orderBy('tuk.created_at', 'desc')
-        ->get();
+            ->select('tuk.*', 'lsp.lsp_nama')
+            ->orderBy('tuk.created_at', 'desc')
+            ->get();
 
         return view('admin-panel.tuk.index', [
             'dataTUK' => $tuk,
@@ -94,20 +97,20 @@ class TUKController extends Controller
         $validated = $request->validate([
             'lsp_ref' => 'required',
             'tuk_nama' => 'required',
-            'tuk_alamat' => 'required', 
-            'tuk_telp' => 'required', 
-            'tuk_email' => 'required', 
-            'tuk_cp_nama' => 'required', 
-            'tuk_cp_email' => 'required', 
-            'tuk_cp_telp' => 'required', 
+            'tuk_alamat' => 'required',
+            'tuk_telp' => 'required',
+            'tuk_email' => 'required',
+            'tuk_cp_nama' => 'required',
+            'tuk_cp_email' => 'required',
+            'tuk_cp_telp' => 'required',
         ], [
             'lsp_ref' => 'TUK harus memiliki LSP Induk tidak boleh kosong',
             'tuk_nama' => 'Nama TUK tidak boleh kosong',
-            'tuk_alamat' => 'Alamat TUK tidak boleh kosong', 
-            'tuk_telp' => 'Telp TUK tidak boleh kosong', 
-            'tuk_email' => 'Email TUK tidak boleh kosong', 
-            'tuk_cp_nama' => 'Nama Kontak Person TUK tidak boleh kosong', 
-            'tuk_cp_email' => 'Email Kontak Person TUK tidak boleh kosong', 
+            'tuk_alamat' => 'Alamat TUK tidak boleh kosong',
+            'tuk_telp' => 'Telp TUK tidak boleh kosong',
+            'tuk_email' => 'Email TUK tidak boleh kosong',
+            'tuk_cp_nama' => 'Nama Kontak Person TUK tidak boleh kosong',
+            'tuk_cp_email' => 'Email Kontak Person TUK tidak boleh kosong',
             'tuk_cp_telp' => 'Telp Kontak Person TUK tidak boleh kosong',
         ]);
 
@@ -134,9 +137,9 @@ class TUKController extends Controller
     public function edit(string $id)
     {
         $tuk = TUKModel::join('lsp', 'lsp.ref', '=', 'tuk.lsp_ref')
-        ->select('tuk.*','lsp.lsp_nama')
-        ->orderBy('tuk.created_at', 'desc')
-        ->get();
+            ->select('tuk.*', 'lsp.lsp_nama')
+            ->orderBy('tuk.created_at', 'desc')
+            ->get();
 
         return view('admin-panel.tuk.edit', [
             'dataTUK' => $tuk,
@@ -183,22 +186,22 @@ class TUKController extends Controller
             'tuk_verif' => $code,
         ]);
 
-        if($code==1)
-        return redirect()
-            ->route('tukAdmin.index')
-            ->with('flashData', [
-                'title' => 'Verifikasi TUK Success',
-                'message' => 'Data TUK Berhasil Diverifikasi',
-                'type' => 'success',
-            ]);
-        else{
+        if ($code == 1)
             return redirect()
-            ->route('tukAdmin.index')
-            ->with('flashData', [
-                'title' => 'Nonaktifkan TUK Success',
-                'message' => 'Data TUK Berhasil Dinonaktifkan',
-                'type' => 'warning',
-            ]);
+                ->route('tukAdmin.index')
+                ->with('flashData', [
+                    'title' => 'Verifikasi TUK Success',
+                    'message' => 'Data TUK Berhasil Diverifikasi',
+                    'type' => 'success',
+                ]);
+        else {
+            return redirect()
+                ->route('tukAdmin.index')
+                ->with('flashData', [
+                    'title' => 'Nonaktifkan TUK Success',
+                    'message' => 'Data TUK Berhasil Dinonaktifkan',
+                    'type' => 'warning',
+                ]);
         }
     }
 }
