@@ -136,7 +136,7 @@
                                                 <td class="text-center">{{ $loop->iteration }}</td>
                                                 <td>{{ $asesmen->nama_tuk }}</td>
                                                 <td>{{ $asesmen->nama_skema }}</td>
-                                                <td class="text-center">{{ date('Y/m/d', strtotime($asesmen->jadwal_asesmen)) }}</td>
+                                                <td class="text-center">{{ \Carbon\Carbon::parse($asesmen->jadwal_asesmen)->locale('id')->translatedFormat('l, d F Y') }}</td>
                                                 <td class="text-center">{{ $asesmen->asesis_count }}/{{ $asesmen->kuota_harian }} Asesi</td>
                                                 <td>
                                                     <div class="btn-group" role="group" aria-label="Basic outlined example">

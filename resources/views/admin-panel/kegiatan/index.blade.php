@@ -40,10 +40,13 @@
                                     @role('master')
                                         <td>
                                             @php
-                                                $lsps = $kegiatan->kegiatanLsp
+                                                $lsps = $kegiatan->kegiatanJadwal
                                                     ->map(fn($item) => $item->lsp) // ambil model LSP
                                                     ->filter() // buang null
                                                     ->unique('ref'); // unik per LSP
+
+                                                // dd($kegiatan);
+
                                             @endphp
 
                                             <div class="d-flex flex-column gap-1">

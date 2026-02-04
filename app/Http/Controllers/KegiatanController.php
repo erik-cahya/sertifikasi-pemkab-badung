@@ -40,12 +40,15 @@ class KegiatanController extends Controller
         $user->loadMissing('lspData');
 
         $query = KegiatanModel::with([
-            'kegiatanLsp:ref,kegiatan_ref,lsp_ref,kuota_lsp',
-            'kegiatanLsp.lsp:ref,lsp_nama'
-        ])->withSum('kegiatanLsp as total_kuota', 'kuota_lsp');
+            // 'kegiatanLsp:ref,kegiatan_ref,lsp_ref,kuota_lsp',
+            // 'kegiatanLsp.lsp:ref,lsp_nama',
+
+            'kegiatanJadwal:ref,kegiatan_ref,lsp_ref,kuota_lsp',
+            'kegiatanJadwal.lsp:ref,lsp_nama'
+        ])->withSum('kegiatanJadwal as total_kuota', 'kuota_lsp');
 
         if ($user->roles === 'lsp' && $user->lspData) {
-            $query->whereHas('kegiatanLsp', function ($q) use ($user) {
+            $query->whereHas('kegiatanJadwal', function ($q) use ($user) {
                 $q->where('lsp_ref', $user->lspData->ref);
             });
         }
@@ -135,13 +138,13 @@ class KegiatanController extends Controller
                     ]);
                 }
 
-                $kegiatanLSP = KegiatanLSPModel::create([
-                    'kegiatan_ref' => $kegiatan->ref,
-                    'lsp_ref' => $lsp,
-                    'kuota_lsp' => $kuota,
-                    'created_by'   => Auth::user()->ref,
+                // $kegiatanLSP = KegiatanLSPModel::create([
+                //     'kegiatan_ref' => $kegiatan->ref,
+                //     'lsp_ref' => $lsp,
+                //     'kuota_lsp' => $kuota,
+                //     'created_by'   => Auth::user()->ref,
 
-                ]);
+                // ]);
 
                 [$start, $end] = array_map('trim', explode(' - ', $range));
                 $startDate = Carbon::createFromFormat('d-m-Y', $start);
@@ -150,9 +153,10 @@ class KegiatanController extends Controller
                 KegiatanJadwalModel::create([
                     'lsp_ref'         => $lsp,
                     'kegiatan_ref' => $kegiatan->ref,
-                    'kegiatan_lsp_ref' => $kegiatanLSP->ref,
+                    'kegiatan_lsp_ref' => NULL,
                     'mulai_asesmen'   => $startDate->format('Y-m-d'),
                     'selesai_asesmen' => $endDate->format('Y-m-d'),
+                    'kuota_lsp' => $kuota,
                     'created_by'      => Auth::user()->ref,
                 ]);
             }
@@ -184,11 +188,11 @@ class KegiatanController extends Controller
             )->withCount('skemas', 'asesi');      // total skema kegiatan
         if ($user->roles === 'lsp' && $user->lspData) {
             $query->whereHas('kegiatanJadwal', function ($q) use ($user) {
-                $q->where('lsp_ref', '01KGHDK7D2AMYYK8356P5Y46SY');
+                $q->where('lsp_ref', $user->lspData->ref);
             })
                 ->with([
-                    'kegiatanJadwal' => function ($q) {
-                        $q->where('lsp_ref', '01KGHDK7D2AMYYK8356P5Y46SY');
+                    'kegiatanJadwal' => function ($q) use ($user) {
+                        $q->where('lsp_ref', $user->lspData->ref);
                     }
                 ]);
         }

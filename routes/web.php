@@ -111,7 +111,7 @@ Route::middleware('auth')->group(function () {
     Route::get('tanda-terima-sertifikat/{id}', [PDFController::class, 'tandaTerimaSertifikat'])->name('pdf.tanda-terima-sertifikat');
 
     // ################################ User Management
-    Route::resource('/user-management', UserManagementController::class);
+    Route::resource('/user-management', UserManagementController::class)->except(['show', 'edit', 'create'])->middleware('role:dinas,master');
 });
 
 // ################################ Pendaftaraan Asesi

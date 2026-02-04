@@ -21,6 +21,7 @@ class TUKController extends Controller
      */
     public function index()
     {
+
         $lsp = LSPModel::all();
 
         return view('pendaftaran.pendaftaran-tuk', [
@@ -72,10 +73,18 @@ class TUKController extends Controller
     // TUK ADMIN PANEL
     public function list()
     {
-        $tuk = TUKModel::join('lsp', 'lsp.ref', '=', 'tuk.lsp_ref')
+        /** @var \App\Models\User $user */
+        $user = Auth::user();
+        $user->loadMissing('lspData');
+
+        $query = TUKModel::join('lsp', 'lsp.ref', '=', 'tuk.lsp_ref')
             ->select('tuk.*', 'lsp.lsp_nama')
-            ->orderBy('tuk.created_at', 'desc')
-            ->get();
+            ->orderBy('tuk.created_at', 'desc');
+
+        if ($user->roles === 'lsp' && $user->lspData) {
+            $query->where('tuk.lsp_ref', $user->lspData->ref);
+        }
+        $tuk = $query->get();
 
         return view('admin-panel.tuk.index', [
             'dataTUK' => $tuk,
@@ -84,7 +93,18 @@ class TUKController extends Controller
 
     public function create()
     {
-        $lsp = LSPModel::all();
+        /** @var \App\Models\User $user */
+        $user = Auth::user();
+        $user->loadMissing('lspData');
+
+        $query = LSPModel::select('ref', 'lsp_nama');
+
+        if ($user->roles === 'lsp' && $user->lspData) {
+            $query->where('ref', $user->lspData->ref);
+        }
+
+
+        $lsp = $query->get();
 
         return view('admin-panel.tuk.create', [
             'dataLsp' => $lsp

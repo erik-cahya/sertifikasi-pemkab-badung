@@ -9,6 +9,10 @@ use Illuminate\Support\Facades\Hash;
 
 class UserManagementController extends Controller
 {
+    public function __construct()
+    {
+        View()->share('title', 'User Management');
+    }
     /**
      * Display a listing of the resource.
      */

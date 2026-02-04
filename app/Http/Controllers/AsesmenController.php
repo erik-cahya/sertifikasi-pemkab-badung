@@ -54,19 +54,6 @@ class AsesmenController extends Controller
         $user = Auth::user();
         $user->loadMissing('lspData');
 
-        // dd($user->lspData->ref);
-
-        // $query = KegiatanModel::with([
-        //     'kegiatanLsp:ref,kegiatan_ref,lsp_ref,kuota_lsp',
-        //     'kegiatanLsp.lsp:ref,lsp_nama'
-        // ])->withSum('kegiatanLsp as total_kuota', 'kuota_lsp');
-
-        // if ($user->roles === 'lsp' && $user->lspData) {
-        //     $query->whereHas('kegiatanLsp', function ($q) use ($user) {
-        //         $q->where('lsp_ref', $user->lspData->ref);
-        //     });
-        // }
-
         $data['dataKegiatan'] = KegiatanModel::where('ref', $id)
             ->with([
                 'kegiatanLsp.lsp',           // detail kuota + LSP
@@ -95,7 +82,14 @@ class AsesmenController extends Controller
         $data['kegiatan_ref'] = $jadwalKegiatan->kegiatan_ref;
         $data['kegiatan_lsp_ref'] = $jadwalKegiatan->kegiatan_lsp_ref;
 
-        $data['dataAsesmen'] = AsesmenModel::where('kegiatan_ref', $id)->withCount('asesis')->get();
+
+        $queryDtAsesmen = AsesmenModel::where('kegiatan_ref', $id)->withCount('asesis');
+
+        if ($user->roles === 'lsp' && $user->lspData) {
+            $queryDtAsesmen->where('nama_lsp', $user->lspData->lsp_nama);
+        }
+
+        $data['dataAsesmen'] = $queryDtAsesmen->get();
 
         return view('admin-panel.asesmen.create', $data);
     }

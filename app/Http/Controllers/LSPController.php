@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\LSPModel;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -118,8 +119,8 @@ class LSPController extends Controller
             'lsp_direktur' => $request->lsp_direktur,
             'lsp_direktur_telp' => $request->lsp_direktur_telp,
             'lsp_logo' => $lsp_logo,
-            'lsp_tanggal_lisensi' => $request->lsp_tanggal_lisensi,
-            'lsp_expired_lisensi' => $request->lsp_expired_lisensi,
+            'lsp_tanggal_lisensi' => Carbon::createFromFormat('d/m/Y', $request->lsp_tanggal_lisensi)->format('Y-m-d'),
+            'lsp_expired_lisensi' => Carbon::createFromFormat('d/m/Y', $request->lsp_expired_lisensi)->format('Y-m-d'),
             'created_by' => Auth::user()->ref,
 
         ]);
