@@ -68,6 +68,47 @@ return [
             'throw' => false,
         ],
 
+        'KTP' => [
+            'driver' => 'local',
+            'root' => public_path('asesi_files'),
+            'url' => rtrim(env('APP_URL'), '/').'asesi_files',
+            'visibility' => 'public',
+            'throw' => false,
+        ],
+
+        'ijazah' => [
+            'driver' => 'local',
+            'root' => public_path('asesi_files'),
+            'url' => rtrim(env('APP_URL'), '/').'asesi_files',
+            'visibility' => 'public',
+            'throw' => false,
+        ],
+
+        'sertikom' => [
+            'driver' => 'local',
+            'root' => public_path('asesi_files'),
+            'url' => rtrim(env('APP_URL'), '/').'asesi_files',
+            'visibility' => 'public',
+            'throw' => false,
+        ],
+
+        'SKB' => [
+            'driver' => 'local',
+            'root' => public_path('asesi_files'),
+            'url' => rtrim(env('APP_URL'), '/').'asesi_files',
+            'visibility' => 'public',
+            'throw' => false,
+        ],
+
+        
+        'pas-foto' => [
+            'driver' => 'local',
+            'root' => public_path('asesi_files'),
+            'url' => rtrim(env('APP_URL'), '/').'asesi_files',
+            'visibility' => 'public',
+            'throw' => false,
+        ],
+
     ],
 
     /*

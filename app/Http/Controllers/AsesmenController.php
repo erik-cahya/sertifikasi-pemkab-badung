@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AsesiModel;
 use App\Models\AsesmenModel;
 use App\Models\KegiatanDetailModel;
 use App\Models\KegiatanJadwalModel;
@@ -97,7 +98,6 @@ class AsesmenController extends Controller
 
         $data['dataAsesmen'] = AsesmenModel::where('kegiatan_ref', $id)->get();
 
-
         return view('admin-panel.asesmen.create', $data);
     }
 
@@ -143,7 +143,8 @@ class AsesmenController extends Controller
         ]);
 
         return redirect()
-            ->route('kegiatan.index')
+            // ->route('kegiatan.index')
+            ->route('asesmen.create', compact($request->kegiatan_ref))
             ->with('flashData', [
                 'title' => 'Tambah Data Success',
                 'message' => 'Jadwal Asesmen Berhasil Diubah Diubah',

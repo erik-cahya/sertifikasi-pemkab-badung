@@ -50,6 +50,10 @@ return new class extends Migration
 
             $table->boolean('status')->nullable();
             $table->boolean('kompeten')->nullable();
+
+            $table->string('no_sertifikat')->nullable();
+            $table->string('sertifikat_file')->nullable();
+
             $table->timestamps();
         });
     }

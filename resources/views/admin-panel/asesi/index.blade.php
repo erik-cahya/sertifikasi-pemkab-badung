@@ -16,6 +16,7 @@
                     <table id="fixed-columns-datatable" class="table table-striped nowrap row-border order-column w-100">
                         <thead>
                             <tr>
+                                <th>Sertifikasi</th>
                                 <th>Nama</th>
                                 <th>NIK</th>
                                 <th>Tempat Lahir </th>
@@ -32,33 +33,108 @@
                                 <th>Jabatan</th>
                                 <th>Telp Perusahaan</th>
                                 <th>Email Perusahaan</th>
-                                <th>Files</th>
-                                <th>K / BK</th>
+                                <th>Dokumen</th>
+                                {{-- <th>Ijazah</th>
+                                <th>Sertifikat Kompetensi</th>
+                                <th>Surat Keterangan Bekerja</th>
+                                <th>Pas Foto</th> --}}
+                                {{-- <th>K / BK</th> --}}
+                                <th>Jadwal Asesmen</th>
                                 <th>Mendaftar pada</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($dataAsesi as $item )
                                 <tr>
+                                    <td><span class="bg-primary rounded-4 px-2 text-white">{{ $item->kegiatan->nama_kegiatan }}</span></td>
                                     <td>{{ $item->nama_lengkap }}</td>
                                     <td>{{ $item->nik }}</td>
                                     <td>{{ $item->tempat_lahir }}</td>
-                                    <td>{{ $item->tgl_lahir }}</td>
+                                    <td>{{ date('Y/m/d', strtotime($item->tgl_lahir)) }}</td>
                                     <td>{{ $item->jenis_kelamin }}</td>
                                     <td>{{ $item->kewarganegaraan }}</td>
                                     <td>{{ $item->alamat }}</td>
-                                    <td>Telp : {{ $item->telp_hp }} <br> Rumah : {{ $item->telp_rumah }} <br> Kantor : {{ $item->telp_kantor }}</td>
+                                    <td>
+                                        <table>
+                                            <tr>
+                                                <td>Telp</td>
+                                                <td>: {{ $item->telp_hp }} </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Rumah</td>
+                                                <td>: {{ $item->telp_rumah }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Kantor</td>
+                                                <td>: {{ $item->telp_kantor }}</td>
+                                            </tr>
+                                        </table>
+                                    </td>
                                     <td>{{ $item->email }}</td>
                                     <td>{{ $item->pendidikan_terakhir }}</td>
                                     <td>{{ $item->nama_perusahaan }}</td>
                                     <td>{{ $item->alamat_perusahaan }}</td>
                                     <td>{{ $item->departemen }}</td>
                                     <td>{{ $item->jabatan }}</td>
-                                    <td>Telp : {{ $item->telp_perusahaan }} <br> Fax : {{ $item->fax_perusahaan }}</td>
+                                    <td>
+                                        <table>
+                                            <tr>
+                                                <td>Telp</td>
+                                                <td>: {{ $item->telp_perusahaan }} </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Fax</td>
+                                                <td>: {{ $item->fax_perusahaan }}</td>
+                                            </tr>
+                                        </table>
+                                    </td>
                                     <td>{{ $item->email_perusahaan }}</td>
-                                    <td>FILES</td>
-                                    <td>K</td>
-                                    <td>{{ $item->created_at->format('Y-m-d') }}</td>
+                                    <td>
+                                        <table>
+                                            <tr>
+                                                <td>IJAZAH</td>
+                                                <td>: <a href="{{ asset('asesi_files/'.$item->ijazah_file) }}" target="_blank"> <i class="mdi mdi-file-pdf-box"></i></a></td>
+                                            </tr>
+                                            <tr>
+                                                <td>SERTIKOM</td>
+                                                <td>: <a href="{{ asset('asesi_files/'.$item->sertikom_file) }}" target="_blank"> <i class="mdi mdi-file-pdf-box"></i></a></td>
+                                            </tr>
+                                            <tr>
+                                                <td>SKB</td>
+                                                <td>: <a href="{{ asset('asesi_files/'.$item->keterangan_kerja_file) }}" target="_blank"> <i class="mdi mdi-file-pdf-box"></i></a></td>
+                                            </tr>
+                                            <tr>
+                                                <td>PAS FOTO</td>
+                                                <td>: <a href="{{ asset('asesi_files/'.$item->pas_foto_file) }}" target="_blank"> <i class="mdi mdi-file-image"></i></a></td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table>
+                                            <tr>
+                                                <td>LSP</td>
+                                                <td>: {{ $item->asesmen->nama_lsp }} </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Tanggal</td>
+                                                <td>: {{ date('Y/m/d', strtotime($item->asesmen->jadwal_asesmen)) }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>TUK</td>
+                                                <td>: {{ $item->asesmen->nama_tuk }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Skema</td>
+                                                <td>: {{ $item->asesmen->nama_skema }}</td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    {{-- <td><a href="{{ asset('asesi/'.$item->ijazah_file) }}" target="_blank"> <i class="mdi mdi-file-pdf-box"></i></a></td>
+                                    <td><a href="{{ asset('asesi/'.$item->sertikom_file) }}" target="_blank"> <i class="mdi mdi-file-pdf-box"></i></a></td>
+                                    <td><a href="{{ asset('asesi/'.$item->skb_file) }}" target="_blank"> <i class="mdi mdi-file-pdf-box"></i></a></td>
+                                    <td><a href="{{ asset('asesi/'.$item->pas_foto_file) }}" target="_blank"> <i class="mdi mdi-file-pdf-box"></i></a></td> --}}
+                                    {{-- <td>K</td> --}}
+                                    <td>{{ $item->created_at->format('Y/m/d') }}</td>
                                 </tr>
                             @endforeach
                         </tbody>

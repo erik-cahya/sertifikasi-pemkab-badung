@@ -229,50 +229,58 @@ class AsesiController extends Controller
         // ================== SIMPAN FILE ==================
         $nik  = $request->nik;
         $time = time();
+        // $ktp = NULL; $ijazah
 
         /* ================== KTP ================== */
         if ($request->hasFile('ktp_file')) {
             $ext = $request->file('ktp_file')->extension();
-            $filename = "{$nik}-{$time}.{$ext}";
+            $filename = "KTP-{$nik}-{$time}.{$ext}";
+            $ktp = Storage::disk('KTP')->putFileAs("KTP", $request->file('ktp_file'), $filename);
 
-            $validated['ktp_file'] = $request->file('ktp_file')
-                ->storeAs('asesi/ktp', $filename, 'public');
+            // $validated['ktp_file'] = $request->file('ktp_file')
+            //     ->storeAs('asesi/ktp', $filename, 'public');
+            
         }
 
         /* ================== IJAZAH ================== */
         if ($request->hasFile('ijazah_file')) {
             $ext = $request->file('ijazah_file')->extension();
-            $filename = "{$nik}-{$time}.{$ext}";
+            $filename = "IJAZAH-{$nik}-{$time}.{$ext}";
+            $ijazah = Storage::disk('ijazah')->putFileAs("ijazah", $request->file('ijazah_file'), $filename);
 
-            $validated['ijazah_file'] = $request->file('ijazah_file')
-                ->storeAs('asesi/ijazah', $filename, 'public');
+            // $validated['ijazah_file'] = $request->file('ijazah_file')
+                // ->storeAs('asesi/ijazah', $filename, 'public');
+
         }
 
         /* ================== SERTIFIKAT KOMPETENSI ================== */
         if ($request->hasFile('sertikom_file')) {
             $ext = $request->file('sertikom_file')->extension();
-            $filename = "{$nik}-{$time}.{$ext}";
+            $filename = "SERTIKOM-{$nik}-{$time}.{$ext}";
+            $sertikom = Storage::disk('sertikom')->putFileAs("sertikom", $request->file('sertikom_file'), $filename);
 
-            $validated['sertikom_file'] = $request->file('sertikom_file')
-                ->storeAs('asesi/sertikom', $filename, 'public');
+            // $validated['sertikom_file'] = $request->file('sertikom_file')
+            //     ->storeAs('asesi/sertikom', $filename, 'public');
         }
 
         /* ================== KETERANGAN KERJA ================== */
         if ($request->hasFile('keterangan_kerja_file')) {
             $ext = $request->file('keterangan_kerja_file')->extension();
-            $filename = "{$nik}-{$time}.{$ext}";
+            $filename = "SKB-{$nik}-{$time}.{$ext}";
+            $skb = Storage::disk('SKB')->putFileAs("SKB", $request->file('keterangan_kerja_file'), $filename);
 
-            $validated['keterangan_kerja_file'] = $request->file('keterangan_kerja_file')
-                ->storeAs('asesi/keterangan_kerja', $filename, 'public');
+            // $validated['keterangan_kerja_file'] = $request->file('keterangan_kerja_file')
+            //     ->storeAs('asesi/keterangan_kerja', $filename, 'public');
         }
 
         /* ================== PAS FOTO ================== */
         if ($request->hasFile('pas_foto_file')) {
             $ext = $request->file('pas_foto_file')->extension();
-            $filename = "{$nik}-{$time}.{$ext}";
+            $filename = "PASFOTO-{$nik}-{$time}.{$ext}";
+            $pasfoto = Storage::disk('pas-foto')->putFileAs("pas-foto", $request->file('pas_foto_file'), $filename);
 
-            $validated['pas_foto_file'] = $request->file('pas_foto_file')
-                ->storeAs('asesi/pas_foto', $filename, 'public');
+            // $validated['pas_foto_file'] = $request->file('pas_foto_file')
+            //     ->storeAs('asesi/pas_foto', $filename, 'public');
         }
 
 
@@ -307,13 +315,16 @@ class AsesiController extends Controller
             'fax_perusahaan' => $request->fax_perusahaan,
             'email_perusahaan' => $request->email_perusahaan,
 
-            'sertikom_file' => NULL,
-            'ijazah_file' => NULL,
+            'sertikom_file' => $sertikom,
+            'ijazah_file' => $ijazah,
             'ktp_file' => NULL,
-            'keterangan_kerja_file' => NULL,
-            'pas_foto_file' => NULL,
+            'keterangan_kerja_file' => $skb,
+            'pas_foto_file' => $pasfoto,
             'status' => NULL,
             'kompeten' => NULL,
+
+            'no_sertifikat' => NULL,
+            'sertifikat_file' => NULL,
         ]);
 
         $flashData = [
@@ -331,7 +342,7 @@ class AsesiController extends Controller
         // ->orderBy('tuk.created_at', 'desc')
         // ->get();
 
-        $asesi = AsesiModel::all();
+        $asesi = AsesiModel::with(['kegiatan', 'asesmen'])->get();
         return view('admin-panel.asesi.index', [
             'dataAsesi' => $asesi,
         ]);

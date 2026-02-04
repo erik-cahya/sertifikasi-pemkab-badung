@@ -93,10 +93,10 @@
                                         <input type="hidden" name="kegiatan_lsp_ref" value="{{ $kegiatan_lsp_ref }}">
                                         <input type="hidden" name="kegiatan_ref" value="{{ $kegiatan_ref }}">
                                         <input type="hidden" name="kegiatan_jadwal_ref" value="{{ $kegiatan_jadwal_ref }}">
-                                        <x-form.input className="col-md-4 mb-3" type="text" name="nama_penanggung_jawab" label="Nama Penanggung Jawab" value="{{ old('nama_penanggung_jawab') }}" />
-                                        <x-form.input className="col-md-4 mb-3" type="text" name="no_penanggung_jawab" label="Nomor Penanggung Jawab" value="{{ old('no_penanggung_jawab') }}" />
-                                        <x-form.input className="col-md-4 mb-3" type="text" name="nama_penyelenggara_uji" label="Nama Penyelenggara Uji" value="{{ old('nama_penyelenggara_uji') }}" />
-                                        <x-form.input className="col-md-4 mb-3" type="text" name="no_penyelenggara_uji" label="No Penyelenggara Uji" value="{{ old('no_penyelenggara_uji') }}" />
+                                        <x-form.input className="col-md-6 mb-3" type="text" name="nama_penanggung_jawab" label="Nama Penanggung Jawab" value="{{ old('nama_penanggung_jawab') }}" />
+                                        <x-form.input className="col-md-6 mb-3" type="text" name="no_penanggung_jawab" label="Nomor Penanggung Jawab" value="{{ old('no_penanggung_jawab') }}" />
+                                        <x-form.input className="col-md-6 mb-3" type="text" name="nama_penyelenggara_uji" label="Nama Penyelenggara Uji" value="{{ old('nama_penyelenggara_uji') }}" />
+                                        <x-form.input className="col-md-6 mb-3" type="text" name="no_penyelenggara_uji" label="No Penyelenggara Uji" value="{{ old('no_penyelenggara_uji') }}" />
                                         <x-form.input className="col-md-4 mb-3" type="text" name="nama_asesor" label="Nama Asesor" value="{{ old('nama_asesor') }}" />
                                         <x-form.input className="col-md-4 mb-3" type="text" name="no_asesor" label="Nomor Asesor" value="{{ old('no_asesor') }}" />
                                         <x-form.input className="col-md-4 mb-3" type="text" name="no_reg_asesor" label="Nomor REG Asesor" value="{{ old('no_reg_asesor') }}" />
@@ -142,6 +142,7 @@
                                                     <div class="btn-group" role="group" aria-label="Basic outlined example">
                                                         <a href="{{ route('pdf.daftar-hadir', $asesmen->kegiatan_ref) }}" target="_blank" class="btn btn-sm btn-info" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Download Daftar Hadir" data-bs-custom-class="info-tooltip"><i class="mdi mdi-download"></i> </a>
                                                         <a href="{{ route('pdf.daftar-penerimaan', $asesmen->kegiatan_ref) }}" target="_blank" class="btn btn-sm btn-info" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Download Daftar Penerimaan" data-bs-custom-class="info-tooltip"><i class="mdi mdi-download"></i> </a>
+                                                        <a href="{{ route('pdf.tanda-terima-sertifikat', $asesmen->kegiatan_ref) }}" target="_blank" class="btn btn-sm btn-info" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Download Tanda Terima Sertifikat" data-bs-custom-class="info-tooltip"><i class="mdi mdi-download"></i> </a>
                                                         <input type="hidden" class="valueID" value="#">
                                                         <button type="button" class="btn btn-sm btn-danger deleteButton" data-nama="#" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Hapus Jadwal Asesmen" data-bs-custom-class="danger-tooltip">
                                                             <i class="mdi mdi-trash-can"></i>
