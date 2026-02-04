@@ -168,42 +168,37 @@ class KegiatanController extends Controller
      */
     public function show(string $id)
     {
-        $data['dataLSP'] = LSPModel::get();
+        /** @var \App\Models\User $user */
+        $user = Auth::user();
+        $user->loadMissing('lspData');
+        // dd($user);
+        // $data['dataLSP'] = LSPModel::get();
 
-        $data['dataKegiatan'] = KegiatanModel::where('ref', $id)
-            ->with([
-                // 'kegiatanLsp.lsp',           // detail kuota + LSP
-                // 'kegiatanLsp.jadwal',
+        $query = KegiatanModel::where('ref', $id)
 
-                'skemaPerLsp.lsp',        // total skema per LSP
-                'kuotaPerLsp.lsp',      // total kuota per LSP
-                'asesi.tuk',
-                'asesi.skema',
-                'kegiatanJadwal.lsp',
 
-                'kegiatanLsp',
-                'jadwalAsesmen',
-
-            ])->withSum(
+            ->withSum(
                 'kegiatanLsp as total_peserta',
                 'kuota_lsp',
-            )->withCount('skemas', 'asesi')        // total skema kegiatan
-            ->firstOrFail();
+            )->withCount('skemas', 'asesi');      // total skema kegiatan
 
-        // dd($data['dataKegiatan']);
+        if ($user->roles === 'lsp' && $user->lspData) {
+            $query->whereHas('kegiatanJadwal', function ($q) use ($user) {
+                $q->where('lsp_ref', '01KGHDK7D2AMYYK8356P5Y46SY');
+            })
+                ->with([
+                    'kegiatanJadwal' => function ($q) {
+                        $q->where('lsp_ref', '01KGHDK7D2AMYYK8356P5Y46SY');
+                    }
+                ]);
+        }
 
-        $data['skemaPerLsp'] = $data['dataKegiatan']->skemaPerLsp->keyBy('lsp_ref'); // Mengelompokkan skema per LSP berdasarkan lsp_ref
-        $data['dataSkema'] = $data['dataKegiatan']->skemas->groupBy('lsp_ref'); // Mengelompokkan data skema berdasarkan lsp_ref
-        // $data['dataAsesi'] = $data['dataKegiatan']->asesi->groupBy('tgl_asesmen');
 
-        $data['dataAsesiByLsp'] = AsesiModel::where('kegiatan_ref', $id)->get()->groupBy('lsp_ref');
+        $data['dataKegiatan'] = $query->firstOrFail();
 
-        // $data['jadwalKegiatan'] = $data['dataKegiatan']->kegiatanLsp->groupBy('lsp_ref'); // Mengelompokkan jadwal kegiatan berdasarkan lsp_ref
-
+        $data['dataSkema'] = $data['dataKegiatan']->skemas->groupBy('lsp_ref');
         $data['dataAsesi'] = AsesiModel::with('asesmen')->get()->groupBy('asesmen_ref');
         $data['jadwalKegiatan'] = $data['dataKegiatan']->jadwalAsesmen->groupBy('nama_lsp');
-        // dd($data['dataAsesi']);
-
 
         return view('admin-panel.kegiatan.show', $data);
     }

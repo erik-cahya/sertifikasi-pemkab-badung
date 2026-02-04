@@ -147,7 +147,9 @@
                                             @endforeach
                                         </td>
 
-                                        <td>{{ $kegiatan->kuota_lsp ?? 0 }} / {{ ($dataAsesiByLsp[$kegiatan->lsp->ref] ?? collect())->count() }} Peserta</td>
+                                        <td>
+                                            {{ $kegiatan->kuota_lsp ?? 0 }} Peserta
+                                        </td>
 
                                         <td>
                                             <button class="btn btn-link text-decoration-none fs-12 p-0" data-bs-toggle="collapse" data-bs-target="#jadwal-{{ $kegiatan->ref }}" aria-expanded="false" aria-controls="jadwal-{{ $kegiatan->ref }}">
@@ -157,10 +159,10 @@
                                     </tr>
                                     <tr class="bg-light collapse" id="jadwal-{{ $kegiatan->ref }}" data-bs-parent="#dataPeserta">
 
-                                        <td colspan="5" class="p-1">
+                                        <td colspan="5" class="">
                                             <div class="card mb-0 border-0 shadow-sm">
-                                                <div class="card-body">
-                                                    <div class="card-header text-bg-info" bis_skin_checked="1">
+                                                <div class="card-body p-0">
+                                                    <div class="card-header bg-dinas text-white" bis_skin_checked="1">
                                                         <h4 class="card-title"> Detail Jadwal & Skema
                                                         </h4>
                                                     </div>

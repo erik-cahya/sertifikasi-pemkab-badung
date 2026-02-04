@@ -56,7 +56,7 @@ class LSPController extends Controller
 
 
         $validated = $request->validate([
-            'lsp_nama' => 'required',
+            'lsp_nama' => 'required|unique:lsp,lsp_nama',
             'lsp_no_lisensi' => 'required',
             // 'lsp_email' => 'required',
             // 'lsp_alamat' => 'required',
@@ -74,6 +74,7 @@ class LSPController extends Controller
             'lsp_logo' => 'nullable|mimes:png|max:2048',
         ], [
             'lsp_nama.required' => 'Silahkan inputkan nama LSP',
+            'lsp_nama.unique' => 'Nama LSP ini sudah ada',
             'lsp_logo.max'   => 'Logo maksimal 2 MB',
             'lsp_logo.mimes' => 'Format logo harus PNG',
         ]);

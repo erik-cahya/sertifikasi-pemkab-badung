@@ -18,6 +18,7 @@ return new class extends Migration
             $table->foreignUlid('kegiatan_lsp_ref')->references('ref')->on('kegiatan_lsp')->cascadeOnDelete();
             $table->dateTime('mulai_asesmen');
             $table->dateTime('selesai_asesmen');
+            $table->integer('kuota_lsp');
             $table->foreignUlid('created_by')->references('ref')->on('users')->cascadeOnDelete();
             $table->timestamps();
         });

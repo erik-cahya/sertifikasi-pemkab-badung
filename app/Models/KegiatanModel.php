@@ -42,8 +42,6 @@ class KegiatanModel extends Model
         return $this->hasMany(KegiatanJadwalModel::class, 'kegiatan_ref', 'ref');
     }
 
-
-
     public function detailsGroupedByLsp()
     {
         return $this->hasMany(KegiatanJadwalModel::class, 'kegiatan_ref', 'ref')
