@@ -175,13 +175,10 @@ class KegiatanController extends Controller
         // $data['dataLSP'] = LSPModel::get();
 
         $query = KegiatanModel::where('ref', $id)
-
-
             ->withSum(
                 'kegiatanLsp as total_peserta',
                 'kuota_lsp',
             )->withCount('skemas', 'asesi');      // total skema kegiatan
-
         if ($user->roles === 'lsp' && $user->lspData) {
             $query->whereHas('kegiatanJadwal', function ($q) use ($user) {
                 $q->where('lsp_ref', '01KGHDK7D2AMYYK8356P5Y46SY');
@@ -192,8 +189,6 @@ class KegiatanController extends Controller
                     }
                 ]);
         }
-
-
         $data['dataKegiatan'] = $query->firstOrFail();
 
         $data['dataSkema'] = $data['dataKegiatan']->skemas->groupBy('lsp_ref');

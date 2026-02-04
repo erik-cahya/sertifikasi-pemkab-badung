@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="utf-8">
     <title>Daftar Penerimaan</title>
@@ -20,9 +21,9 @@
 
         .header-table {
             width: 100%;
-            border-bottom: 2px solid #1e5aa8;*/
-            margin:2px 0px;
-            padding-bottom:15px;
+            border-bottom: 2px solid #1e5aa8;
+            */ margin: 2px 0px;
+            padding-bottom: 15px;
             margin-top: -30px;
         }
 
@@ -35,7 +36,6 @@
             text-transform: uppercase;
             font-size: 15.5px;
             line-height: 1.5;
-
         }
 
         .subtitle {
@@ -62,7 +62,7 @@
             border-collapse: collapse;
         }
 
-        table.data th{
+        table.data th {
             border: 1px solid #000;
             vertical-align: middle;
         }
@@ -82,136 +82,136 @@
         .center {
             text-align: center;
         }
-        .value{
+
+        .value {
             /* color: RED; */
             color: #000;
         }
-         .page-break {
+
+        .page-break {
             page-break-before: always;
         }
     </style>
 </head>
 @foreach ($asesmen as $item)
+    @php
+        $maxRow = 10;
+    @endphp
 
-@php
-    $maxRow = 10;
-@endphp
+    <body>
+        {{-- ############# DAFTAR HADIR ASESI --}}
 
-<body>
-    {{-- ############# DAFTAR HADIR ASESI --}}
+        {{-- HEADER --}}
+        <table class="header-table">
+            <tr mb-5>
+                <td width="15%" class="center">
+                    <img src="{{ public_path('img/logo_dinas_no_title.png') }}" width="80px;">
+                </td>
+                <td width="75%" class="center">
+                    <div class="title">DINAS PERINDUSTRIAN & TENAGA KERJA KABUPATEN BADUNG</div>
+                    <div class="title">DAFTAR HADIR PESERTA</div>
+                    <div class="title">KEGIATAN UJI KOMPETENSI TENAGA KERJA TAHUN <span class="value">{{ date('Y', strtotime($item->jadwal_asesmen)) }}</span></div>
+                </td>
+                <td width="15%" class="center">
+                    {{-- <img src="{{ public_path('img/logo_dinas_no_title.png') }}" width="80px"> --}}
+                    <img src="{{ public_path('img/' . $item->kegiatanJadwal->lsp->lsp_logo) }}" width="80px">
+                </td>
+            </tr>
+        </table>
 
-    {{-- HEADER --}}
-    <table class="header-table">
-        <tr mb-5>
-            <td width="15%" class="center">
-                <img src="{{ public_path('img/logo_dinas_no_title.png') }}" width="80px;">
-            </td>
-            <td width="75%" class="center">
-                <div class="title">DINAS PERINDUSTRIAN & TENAGA KERJA KABUPATEN BADUNG</div>
-                <div class="title">DAFTAR HADIR PESERTA</div>
-                <div class="title">KEGIATAN UJI KOMPETENSI TENAGA KERJA TAHUN <span class="value">{{ date('Y', strtotime($item->jadwal_asesmen)) }}</span></div>
-            </td>
-            <td width="15%" class="center">
-                {{-- <img src="{{ public_path('img/logo_dinas_no_title.png') }}" width="80px"> --}}
-                <img src="{{public_path('img/'.$item->kegiatanLsp->lsp->lsp_logo) }}"  width="80px">
-            </td>
-        </tr>
-    </table>
-
-    {{-- INFORMASI --}}
-    <table class="info-table">
-        <tr>
-            <td class="info-label">1. Skema</td>
-            <td class="value">: {{ $item->nama_skema }}</td>
-        </tr>
-        <tr>
-            <td class="info-label">2. TUK</td>
-            <td class="value">: {{ $item->nama_tuk }}</td>
-        </tr>
-        <tr>
-            <td class="info-label">3. Alamat</td>
-            <td class="value">: {{ $item->alamat_tuk }}</td>
-        </tr>
-        <tr>
-            <td class="info-label">4. Tanggal</td>
-            <td class="value">: {{ \Carbon\Carbon::parse($item->jadwal_asesmen)->locale('id')->translatedFormat('j F Y') }}</td>
-        </tr>
-        <tr>
-            <td class="info-label">5. Jumlah Peserta</td>
-            <td class="value">: {{ $item->kuota_harian }} Orang</td>
-        </tr>
-    </table>
-
-    {{-- TABEL PESERTA --}}
-    <table class="data">
-        <thead>
-             <tr>
-                <th width="5%" rowspan="2">NO.</th>
-                <th width="25%" rowspan="2">NAMA PESERTA</th>
-                <th width="25%" rowspan="2">ORGANISASI/INSTANSI</th>
-                <th width="9%" colspan="5">TANDA TERIMA</th>
+        {{-- INFORMASI --}}
+        <table class="info-table">
+            <tr>
+                <td class="info-label">1. Skema</td>
+                <td class="value">: {{ $item->nama_skema }}</td>
             </tr>
             <tr>
-                <th width="9%">ATK</th>
-                <th width="9%">MATERI UJI</th>
-                <th width="9%">BAHAN UJI</th>
-                <th width="9%">SNACK BOX</th>
-                <th width="9%">NASI KOTAK</th>
+                <td class="info-label">2. TUK</td>
+                <td class="value">: {{ $item->nama_tuk }}</td>
             </tr>
-        </thead>
-        <tbody class="value">
-            @foreach ($item->asesis as $asesi)
-                @if ($loop->iteration <= $maxRow)
-                    <tr>
-                        <td class="center">{{ $loop->iteration }}</td>
-                        <td>{{ $asesi->nama_lengkap }}</td>
-                        <td>{{ $asesi->nama_perusahaan }}</td>
-                        <td class="signature"> {{ $loop->iteration }}.</td>
-                        <td class="signature"> {{ $loop->iteration }}.</td>
-                        <td class="signature"> {{ $loop->iteration }}.</td>
-                        <td class="signature"> {{ $loop->iteration }}.</td>
-                        <td class="signature"> {{ $loop->iteration }}.</td>
-                    </tr>
-                @endif
-            @endforeach
+            <tr>
+                <td class="info-label">3. Alamat</td>
+                <td class="value">: {{ $item->alamat_tuk }}</td>
+            </tr>
+            <tr>
+                <td class="info-label">4. Tanggal</td>
+                <td class="value">: {{ \Carbon\Carbon::parse($item->jadwal_asesmen)->locale('id')->translatedFormat('j F Y') }}</td>
+            </tr>
+            <tr>
+                <td class="info-label">5. Jumlah Peserta</td>
+                <td class="value">: {{ $item->kuota_harian }} Orang</td>
+            </tr>
+        </table>
 
-            @for ($i = $item->asesis->count() + 1; $i <= $maxRow; $i++)
+        {{-- TABEL PESERTA --}}
+        <table class="data">
+            <thead>
                 <tr>
-                    <td class="center">{{ $i }}</td>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
-                    <td class="signature"> {{ $i }}.</td>
-                    <td class="signature"> {{ $i }}.</td>
-                    <td class="signature"> {{ $i }}.</td>
-                    <td class="signature"> {{ $i }}.</td>
-                    <td class="signature"> {{ $i }}.</td>
+                    <th width="5%" rowspan="2">NO.</th>
+                    <th width="25%" rowspan="2">NAMA PESERTA</th>
+                    <th width="25%" rowspan="2">ORGANISASI/INSTANSI</th>
+                    <th width="9%" colspan="5">TANDA TERIMA</th>
                 </tr>
-            @endfor
-            <tr>
-                <td class="center">11</td>
-                <td>Penanggung Jawab <br> {{ $item->nama_penanggung_jawab }}</td>
-                <td>{{ $item->kegiatanLsp->lsp->lsp_nama }}</td>
-                <td class="signature" colspan = '4'></td>
-                <td class="signature"> 11.</td>
-            </tr>
-            <tr>
-                <td class="center">12</td>
-                <td>Sekretariat Penyelenggara Uji <br> {{ $item->nama_penyelenggara_uji }}</td>
-                <td>{{ $item->kegiatanLsp->lsp->lsp_nama }}</td>
-                <td class="signature" colspan = '4'></td>
-                <td class="signature"> 12.</td>
-            </tr>
-             <tr>
-                <td class="center">13</td>
-                <td>Asesor <br> {{ $item->nama_asesor }}</td>
-                <td>{{ $item->kegiatanLsp->lsp->lsp_nama }}</td>
-                <td class="signature" colspan = '4'></td>
-                <td class="signature"> 13.</td>
-            </tr>
-        </tbody>
-    </table>
+                <tr>
+                    <th width="9%">ATK</th>
+                    <th width="9%">MATERI UJI</th>
+                    <th width="9%">BAHAN UJI</th>
+                    <th width="9%">SNACK BOX</th>
+                    <th width="9%">NASI KOTAK</th>
+                </tr>
+            </thead>
+            <tbody class="value">
+                @foreach ($item->asesis as $asesi)
+                    @if ($loop->iteration <= $maxRow)
+                        <tr>
+                            <td class="center">{{ $loop->iteration }}</td>
+                            <td>{{ $asesi->nama_lengkap }}</td>
+                            <td>{{ $asesi->nama_perusahaan }}</td>
+                            <td class="signature"> {{ $loop->iteration }}.</td>
+                            <td class="signature"> {{ $loop->iteration }}.</td>
+                            <td class="signature"> {{ $loop->iteration }}.</td>
+                            <td class="signature"> {{ $loop->iteration }}.</td>
+                            <td class="signature"> {{ $loop->iteration }}.</td>
+                        </tr>
+                    @endif
+                @endforeach
 
-
-    @endforeach
+                @for ($i = $item->asesis->count() + 1; $i <= $maxRow; $i++)
+                    <tr>
+                        <td class="center">{{ $i }}</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td class="signature"> {{ $i }}.</td>
+                        <td class="signature"> {{ $i }}.</td>
+                        <td class="signature"> {{ $i }}.</td>
+                        <td class="signature"> {{ $i }}.</td>
+                        <td class="signature"> {{ $i }}.</td>
+                    </tr>
+                @endfor
+                <tr>
+                    <td class="center">11</td>
+                    <td>Penanggung Jawab <br> {{ $item->nama_penanggung_jawab }}</td>
+                    <td>{{ $item->kegiatanJadwal->lsp->lsp_nama }}</td>
+                    <td class="signature" colspan = '4'></td>
+                    <td class="signature"> 11.</td>
+                </tr>
+                <tr>
+                    <td class="center">12</td>
+                    <td>Sekretariat Penyelenggara Uji <br> {{ $item->nama_penyelenggara_uji }}</td>
+                    <td>{{ $item->kegiatanJadwal->lsp->lsp_nama }}</td>
+                    <td class="signature" colspan = '4'></td>
+                    <td class="signature"> 12.</td>
+                </tr>
+                <tr>
+                    <td class="center">13</td>
+                    <td>Asesor <br> {{ $item->nama_asesor }}</td>
+                    <td>{{ $item->kegiatanJadwal->lsp->lsp_nama }}</td>
+                    <td class="signature" colspan = '4'></td>
+                    <td class="signature"> 13.</td>
+                </tr>
+            </tbody>
+        </table>
+@endforeach
 </body>
+
 </html>

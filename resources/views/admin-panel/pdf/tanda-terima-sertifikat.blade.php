@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="utf-8">
     <title>Tanda Terima Sertifikat</title>
@@ -20,9 +21,9 @@
 
         .header-table {
             width: 100%;
-            border-bottom: 2px solid #1e5aa8;*/
-            margin:2px 0px;
-            padding-bottom:15px;
+            border-bottom: 2px solid #1e5aa8;
+            */ margin: 2px 0px;
+            padding-bottom: 15px;
         }
 
         .header-table td {
@@ -34,7 +35,6 @@
             text-transform: uppercase;
             font-size: 15.5px;
             line-height: 1.5;
-
         }
 
         .subtitle {
@@ -77,93 +77,92 @@
         .center {
             text-align: center;
         }
-        .value{
+
+        .value {
             /* color: RED; */
             color: #000;
         }
-         .page-break {
+
+        .page-break {
             page-break-before: always;
         }
     </style>
 </head>
 @foreach ($asesmen as $item)
+    @php
+        $maxRow = 10;
+    @endphp
 
-@php
-    $maxRow = 10;
-@endphp
+    <body>
+        {{-- ############# DAFTAR HADIR ASESI --}}
 
-<body>
-    {{-- ############# DAFTAR HADIR ASESI --}}
-
-    {{-- HEADER --}}
-    <table class="header-table">
-        <tr mb-5>
-            <td width="15%" class="center">
-                <img src="{{ public_path('img/logo_dinas_no_title.png') }}" width="80px;">
-            </td>
-            <td width="75%" class="center">
-                <div class="title">DINAS PERINDUSTRIAN & TENAGA KERJA KABUPATEN BADUNG</div>
-                <div class="title">DAFTAR HADIR PESERTA</div>
-                <div class="title">KEGIATAN UJI KOMPETENSI TENAGA KERJA TAHUN <span class="value">{{ date('Y', strtotime($item->jadwal_asesmen)) }}</span></div>
-            </td>
-            <td width="15%" class="center">
-                {{-- <img src="{{ public_path('img/logo_dinas_no_title.png') }}" width="80px"> --}}
-                <img src="{{public_path('img/'.$item->kegiatanLsp->lsp->lsp_logo) }}"  width="80px">
-            </td>
-        </tr>
-    </table>
-
-    {{-- INFORMASI --}}
-     <table class="info-table">
-        <tr>
-            <td class="info-label">1. Tempat Uji Kompetensi</td>
-            <td class="value">: {{ $item->nama_tuk }}<</td>
-        </tr>
-        <tr>
-            <td class="info-label">2. Tanggal</td>
-            <td class="value">: {{ \Carbon\Carbon::parse($item->jadwal_asesmen)->locale('id')->translatedFormat('j F Y') }}</td>
-        </tr>
-        <tr>
-            <td class="info-label">3. Skema</td>
-            <td class="value">: {{ $item->nama_skema }}</td>
-        </tr>
-    </table>
-
-    {{-- TABEL PESERTA --}}
-    <table class="data">
-        <thead>
-            <tr>
-                <th width="5%">NO.</th>
-                <th width="40%">NAMA PESERTA</th>
-                <th width="35%">NOMOR SERTIFIKAT</th>
-                <th width="20%">TANDA TANGAN</th>
+        {{-- HEADER --}}
+        <table class="header-table">
+            <tr mb-5>
+                <td width="15%" class="center">
+                    <img src="{{ public_path('img/logo_dinas_no_title.png') }}" width="80px;">
+                </td>
+                <td width="75%" class="center">
+                    <div class="title">DINAS PERINDUSTRIAN & TENAGA KERJA KABUPATEN BADUNG</div>
+                    <div class="title">DAFTAR HADIR PESERTA</div>
+                    <div class="title">KEGIATAN UJI KOMPETENSI TENAGA KERJA TAHUN <span class="value">{{ date('Y', strtotime($item->jadwal_asesmen)) }}</span></div>
+                </td>
+                <td width="15%" class="center">
+                    {{-- <img src="{{ public_path('img/logo_dinas_no_title.png') }}" width="80px"> --}}
+                    <img src="{{ public_path('img/' . $item->kegiatanJadwal->lsp->lsp_logo) }}" width="80px">
+                </td>
             </tr>
-        </thead>
-        <tbody class="value">
-            @foreach ($item->asesis as $asesi)
-                @if ($loop->iteration <= $maxRow)
-                    <tr>
-                        <td class="center">{{ $loop->iteration }}</td>
-                        <td>{{ $asesi->nama_lengkap }}</td>
-                        <td></td>
-                        <td class="signature"> {{ $loop->iteration }}.</td>
-                    </tr>
-                @endif
-            @endforeach
+        </table>
 
-            @for ($i = $item->asesis->count() + 1; $i <= $maxRow; $i++)
+        {{-- INFORMASI --}}
+        <table class="info-table">
+            <tr>
+                <td class="info-label">1. Tempat Uji Kompetensi</td>
+                <td class="value">: {{ $item->nama_tuk }}<< /td>
+            </tr>
+            <tr>
+                <td class="info-label">2. Tanggal</td>
+                <td class="value">: {{ \Carbon\Carbon::parse($item->jadwal_asesmen)->locale('id')->translatedFormat('j F Y') }}</td>
+            </tr>
+            <tr>
+                <td class="info-label">3. Skema</td>
+                <td class="value">: {{ $item->nama_skema }}</td>
+            </tr>
+        </table>
+
+        {{-- TABEL PESERTA --}}
+        <table class="data">
+            <thead>
                 <tr>
-                    <td class="center">{{ $i }}</td>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
-                    <td class="signature">{{ $i }}.</td>
+                    <th width="5%">NO.</th>
+                    <th width="40%">NAMA PESERTA</th>
+                    <th width="35%">NOMOR SERTIFIKAT</th>
+                    <th width="20%">TANDA TANGAN</th>
                 </tr>
-            @endfor
-        </tbody>
-    </table>
+            </thead>
+            <tbody class="value">
+                @foreach ($item->asesis as $asesi)
+                    @if ($loop->iteration <= $maxRow)
+                        <tr>
+                            <td class="center">{{ $loop->iteration }}</td>
+                            <td>{{ $asesi->nama_lengkap }}</td>
+                            <td></td>
+                            <td class="signature"> {{ $loop->iteration }}.</td>
+                        </tr>
+                    @endif
+                @endforeach
 
-
-    
+                @for ($i = $item->asesis->count() + 1; $i <= $maxRow; $i++)
+                    <tr>
+                        <td class="center">{{ $i }}</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td class="signature">{{ $i }}.</td>
+                    </tr>
+                @endfor
+            </tbody>
+        </table>
 @endforeach
 </body>
+
 </html>

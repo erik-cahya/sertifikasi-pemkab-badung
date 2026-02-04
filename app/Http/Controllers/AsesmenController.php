@@ -143,7 +143,7 @@ class AsesmenController extends Controller
 
         return redirect()
             // ->route('kegiatan.index')
-            ->route('asesmen.create', compact($request->kegiatan_ref))
+            ->route('asesmen.create', $request->kegiatan_ref)
             ->with('flashData', [
                 'title' => 'Tambah Data Success',
                 'message' => 'Jadwal Asesmen Berhasil Diubah Diubah',

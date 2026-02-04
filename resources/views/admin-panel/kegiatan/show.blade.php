@@ -55,64 +55,64 @@
                             </div>
                         </div>
                         @unlessrole('lsp')
-                        <hr>
-                        <div class="d-flex gap-2">
-                            <div class="d-flex flex-lg-nowrap justify-content-between align-items-end flex-wrap">
-                                @role('master', 'dinas')
-                                    <button class="btn-sm btn btn-warning" data-bs-toggle="modal" data-bs-target="#editModal-{{ $dataKegiatan->ref }}">
-                                        <i class="mdi mdi-pencil"></i> Edit Kegiatan
-                                    </button>
-                                @endrole
-                            </div>
-                        </div>
-
-                        <!-- Edit Data Modal -->
-                        <div id="editModal-{{ $dataKegiatan->ref }}" class="modal modal-lg fade" tabindex="-1" role="dialog" aria-labelledby="success-header-modalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <form action="{{ route('kegiatan.update', $dataKegiatan->ref) }}" method="POST">
-                                        @method('PUT')
-                                        @csrf
-                                        <div class="modal-header modal-colored-header bg-pink">
-                                            <h4 class="modal-title" id="success-header-modalLabel">Edit Kegiatan</h4>
-                                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <div class="row px-2">
-                                                <div class="col-lg-12 mb-2">
-                                                    <label for="nama_kegiatan" class="form-label">Nama Kegiatan</label>
-                                                    <input type="text" id="nama_kegiatan" class="form-control" name="nama_kegiatan" value="{{ $dataKegiatan->nama_kegiatan }}">
-                                                </div>
-
-                                                <div class="col-lg-6 mb-2">
-                                                    <label for="mulai_kegiatan" class="form-label">Mulai Kegiatan</label>
-                                                    <input type="text" value="{{ \Carbon\Carbon::parse($dataKegiatan->mulai_kegiatan)->translatedFormat('d/m/Y') }}" id="mulai_kegiatan" name="mulai_kegiatan" class="form-control single-date @error('mulai_kegiatan', 'create_kegiatan') is-invalid @enderror">
-                                                </div>
-
-                                                <div class="col-lg-6 mb-2">
-                                                    <label for="selesai_kegiatan" class="form-label">Selesai Kegiatan</label>
-                                                    <input type="text" value="{{ \Carbon\Carbon::parse($dataKegiatan->selesai_kegiatan)->locale('id')->translatedFormat('d/m/Y') }}" id="selesai_kegiatan" class="form-control single-date @error('selesai_kegiatan', 'create_kegiatan') is-invalid @enderror" name="selesai_kegiatan">
-                                                </div>
-                                                <div class="col-lg-6 mb-2">
-                                                    <label for="status" class="form-label">Status</label>
-                                                    <select class="text-capitalize form-select" id="skema_kategori" name="status">
-                                                        <option value="#" disabled selected hidden>Pilih Kategori Skema</option>
-                                                        <option value="1" {{ $dataKegiatan->status === 1 ? 'selected' : '' }}>Active</option>
-                                                        <option value="0" {{ $dataKegiatan->status === 0 ? 'selected' : '' }}>Inactive</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-                                            <button type="submit" class="btn btn-pink">Simpan Perubahan</button>
-                                        </div>
-                                    </form>
+                            <hr>
+                            <div class="d-flex gap-2">
+                                <div class="d-flex flex-lg-nowrap justify-content-between align-items-end flex-wrap">
+                                    @role('master', 'dinas')
+                                        <button class="btn-sm btn btn-warning" data-bs-toggle="modal" data-bs-target="#editModal-{{ $dataKegiatan->ref }}">
+                                            <i class="mdi mdi-pencil"></i> Edit Kegiatan
+                                        </button>
+                                    @endrole
                                 </div>
                             </div>
-                        </div>
-                        <!-- End Edit Data Modal -->
-                        @endunlessrole
+
+                            <!-- Edit Data Modal -->
+                            <div id="editModal-{{ $dataKegiatan->ref }}" class="modal modal-lg fade" tabindex="-1" role="dialog" aria-labelledby="success-header-modalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <form action="{{ route('kegiatan.update', $dataKegiatan->ref) }}" method="POST">
+                                            @method('PUT')
+                                            @csrf
+                                            <div class="modal-header modal-colored-header bg-pink">
+                                                <h4 class="modal-title" id="success-header-modalLabel">Edit Kegiatan</h4>
+                                                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="row px-2">
+                                                    <div class="col-lg-12 mb-2">
+                                                        <label for="nama_kegiatan" class="form-label">Nama Kegiatan</label>
+                                                        <input type="text" id="nama_kegiatan" class="form-control" name="nama_kegiatan" value="{{ $dataKegiatan->nama_kegiatan }}">
+                                                    </div>
+
+                                                    <div class="col-lg-6 mb-2">
+                                                        <label for="mulai_kegiatan" class="form-label">Mulai Kegiatan</label>
+                                                        <input type="text" value="{{ \Carbon\Carbon::parse($dataKegiatan->mulai_kegiatan)->translatedFormat('d/m/Y') }}" id="mulai_kegiatan" name="mulai_kegiatan" class="form-control single-date @error('mulai_kegiatan', 'create_kegiatan') is-invalid @enderror">
+                                                    </div>
+
+                                                    <div class="col-lg-6 mb-2">
+                                                        <label for="selesai_kegiatan" class="form-label">Selesai Kegiatan</label>
+                                                        <input type="text" value="{{ \Carbon\Carbon::parse($dataKegiatan->selesai_kegiatan)->locale('id')->translatedFormat('d/m/Y') }}" id="selesai_kegiatan" class="form-control single-date @error('selesai_kegiatan', 'create_kegiatan') is-invalid @enderror" name="selesai_kegiatan">
+                                                    </div>
+                                                    <div class="col-lg-6 mb-2">
+                                                        <label for="status" class="form-label">Status</label>
+                                                        <select class="text-capitalize form-select" id="skema_kategori" name="status">
+                                                            <option value="#" disabled selected hidden>Pilih Kategori Skema</option>
+                                                            <option value="1" {{ $dataKegiatan->status === 1 ? 'selected' : '' }}>Active</option>
+                                                            <option value="0" {{ $dataKegiatan->status === 0 ? 'selected' : '' }}>Inactive</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                                                <button type="submit" class="btn btn-pink">Simpan Perubahan</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- End Edit Data Modal -->
+                            {{-- @endunlessrole --}}
                         @endauth
                     </div>
                 </div>

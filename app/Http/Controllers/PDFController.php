@@ -17,10 +17,10 @@ class PDFController extends Controller
         // dd(Storage::disk('public')->exists('logo-lsp/lsp-beta-BNSP-000-ID.png'));
         $asesmen = AsesmenModel::with([
             'asesis',
-            'kegiatanLsp.lsp',
+            'kegiatanJadwal.lsp',
         ])
-        ->where('kegiatan_ref', $id)
-        ->get();
+            ->where('kegiatan_ref', $id)
+            ->get();
 
         return Pdf::loadView('admin-panel.pdf.daftar-hadir', compact('asesmen'))
             ->setPaper('A4', 'portrait')
@@ -31,10 +31,10 @@ class PDFController extends Controller
     {
         $asesmen = AsesmenModel::with([
             'asesis',
-            'kegiatanLsp.lsp',
+            'kegiatanJadwal.lsp',
         ])
-        ->where('kegiatan_ref', $id)
-        ->get();
+            ->where('kegiatan_ref', $id)
+            ->get();
 
         return Pdf::loadView('admin-panel.pdf.daftar-penerimaan', compact('asesmen'))
             ->setPaper('A4', 'landscape')
@@ -45,10 +45,10 @@ class PDFController extends Controller
     {
         $asesmen = AsesmenModel::with([
             'asesis',
-            'kegiatanLsp.lsp',
+            'kegiatanJadwal.lsp',
         ])
-        ->where('kegiatan_ref', $id)
-        ->get();
+            ->where('kegiatan_ref', $id)
+            ->get();
 
         return Pdf::loadView('admin-panel.pdf.tanda-terima-sertifikat', compact('asesmen'))
             ->setPaper('A4', 'portrait')
