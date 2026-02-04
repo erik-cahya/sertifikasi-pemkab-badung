@@ -70,7 +70,7 @@ class ProfileController extends Controller
             'title' => 'Edit Success',
             'message' => 'Data LSP berhasil diubah',
             'type' => 'success',
-        ];;
+        ];
         return redirect()->route('profile.index')->with('flashData', $flashData);
     }
 

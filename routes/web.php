@@ -15,24 +15,19 @@ use App\Http\Controllers\LSPController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SkemaController;
 use App\Http\Controllers\PDFController;
+use App\Http\Controllers\UserManagementController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/ajax/skema-by-lsp/{lspRef}', [SkemaController::class, 'getByLsp'])->name('ajax.skema.by-lsp');
-
-
-Route::get('/ajax/lsp-by-kegiatan/{kegiatan}', [AsesiController::class, 'getLspByKegiatan']);
-Route::get('/ajax/jadwal-by-lsp', [AsesiController::class, 'getJadwalByLsp']);
-
-
-Route::get('/ajax/skema-by-kegiatan-lsp', [AsesiController::class, 'getSkemaByKegiatanLsp']);
-Route::get('/ajax/tuk-by-lsp', [AsesiController::class, 'getTukByLsp']);
-Route::get('/ajax/asesmen-by-lsp', [AsesiController::class, 'getAsesmenByLsp']);
-
-Route::get('/ajax/getJabatanByDepartemen/{departemenNama}', [JabatanController::class, 'getJabatanByDepartemen']);
 
 Route::get('/', function () {
     return view('home');
 });
+
+Route::get('/ajax/skema-by-lsp/{lspRef}', [SkemaController::class, 'getByLsp'])->name('ajax.skema.by-lsp');
+Route::get('/ajax/lsp-by-kegiatan/{kegiatan}', [AsesiController::class, 'getLspByKegiatan']);
+Route::get('/ajax/jadwal-by-lsp', [AsesiController::class, 'getJadwalByLsp']);
+Route::get('/ajax/getJabatanByDepartemen/{departemenNama}', [JabatanController::class, 'getJabatanByDepartemen']);
+
 Route::middleware('auth')->group(function () {
 
     // ################################ Dashboard
@@ -61,47 +56,35 @@ Route::middleware('auth')->group(function () {
     Route::get('lsp/{id}', [LSPController::class, 'show'])->name('lsp.show')->middleware('role:dinas,master');
     Route::delete('lsp/{id}', [LSPController::class, 'destroy'])->name('lsp.destroy')->middleware('role:dinas,master');
 
-    // Selain role master & dinas, tidak bisa akses route ini
-    Route::middleware(['role:master, dinas'])->group(function () {
+    // ################################ Kegiatan LSP
+    Route::post('kegiatan-detail', [KegiatanLSPController::class, 'store'])->name('kegiatan-lsp.store')->middleware('role:dinas,master');
 
+    // ################################ Departemen
+    Route::get('departemen', [DepartemenController::class, 'index'])->name('departemen.index')->middleware('role:dinas,master');
+    Route::post('departemen/store', [DepartemenController::class, 'store'])->name('departemen.store')->middleware('role:dinas,master');
+    Route::get('departemen/{id}', [DepartemenController::class, 'edit'])->name('departemen.edit')->middleware('role:dinas,master');
+    Route::put('departemen/{id}', [DepartemenController::class, 'update'])->name('departemen.update')->middleware('role:dinas,master');
+    Route::delete('departemen/{id}', [DepartemenController::class, 'destroy'])->name('departemen.destroy')->middleware('role:dinas,master');
 
+    // ################################ Jabatan
+    Route::get('jabatan', [JabatanController::class, 'index'])->name('jabatan.index')->middleware('role:dinas,master');
+    Route::post('jabatan/store', [JabatanController::class, 'store'])->name('jabatan.store')->middleware('role:dinas,master');
+    Route::get('jabatan/{id}', [JabatanController::class, 'edit'])->name('jabatan.edit')->middleware('role:dinas,master');
+    Route::put('jabatan/{id}', [JabatanController::class, 'update'])->name('jabatan.update')->middleware('role:dinas,master');
+    Route::delete('jabatan/{id}', [JabatanController::class, 'destroy'])->name('jabatan.destroy')->middleware('role:dinas,master');
 
-        // ################################ Asesmen by Admin
-        // Route::resource('asesmen', AsesmenController::class)->except('index');
+    // ################################ Skema
+    Route::get('skema', [SkemaController::class, 'index'])->name('skema.index');
+    Route::get('skema/create', [SkemaController::class, 'create'])->name('skema.create');
+    Route::post('skema/store', [SkemaController::class, 'store'])->name('skema.store');
+    Route::get('skema/{id}', [SkemaController::class, 'show'])->name('skema.show');
+    Route::put('skema/{id}', [SkemaController::class, 'update'])->name('skema.update');
+    Route::delete('skema/{id}', [SkemaController::class, 'destroy'])->name('skema.destroy');
 
-        // ################################ Kegiatan LSP
-        Route::post('kegiatan-detail', [KegiatanLSPController::class, 'store'])->name('kegiatan-lsp.store');
-
-        // ################################ Departemen
-        Route::get('departemen', [DepartemenController::class, 'index'])->name('departemen.index');
-        Route::post('departemen/store', [DepartemenController::class, 'store'])->name('departemen.store');
-        Route::get('departemen/{id}', [DepartemenController::class, 'edit'])->name('departemen.edit');
-        Route::put('departemen/{id}', [DepartemenController::class, 'update'])->name('departemen.update');
-        Route::delete('departemen/{id}', [DepartemenController::class, 'destroy'])->name('departemen.destroy');
-
-        // ################################ Jabatan
-        Route::get('jabatan', [JabatanController::class, 'index'])->name('jabatan.index');
-        Route::post('jabatan/store', [JabatanController::class, 'store'])->name('jabatan.store');
-        Route::get('jabatan/{id}', [JabatanController::class, 'edit'])->name('jabatan.edit');
-        Route::put('jabatan/{id}', [JabatanController::class, 'update'])->name('jabatan.update');
-        Route::delete('jabatan/{id}', [JabatanController::class, 'destroy'])->name('jabatan.destroy');
-    });
-
-    // Role LSP
-    Route::middleware(['role:lsp,master,dinas'])->group(function () {
-        // ################################ Skema
-        Route::get('skema', [SkemaController::class, 'index'])->name('skema.index');
-        Route::get('skema/create', [SkemaController::class, 'create'])->name('skema.create');
-        Route::post('skema/store', [SkemaController::class, 'store'])->name('skema.store');
-        Route::get('skema/{id}', [SkemaController::class, 'show'])->name('skema.show');
-        Route::put('skema/{id}', [SkemaController::class, 'update'])->name('skema.update');
-        Route::delete('skema/{id}', [SkemaController::class, 'destroy'])->name('skema.destroy');
-
-        // ################################ Kode Unit
-        Route::post('skema/create_kode_unit', [KodeUnitController::class, 'store'])->name('kode_unit.store');
-        Route::put('kode_unit/{id}', [KodeUnitController::class, 'update'])->name('kode_unit.update');
-        Route::delete('kode_unit/{id}', [KodeUnitController::class, 'destroy'])->name('kode_unit.destroy');
-    });
+    // ################################ Kode Unit
+    Route::post('skema/create_kode_unit', [KodeUnitController::class, 'store'])->name('kode_unit.store');
+    Route::put('kode_unit/{id}', [KodeUnitController::class, 'update'])->name('kode_unit.update');
+    Route::delete('kode_unit/{id}', [KodeUnitController::class, 'destroy'])->name('kode_unit.destroy');
 
 
 
@@ -126,6 +109,9 @@ Route::middleware('auth')->group(function () {
     Route::get('daftar-hadir/{id}', [PDFController::class, 'daftarHadir'])->name('pdf.daftar-hadir');
     Route::get('daftar-penerimaan/{id}', [PDFController::class, 'daftarPenerimaan'])->name('pdf.daftar-penerimaan');
     Route::get('tanda-terima-sertifikat/{id}', [PDFController::class, 'tandaTerimaSertifikat'])->name('pdf.tanda-terima-sertifikat');
+
+    // ################################ User Management
+    Route::resource('/user-management', UserManagementController::class);
 });
 
 // ################################ Pendaftaraan Asesi

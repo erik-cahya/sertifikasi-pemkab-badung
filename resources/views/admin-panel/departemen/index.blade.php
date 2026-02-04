@@ -17,7 +17,7 @@
                             <div class="col-lg-5">
                                 <div class="mb-3">
                                     <label for="departemen_nama" class="form-label">Nama Departemen</label><span class="text-danger">*</span>
-                                    <input type="text" id="departemen_nama" class="form-control rounded-3 @error('departemen_nama', 'create_departemen') is-invalid @enderror" name="departemen_nama" placeholder="Masukkan nama departemen">
+                                    <input type="text" id="departemen_nama" class="form-control rounded-3 @error('departemen_nama', 'create_departemen') is-invalid @enderror" name="departemen_nama" placeholder="Masukkan nama departemen" value="{{ old('departemen_nama') }}"">
                                     @error('departemen_nama', 'create_departemen')
                                         <div class="invalid-feedback" bis_skin_checked="1">
                                             {{ $message }}

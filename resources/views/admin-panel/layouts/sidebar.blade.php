@@ -206,8 +206,8 @@
 
             @role('master', 'dinas')
                 <li class="side-nav-title">Settings</li>
-                <li class="side-nav-item {{ request()->routeIs('profile.index') ? 'menuitem-active' : '' }}">
-                    <a href="{{ route('profile.index') }}" class="side-nav-link">
+                <li class="side-nav-item {{ request()->routeIs('user-management.index') ? 'menuitem-active' : '' }}">
+                    <a href="{{ route('user-management.index') }}" class="side-nav-link">
                         <i class="ri-user-2-line"></i>
                         <span> Account Management </span>
                     </a>
