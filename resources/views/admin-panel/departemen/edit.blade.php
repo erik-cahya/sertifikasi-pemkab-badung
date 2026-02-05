@@ -1,8 +1,5 @@
 @extends('admin-panel.layouts.app')
-@push('style')
-    <!-- Datatables css -->
-    <link href="{{ asset('admin') }}/assets/vendor/datatables.net-bs5/css/dataTables.bootstrap5.min.css" rel="stylesheet" type="text/css" />
-@endpush
+
 @section('content')
     @foreach ($dataDepartemen as $item)
         <div class="row">
@@ -37,14 +34,3 @@
     @endforeach
 
 @endsection
-@push('script')
-    <!-- Datatables js -->
-    <script src="{{ asset('admin') }}/assets/vendor/datatables.net/js/jquery.dataTables.min.js"></script>
-    <script src="{{ asset('admin') }}/assets/vendor/datatables.net-bs5/js/dataTables.bootstrap5.min.js"></script>
-    <script src="{{ asset('admin') }}/assets/vendor/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
-
-    <!-- Datatable Demo App js -->
-    <script src="{{ asset('admin') }}/assets/js/pages/datatable.init.js"></script>
-
-    
-@endpush

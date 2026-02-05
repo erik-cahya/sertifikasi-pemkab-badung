@@ -1,8 +1,5 @@
 @extends('admin-panel.layouts.app')
-@push('style')
-    <!-- Datatables css -->
-    <link href="{{ asset('admin') }}/assets/vendor/datatables.net-bs5/css/dataTables.bootstrap5.min.css" rel="stylesheet" type="text/css" />
-@endpush
+
 @section('content')
     <div class="container-fluid">
         <div class="row">
@@ -102,7 +99,7 @@
                         <h4 class=".card-title">Kode Unit</h4>
                     </div>
                     <div class="card-body">
-                        <table id="scroll-horizontal-datatable" class="table-striped table-sm table-bordered w-100 nowrap table" style="font-size: 12px">
+                        <table id="datatable-dashboard" class="table-striped table-sm table-bordered w-100 nowrap table" style="font-size: 12px">
                             <thead>
                                 <tr>
                                     <th>No</th>

@@ -1,12 +1,5 @@
 @extends('admin-panel.layouts.app')
 @push('style')
-    <!-- Datatables css -->
-    <link href="{{ asset('admin') }}/assets/vendor/datatables.net-bs5/css/dataTables.bootstrap5.min.css" rel="stylesheet" type="text/css" />
-    {{-- <link href="{{ asset('admin') }}/assets/vendor/daterangepicker/daterangepicker.css" rel="stylesheet" type="text/css" /> --}}
-
-    <!-- Daterangepicker css -->
-    <link href="{{ asset('admin') }}/assets/vendor/daterangepicker/daterangepicker.css" rel="stylesheet" type="text/css" />
-
     <style>
         .kegiatan-item {
             border-radius: 8px;
@@ -123,7 +116,7 @@
                     <h5 class="card-header bg-light-subtle">Data Peserta</h5>
                     <div class="card-body" bis_skin_checked="1">
 
-                        <table class="table-sm table-bordered w-100 table">
+                        <table class="table-sm table-bordered w-100 table" >
                             <thead>
                                 <tr>
                                     <th>No</th>
@@ -140,7 +133,7 @@
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $kegiatan->lsp->lsp_nama }}</td>
-                                        <td class="d-flex flex-wrap gap-1 border-0" width="500px">
+                                        <td width="500px">
 
                                             @foreach ($dataSkema[$kegiatan->lsp->ref] as $skema)
                                                 <span class="badge bg-primary-subtle text-primary">
@@ -248,23 +241,6 @@
     </div>
 @endsection
 @push('script')
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-    <!-- Daterangepicker Plugin js -->
-    <script src="{{ asset('admin') }}/assets/vendor/daterangepicker/moment.min.js"></script>
-    <script src="{{ asset('admin') }}/assets/vendor/daterangepicker/daterangepicker.js"></script>
-
-    <!-- Datatables js -->
-    <script src="{{ asset('admin') }}/assets/vendor/datatables.net/js/jquery.dataTables.min.js"></script>
-    <script src="{{ asset('admin') }}/assets/vendor/datatables.net-bs5/js/dataTables.bootstrap5.min.js"></script>
-    <script src="{{ asset('admin') }}/assets/vendor/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
-    <script src="{{ asset('admin') }}/assets/js/pages/datatable.init.js"></script>
-
-    <script src="{{ asset('admin') }}/assets/vendor/lucide/umd/lucide.min.js"></script>
-
-    <!--  Select2 Plugin Js -->
-    <script src="{{ asset('admin') }}/assets/vendor/select2/js/select2.min.js"></script>
-
     <script>
         $(document).on('focus', '.single-date', function() {
             const modal = $(this).closest('.modal');
@@ -337,5 +313,5 @@
             });
 
         });
-    </script>
+    </>
 @endpush

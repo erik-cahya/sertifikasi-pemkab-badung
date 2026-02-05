@@ -1,6 +1,5 @@
 @extends('admin-panel.layouts.app')
-@push('style')
-@endpush
+
 @section('content')
     <div class="content">
         <div class="container-fluid">

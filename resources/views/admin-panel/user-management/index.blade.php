@@ -145,7 +145,7 @@
                                                 @method('PUT')
                                                 @csrf
                                                 <div class="modal-header modal-colored-header bg-dinas text-white">
-                                                    <h4 class="modal-title" id="success-header-modalLabel">Edit Kegiatan</h4>
+                                                    <h4 class="modal-title" id="success-header-modalLabel">Edit User</h4>
                                                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                                                 </div>
                                                 <div class="modal-body">
@@ -162,8 +162,8 @@
                                                     </div>
                                                 </div>
                                                 <div class="modal-footer">
-                                                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-                                                    <button type="submit" class="btn btn-pink">Simpan Perubahan</button>
+                                                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+                                                    <button type="submit" class="btn btn-dinas">Simpan Perubahan</button>
                                                 </div>
                                             </form>
                                         </div>

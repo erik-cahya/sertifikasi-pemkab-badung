@@ -1,7 +1,5 @@
 @extends('admin-panel.layouts.app')
-@push('style')
-    <link href="{{ asset('admin') }}/assets/vendor/daterangepicker/daterangepicker.css" rel="stylesheet" type="text/css" />
-@endpush
+
 @section('content')
     <div class="content">
         <div class="container-fluid">
@@ -114,11 +112,6 @@
     </div>
 @endsection
 @push('script')
-    <script src="{{ asset('js/jquery-3.6.0.min.js') }}"></script>
-    <script src="{{ asset('js/select2.min.js') }}"></script>
-    <!-- Daterangepicker Plugin js -->
-    <script src="{{ asset('admin') }}/assets/vendor/daterangepicker/moment.min.js"></script>
-    <script src="{{ asset('admin') }}/assets/vendor/daterangepicker/daterangepicker.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             $(function() {

@@ -1,10 +1,6 @@
 @extends('admin-panel.layouts.app')
-@push('style')
-    <!-- Datatables css -->
-    <link href="{{ asset('admin') }}/assets/vendor/datatables.net-bs5/css/dataTables.bootstrap5.min.css" rel="stylesheet" type="text/css" />
-@endpush
-@section('content')
 
+@section('content')
     <div class="row">
         <div class="col-12">
             <div class="card">
@@ -13,7 +9,7 @@
                 </div>
                 <div class="card-body">
 
-                    <table id="fixed-columns-datatable" class="table table-striped nowrap row-border order-column w-100">
+                    <table id="datatable-dashboard" class="table table-striped nowrap row-border order-column w-100">
                         <thead>
                             <tr>
                                 <th>Sertifikasi</th>
@@ -33,12 +29,7 @@
                                 <th>Jabatan</th>
                                 <th>Telp Perusahaan</th>
                                 <th>Email Perusahaan</th>
-                                <th>Dokumen</th>
-                                {{-- <th>Ijazah</th>
-                                <th>Sertifikat Kompetensi</th>
-                                <th>Surat Keterangan Bekerja</th>
-                                <th>Pas Foto</th> --}}
-                                {{-- <th>K / BK</th> --}}
+                                <th class="no-export">Dokumen</th>
                                 <th>Jadwal Asesmen</th>
                                 <th>Mendaftar pada</th>
                             </tr>
@@ -89,23 +80,23 @@
                                         </table>
                                     </td>
                                     <td>{{ $item->email_perusahaan }}</td>
-                                    <td>
+                                    <td class="no-export">
                                         <table>
                                             <tr>
                                                 <td>IJAZAH</td>
-                                                <td>: <a href="{{ asset('asesi_files/'.$item->ijazah_file) }}" target="_blank"> <i class="mdi mdi-file-pdf-box"></i></a></td>
+                                                <td>: @if(!empty($item->ijazah_file))<a href="{{ asset('asesi_files/'.$item->ijazah_file) }}" target="_blank"> <i class="mdi mdi-file-pdf-box"></i></a>@else - @endif</td>
                                             </tr>
                                             <tr>
                                                 <td>SERTIKOM</td>
-                                                <td>: <a href="{{ asset('asesi_files/'.$item->sertikom_file) }}" target="_blank"> <i class="mdi mdi-file-pdf-box"></i></a></td>
+                                                <td>: @if(!empty($item->sertikom_file))<a href="{{ asset('asesi_files/'.$item->sertikom_file) }}" target="_blank"> <i class="mdi mdi-file-pdf-box"></i></a>@else - @endif</td>
                                             </tr>
                                             <tr>
                                                 <td>SKB</td>
-                                                <td>: <a href="{{ asset('asesi_files/'.$item->keterangan_kerja_file) }}" target="_blank"> <i class="mdi mdi-file-pdf-box"></i></a></td>
+                                                <td>: @if(!empty($item->keterangan_kerja_file))<a href="{{ asset('asesi_files/'.$item->keterangan_kerja_file) }}" target="_blank"> <i class="mdi mdi-file-pdf-box"></i></a>@else - @endif</td>
                                             </tr>
                                             <tr>
                                                 <td>PAS FOTO</td>
-                                                <td>: <a href="{{ asset('asesi_files/'.$item->pas_foto_file) }}" target="_blank"> <i class="mdi mdi-file-image"></i></a></td>
+                                                <td>: @if(!empty($item->pas_foto_file))<a href="{{ asset('asesi_files/'.$item->pas_foto_file) }}" target="_blank"> <i class="mdi mdi-file-image"></i></a>@else - @endif</td>
                                             </tr>
                                         </table>
                                     </td>
@@ -129,11 +120,6 @@
                                             </tr>
                                         </table>
                                     </td>
-                                    {{-- <td><a href="{{ asset('asesi/'.$item->ijazah_file) }}" target="_blank"> <i class="mdi mdi-file-pdf-box"></i></a></td>
-                                    <td><a href="{{ asset('asesi/'.$item->sertikom_file) }}" target="_blank"> <i class="mdi mdi-file-pdf-box"></i></a></td>
-                                    <td><a href="{{ asset('asesi/'.$item->skb_file) }}" target="_blank"> <i class="mdi mdi-file-pdf-box"></i></a></td>
-                                    <td><a href="{{ asset('asesi/'.$item->pas_foto_file) }}" target="_blank"> <i class="mdi mdi-file-pdf-box"></i></a></td> --}}
-                                    {{-- <td>K</td> --}}
                                     <td>{{ $item->created_at->format('Y/m/d') }}</td>
                                 </tr>
                             @endforeach
@@ -147,14 +133,6 @@
 
 @endsection
 @push('script')
-    <!-- Datatables js -->
-    <script src="{{ asset('admin') }}/assets/vendor/datatables.net/js/jquery.dataTables.min.js"></script>
-    <script src="{{ asset('admin') }}/assets/vendor/datatables.net-bs5/js/dataTables.bootstrap5.min.js"></script>
-    <script src="{{ asset('admin') }}/assets/vendor/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
-
-    <!-- Datatable Demo App js -->
-    <script src="{{ asset('admin') }}/assets/js/pages/datatable.init.js"></script>
-
     {{-- Sweet Alert --}}
     <script>
         document.addEventListener('DOMContentLoaded', function() {

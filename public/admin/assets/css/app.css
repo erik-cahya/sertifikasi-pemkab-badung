@@ -20210,6 +20210,28 @@ span.flatpickr-weekday,
     box-shadow: 0 0 0 0.15rem rgba(103, 25, 25, 0.35);
 }
 
+.btn-dinas-fill {
+    color: #ffffff;
+    border: 1px solid #671919;
+    background-color: #671919;
+    transition: all 0.2s ease-in-out;
+}
+
+.btn-dinas-fill:hover {
+    background-color: #824848;
+    color: #ffffff;
+    border: 1px solid #671919;
+}
+
+.btn-dinas-fill:focus,
+.btn-dinas-fill:active {
+    background-color: #824848;
+    color: #ffffff;
+    box-shadow: 0 0 0 0.15rem rgba(103, 25, 25, 0.35);
+    border: 1px solid #671919;
+
+}
+
 /* ===============================
    FORM DINAS – WARNA #671919
    =============================== */

@@ -4,6 +4,23 @@
 $(document).ready(function () {
     "use strict";
 
+    $('#datatable-dashboard').DataTable({        
+        paging: false,          // ❌ pagination
+        info: true,            // ❌ info bawah
+        lengthChange: true,    // ❌ show entries
+        ordering: true,         // ✅ sorting
+        searching: true,        // ✅ search
+
+        scrollY: '70vh',
+        scrollX: true,          
+        scrollCollapse: true,
+        fixedHeader: true,
+
+        dom:"<'row mb-2'\ <'col-md-6 d-flex align-items-center gap-2'B>\ <'col-md-6 d-flex justify-content-end'f>\ >\ rt\ <'row mt-2'\ <'col-md-6'i>\ <'col-md-6'p>\>",
+        buttons: [{ extend: 'copy', className: 'btn-dinas-fill' },{ extend: 'print', className: 'btn-dinas-fill' },{extend: 'excelHtml5', className: 'btn-dinas-fill', exportOptions: { columns: ':not(.no-export)', stripHtml: true }}],
+        language: {info: "Menampilkan _TOTAL_ data dari _MAX_ data", infoFiltered: "(difilter dari _MAX_ data)", search: "Cari:"}
+    });
+
     $("#basic-datatable").DataTable({
         keys: !0,
         language: {
@@ -17,33 +34,10 @@ $(document).ready(function () {
         }
     });
 
-    // var a = $("#datatable-buttons").DataTable({
-    //     lengthChange: !1,
-    //     buttons: ["copy", "print"],
-    //     language: {
-    //         paginate: {
-    //             previous: "<i class='ri-arrow-left-s-line'>",
-    //             next: "<i class='ri-arrow-right-s-line'>"
-    //         }
-    //     },
-    //     drawCallback: function () {
-    //         $(".dataTables_paginate > .pagination").addClass("pagination-rounded");
-    //     }
-    // });
-    // ## NEW VERSION DATATABLE BUTTONS
-        var a = $("#datatable-buttons").DataTable({
-        lengthChange: false,
-        paging: false,        // ⬅️ matikan pagination (langsung tampil semua)
-        pageLength: -1,       // ⬅️ tampilkan semua data
-        buttons: [
-            { extend: 'copy', text: 'Copy' },
-            { extend: 'excel', text: 'Excel' },
-            { extend: 'pdf', text: 'PDF' },
-            { extend: 'print', text: 'Print' }
-        ],
+    var a = $("#datatable-buttons").DataTable({
+        lengthChange: !1,
+        buttons: ["copy", "print"],
         language: {
-            search: "Cari:",
-            info: "Menampilkan _TOTAL_ data",
             paginate: {
                 previous: "<i class='ri-arrow-left-s-line'>",
                 next: "<i class='ri-arrow-right-s-line'>"
@@ -53,7 +47,6 @@ $(document).ready(function () {
             $(".dataTables_paginate > .pagination").addClass("pagination-rounded");
         }
     });
-
 
     $("#selection-datatable").DataTable({
         select: {

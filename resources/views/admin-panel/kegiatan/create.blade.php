@@ -1,13 +1,7 @@
 @extends('admin-panel.layouts.app')
 @push('style')
-    {{-- <link href="{{ asset('admin') }}/assets/vendor/select2/css/select2.min.css" rel="stylesheet" type="text/css" /> --}}
-    {{-- <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" /> --}}
+    <!-- Select 2 css -->
     <link href="{{ asset('css/select2.min.css') }}" rel="stylesheet" type="text/css" />
-
-    {{-- <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" /> --}}
-
-    <!-- Daterangepicker css -->
-    <link href="{{ asset('admin') }}/assets/vendor/daterangepicker/daterangepicker.css" rel="stylesheet" type="text/css" />
 
     <style>
         .kegiatan-item {
@@ -152,12 +146,10 @@
     </div>
 @endsection
 @push('script')
+    <!-- Select 2 -->
     <script src="{{ asset('js/jquery-3.6.0.min.js') }}"></script>
     <script src="{{ asset('js/select2.min.js') }}"></script>
-    <!-- Daterangepicker Plugin js -->
-    <script src="{{ asset('admin') }}/assets/vendor/daterangepicker/moment.min.js"></script>
-    <script src="{{ asset('admin') }}/assets/vendor/daterangepicker/daterangepicker.js"></script>
-
+    
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             $(function() {
