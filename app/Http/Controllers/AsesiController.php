@@ -178,7 +178,7 @@ class AsesiController extends Controller
         // ================== SIMPAN FILE ==================
         $nik  = $request->nik;
         $time = time();
-        // $ktp = NULL; $ijazah
+        $ktp = NULL; $ijazah = NULL; $sertikom = NULL; $skb = NULL; $pasfoto = NULL;
 
         /* ================== KTP ================== */
         if ($request->hasFile('ktp_file')) {
@@ -266,7 +266,7 @@ class AsesiController extends Controller
 
             'sertikom_file' => $sertikom,
             'ijazah_file' => $ijazah,
-            'ktp_file' => NULL,
+            'ktp_file' => $ktp,
             'keterangan_kerja_file' => $skb,
             'pas_foto_file' => $pasfoto,
             'status' => NULL,
