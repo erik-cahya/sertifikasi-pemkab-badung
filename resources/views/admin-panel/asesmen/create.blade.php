@@ -142,10 +142,13 @@
                                                 </td>
                                                 <td>
                                                     <div class="btn-group" role="group" aria-label="Basic outlined example">
-                                                        <a href="{{ route('pdf.daftar-hadir', $asesmen->kegiatan_ref) }}" target="_blank" class="btn btn-sm btn-info" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Download Daftar Hadir" data-bs-custom-class="info-tooltip"><i class="mdi mdi-download"></i> </a>
-                                                        <a href="{{ route('pdf.daftar-penerimaan', $asesmen->kegiatan_ref) }}" target="_blank" class="btn btn-sm btn-info" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Download Daftar Penerimaan" data-bs-custom-class="info-tooltip"><i class="mdi mdi-download"></i> </a>
-                                                        <a href="{{ route('pdf.tanda-terima-sertifikat', $asesmen->kegiatan_ref) }}" target="_blank" class="btn btn-sm btn-info" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Download Tanda Terima Sertifikat" data-bs-custom-class="info-tooltip"><i class="mdi mdi-download"></i> </a>
+                                                        {{-- <a href="{{ route('pdf.daftar-hadir', $asesmen->kegiatan_ref) }}" target="_blank" class="btn btn-sm btn-info" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Download Daftar Hadir" data-bs-custom-class="info-tooltip"><i class="mdi mdi-download"></i> </a> --}}
+                                                        {{-- <a href="{{ route('pdf.daftar-penerimaan', $asesmen->kegiatan_ref) }}" target="_blank" class="btn btn-sm btn-info" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Download Daftar Penerimaan" data-bs-custom-class="info-tooltip"><i class="mdi mdi-download"></i> </a> --}}
+                                                        {{-- <a href="{{ route('pdf.tanda-terima-sertifikat', $asesmen->kegiatan_ref) }}" target="_blank" class="btn btn-sm btn-info" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Download Tanda Terima Sertifikat" data-bs-custom-class="info-tooltip"><i class="mdi mdi-download"></i> </a> --}}
                                                         <input type="hidden" class="valueID" value="#">
+                                                        <button type="button" class="btn btn-sm btn-info" data-nama="#" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Hapus Jadwal Asesmen" data-bs-custom-class="danger-tooltip">
+                                                            <i class="mdi mdi-circle-edit-outline"></i>
+                                                        </button>
                                                         <button type="button" class="btn btn-sm btn-danger deleteButton" data-nama="#" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Hapus Jadwal Asesmen" data-bs-custom-class="danger-tooltip">
                                                             <i class="mdi mdi-trash-can"></i>
                                                         </button>

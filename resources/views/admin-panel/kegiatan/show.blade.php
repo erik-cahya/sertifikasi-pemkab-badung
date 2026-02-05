@@ -165,8 +165,11 @@
                                                         <thead>
                                                             <tr>
                                                                 <th>No</th>
-                                                                <th>Jumlah Peserta Mendaftar</th>
+                                                                <th>Peserta Mendaftar</th>
                                                                 <th>Tanggal Asesmen</th>
+                                                                <th>Form Daftar Hadir</th>
+                                                                <th>Form Daftar Penerimaan</th>
+                                                                <th>Form Tanda Terima Sertifikat</th>
                                                                 <th>Action</th>
                                                             </tr>
                                                         </thead>
@@ -177,6 +180,9 @@
                                                                     <td>{{ $loop->iteration }}</td>
                                                                     <td>{{ count($dataAsesi[$asesmen->ref] ?? []) }}</td>
                                                                     <td class={{ count($dataAsesi[$asesmen->ref] ?? []) >= 1 ? 'fw-bold' : '' }}>{{ \Carbon\Carbon::parse($asesmen->jadwal_asesmen)->locale('id')->translatedFormat('l, d F Y') }}</td>
+                                                                    <td><a href="{{ route('pdf.daftar-hadir', $asesmen->kegiatan_ref) }}" target="_blank"  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Download Daftar Hadir" data-bs-custom-class="info-tooltip"><i class="mdi mdi-download"></i> Download </a></td>
+                                                                    <td><a href="{{ route('pdf.daftar-penerimaan', $asesmen->kegiatan_ref) }}" target="_blank" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Download Daftar Penerimaan" data-bs-custom-class="info-tooltip"><i class="mdi mdi-download"></i> Download</a> </td>
+                                                                    <td><a href="{{ route('pdf.tanda-terima-sertifikat', $asesmen->kegiatan_ref) }}" target="_blank" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Download Tanda Terima Sertifikat" data-bs-custom-class="info-tooltip"><i class="mdi mdi-download"></i> Download</a> </td>
                                                                     <td class="d-flex gap-2">
                                                                         <button class="btn btn-link text-decoration-none fs-12 p-0" data-bs-toggle="collapse" data-bs-target="#asesi_list-{{ $asesmen->ref }}" aria-expanded="false" aria-controls="asesi_list-{{ $asesmen->ref }}">
                                                                             Lihat Detail
@@ -184,10 +190,10 @@
                                                                     </td>
                                                                 </tr>
                                                                 <tr class="bg-light collapse" id="asesi_list-{{ $asesmen->ref }}" data-bs-parent="#detailJadwal-{{ $kegiatan->ref }}">
-                                                                    <td colspan="4" class="p-3">
+                                                                    <td colspan="7" class="p-3">
                                                                         <div class="card mb-0 border-0 shadow-sm">
-                                                                            <div class="card-body">
-                                                                                <div class="card-header text-bg-primary px-3" bis_skin_checked="1">
+                                                                            <div class="card-body p-1">
+                                                                                <div class="card-header text-white bg-dinas px-3" bis_skin_checked="1">
                                                                                     <h4 class="card-title"> List Asesi</h4>
                                                                                     <h6>{{ \Carbon\Carbon::parse($asesmen->jadwal_asesmen)->locale('id')->translatedFormat('l, d F Y') }}</h6>
                                                                                 </div>
@@ -198,7 +204,9 @@
                                                                                             <th>Nama Asesi</th>
                                                                                             <th>Skema Dipilih</th>
                                                                                             <th>Lokasi TUK</th>
-                                                                                            <th>Upload Berkas</th>
+                                                                                            <th>Nomor Sertifikat</th>
+                                                                                            <th>Upload Sertifikat</th>
+                                                                                            <th>Download Sertifikat</th>
                                                                                         </tr>
                                                                                     </thead>
                                                                                     <tbody>
@@ -209,6 +217,8 @@
                                                                                                 <td>{{ $asesi->nama_lengkap }}</td>
                                                                                                 <td>{{ $asesi->asesmen->nama_skema }}</td>
                                                                                                 <td>{{ $asesi->asesmen->nama_tuk }}</td>
+                                                                                                <td></td>
+                                                                                                <td></td>
                                                                                                 <td class="d-flex gap-2">
                                                                                                     <button class="btn btn-link text-decoration-none fs-12 p-0">
                                                                                                         Download Berkas
