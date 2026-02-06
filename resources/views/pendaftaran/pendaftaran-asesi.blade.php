@@ -371,7 +371,7 @@
                                                 <select class="rounded-3 form-select" id="kegiatan_ref" name="kegiatan_ref">
                                                     <option value="" selected>Pilih Kegiatan</option>
                                                     @foreach ($dataKegiatan as $kegiatan)
-                                                        <option value="{{ $kegiatan->ref }}">{{ $kegiatan->nama_kegiatan }}</option>
+                                                        <option value="{{ $kegiatan->ref }}" {{ old('kegiatan_ref') == $kegiatan->ref ? 'selected' : '' }}>{{ $kegiatan->nama_kegiatan }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -395,37 +395,9 @@
                                             </div>
                                         </div>
 
-                                        {{-- <div class="col-lg-6">
-                                            <div class="mb-3">
-                                                <label for="skema_asesmen" class="form-label">Skema Sertifikasi Kompetensi</label><span class="text-danger">*</span>
-                                                <select class="rounded-3 form-select" id="skema_asesmen" name="skema_asesmen" disabled>
-                                                    <option value="" disabled selected>Pilih Skema Sertifikasi Kompetensi</option>
-                                                </select>
-
-                                            </div>
-                                        </div>
-
-                                        <div class="col-lg-6">
-                                            <div class="mb-3">
-                                                <label for="tuk_ref" class="form-label">Tempat Uji Kompetensi (TUK)</label><span class="text-danger">*</span>
-                                                <select class="rounded-3 form-select" id="tuk_ref" name="tuk_ref" disabled>
-                                                    <option value="" disabled selected>Pilih Tempat Uji Kompetensi (TUK)</option>
-                                                </select>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-lg-6">
-                                            <div class="mb-3">
-                                                <label for="tgl_asesmen" class="form-label">Tanggal Pelaksanaan Uji Kompetensi</label><span class="text-danger">*</span>
-                                                <select class="rounded-3 form-select" id="tgl_asesmen" name="tgl_asesmen" disabled>
-                                                    <option value="" disabled selected>Pilih Jadwal Uji Kompetensi</option>
-                                                </select>
-                                            </div>
-                                        </div> --}}
-
                                         <div class="col-lg-12">
                                             <div class="mb-2 mt-3">
-                                                <button type="button"  id="btnSubmit" class="btn btn-dinas rounded-3 fw-semibold px-4 py-2"><i class="ri-save-3-line"></i> DAFTAR</button>
+                                                <button type="button" id="btnSubmit" class="btn btn-dinas rounded-3 fw-semibold px-4 py-2"><i class="ri-save-3-line"></i> DAFTAR</button>
                                             </div>
                                         </div>
 
@@ -483,6 +455,10 @@
     </script>
 
     <script>
+        const oldKegiatanRef = @json(old('kegiatan_ref'));
+        const oldLspRef = @json(old('lsp_ref'));
+        const oldAsesmenRef = @json(old('asesmen_ref'));
+
         const kegiatanSelect = document.getElementById('kegiatan_ref');
         const lspSelect = document.getElementById('lsp_ref');
         const jadwalAsesmen = document.getElementById('jadwal_asesmen');
@@ -534,21 +510,60 @@
                     let opt = '<option value="" disabled selected>Pilih Jadwal Sertifikasi</option>';
                     data.forEach(item => {
                         console.table(item);
-                        opt += `<option value="${item.asesmen_ref}">${item.nama_tuk} - ${item.nama_skema} | ${formatTanggalIndo(item.jadwal_asesmen)} | Kuota: ${item.sisa_kuota}</option>`;
+                        const isSelected = oldAsesmenRef === item.asesmen_ref ? 'selected' : '';
+                        opt += `<option value="${item.asesmen_ref}" ${isSelected}>${item.nama_tuk} - ${item.nama_skema} | ${formatTanggalIndo(item.jadwal_asesmen)} | Kuota: ${item.sisa_kuota}</option>`;
                     });
                     jadwalAsesmen.innerHTML = opt;
                     jadwalAsesmen.disabled = false;
                 });
         });
+
+        // Auto-load LSP and Jadwal if old values exist
+        document.addEventListener('DOMContentLoaded', function() {
+            if (oldKegiatanRef) {
+                kegiatanSelect.value = oldKegiatanRef;
+
+                // Load LSP
+                fetch(`/ajax/lsp-by-kegiatan/${oldKegiatanRef}`)
+                    .then(res => res.json())
+                    .then(data => {
+                        let opt = '<option value="" disabled>Pilih LSP</option>';
+                        data.forEach(item => {
+                            const disabled = item.sisa_kuota <= 0 ? 'disabled' : '';
+                            const isSelected = oldLspRef === item.nama_lsp ? 'selected' : '';
+                            opt += `<option value="${item.nama_lsp}" ${disabled} ${isSelected}>${item.nama_lsp}</option>`;
+                        });
+                        lspSelect.innerHTML = opt;
+                        lspSelect.disabled = false;
+
+                        // If LSP was selected, load jadwal
+                        if (oldLspRef) {
+                            lspSelect.value = oldLspRef;
+
+                            fetch(`/ajax/jadwal-by-lsp?kegiatan_ref=${oldKegiatanRef}&lsp_ref=${oldLspRef}`)
+                                .then(res => res.json())
+                                .then(data => {
+                                    let opt = '<option value="" disabled>Pilih Jadwal Sertifikasi</option>';
+                                    data.forEach(item => {
+                                        const isSelected = oldAsesmenRef === item.asesmen_ref ? 'selected' : '';
+                                        opt += `<option value="${item.asesmen_ref}" ${isSelected}>${item.nama_tuk} - ${item.nama_skema} | ${formatTanggalIndo(item.jadwal_asesmen)} | Kuota: ${item.sisa_kuota}</option>`;
+                                    });
+                                    jadwalAsesmen.innerHTML = opt;
+                                    jadwalAsesmen.disabled = false;
+                                });
+                        }
+                    });
+            }
+        });
     </script>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
+        document.addEventListener('DOMContentLoaded', function() {
 
             const btn = document.getElementById('btnSubmit');
             if (!btn) return;
 
-            btn.addEventListener('click', function () {
+            btn.addEventListener('click', function() {
 
                 const val = name =>
                     document.querySelector(`[name="${name}"]`)?.value || '-';
@@ -584,5 +599,4 @@
 
         });
     </script>
-
 @endpush
