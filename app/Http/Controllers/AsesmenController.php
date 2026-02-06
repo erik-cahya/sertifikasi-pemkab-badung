@@ -170,5 +170,15 @@ class AsesmenController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id) {}
+    public function destroy(string $id)
+    {
+        AsesmenModel::where('ref', $id)->delete();
+        $flashData = [
+            'judul' => 'Hapus Data Sukses',
+            'pesan' => 'Jadwal Berhasil Dihapus ',
+            'type' => 'success',
+        ];
+
+        return response()->json($flashData);
+    }
 }

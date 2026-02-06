@@ -156,11 +156,15 @@
                                                         {{-- <a href="{{ route('pdf.daftar-hadir', $asesmen->kegiatan_ref) }}" target="_blank" class="btn btn-sm btn-info" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Download Daftar Hadir" data-bs-custom-class="info-tooltip"><i class="mdi mdi-download"></i> </a> --}}
                                                         {{-- <a href="{{ route('pdf.daftar-penerimaan', $asesmen->kegiatan_ref) }}" target="_blank" class="btn btn-sm btn-info" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Download Daftar Penerimaan" data-bs-custom-class="info-tooltip"><i class="mdi mdi-download"></i> </a> --}}
                                                         {{-- <a href="{{ route('pdf.tanda-terima-sertifikat', $asesmen->kegiatan_ref) }}" target="_blank" class="btn btn-sm btn-info" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Download Tanda Terima Sertifikat" data-bs-custom-class="info-tooltip"><i class="mdi mdi-download"></i> </a> --}}
-                                                        <input type="hidden" class="valueID" value="#">
+                                                        {{-- <input type="hidden" class="valueID" value="#">
                                                         <button type="button" class="btn btn-sm btn-info" data-nama="#" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Hapus Jadwal Asesmen" data-bs-custom-class="danger-tooltip">
                                                             <i class="mdi mdi-circle-edit-outline"></i>
-                                                        </button>
-                                                        <button type="button" class="btn btn-sm btn-danger deleteButton" data-nama="#" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Hapus Jadwal Asesmen" data-bs-custom-class="danger-tooltip">
+                                                        </button> --}}
+                                                        {{-- <button type="button" class="btn btn-sm btn-danger deleteButton" data-nama="#" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Hapus Jadwal Asesmen" data-bs-custom-class="danger-tooltip">
+                                                            <i class="mdi mdi-trash-can"></i>
+                                                        </button> --}}
+                                                        <input type="hidden" class="valueID" value="{{ $asesmen->ref }}">
+                                                        <button type="button" class="btn btn-sm btn-danger deleteButton" data-nama="{{ $asesmen->nama_tuk }}" data-tanggal="{{ $asesmen->jadwal_asesmen }}" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Delete Data" data-bs-custom-class="danger-tooltip">
                                                             <i class="mdi mdi-trash-can"></i>
                                                         </button>
                                                     </div>
@@ -209,6 +213,62 @@
                 });
 
 
+            });
+        </script>
+        {{-- Sweet Alert --}}
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                // Saat halaman sudah ready
+                const deleteButtons = document.querySelectorAll('.deleteButton');
+
+                deleteButtons.forEach(button => {
+                    button.addEventListener('click', function(e) {
+                        e.preventDefault();
+
+                        let propertyName = this.getAttribute('data-nama');
+                        let propertyJadwal = this.getAttribute('data-tanggal');
+                        let valueID = this.parentElement.querySelector('.valueID').value;
+
+                        Swal.fire({
+                            title: 'Apakah kamu yakin?',
+                            text: "Hapus data Jadwal Asesmen di TUK " + propertyName + " pada tanggal "+ propertyJadwal + "?",
+                            icon: 'warning',
+                            showCancelButton: true,
+                            confirmButtonColor: '#3085d6',
+                            cancelButtonColor: '#d33',
+                            confirmButtonText: 'Ya, hapus data'
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                // Kirim DELETE request manual lewat JavaScript
+                                fetch('/asesmen/' + valueID, {
+                                        method: 'DELETE',
+                                        headers: {
+                                            'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                                            'Content-Type': 'application/json'
+                                        }
+                                    })
+                                    .then(response => response.json())
+                                    .then(data => {
+                                        Swal.fire({
+                                            title: data.judul,
+                                            text: data.pesan,
+                                            icon: data.type,
+                                        });
+
+                                        // Optional: reload table / halaman
+                                        setTimeout(() => {
+                                            location.reload();
+                                        }, 1500);
+                                    })
+                                    .catch(error => {
+                                        console.error('Error:', error);
+                                        Swal.fire('Error', 'Something went wrong!',
+                                            'error');
+                                    });
+                            }
+                        });
+                    });
+                });
             });
         </script>
     @endpush

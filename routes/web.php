@@ -48,6 +48,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('asesmen/create/{id}', [AsesmenController::class, 'create'])->name('asesmen.create');
     Route::post('asesment', [AsesmenController::class, 'store'])->name('asesmen.store');
+    Route::delete('asesmen/{id}', [AsesmenController::class, 'destroy'])->name('asesmen.destroy');
 
 
     // ################################ LSP
