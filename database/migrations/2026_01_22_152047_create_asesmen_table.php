@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('asesmen', function (Blueprint $table) {
             $table->ulid('ref')->primary();
             $table->foreignUlid('kegiatan_ref')->nullable()->references('ref')->on('kegiatan')->nullOnDelete();
-            $table->foreignUlid('kegiatan_lsp_ref')->nullable()->references('ref')->on('kegiatan_lsp')->nullOnDelete();
+            // $table->foreignUlid('kegiatan_lsp_ref')->nullable()->references('ref')->on('kegiatan_lsp')->nullOnDelete();
             $table->foreignUlid('kegiatan_jadwal_ref')->nullable()->references('ref')->on('kegiatan_jadwal')->nullOnDelete();
             $table->string('nama_lsp');
             $table->string('nama_tuk');
@@ -32,7 +32,7 @@ return new class extends Migration
             $table->string('no_asesor');
             $table->string('no_reg_asesor');
 
-            $table->string('bukti_asesmen');
+            $table->string('bukti_asesmen')->nullable();
 
             $table->foreignUlid('created_by')->nullable()->references('ref')->on('users')->nullOnDelete();
             $table->timestamps();

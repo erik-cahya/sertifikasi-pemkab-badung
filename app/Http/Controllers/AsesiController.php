@@ -38,10 +38,9 @@ class AsesiController extends Controller
 
     public function getJadwalByLsp(Request $request)
     {
-        // dd($request->all());
         $request->validate([
             'kegiatan_ref' => 'required',
-            'lsp_ref'      => 'required',
+            'lsp_ref' => 'required',
         ]);
 
         $asesiPerAsesmen = AsesiModel::where('kegiatan_ref', $request->kegiatan_ref)
@@ -55,14 +54,14 @@ class AsesiController extends Controller
             ->map(function ($asesmen) use ($asesiPerAsesmen) {
 
                 $terpakai = $asesiPerAsesmen[$asesmen->ref] ?? 0;
-                $sisa     = max($asesmen->kuota_harian - $terpakai, 0);
+                $sisa = max($asesmen->kuota_harian - $terpakai, 0);
 
                 return [
-                    'asesmen_ref'     => $asesmen->ref,
-                    'jadwal_asesmen'  => $asesmen->jadwal_asesmen,
-                    'kuota_harian'    => $asesmen->kuota_harian,
-                    'terpakai'        => $terpakai,
-                    'sisa_kuota'      => $sisa,
+                    'asesmen_ref' => $asesmen->ref,
+                    'jadwal_asesmen' => $asesmen->jadwal_asesmen,
+                    'kuota_harian' => $asesmen->kuota_harian,
+                    'terpakai' => $terpakai,
+                    'sisa_kuota' => $sisa,
                     'nama_tuk' => $asesmen->nama_tuk,
                     'nama_skema' => $asesmen->nama_skema,
 
@@ -70,8 +69,6 @@ class AsesiController extends Controller
             });
         return response()->json($data);
     }
-
-
 
     /**
      * Display a listing of the resource.
@@ -96,7 +93,6 @@ class AsesiController extends Controller
 
     public function store(Request $request)
     {
-
         $validated = $request->validate([
             'kegiatan_ref' => 'required',
             'lsp_ref' => 'required',
@@ -166,8 +162,8 @@ class AsesiController extends Controller
 
         if ($existingAsesi) {
             $batasDaftarUlang = Carbon::parse($existingAsesi->created_at)
-            ->addYears(3)
-            ->addDay();
+                ->addYears(3)
+                ->addDay();
 
             if (now()->lessThan($batasDaftarUlang)) {
                 throw \Illuminate\Validation\ValidationException::withMessages([
@@ -180,12 +176,10 @@ class AsesiController extends Controller
         // Validasi Kuota LSP (Jika LSP di bypass user)
         $kegiatanRef = $request->kegiatan_ref;
         $lspRef      = $request->lsp_ref;
-        $kuotaLsp = KegiatanLSPModel::where('kegiatan_ref', $kegiatanRef)
-            ->where('lsp_ref', $lspRef)
-            ->value('kuota_lsp');
-        $totalAsesi = AsesiModel::where('kegiatan_ref', $kegiatanRef)
-            ->where('lsp_ref', $lspRef)
-            ->count();
+
+
+        // $kuotaLsp = KegiatanLSPModel::where('kegiatan_ref', $kegiatanRef)->where('lsp_ref', $lspRef)->value('kuota_lsp');
+        // $totalAsesi = AsesiModel::where('kegiatan_ref', $kegiatanRef)->where('lsp_ref', $lspRef)->count();
 
         // if ($totalAsesi >= $kuotaLsp) {
         //     throw ValidationException::withMessages([
@@ -196,7 +190,11 @@ class AsesiController extends Controller
         // ================== SIMPAN FILE ==================
         $nik  = $request->nik;
         $time = time();
-        $ktp = NULL; $ijazah = NULL; $sertikom = NULL; $skb = NULL; $pasfoto = NULL;
+        $ktp = NULL;
+        $ijazah = NULL;
+        $sertikom = NULL;
+        $skb = NULL;
+        $pasfoto = NULL;
 
         /* ================== KTP ================== */
         if ($request->hasFile('ktp_file')) {

@@ -68,7 +68,7 @@ class KegiatanController extends Controller
 
         // Jika data kegiatan sudah dibuat, maka tidak ditampilkan lagi
         // $data['dataKegiatan'] = KegiatanModel::select('ref', 'nama_kegiatan')->whereDoesntHave('details')->get();
-        $data['dataKegiatan'] = KegiatanModel::select('ref', 'nama_kegiatan')->whereDoesntHave('kegiatanLsp')->get();
+        $data['dataKegiatan'] = KegiatanModel::select('ref', 'nama_kegiatan')->get();
         return view('admin-panel.kegiatan.create', $data);
     }
 
@@ -185,7 +185,7 @@ class KegiatanController extends Controller
 
         $query = KegiatanModel::where('ref', $id)
             ->withSum(
-                'kegiatanLsp as total_peserta',
+                'kegiatanJadwal as total_peserta',
                 'kuota_lsp',
             )->withCount('skemas', 'asesi');      // total skema kegiatan
         if ($user->roles === 'lsp' && $user->lspData) {
@@ -284,7 +284,7 @@ class KegiatanController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => 'No Sertifikat -'.$asesi->nama_lengkap.' Berhasil Ditambahkan!'
+            'message' => 'No Sertifikat -' . $asesi->nama_lengkap . ' Berhasil Ditambahkan!'
         ]);
     }
 
@@ -310,8 +310,7 @@ class KegiatanController extends Controller
         $filename = "SERTIFIKAT-{$nik}-{$time}.{$ext}";
 
         // hapus file lama
-        if($asesi->sertifikat_file && Storage::disk('sertifikat')->exists($asesi->sertifikat_file)) 
-        {
+        if ($asesi->sertifikat_file && Storage::disk('sertifikat')->exists($asesi->sertifikat_file)) {
             Storage::disk('sertifikat')->delete($asesi->sertifikat_file);
         }
 
@@ -323,9 +322,9 @@ class KegiatanController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => 'Sertifikat Kompetensi - '.$asesi->nama_lengkap.' berhasil diupload',
+            'message' => 'Sertifikat Kompetensi - ' . $asesi->nama_lengkap . ' berhasil diupload',
             'path'    => $path,
-            'url'     => asset('asesi_files/'.$path),
+            'url'     => asset('asesi_files/' . $path),
 
         ]);
     }
@@ -354,8 +353,7 @@ class KegiatanController extends Controller
         $filename = "BUKTI-ASESMEN-{$lsp}-{$tuk}-{$tgl}-{$time}.{$ext}";
 
         // hapus file lama
-        if($asesmen->bukti_asesmen && Storage::disk('bukti_asesmen')->exists($asesmen->bukti_asesmen)) 
-        {
+        if ($asesmen->bukti_asesmen && Storage::disk('bukti_asesmen')->exists($asesmen->bukti_asesmen)) {
             Storage::disk('bukti_asesmen')->delete($asesmen->bukti_asesmen);
         }
 
@@ -367,9 +365,9 @@ class KegiatanController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => 'Bukti Asesmen - '.$asesmen->nama_lsp.' - '.$asesmen->nama_tuk.' - '.$asesmen->jadwal_asesmen.' berhasil diupload',
+            'message' => 'Bukti Asesmen - ' . $asesmen->nama_lsp . ' - ' . $asesmen->nama_tuk . ' - ' . $asesmen->jadwal_asesmen . ' berhasil diupload',
             'path'    => $path,
-            'url'     => asset('asesmen_files/'.$path),
+            'url'     => asset('asesmen_files/' . $path),
 
         ]);
     }

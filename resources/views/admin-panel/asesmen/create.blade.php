@@ -24,7 +24,7 @@
                                         <small>Durasi Kegiatan : {{ \Carbon\Carbon::parse($dataKegiatan->mulai_kegiatan)->locale('id')->translatedFormat('d F Y') }} s/d {{ \Carbon\Carbon::parse($dataKegiatan->selesai_kegiatan)->locale('id')->translatedFormat('d F Y') }}</small>
                                     </p>
                                     <span class="badge {{ $dataKegiatan->status == 1 ? 'bg-success' : 'bg-danger' }} rounded-pill px-2 py-1">Status : {{ $dataKegiatan->status == 1 ? 'Aktif' : 'Tidak Aktif' }}</span>
-                                    <span class="badge bg-info rounded-pill px-2 py-1">{{ $dataKegiatan->kegiatanLsp->pluck('lsp')->unique('ref')->count() }} LSP</span>
+                                    {{-- <span class="badge bg-info rounded-pill px-2 py-1">20 LSP</span> --}}
                                     <span class="badge bg-primary rounded-pill px-2 py-1">{{ $dataKegiatan->asesi_count }}/{{ $dataKegiatan->total_peserta }} Calon Asesi</span>
                                 </div>
                             </div>
@@ -134,10 +134,10 @@
                                                 <td>
                                                     {{ $asesmen->nama_penanggung_jawab }} <br> {{ $asesmen->no_penanggung_jawab }}
                                                 </td>
-                                                                                                <td>
+                                                <td>
                                                     {{ $asesmen->nama_penyelenggara_uji }} <br> {{ $asesmen->no_penyelenggara_uji }}
                                                 </td>
-                                                                                                <td>
+                                                <td>
                                                     {{ $asesmen->nama_asesor }} <br> {{ $asesmen->no_asesor }} <br> {{ $asesmen->no_reg_asesor }}
                                                 </td>
                                                 <td>

@@ -11,13 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('kegiatan_lsp', function (Blueprint $table) {
-            $table->ulid('ref')->primary();
-            $table->foreignUlid('kegiatan_ref')->references('ref')->on('kegiatan')->cascadeOnDelete();
-            $table->foreignUlid('lsp_ref')->references('ref')->on('lsp')->cascadeOnDelete();
-            $table->integer('kuota_lsp');
-            $table->timestamps();
-        });
+        // Schema::create('kegiatan_lsp', function (Blueprint $table) {
+        //     $table->ulid('ref')->primary();
+        //     $table->foreignUlid('kegiatan_ref')->references('ref')->on('kegiatan')->cascadeOnDelete();
+        //     $table->foreignUlid('lsp_ref')->references('ref')->on('lsp')->cascadeOnDelete();
+        //     $table->integer('kuota_lsp');
+        //     $table->timestamps();
+        // });
     }
 
     /**

@@ -27,12 +27,12 @@ class AsesmenController extends Controller
         $user->loadMissing('lspData');
 
         $query = KegiatanModel::with([
-            'kegiatanLsp:ref,kegiatan_ref,lsp_ref,kuota_lsp',
-            'kegiatanLsp.lsp:ref,lsp_nama'
-        ])->withSum('kegiatanLsp as total_kuota', 'kuota_lsp');
+            'kegiatanJadwal:ref,kegiatan_ref,lsp_ref,kuota_lsp',
+            'kegiatanJadwal.lsp:ref,lsp_nama'
+        ])->withSum('kegiatanJadwal as total_kuota', 'kuota_lsp');
 
         if ($user->roles === 'lsp' && $user->lspData) {
-            $query->whereHas('kegiatanLsp', function ($q) use ($user) {
+            $query->whereHas('kegiatanJadwal', function ($q) use ($user) {
                 $q->where('lsp_ref', $user->lspData->ref);
             });
         }
@@ -56,14 +56,15 @@ class AsesmenController extends Controller
 
         $data['dataKegiatan'] = KegiatanModel::where('ref', $id)
             ->with([
-                'kegiatanLsp.lsp',           // detail kuota + LSP
-                'kegiatanLsp.jadwal',
+                'kegiatanJadwal.lsp',           // detail kuota + LSP
                 'skemaPerLsp.lsp',        // total skema per LSP
-                'kuotaPerLsp.lsp',      // total kuota per LSP
+
+                // 'kuotaPerLsp.lsp',      // total kuota per LSP
+
                 'asesi.tuk',
                 'asesi.skema'
             ])->withSum(
-                'kegiatanLsp as total_peserta',
+                'kegiatanJadwal as total_peserta',
                 'kuota_lsp',
             )->withCount('skemas', 'asesi')        // total skema kegiatan
             ->firstOrFail();
