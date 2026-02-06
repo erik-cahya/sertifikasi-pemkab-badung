@@ -22,6 +22,7 @@ class DepartemenSeeder extends Seeder
         $data = [
             [
                 'ref' => (string) Str::ulid(),
+                'departemen_kode' => 1,
                 'departemen_nama' => 'Human Resources',
                 'created_by' => $user,
                 'created_at' => now(),
@@ -30,6 +31,7 @@ class DepartemenSeeder extends Seeder
             [
                 'ref' => (string) Str::ulid(),
                 'departemen_nama' => 'IT',
+                'departemen_kode' => 2,
                 'created_by' => $user,
                 'created_at' => now(),
                 'updated_at' => now(),
@@ -37,6 +39,7 @@ class DepartemenSeeder extends Seeder
             [
                 'ref' => (string) Str::ulid(),
                 'departemen_nama' => 'Engineering',
+                'departemen_kode' => 3,
                 'created_by' => $user,
                 'created_at' => now(),
                 'updated_at' => now(),

@@ -50,7 +50,10 @@ class DepartemenController extends Controller
             'departemen_nama.unique' => 'Nama departemen sudah ada',
         ])->validateWithBag('create_departemen');
 
+        $lastKode = DepartemenModel::max('departemen_kode') ?? 0;
+
         DepartemenModel::create([
+            'departemen_kode' => $lastKode + 1,
             'departemen_nama' => trim($request->departemen_nama),
             'created_by' => Auth::user()->ref,
         ]);

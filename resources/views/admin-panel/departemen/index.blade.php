@@ -46,6 +46,7 @@
                     <table id="datatable-dashboard" class="table-striped nowrap row-border order-column w-100 table">
                         <thead>
                             <tr>
+                                <th>Kode Departemen</th>
                                 <th>Nama</th>
                                 <th>Dibuat oleh</th>
                                 <th width="5%">Action</th>
@@ -54,6 +55,7 @@
                         <tbody>
                             @foreach ($dataDepartemen as $item)
                                 <tr>
+                                    <td>{{ $item->departemen_kode }}</td>
                                     <td>{{ $item->departemen_nama }}</td>
                                     <td>{{ $item->name }} <br> {{ $item->created_at->format('Y-m-d') }}</td>
                                     <td>
