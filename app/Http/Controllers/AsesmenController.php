@@ -92,6 +92,10 @@ class AsesmenController extends Controller
 
         $data['dataAsesmen'] = $queryDtAsesmen->get();
 
+        $totalKuotaTerpakai = AsesmenModel::where('kegiatan_jadwal_ref', $jadwalKegiatan->ref)->sum('kuota_harian');
+        $data['isKuotaPenuh'] = $totalKuotaTerpakai >= $jadwalKegiatan->kuota_lsp;
+
+
         return view('admin-panel.asesmen.create', $data);
     }
 

@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('departemen', function (Blueprint $table) {
             $table->ulid('ref')->primary();
+            $table->unsignedInteger('departemen_kode')->unique();
             $table->string('departemen_nama');
             $table->foreignUlid('created_by')->references('ref')->on('users')->cascadeOnDelete();
             $table->timestamps();

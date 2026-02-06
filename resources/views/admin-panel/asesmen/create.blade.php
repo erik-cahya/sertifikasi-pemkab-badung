@@ -32,6 +32,7 @@
                     </div>
                 </div>
 
+            @if(!$isKuotaPenuh)
                 <div class="row">
                     <div class="col-12">
                         <div class="card">
@@ -85,11 +86,11 @@
                                         <input type="hidden" name="kegiatan_ref" value="{{ $kegiatan_ref }}">
                                         <input type="hidden" name="kegiatan_jadwal_ref" value="{{ $kegiatan_jadwal_ref }}">
                                         <x-form.input className="col-md-6 mb-3" type="text" name="nama_penanggung_jawab" label="Nama Penanggung Jawab" value="{{ old('nama_penanggung_jawab') }}" />
-                                        <x-form.input className="col-md-6 mb-3" type="text" name="no_penanggung_jawab" label="Nomor Penanggung Jawab" value="{{ old('no_penanggung_jawab') }}" />
+                                        <x-form.input className="col-md-6 mb-3" type="text" name="no_penanggung_jawab" label="Nomor HP Penanggung Jawab" value="{{ old('no_penanggung_jawab') }}" />
                                         <x-form.input className="col-md-6 mb-3" type="text" name="nama_penyelenggara_uji" label="Nama Penyelenggara Uji" value="{{ old('nama_penyelenggara_uji') }}" />
-                                        <x-form.input className="col-md-6 mb-3" type="text" name="no_penyelenggara_uji" label="No Penyelenggara Uji" value="{{ old('no_penyelenggara_uji') }}" />
+                                        <x-form.input className="col-md-6 mb-3" type="text" name="no_penyelenggara_uji" label="No HP Penyelenggara Uji" value="{{ old('no_penyelenggara_uji') }}" />
                                         <x-form.input className="col-md-4 mb-3" type="text" name="nama_asesor" label="Nama Asesor" value="{{ old('nama_asesor') }}" />
-                                        <x-form.input className="col-md-4 mb-3" type="text" name="no_asesor" label="Nomor Asesor" value="{{ old('no_asesor') }}" />
+                                        <x-form.input className="col-md-4 mb-3" type="text" name="no_asesor" label="Nomor HP Asesor" value="{{ old('no_asesor') }}" />
                                         <x-form.input className="col-md-4 mb-3" type="text" name="no_reg_asesor" label="Nomor REG Asesor" value="{{ old('no_reg_asesor') }}" />
                                     </div>
                                     <div class="mb-3 mt-3">
@@ -100,6 +101,16 @@
                         </div>
                     </div>
                 </div>
+            @else
+                <div class="row">
+                    <div class="col-12">
+                        <div class="alert alert-danger">
+                            <i class="ri-information-line"></i>
+                            Kuota asesmen sudah terpenuhi. Tidak dapat menambahkan jadwal baru.
+                        </div>
+                    </div>
+                </div>
+            @endif
 
                 <div class="row">
                     <div class="col-12">
