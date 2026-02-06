@@ -159,6 +159,24 @@ class AsesiController extends Controller
             'email_perusahaan.email' => 'Format email perusahaan tidak valid',
         ]);
 
+        // CEK NIK + 3 TAHUN 1 HARI
+        $existingAsesi = AsesiModel::where('nik', $request->nik)
+            ->orderByDesc('created_at')
+            ->first();
+
+        if ($existingAsesi) {
+            $batasDaftarUlang = Carbon::parse($existingAsesi->created_at)
+            ->addYears(3)
+            ->addDay();
+
+            if (now()->lessThan($batasDaftarUlang)) {
+                throw \Illuminate\Validation\ValidationException::withMessages([
+                    'nik' => 'Maaf NIK sudah terdaftar, anda boleh mendaftar kembali pada '
+                        . $batasDaftarUlang->translatedFormat('d F Y'),
+                ]);
+            }
+        }
+
         // Validasi Kuota LSP (Jika LSP di bypass user)
         $kegiatanRef = $request->kegiatan_ref;
         $lspRef      = $request->lsp_ref;

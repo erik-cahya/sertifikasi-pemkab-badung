@@ -425,7 +425,7 @@
 
                                         <div class="col-lg-12">
                                             <div class="mb-2 mt-3">
-                                                <button type="submit" class="btn btn-dinas rounded-3 fw-semibold px-4 py-2"><i class="ri-save-3-line"></i> DAFTAR</button>
+                                                <button type="button"  id="btnSubmit" class="btn btn-dinas rounded-3 fw-semibold px-4 py-2"><i class="ri-save-3-line"></i> DAFTAR</button>
                                             </div>
                                         </div>
 
@@ -577,4 +577,48 @@
         //         });
         // });
     </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+
+            const btn = document.getElementById('btnSubmit');
+            if (!btn) return;
+
+            btn.addEventListener('click', function () {
+
+                const val = name =>
+                    document.querySelector(`[name="${name}"]`)?.value || '-';
+
+                const selectedText = id =>
+                    document.querySelector(`#${id} option:checked`)?.text || '-';
+
+                Swal.fire({
+                    title: 'Konfirmasi Data Pendaftaran',
+                    html: `
+                        <table class="table table-bordered text-start small">
+                            <tr><th>Nama Lengkap</th><td>${val('nama_lengkap')}</td></tr>
+                            <tr><th>NIK</th><td>${val('nik')}</td></tr>
+                            <tr><th>Tempat Bekerja</th><td>${val('nama_perusahaan')}</td></tr>
+                            <tr><th>Departemen</th><td>${val('departemen')}</td></tr>
+                            <tr><th>Jabatan</th><td>${val('jabatan')}</td></tr>
+                            <tr><th>Kegiatan</th><td>${selectedText('kegiatan_ref')}</td></tr>
+                            <tr><th>LSP</th><td>${selectedText('lsp_ref')}</td></tr>
+                            <tr><th>Jadwal Asesmen</th><td>${selectedText('jadwal_asesmen')}</td></tr>
+                        </table>
+                    `,
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonText: 'Ya, Daftar',
+                    cancelButtonText: 'Batal',
+                    focusConfirm: false
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        document.querySelector('form').submit();
+                    }
+                });
+            });
+
+        });
+    </script>
+
 @endpush
