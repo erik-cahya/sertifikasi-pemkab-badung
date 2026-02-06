@@ -118,7 +118,7 @@
         <table class="info-table">
             <tr>
                 <td class="info-label">1. Tempat Uji Kompetensi</td>
-                <td class="value">: {{ $item->nama_tuk }}<< /td>
+                <td class="value">: {{ $item->nama_tuk }}</td>
             </tr>
             <tr>
                 <td class="info-label">2. Tanggal</td>
