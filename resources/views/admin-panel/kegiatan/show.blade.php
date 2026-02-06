@@ -115,135 +115,158 @@
                 <div class="card" bis_skin_checked="1">
                     <h5 class="card-header bg-light-subtle">Data Peserta</h5>
                     <div class="card-body" bis_skin_checked="1">
-
-                        <table class="table-sm table-bordered w-100 table" >
-                            <thead>
-                                <tr>
-                                    <th>No</th>
-                                    <th>Nama LSP</th>
-                                    <th>Jumlah Skema</th>
-                                    <th>Kuota</th>
-                                    <th>Details</th>
-                                </tr>
-                            </thead>
-
-                            <tbody id="dataPeserta">
-                                @foreach ($dataKegiatan->kegiatanJadwal as $kegiatan)
-                                    {{-- {{ dd($kegiatan) }} --}}
+                        <div class="table-responsive">
+                            <table class="table-sm table-bordered w-100 table" >
+                                <thead>
                                     <tr>
-                                        <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $kegiatan->lsp->lsp_nama }}</td>
-                                        <td width="500px">
-
-                                            @foreach ($dataSkema[$kegiatan->lsp->ref] as $skema)
-                                                <span class="badge bg-primary-subtle text-primary">
-                                                    {{ $skema->skema_judul }}
-                                                </span>
-                                            @endforeach
-                                        </td>
-
-                                        <td>
-                                            {{ $kegiatan->kuota_lsp ?? 0 }} Peserta
-                                        </td>
-
-                                        <td>
-                                            <button class="btn btn-link text-decoration-none fs-12 p-0" data-bs-toggle="collapse" data-bs-target="#jadwal-{{ $kegiatan->ref }}" aria-expanded="false" aria-controls="jadwal-{{ $kegiatan->ref }}">
-                                                Lihat Detail
-                                            </button>
-                                        </td>
+                                        <th>No</th>
+                                        <th>Nama LSP</th>
+                                        <th>Jumlah Skema</th>
+                                        <th>Kuota</th>
+                                        <th>Details</th>
                                     </tr>
-                                    <tr class="bg-light collapse" id="jadwal-{{ $kegiatan->ref }}" data-bs-parent="#dataPeserta">
+                                </thead>
 
-                                        <td colspan="5" class="">
-                                            <div class="card mb-0 border-0 shadow-sm">
-                                                <div class="card-body p-0">
-                                                    <div class="card-header bg-dinas text-white" bis_skin_checked="1">
-                                                        <h4 class="card-title"> Detail Jadwal & Skema
-                                                        </h4>
-                                                    </div>
-                                                    <table class="table-sm table-bordered table" style="font-size: 12px">
-                                                        <thead>
-                                                            <tr>
-                                                                <th>No</th>
-                                                                <th>Peserta Mendaftar</th>
-                                                                <th>Tanggal Asesmen</th>
-                                                                <th>Form Daftar Hadir</th>
-                                                                <th>Form Daftar Penerimaan</th>
-                                                                <th>Form Tanda Terima Sertifikat</th>
-                                                                <th>Action</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody id="detailJadwal-{{ $kegiatan->ref }}">
-                                                            {{-- {{ dd($kegiatan->lsp->lsp_nama) }} --}}
-                                                            @foreach ($jadwalKegiatan[$kegiatan->lsp->lsp_nama] ?? [] as $asesmen)
+                                <tbody id="dataPeserta">
+                                    @foreach ($dataKegiatan->kegiatanJadwal as $kegiatan)
+                                        {{-- {{ dd($kegiatan) }} --}}
+                                        <tr>
+                                            <td>{{ $loop->iteration }}</td>
+                                            <td>{{ $kegiatan->lsp->lsp_nama }}</td>
+                                            <td width="500px">
+
+                                                @foreach ($dataSkema[$kegiatan->lsp->ref] as $skema)
+                                                    <span class="badge bg-primary-subtle text-primary">
+                                                        {{ $skema->skema_judul }}
+                                                    </span>
+                                                @endforeach
+                                            </td>
+
+                                            <td>
+                                                {{ $kegiatan->kuota_lsp ?? 0 }} Peserta
+                                            </td>
+
+                                            <td>
+                                                <button class="btn btn-link text-decoration-none fs-12 p-0" data-bs-toggle="collapse" data-bs-target="#jadwal-{{ $kegiatan->ref }}" aria-expanded="false" aria-controls="jadwal-{{ $kegiatan->ref }}">
+                                                    Lihat Jadwal
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        <tr class="bg-light collapse" id="jadwal-{{ $kegiatan->ref }}" data-bs-parent="#dataPeserta">
+
+                                            <td colspan="5" class="">
+                                                <div class="card mb-0 border-0 shadow-sm">
+                                                    <div class="card-body p-0">
+                                                        <div class="card-header bg-dinas text-white" bis_skin_checked="1">
+                                                            <h4 class="card-title"> Detail Jadwal & Skema
+                                                            </h4>
+                                                        </div>
+                                                        <table class="table-sm table-bordered table" style="font-size: 12px">
+                                                            <thead>
                                                                 <tr>
-                                                                    <td>{{ $loop->iteration }}</td>
-                                                                    <td>{{ count($dataAsesi[$asesmen->ref] ?? []) }}</td>
-                                                                    <td class={{ count($dataAsesi[$asesmen->ref] ?? []) >= 1 ? 'fw-bold' : '' }}>{{ \Carbon\Carbon::parse($asesmen->jadwal_asesmen)->locale('id')->translatedFormat('l, d F Y') }}</td>
-                                                                    <td><a href="{{ route('pdf.daftar-hadir', $asesmen->kegiatan_ref) }}" target="_blank"  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Download Daftar Hadir" data-bs-custom-class="info-tooltip"><i class="mdi mdi-download"></i> Download </a></td>
-                                                                    <td><a href="{{ route('pdf.daftar-penerimaan', $asesmen->kegiatan_ref) }}" target="_blank" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Download Daftar Penerimaan" data-bs-custom-class="info-tooltip"><i class="mdi mdi-download"></i> Download</a> </td>
-                                                                    <td><a href="{{ route('pdf.tanda-terima-sertifikat', $asesmen->kegiatan_ref) }}" target="_blank" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Download Tanda Terima Sertifikat" data-bs-custom-class="info-tooltip"><i class="mdi mdi-download"></i> Download</a> </td>
-                                                                    <td class="d-flex gap-2">
-                                                                        <button class="btn btn-link text-decoration-none fs-12 p-0" data-bs-toggle="collapse" data-bs-target="#asesi_list-{{ $asesmen->ref }}" aria-expanded="false" aria-controls="asesi_list-{{ $asesmen->ref }}">
-                                                                            Lihat Detail
-                                                                        </button>
-                                                                    </td>
+                                                                    <th>No</th>
+                                                                    <th>Total Asesi</th>
+                                                                    <th>Tanggal Asesmen</th>
+                                                                    <th>Tempat Asesmen</th>
+                                                                    <th>Skema Asesmen</th>
+                                                                    {{-- <th>Penanggung Jawab</th>
+                                                                    <th>Penyelenggara Uji</th>
+                                                                    <th>Asesor</th> --}}
+                                                                    <th>Form Daftar Hadir</th>
+                                                                    <th>Form Daftar Penerimaan</th>
+                                                                    <th>Form Tanda Terima Sertifikat</th>
+                                                                    <th>Bukti Asesmen</th>
+                                                                    <th>Upload Bukti Asesmen</th>
+                                                                    <th>Action</th>
                                                                 </tr>
-                                                                <tr class="bg-light collapse" id="asesi_list-{{ $asesmen->ref }}" data-bs-parent="#detailJadwal-{{ $kegiatan->ref }}">
-                                                                    <td colspan="7" class="p-3">
-                                                                        <div class="card mb-0 border-0 shadow-sm">
-                                                                            <div class="card-body p-1">
-                                                                                <div class="card-header text-white bg-dinas px-3" bis_skin_checked="1">
-                                                                                    <h4 class="card-title"> List Asesi</h4>
-                                                                                    <h6>{{ \Carbon\Carbon::parse($asesmen->jadwal_asesmen)->locale('id')->translatedFormat('l, d F Y') }}</h6>
-                                                                                </div>
-                                                                                <table class="table-sm table-bordered table" style="font-size: 12px">
-                                                                                    <thead>
-                                                                                        <tr>
-                                                                                            <th>No</th>
-                                                                                            <th>Nama Asesi</th>
-                                                                                            <th>Skema Dipilih</th>
-                                                                                            <th>Lokasi TUK</th>
-                                                                                            <th>Nomor Sertifikat</th>
-                                                                                            <th>Upload Sertifikat</th>
-                                                                                            <th>Download Sertifikat</th>
-                                                                                        </tr>
-                                                                                    </thead>
-                                                                                    <tbody>
-                                                                                        @foreach ($dataAsesi[$asesmen->ref] ?? [] as $asesi)
-                                                                                            {{-- {{ dd($asesi) }} --}}
+                                                            </thead>
+                                                            <tbody id="detailJadwal-{{ $kegiatan->ref }}">
+                                                                {{-- {{ dd($kegiatan->lsp->lsp_nama) }} --}}
+                                                                @foreach ($jadwalKegiatan[$kegiatan->lsp->lsp_nama] ?? [] as $asesmen)
+                                                                    <tr>
+                                                                        <td>{{ $loop->iteration }}</td>
+                                                                        <td>{{ count($dataAsesi[$asesmen->ref] ?? []) }} / {{ $asesmen->kuota_harian }} Orang</td>
+                                                                        <td class={{ count($dataAsesi[$asesmen->ref] ?? []) >= 1 ? 'fw-bold' : '' }}>{{ \Carbon\Carbon::parse($asesmen->jadwal_asesmen)->locale('id')->translatedFormat('l, d F Y') }}</td>
+                                                                        <td>{{ $asesmen->nama_tuk }}</td>
+                                                                        <td>{{ $asesmen->nama_skema }}</td>
+                                                                        {{-- <td>{{ $asesmen->nama_penanggung_jawab }}</td>
+                                                                        <td>{{ $asesmen->nama_penyelenggara_uji }}</td>
+                                                                        <td>{{ $asesmen->nama_asesor }}</td> --}}
+                                                                        <td><a href="{{ route('pdf.daftar-hadir', $asesmen->ref) }}" target="_blank"  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Download Daftar Hadir" data-bs-custom-class="info-tooltip"><i class="mdi mdi-download"></i> Download </a></td>
+                                                                        <td><a href="{{ route('pdf.daftar-penerimaan', $asesmen->ref) }}" target="_blank" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Download Daftar Penerimaan" data-bs-custom-class="info-tooltip"><i class="mdi mdi-download"></i> Download</a> </td>
+                                                                        <td><a href="{{ route('pdf.tanda-terima-sertifikat', $asesmen->ref) }}" target="_blank" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Download Tanda Terima Sertifikat" data-bs-custom-class="info-tooltip"><i class="mdi mdi-download"></i> Download</a> </td>
+                                                                        <td class="d-flex gap-2 align-items-center">
+                                                                            <span id="asesmen-{{ $asesmen->ref }}">
+                                                                                @if($asesmen->bukti_asesmen)
+                                                                                    <a href="{{ asset('asesmen_files/'.$asesmen->bukti_asesmen) }}" target="_blank" class="text-danger fs-5" title="Lihat Sertifikat"> <i class="mdi mdi-download"></i> Download </a>
+                                                                                @else
+                                                                                    <span class="text-muted">-</span>
+                                                                                @endif
+                                                                            </span>
+                                                                        </td>
+                                                                        <td><input type="file" class="form-control upload-bukti-asesmen" data-ref="{{ $asesmen->ref }}" accept="application/pdf"></td>
+                                                                        <td class="d-flex gap-2">
+                                                                            <button class="btn btn-link text-decoration-none fs-12 p-0" data-bs-toggle="collapse" data-bs-target="#asesi_list-{{ $asesmen->ref }}" aria-expanded="false" aria-controls="asesi_list-{{ $asesmen->ref }}">
+                                                                                Lihat Asesi
+                                                                            </button>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr class="bg-light collapse" id="asesi_list-{{ $asesmen->ref }}" data-bs-parent="#detailJadwal-{{ $kegiatan->ref }}">
+                                                                        <td colspan="14" class="p-3">
+                                                                            <div class="card mb-0 border-0 shadow-sm">
+                                                                                <div class="card-body p-1">
+                                                                                    <div class="card-header text-white bg-dinas px-3" bis_skin_checked="1">
+                                                                                        <h4 class="card-title"> List Asesi</h4>
+                                                                                        <h6>{{ \Carbon\Carbon::parse($asesmen->jadwal_asesmen)->locale('id')->translatedFormat('l, d F Y') }}</h6>
+                                                                                    </div>
+                                                                                    <table class="table-sm table-bordered table" style="font-size: 12px">
+                                                                                        <thead>
                                                                                             <tr>
-                                                                                                <td>{{ $loop->iteration }}</td>
-                                                                                                <td>{{ $asesi->nama_lengkap }}</td>
-                                                                                                <td>{{ $asesi->asesmen->nama_skema }}</td>
-                                                                                                <td>{{ $asesi->asesmen->nama_tuk }}</td>
-                                                                                                <td></td>
-                                                                                                <td></td>
-                                                                                                <td class="d-flex gap-2">
-                                                                                                    <button class="btn btn-link text-decoration-none fs-12 p-0">
-                                                                                                        Download Berkas
-                                                                                                    </button>
-                                                                                                </td>
+                                                                                                <th>No</th>
+                                                                                                <th>Nama Asesi</th>
+                                                                                                <th>Nomor Sertifikat</th>
+                                                                                                <th width="20%">Upload Sertifikat</th>
+                                                                                                <th>Download Sertifikat</th>
                                                                                             </tr>
-                                                                                        @endforeach
+                                                                                        </thead>
+                                                                                        <tbody>
+                                                                                            @foreach ($dataAsesi[$asesmen->ref] ?? [] as $asesi)
+                                                                                                {{-- {{ dd($asesi) }} --}}
+                                                                                                <tr>
+                                                                                                    <td>{{ $loop->iteration }}</td>
+                                                                                                    <td>{{ $asesi->nama_lengkap }}</td>
+                                                                                                    <td><span class="edited" id="no_sertifikat" ref="{{$asesi->ref}}">@if($asesi->no_sertifikat!=NULL){{ $asesi->no_sertifikat }} @else-@endif</span></td>
+                                                                                                    <td><input type="file" class="form-control upload-sertifikat" data-ref="{{ $asesi->ref }}" accept="application/pdf"></td>
+                                                                                                    <td class="d-flex gap-2 align-items-center">
+                                                                                                        <span id="sertifikat-{{ $asesi->ref }}">
+                                                                                                            @if($asesi->sertifikat_file)
+                                                                                                                <a href="{{ asset('asesi_files/'.$asesi->sertifikat_file) }}" target="_blank" class="text-danger fs-5" title="Lihat Sertifikat"> <i class="mdi mdi-download"></i> Download </a>
+                                                                                                            @else
+                                                                                                                <span class="text-muted">-</span>
+                                                                                                            @endif
+                                                                                                        </span>
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                            @endforeach
 
-                                                                                    </tbody>
-                                                                                </table>
+                                                                                        </tbody>
+                                                                                    </table>
 
+                                                                                </div>
                                                                             </div>
-                                                                        </div>
-                                                                    </td>
-                                                                </tr>
-                                                            @endforeach
-                                                        </tbody>
-                                                    </table>
+                                                                        </td>
+                                                                    </tr>
+                                                                @endforeach
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -266,6 +289,153 @@
 
             $(this).on('apply.daterangepicker', function(ev, picker) {
                 $(this).val(picker.startDate.format('DD/MM/YYYY'));
+            });
+        });
+    </script>
+
+    <!-- Update no_sertifikat asesi -->
+    <script>
+        $(document).ready(function() {
+            // Delegate click event to the document (or a parent element that won't change)
+            $(document).on('click', '.edited', function() {
+            var span = $(this);
+            var itemText = span.text();
+            var itemId = span.attr('id'); // Get the id
+            var itemRef = span.attr('ref'); // Get the ref
+
+            // Create an input field with the current text
+            var input = $('<input type="text" class="form-control"/>').val(itemText).attr('id', itemId).attr('ref', itemRef);
+
+            // Replace the span with the input field
+            span.replaceWith(input);
+
+            // Focus the input field
+            input.focus();
+
+            // Handle blur event (when input loses focus)
+            input.on('blur', function() {
+                var newValue = input.val();
+                var updatedSpan = $('<span class="edited"></span>').text(newValue).attr('id', itemId).attr('ref', itemRef);
+
+                // Replace the input back with the updated span
+                input.replaceWith(updatedSpan);
+
+                // Send the updated value to the server using AJAX
+                $.ajax({
+                    url: "{{ route('kegiatan.sertifikatUpdate') }}", 
+                    type: 'POST',
+                    data: { 
+                        id: itemId, 
+                        ref: itemRef, 
+                        value: newValue,
+                        _token: "{{ csrf_token() }}"
+                    },
+                    success: function(res) {
+                        //notif alert bisa delete aja kalo ganggu
+                        Swal.fire({
+                            icon: res.success ? 'success' : 'error',
+                            text: res.message,
+                            timer: 1200,
+                            showConfirmButton: false
+                        });
+                    },
+                    error: function(xhr) {
+                        Swal.fire({
+                            icon: 'error',
+                            text: xhr.responseJSON?.message ?? 'Gagal menyimpan data'
+                        });
+                    }
+                });
+            });
+
+            });
+        });
+    </script>
+
+    <!-- Upload Bukti Asesmen -->
+    <script>
+        $(document).on('change', '.upload-bukti-asesmen', function () {
+            let input = this;
+            let file = this.files[0];
+            let ref  = $(this).data('ref');
+
+            if (!file) return;
+
+            let formData = new FormData();
+            formData.append('bukti_asesmen', file);
+            formData.append('ref', ref);
+            formData.append('_token', '{{ csrf_token() }}');
+
+            $.ajax({
+                url: "{{ route('kegiatan.uploadBuktiAsesmen') }}",
+                type: "POST",
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function(res) {
+                    input.value = '';
+                    Swal.fire({
+                        icon: 'success',
+                        text: res.message,
+                        timer: 1500,
+                        showConfirmButton: false
+                    });
+                    $('#asesmen-' + ref).html(`
+                        <a href="${res.url}" target="_blank" class="text-danger fs-5">
+                            <i class="mdi mdi-download"></i> Download
+                        </a>
+                    `);
+                },
+                error: function(xhr) {
+                    Swal.fire({
+                        icon: 'error',
+                        text: xhr.responseJSON?.message ?? 'Upload gagal'
+                    });
+                }
+            });
+        });
+    </script>
+
+    <!-- Upload sertifikat -->
+    <script>
+        $(document).on('change', '.upload-sertifikat', function () {
+            let input = this;
+            let file = this.files[0];
+            let ref  = $(this).data('ref');
+
+            if (!file) return;
+
+            let formData = new FormData();
+            formData.append('sertifikat_file', file);
+            formData.append('ref', ref);
+            formData.append('_token', '{{ csrf_token() }}');
+
+            $.ajax({
+                url: "{{ route('kegiatan.uploadSertifikat') }}",
+                type: "POST",
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function(res) {
+                    input.value = '';
+                    Swal.fire({
+                        icon: 'success',
+                        text: res.message,
+                        timer: 1500,
+                        showConfirmButton: false
+                    });
+                    $('#sertifikat-' + ref).html(`
+                        <a href="${res.url}" target="_blank" class="text-danger fs-5">
+                            <i class="mdi mdi-download"></i> Download
+                        </a>
+                    `);
+                },
+                error: function(xhr) {
+                    Swal.fire({
+                        icon: 'error',
+                        text: xhr.responseJSON?.message ?? 'Upload gagal'
+                    });
+                }
             });
         });
     </script>
@@ -323,5 +493,6 @@
             });
 
         });
-    </>
+    </script>
+    
 @endpush

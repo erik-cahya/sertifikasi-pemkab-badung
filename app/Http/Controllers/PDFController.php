@@ -19,7 +19,7 @@ class PDFController extends Controller
             'asesis',
             'kegiatanJadwal.lsp',
         ])
-            ->where('kegiatan_ref', $id)
+            ->where('asesmen.ref', $id)
             ->get();
 
         return Pdf::loadView('admin-panel.pdf.daftar-hadir', compact('asesmen'))
@@ -33,7 +33,7 @@ class PDFController extends Controller
             'asesis',
             'kegiatanJadwal.lsp',
         ])
-            ->where('kegiatan_ref', $id)
+            ->where('asesmen.ref', $id)
             ->get();
 
         return Pdf::loadView('admin-panel.pdf.daftar-penerimaan', compact('asesmen'))
@@ -47,7 +47,7 @@ class PDFController extends Controller
             'asesis',
             'kegiatanJadwal.lsp',
         ])
-            ->where('kegiatan_ref', $id)
+            ->where('asesmen.ref', $id)
             ->get();
 
         return Pdf::loadView('admin-panel.pdf.tanda-terima-sertifikat', compact('asesmen'))

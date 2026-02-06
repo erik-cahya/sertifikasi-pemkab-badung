@@ -221,7 +221,7 @@
             </tr>
             <tr>
                 <td class="info-label">4. Tanggal</td>
-                <td class="value">: {{ date('Y/m/d', strtotime($item->jadwal_asesmen)) }}</td>
+                <td class="value">: {{ \Carbon\Carbon::parse($item->jadwal_asesmen)->locale('id')->translatedFormat('j F Y') }}</td>
             </tr>
             <tr>
                 <td class="info-label">5. Jumlah Peserta</td>

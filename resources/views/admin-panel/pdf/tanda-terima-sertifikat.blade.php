@@ -86,6 +86,9 @@
         .page-break {
             page-break-before: always;
         }
+        .center{
+            text-align: center;
+        }
     </style>
 </head>
 @foreach ($asesmen as $item)
@@ -118,7 +121,7 @@
         <table class="info-table">
             <tr>
                 <td class="info-label">1. Tempat Uji Kompetensi</td>
-                <td class="value">: {{ $item->nama_tuk }}<< /td>
+                <td class="value">: {{ $item->nama_tuk }}</td>
             </tr>
             <tr>
                 <td class="info-label">2. Tanggal</td>
@@ -146,7 +149,7 @@
                         <tr>
                             <td class="center">{{ $loop->iteration }}</td>
                             <td>{{ $asesi->nama_lengkap }}</td>
-                            <td></td>
+                            <td class="center">{{ $asesi->no_sertifikat }}</td>
                             <td class="signature"> {{ $loop->iteration }}.</td>
                         </tr>
                     @endif
