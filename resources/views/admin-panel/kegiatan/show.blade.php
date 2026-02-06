@@ -176,8 +176,9 @@
                                                                     <th>Form Daftar Penerimaan</th>
                                                                     <th>Form Tanda Terima Sertifikat</th>
                                                                     <th>Bukti Asesmen</th>
-
-                                                                    <th>Upload Bukti Asesmen</th>
+                                                                    @role('lsp')
+                                                                        <th>Upload Bukti Asesmen</th>
+                                                                    @endrole
                                                                     <th>Action</th>
                                                                 </tr>
                                                             </thead>
@@ -187,7 +188,7 @@
                                                                     <tr>
                                                                         <td>{{ $loop->iteration }}</td>
                                                                         <td>{{ count($dataAsesi[$asesmen->ref] ?? []) }} / {{ $asesmen->kuota_harian }} Orang</td>
-                                                                        <td class={{ count($dataAsesi[$asesmen->ref] ?? []) >= 1 ? 'fw-bold' : '' }}>{{ \Carbon\Carbon::parse($asesmen->jadwal_asesmen)->locale('id')->translatedFormat('l, d F Y') }}</td>
+                                                                        <td class="{{ count($dataAsesi[$asesmen->ref] ?? []) >= 1 ? 'fw-bold' : '' }}">{{ \Carbon\Carbon::parse($asesmen->jadwal_asesmen)->locale('id')->translatedFormat('l, d F Y') }}</td>
                                                                         <td>{{ $asesmen->nama_tuk }}</td>
                                                                         <td>{{ $asesmen->nama_skema }}</td>
                                                                         {{-- <td>{{ $asesmen->nama_penanggung_jawab }}</td>
@@ -196,29 +197,30 @@
                                                                         <td><a href="{{ route('pdf.daftar-hadir', $asesmen->ref) }}" target="_blank" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Download Daftar Hadir" data-bs-custom-class="info-tooltip"><i class="mdi mdi-download"></i> Download </a></td>
                                                                         <td><a href="{{ route('pdf.daftar-penerimaan', $asesmen->ref) }}" target="_blank" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Download Daftar Penerimaan" data-bs-custom-class="info-tooltip"><i class="mdi mdi-download"></i> Download</a> </td>
                                                                         <td><a href="{{ route('pdf.tanda-terima-sertifikat', $asesmen->ref) }}" target="_blank" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Download Tanda Terima Sertifikat" data-bs-custom-class="info-tooltip"><i class="mdi mdi-download"></i> Download</a> </td>
-                                                                        <td class="d-flex gap-2 align-items-center">
-                                                                            <span id="asesmen-{{ $asesmen->ref }}">
-                                                                                @if ($asesmen->bukti_asesmen)
-                                                                                    <a href="{{ asset('asesmen_files/' . $asesmen->bukti_asesmen) }}" target="_blank" class="text-danger fs-5" title="Lihat Sertifikat"> <i class="mdi mdi-download"></i> Download </a>
-                                                                                @else
-                                                                                    <span class="text-muted">-</span>
-                                                                                @endif
-                                                                            </span>
+                                                                        <td>
+                                                                            <div class="d-flex gap-2 align-items-center">
+                                                                                <span id="asesmen-{{ $asesmen->ref }}">
+                                                                                    @if ($asesmen->bukti_asesmen)
+                                                                                        <a href="{{ asset('asesmen_files/' . $asesmen->bukti_asesmen) }}" target="_blank" class="text-danger fs-5" title="Lihat Sertifikat"> <i class="mdi mdi-download"></i> Download </a>
+                                                                                    @else
+                                                                                        <span class="text-muted">-</span>
+                                                                                    @endif
+                                                                                </span>
+                                                                            </div>
                                                                         </td>
+
+                                                                        @role('lsp')
+                                                                            <td>
+                                                                                <input type="file" class="form-control upload-bukti-asesmen form-control-sm" data-ref="{{ $asesmen->ref }}" accept="application/pdf">
+                                                                            </td>
+                                                                        @endrole
 
                                                                         <td>
-                                                                            @role('lsp')
-                                                                                <input type="file" class="form-control upload-bukti-asesmen form-control-sm" data-ref="{{ $asesmen->ref }}" accept="application/pdf">
-                                                                            @endrole
-                                                                            @role('dinas', 'master')
-                                                                                -
-                                                                            @endrole
-                                                                        </td>
-
-                                                                        <td class="d-flex gap-2">
-                                                                            <button class="btn btn-link text-decoration-none fs-12 p-0" data-bs-toggle="collapse" data-bs-target="#asesi_list-{{ $asesmen->ref }}" aria-expanded="false" aria-controls="asesi_list-{{ $asesmen->ref }}">
-                                                                                Lihat Asesi
-                                                                            </button>
+                                                                            <div class="d-flex gap-2">
+                                                                                <button class="btn btn-link text-decoration-none fs-12 p-0" data-bs-toggle="collapse" data-bs-target="#asesi_list-{{ $asesmen->ref }}" aria-expanded="false" aria-controls="asesi_list-{{ $asesmen->ref }}">
+                                                                                    Lihat Asesi
+                                                                                </button>
+                                                                            </div>
                                                                         </td>
                                                                     </tr>
                                                                     <tr class="bg-light collapse" id="asesi_list-{{ $asesmen->ref }}" data-bs-parent="#detailJadwal-{{ $kegiatan->ref }}">

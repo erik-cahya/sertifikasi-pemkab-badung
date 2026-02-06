@@ -32,85 +32,85 @@
                     </div>
                 </div>
 
-            @if(!$isKuotaPenuh)
-                <div class="row">
-                    <div class="col-12">
-                        <div class="card">
-                            <div class="card-header">
-                                <h4 class="card-title mb-0"> <i class="ri-profile-line fw-normal fs-20 me-1 align-middle"></i>
-                                    Buat Data Asesmen</h4>
-                            </div>
-                            <div class="card-body">
-                                <form action="{{ route('asesmen.store') }}" method="POST">
-                                    @csrf
-                                    <div class="row">
-                                        <div class="col-lg-4 mb-3">
-                                            <label for="nama_tuk" class="form-label">Pilih TUK</label>
-                                            <select class="select2 @error('nama_tuk') is-invalid @enderror form-select" data-toggle="select2" id="nama_tuk" name="nama_tuk">
-                                                <option value="#" hidden disabled selected>Pilih TUK</option>
-                                                @foreach ($dataTUK as $tuk)
-                                                    <option value="{{ $tuk->tuk_nama }}">{{ $tuk->tuk_nama }}</option>
-                                                @endforeach
-                                            </select>
-                                            @error('nama_tuk')
-                                                <div class="invalid-feedback" bis_skin_checked="1">
-                                                    {{ $message }}
-                                                </div>
-                                            @enderror
-                                        </div>
-                                        <div class="col-lg-4 mb-3">
-                                            <label class="form-label" for="jadwal_asesmen">Tanggal Mulai Kegiatan</label>
-                                            <input type="text" id="jadwal_asesmen" name="jadwal_asesmen" class="form-control single-date rounded-3 @error('jadwal_asesmen', 'create_kegiatan') is-invalid @enderror" value="{{ old('jadwal_asesmen') }}" autocomplete="off">
+                @if (!$isKuotaPenuh)
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h4 class="card-title mb-0"> <i class="ri-profile-line fw-normal fs-20 me-1 align-middle"></i>
+                                        Buat Data Asesmen</h4>
+                                </div>
+                                <div class="card-body">
+                                    <form action="{{ route('asesmen.store') }}" method="POST">
+                                        @csrf
+                                        <div class="row">
+                                            <div class="col-lg-4 mb-3">
+                                                <label for="nama_tuk" class="form-label">Pilih TUK</label>
+                                                <select class="select2 @error('nama_tuk') is-invalid @enderror form-select" data-toggle="select2" id="nama_tuk" name="nama_tuk">
+                                                    <option value="#" hidden disabled selected>Pilih TUK</option>
+                                                    @foreach ($dataTUK as $tuk)
+                                                        <option value="{{ $tuk->tuk_nama }}">{{ $tuk->tuk_nama }}</option>
+                                                    @endforeach
+                                                </select>
+                                                @error('nama_tuk')
+                                                    <div class="invalid-feedback" bis_skin_checked="1">
+                                                        {{ $message }}
+                                                    </div>
+                                                @enderror
+                                            </div>
+                                            <div class="col-lg-4 mb-3">
+                                                <label class="form-label" for="jadwal_asesmen">Tanggal Mulai Kegiatan</label>
+                                                <input type="text" id="jadwal_asesmen" name="jadwal_asesmen" class="form-control single-date rounded-3 @error('jadwal_asesmen', 'create_kegiatan') is-invalid @enderror" value="{{ old('jadwal_asesmen') }}" autocomplete="off">
 
-                                            @error('jadwal_asesmen', 'create_kegiatan')
-                                                <div class="invalid-feedback" bis_skin_checked="1">
-                                                    {{ $message }}
-                                                </div>
-                                            @enderror
+                                                @error('jadwal_asesmen', 'create_kegiatan')
+                                                    <div class="invalid-feedback" bis_skin_checked="1">
+                                                        {{ $message }}
+                                                    </div>
+                                                @enderror
+                                            </div>
+                                            <div class="col-lg-4 mb-3">
+                                                <label for="skema_sertifikasi" class="form-label">Skema Sertifikasi</label>
+                                                <select class="select2 @error('skema_sertifikasi') is-invalid @enderror form-select" data-toggle="select2" id="skema_sertifikasi" name="skema_sertifikasi">
+                                                    <option value="#" hidden disabled selected>Pilih Skema</option>
+                                                    @foreach ($dataSkema as $dtSkema)
+                                                        <option value="{{ $dtSkema->skema->skema_judul }}">{{ $dtSkema->skema->skema_judul }}</option>
+                                                    @endforeach
+                                                </select>
+                                                @error('skema_sertifikasi')
+                                                    <div class="invalid-feedback" bis_skin_checked="1">
+                                                        {{ $message }}
+                                                    </div>
+                                                @enderror
+                                            </div>
+                                            <input type="hidden" name="kegiatan_lsp_ref" value="{{ $kegiatan_lsp_ref }}">
+                                            <input type="hidden" name="kegiatan_ref" value="{{ $kegiatan_ref }}">
+                                            <input type="hidden" name="kegiatan_jadwal_ref" value="{{ $kegiatan_jadwal_ref }}">
+                                            <x-form.input className="col-md-6 mb-3" type="text" name="nama_penanggung_jawab" label="Nama Penanggung Jawab" value="{{ old('nama_penanggung_jawab') }}" />
+                                            <x-form.input className="col-md-6 mb-3" type="text" name="no_penanggung_jawab" label="Nomor HP Penanggung Jawab" value="{{ old('no_penanggung_jawab') }}" />
+                                            <x-form.input className="col-md-6 mb-3" type="text" name="nama_penyelenggara_uji" label="Nama Penyelenggara Uji" value="{{ old('nama_penyelenggara_uji') }}" />
+                                            <x-form.input className="col-md-6 mb-3" type="text" name="no_penyelenggara_uji" label="No HP Penyelenggara Uji" value="{{ old('no_penyelenggara_uji') }}" />
+                                            <x-form.input className="col-md-4 mb-3" type="text" name="nama_asesor" label="Nama Asesor" value="{{ old('nama_asesor') }}" />
+                                            <x-form.input className="col-md-4 mb-3" type="text" name="no_asesor" label="Nomor HP Asesor" value="{{ old('no_asesor') }}" />
+                                            <x-form.input className="col-md-4 mb-3" type="text" name="no_reg_asesor" label="Nomor REG Asesor" value="{{ old('no_reg_asesor') }}" />
                                         </div>
-                                        <div class="col-lg-4 mb-3">
-                                            <label for="skema_sertifikasi" class="form-label">Skema Sertifikasi</label>
-                                            <select class="select2 @error('skema_sertifikasi') is-invalid @enderror form-select" data-toggle="select2" id="skema_sertifikasi" name="skema_sertifikasi">
-                                                <option value="#" hidden disabled selected>Pilih Skema</option>
-                                                @foreach ($dataSkema as $dtSkema)
-                                                    <option value="{{ $dtSkema->skema->skema_judul }}">{{ $dtSkema->skema->skema_judul }}</option>
-                                                @endforeach
-                                            </select>
-                                            @error('skema_sertifikasi')
-                                                <div class="invalid-feedback" bis_skin_checked="1">
-                                                    {{ $message }}
-                                                </div>
-                                            @enderror
+                                        <div class="mb-3 mt-3">
+                                            <button class="btn btn-primary" type="submit"><i class="ri-add-box-fill"></i> Buat Jadwal</button>
                                         </div>
-                                        <input type="hidden" name="kegiatan_lsp_ref" value="{{ $kegiatan_lsp_ref }}">
-                                        <input type="hidden" name="kegiatan_ref" value="{{ $kegiatan_ref }}">
-                                        <input type="hidden" name="kegiatan_jadwal_ref" value="{{ $kegiatan_jadwal_ref }}">
-                                        <x-form.input className="col-md-6 mb-3" type="text" name="nama_penanggung_jawab" label="Nama Penanggung Jawab" value="{{ old('nama_penanggung_jawab') }}" />
-                                        <x-form.input className="col-md-6 mb-3" type="text" name="no_penanggung_jawab" label="Nomor HP Penanggung Jawab" value="{{ old('no_penanggung_jawab') }}" />
-                                        <x-form.input className="col-md-6 mb-3" type="text" name="nama_penyelenggara_uji" label="Nama Penyelenggara Uji" value="{{ old('nama_penyelenggara_uji') }}" />
-                                        <x-form.input className="col-md-6 mb-3" type="text" name="no_penyelenggara_uji" label="No HP Penyelenggara Uji" value="{{ old('no_penyelenggara_uji') }}" />
-                                        <x-form.input className="col-md-4 mb-3" type="text" name="nama_asesor" label="Nama Asesor" value="{{ old('nama_asesor') }}" />
-                                        <x-form.input className="col-md-4 mb-3" type="text" name="no_asesor" label="Nomor HP Asesor" value="{{ old('no_asesor') }}" />
-                                        <x-form.input className="col-md-4 mb-3" type="text" name="no_reg_asesor" label="Nomor REG Asesor" value="{{ old('no_reg_asesor') }}" />
-                                    </div>
-                                    <div class="mb-3 mt-3">
-                                        <button class="btn btn-primary" type="submit"><i class="ri-add-box-fill"></i> Buat Jadwal</button>
-                                    </div>
-                                </form>
+                                    </form>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            @else
-                <div class="row">
-                    <div class="col-12">
-                        <div class="alert alert-danger">
-                            <i class="ri-information-line"></i>
-                            Kuota asesmen sudah terpenuhi. Tidak dapat menambahkan jadwal baru.
+                @else
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="alert alert-danger">
+                                <i class="ri-information-line"></i>
+                                Kuota asesmen sudah terpenuhi. Tidak dapat menambahkan jadwal baru.
+                            </div>
                         </div>
                     </div>
-                </div>
-            @endif
+                @endif
 
                 <div class="row">
                     <div class="col-12">
@@ -163,6 +163,9 @@
                                                         {{-- <button type="button" class="btn btn-sm btn-danger deleteButton" data-nama="#" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Hapus Jadwal Asesmen" data-bs-custom-class="danger-tooltip">
                                                             <i class="mdi mdi-trash-can"></i>
                                                         </button> --}}
+                                                        <button type="button" class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#editModal-{{ $asesmen->ref }}" data-bs-placement="top" data-bs-title="Edit Data">
+                                                            <i class="mdi mdi-pencil"></i>
+                                                        </button>
                                                         <input type="hidden" class="valueID" value="{{ $asesmen->ref }}">
                                                         <button type="button" class="btn btn-sm btn-danger deleteButton" data-nama="{{ $asesmen->nama_tuk }}" data-tanggal="{{ $asesmen->jadwal_asesmen }}" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Delete Data" data-bs-custom-class="danger-tooltip">
                                                             <i class="mdi mdi-trash-can"></i>
@@ -170,6 +173,79 @@
                                                     </div>
                                                 </td>
                                             </tr>
+
+                                            <!-- Edit Modal -->
+                                            <div class="modal fade" id="editModal-{{ $asesmen->ref }}" tabindex="-1" aria-labelledby="editModalLabel-{{ $asesmen->ref }}" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+                                                <div class="modal-dialog modal-lg">
+                                                    <div class="modal-content">
+                                                        <form action="{{ route('asesmen.update', $asesmen->ref) }}" method="POST">
+                                                            @csrf
+                                                            @method('PUT')
+                                                            <div class="modal-header modal-colored-header bg-warning">
+                                                                <h5 class="modal-title text-white" id="editModalLabel-{{ $asesmen->ref }}">Edit Data Asesmen</h5>
+                                                                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <div class="row">
+                                                                    <div class="col-lg-6 mb-3">
+                                                                        <label for="edit_nama_tuk_{{ $asesmen->ref }}" class="form-label">Pilih TUK</label>
+                                                                        <select class="form-select" id="edit_nama_tuk_{{ $asesmen->ref }}" name="nama_tuk">
+                                                                            @foreach ($dataTUK as $tuk)
+                                                                                <option value="{{ $tuk->tuk_nama }}" {{ $asesmen->nama_tuk == $tuk->tuk_nama ? 'selected' : '' }}>{{ $tuk->tuk_nama }}</option>
+                                                                            @endforeach
+                                                                        </select>
+                                                                    </div>
+                                                                    <div class="col-lg-6 mb-3">
+                                                                        <label class="form-label" for="edit_jadwal_asesmen_{{ $asesmen->ref }}">Tanggal Asesmen</label>
+                                                                        <input type="text" id="edit_jadwal_asesmen_{{ $asesmen->ref }}" name="jadwal_asesmen" class="form-control edit-single-date" value="{{ \Carbon\Carbon::parse($asesmen->jadwal_asesmen)->format('d/m/Y') }}" autocomplete="off">
+                                                                    </div>
+                                                                    <div class="col-lg-12 mb-3">
+                                                                        <label for="edit_skema_sertifikasi_{{ $asesmen->ref }}" class="form-label">Skema Sertifikasi</label>
+                                                                        <select class="form-select" id="edit_skema_sertifikasi_{{ $asesmen->ref }}" name="skema_sertifikasi">
+                                                                            @foreach ($dataSkema as $dtSkema)
+                                                                                <option value="{{ $dtSkema->skema->skema_judul }}" {{ $asesmen->nama_skema == $dtSkema->skema->skema_judul ? 'selected' : '' }}>{{ $dtSkema->skema->skema_judul }}</option>
+                                                                            @endforeach
+                                                                        </select>
+                                                                    </div>
+                                                                    <div class="col-md-6 mb-3">
+                                                                        <label for="edit_nama_penanggung_jawab_{{ $asesmen->ref }}" class="form-label">Nama Penanggung Jawab</label>
+                                                                        <input type="text" class="form-control" id="edit_nama_penanggung_jawab_{{ $asesmen->ref }}" name="nama_penanggung_jawab" value="{{ $asesmen->nama_penanggung_jawab }}">
+                                                                    </div>
+                                                                    <div class="col-md-6 mb-3">
+                                                                        <label for="edit_no_penanggung_jawab_{{ $asesmen->ref }}" class="form-label">Nomor HP Penanggung Jawab</label>
+                                                                        <input type="text" class="form-control" id="edit_no_penanggung_jawab_{{ $asesmen->ref }}" name="no_penanggung_jawab" value="{{ $asesmen->no_penanggung_jawab }}">
+                                                                    </div>
+                                                                    <div class="col-md-6 mb-3">
+                                                                        <label for="edit_nama_penyelenggara_uji_{{ $asesmen->ref }}" class="form-label">Nama Penyelenggara Uji</label>
+                                                                        <input type="text" class="form-control" id="edit_nama_penyelenggara_uji_{{ $asesmen->ref }}" name="nama_penyelenggara_uji" value="{{ $asesmen->nama_penyelenggara_uji }}">
+                                                                    </div>
+                                                                    <div class="col-md-6 mb-3">
+                                                                        <label for="edit_no_penyelenggara_uji_{{ $asesmen->ref }}" class="form-label">No HP Penyelenggara Uji</label>
+                                                                        <input type="text" class="form-control" id="edit_no_penyelenggara_uji_{{ $asesmen->ref }}" name="no_penyelenggara_uji" value="{{ $asesmen->no_penyelenggara_uji }}">
+                                                                    </div>
+                                                                    <div class="col-md-4 mb-3">
+                                                                        <label for="edit_nama_asesor_{{ $asesmen->ref }}" class="form-label">Nama Asesor</label>
+                                                                        <input type="text" class="form-control" id="edit_nama_asesor_{{ $asesmen->ref }}" name="nama_asesor" value="{{ $asesmen->nama_asesor }}">
+                                                                    </div>
+                                                                    <div class="col-md-4 mb-3">
+                                                                        <label for="edit_no_asesor_{{ $asesmen->ref }}" class="form-label">Nomor HP Asesor</label>
+                                                                        <input type="text" class="form-control" id="edit_no_asesor_{{ $asesmen->ref }}" name="no_asesor" value="{{ $asesmen->no_asesor }}">
+                                                                    </div>
+                                                                    <div class="col-md-4 mb-3">
+                                                                        <label for="edit_no_reg_asesor_{{ $asesmen->ref }}" class="form-label">Nomor REG Asesor</label>
+                                                                        <input type="text" class="form-control" id="edit_no_reg_asesor_{{ $asesmen->ref }}" name="no_reg_asesor" value="{{ $asesmen->no_reg_asesor }}">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Batal</button>
+                                                                <button type="submit" class="btn btn-warning">Simpan Perubahan</button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- End Edit Modal -->
                                         @endforeach
 
                                     </tbody>
@@ -212,6 +288,25 @@
                     });
                 });
 
+                // Initialize daterangepicker for edit modal
+                $(document).on('focus', '.edit-single-date', function() {
+                    const modal = $(this).closest('.modal');
+
+                    $(this).daterangepicker({
+                        singleDatePicker: true,
+                        autoApply: true,
+                        minDate: mulaiKegiatan,
+                        maxDate: selesaiKegiatan,
+                        parentEl: modal,
+                        locale: {
+                            format: 'DD/MM/YYYY'
+                        }
+                    });
+
+                    $(this).on('apply.daterangepicker', function(ev, picker) {
+                        $(this).val(picker.startDate.format('DD/MM/YYYY'));
+                    });
+                });
 
             });
         </script>
@@ -231,7 +326,7 @@
 
                         Swal.fire({
                             title: 'Apakah kamu yakin?',
-                            text: "Hapus data Jadwal Asesmen di TUK " + propertyName + " pada tanggal "+ propertyJadwal + "?",
+                            text: "Hapus data Jadwal Asesmen di TUK " + propertyName + " pada tanggal " + propertyJadwal + "?",
                             icon: 'warning',
                             showCancelButton: true,
                             confirmButtonColor: '#3085d6',
