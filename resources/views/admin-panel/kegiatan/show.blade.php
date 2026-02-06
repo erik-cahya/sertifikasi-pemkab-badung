@@ -215,7 +215,7 @@
                                                                                                 {{-- <th>Skema Dipilih</th> --}}
                                                                                                 {{-- <th>Lokasi TUK</th> --}}
                                                                                                 <th>Nomor Sertifikat</th>
-                                                                                                <th>Upload Sertifikat</th>
+                                                                                                <th width="20%">Upload Sertifikat</th>
                                                                                                 <th>Download Sertifikat</th>
                                                                                             </tr>
                                                                                         </thead>
@@ -309,7 +309,7 @@
 
                 // Send the updated value to the server using AJAX
                 $.ajax({
-                url: '/sertifikatUpdate', 
+                url: "{{ route('kegiatan.sertifikatUpdate') }}", 
                 type: 'POST',
                 data: { 
                     id: itemId, 

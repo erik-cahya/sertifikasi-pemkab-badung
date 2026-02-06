@@ -264,25 +264,25 @@ class KegiatanController extends Controller
         return view('admin-panel.kegiatan.create-lsp', $data);
     }
 
-    // public function sertifikatUpdate(Request $request)
-    // {
-    //     $asesi = AsesiModel::where('ref', $request->ref)->first();
+    public function sertifikatUpdate(Request $request)
+    {
+        $asesi = AsesiModel::where('ref', $request->ref)->first();
 
-    //     if (!$asesi) {
-    //         return response()->json([
-    //             'success' => false,
-    //             'message' => 'Data Asesi tidak ditemukan'
-    //         ], 404);
-    //     }
+        if (!$asesi) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Data Asesi tidak ditemukan'
+            ], 404);
+        }
 
-    //     // update kolom dinamis
-    //     $asesi->update([
-    //         $request->id => $request->value,
-    //     ]);
+        // update kolom dinamis
+        $asesi->update([
+            $request->id => $request->value,
+        ]);
 
-    //     return response()->json([
-    //         'success' => true,
-    //         'message' => 'No Sertifikat Berhasil Ditambahkan!'
-    //     ]);
-    // }
+        return response()->json([
+            'success' => true,
+            'message' => 'No Sertifikat Berhasil Ditambahkan!'
+        ]);
+    }
 }

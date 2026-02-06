@@ -86,6 +86,9 @@
         .page-break {
             page-break-before: always;
         }
+        .center{
+            text-align: center;
+        }
     </style>
 </head>
 @foreach ($asesmen as $item)
@@ -146,7 +149,7 @@
                         <tr>
                             <td class="center">{{ $loop->iteration }}</td>
                             <td>{{ $asesi->nama_lengkap }}</td>
-                            <td></td>
+                            <td class="center">{{ $asesi->no_sertifikat }}</td>
                             <td class="signature"> {{ $loop->iteration }}.</td>
                         </tr>
                     @endif
