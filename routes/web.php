@@ -43,6 +43,8 @@ Route::middleware('auth')->group(function () {
     Route::put('kegiatan/{id}', [KegiatanController::class, 'update'])->name('kegiatan.update');
     Route::delete('kegiatan/{id}', [KegiatanController::class, 'destroy'])->name('kegiatan.destroy');
     Route::post('kegiatan/sertifikatUpdate', [KegiatanController::class, 'sertifikatUpdate'])->name('kegiatan.sertifikatUpdate');
+    Route::post('kegiatan/uploadSertifikat', [KegiatanController::class, 'uploadSertifikat'])->name('kegiatan.uploadSertifikat');
+    Route::post('kegiatan/uploadBuktiAsesmen', [KegiatanController::class, 'uploadBuktiAsesmen'])->name('kegiatan.uploadBuktiAsesmen');
 
     Route::get('asesmen/create/{id}', [AsesmenController::class, 'create'])->name('asesmen.create');
     Route::post('asesment', [AsesmenController::class, 'store'])->name('asesmen.store');

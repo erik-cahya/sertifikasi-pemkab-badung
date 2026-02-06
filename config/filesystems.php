@@ -71,7 +71,7 @@ return [
         'KTP' => [
             'driver' => 'local',
             'root' => public_path('asesi_files'),
-            'url' => rtrim(env('APP_URL'), '/').'asesi_files',
+            'url' => rtrim(env('APP_URL'), '/').'/asesi_files',
             'visibility' => 'public',
             'throw' => false,
         ],
@@ -79,7 +79,7 @@ return [
         'ijazah' => [
             'driver' => 'local',
             'root' => public_path('asesi_files'),
-            'url' => rtrim(env('APP_URL'), '/').'asesi_files',
+            'url' => rtrim(env('APP_URL'), '/').'/asesi_files',
             'visibility' => 'public',
             'throw' => false,
         ],
@@ -87,7 +87,7 @@ return [
         'sertikom' => [
             'driver' => 'local',
             'root' => public_path('asesi_files'),
-            'url' => rtrim(env('APP_URL'), '/').'asesi_files',
+            'url' => rtrim(env('APP_URL'), '/').'/asesi_files',
             'visibility' => 'public',
             'throw' => false,
         ],
@@ -95,7 +95,7 @@ return [
         'SKB' => [
             'driver' => 'local',
             'root' => public_path('asesi_files'),
-            'url' => rtrim(env('APP_URL'), '/').'asesi_files',
+            'url' => rtrim(env('APP_URL'), '/').'/asesi_files',
             'visibility' => 'public',
             'throw' => false,
         ],
@@ -104,7 +104,23 @@ return [
         'pas-foto' => [
             'driver' => 'local',
             'root' => public_path('asesi_files'),
-            'url' => rtrim(env('APP_URL'), '/').'asesi_files',
+            'url' => rtrim(env('APP_URL'), '/').'/asesi_files',
+            'visibility' => 'public',
+            'throw' => false,
+        ],
+
+        'sertifikat' => [
+            'driver' => 'local',
+            'root' => public_path('asesi_files'),
+            'url' => rtrim(env('APP_URL'), '/').'/asesi_files',
+            'visibility' => 'public',
+            'throw' => false,
+        ],
+
+        'bukti_asesmen' => [
+            'driver' => 'local',
+            'root' => public_path('asesmen_files'),
+            'url' => rtrim(env('APP_URL'), '/').'/asesmen_files',
             'visibility' => 'public',
             'throw' => false,
         ],
