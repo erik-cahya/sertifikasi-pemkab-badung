@@ -27,7 +27,7 @@
                             @foreach ($dataSkema as $skema)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
-                                    @role('master')
+                                    @role('master', 'dinas')
                                         <td>{{ $skema->lsp_nama }}</td>
                                     @endrole
                                     <td>{{ $skema->skema_judul }}</td>
