@@ -36,9 +36,9 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="card">
-                                <div class="card-header">
+                                <div class="card-header bg-dinas text-white">
                                     <h4 class="card-title mb-0"> <i class="ri-profile-line fw-normal fs-20 me-1 align-middle"></i>
-                                        Buat Data Asesmen</h4>
+                                        Buat Jadwal Asesmen</h4>
                                 </div>
                                 <div class="card-body">
                                     <form action="{{ route('asesmen.store') }}" method="POST">
@@ -94,7 +94,7 @@
                                             <x-form.input className="col-md-4 mb-3" type="text" name="no_reg_asesor" label="Nomor REG Asesor" value="{{ old('no_reg_asesor') }}" />
                                         </div>
                                         <div class="mb-3 mt-3">
-                                            <button class="btn btn-primary" type="submit"><i class="ri-add-box-fill"></i> Buat Jadwal</button>
+                                            <button class="btn btn-dinas" type="submit"><i class="ri-add-box-fill"></i> Buat Jadwal</button>
                                         </div>
                                     </form>
                                 </div>
@@ -115,7 +115,7 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="card">
-                            <div class="card-header">
+                            <div class="card-header bg-dinas text-white">
                                 <h4 class="card-title mb-0"> <i class="ri-account-circle-line fw-normal fs-20 me-1 align-middle"></i>
                                     List Data Jadwal Asesmen</h4>
                             </div>
@@ -131,7 +131,7 @@
                                             <th>Penanggung Jawab</th>
                                             <th>Penyelenggara Uji</th>
                                             <th>Asesor</th>
-                                            <th>Action</th>
+                                            <th width="5%">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -163,7 +163,7 @@
                                                         {{-- <button type="button" class="btn btn-sm btn-danger deleteButton" data-nama="#" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Hapus Jadwal Asesmen" data-bs-custom-class="danger-tooltip">
                                                             <i class="mdi mdi-trash-can"></i>
                                                         </button> --}}
-                                                        <button type="button" class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#editModal-{{ $asesmen->ref }}" data-bs-placement="top" data-bs-title="Edit Data">
+                                                        <button type="button" class="btn btn-sm btn-info" data-bs-toggle="modal" data-bs-target="#editModal-{{ $asesmen->ref }}" data-bs-placement="top" data-bs-title="Edit Data">
                                                             <i class="mdi mdi-pencil"></i>
                                                         </button>
                                                         <input type="hidden" class="valueID" value="{{ $asesmen->ref }}">
@@ -181,7 +181,7 @@
                                                         <form action="{{ route('asesmen.update', $asesmen->ref) }}" method="POST">
                                                             @csrf
                                                             @method('PUT')
-                                                            <div class="modal-header modal-colored-header bg-warning">
+                                                            <div class="modal-header modal-colored-header bg-dinas">
                                                                 <h5 class="modal-title text-white" id="editModalLabel-{{ $asesmen->ref }}">Edit Data Asesmen</h5>
                                                                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                                                             </div>
@@ -239,7 +239,7 @@
                                                             </div>
                                                             <div class="modal-footer">
                                                                 <button type="button" class="btn btn-light" data-bs-dismiss="modal">Batal</button>
-                                                                <button type="submit" class="btn btn-warning">Simpan Perubahan</button>
+                                                                <button type="submit" class="btn btn-dinas">Simpan Perubahan</button>
                                                             </div>
                                                         </form>
                                                     </div>

@@ -41,7 +41,7 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="card">
-                            <div class="card-header">
+                            <div class="card-header bg-dinas text-white">
                                 <h4 class=".card-title">Create Data Kegiatan</h4>
                             </div>
                             <div class="card-body">
@@ -61,7 +61,7 @@
 
                                     <div class="col-lg-6 mb-3">
                                         <label class="form-label" for="mulai_kegiatan">Tanggal Mulai Kegiatan</label>
-                                        <input type="text" id="mulai_kegiatan" name="mulai_kegiatan" class="form-control single-date @error('mulai_kegiatan', 'create_kegiatan') is-invalid @enderror" value="{{ old('mulai_kegiatan') }}" autocomplete="off">
+                                        <input type="text" id="mulai_kegiatan" name="mulai_kegiatan" class="form-control rounded-3 single-date @error('mulai_kegiatan', 'create_kegiatan') is-invalid @enderror" value="{{ old('mulai_kegiatan') }}" autocomplete="off">
 
                                         @error('mulai_kegiatan', 'create_kegiatan')
                                             <div class="invalid-feedback" bis_skin_checked="1">
@@ -72,7 +72,7 @@
 
                                     <div class="col-lg-6 mb-3">
                                         <label class="form-label" for="selesai_kegiatan">Tanggal Selesai Kegiatan</label>
-                                        <input type="text" id="selesai_kegiatan" name="selesai_kegiatan" class="form-control single-date @error('selesai_kegiatan', 'create_kegiatan') is-invalid @enderror" value="{{ old('selesai_kegiatan') }}" autocomplete="off">
+                                        <input type="text" id="selesai_kegiatan" name="selesai_kegiatan" class="form-control rounded-3 single-date @error('selesai_kegiatan', 'create_kegiatan') is-invalid @enderror" value="{{ old('selesai_kegiatan') }}" autocomplete="off">
 
                                         @error('selesai_kegiatan', 'create_kegiatan')
                                             <div class="invalid-feedback" bis_skin_checked="1">
@@ -90,7 +90,7 @@
 
                                                         <div class="col-lg-3">
                                                             <label class="form-label">Nama LSP</label>
-                                                            <select class="lsp-select @error(`lsp_ref.$i`) is-invalid @enderror form-select" name="lsp_ref[{{ $i }}]">
+                                                            <select class="lsp-select @error(`lsp_ref.$i`) is-invalid @enderror form-select rounded-3" name="lsp_ref[{{ $i }}]">
                                                                 <option value="" selected>Pilih LSP</option>
                                                                 @foreach ($dataLSP as $lsp)
                                                                     <option value="{{ $lsp->ref }}" {{ old('lsp_ref.' . $i) == $lsp->ref ? 'selected' : '' }}>{{ $lsp->lsp_nama }}</option>
@@ -106,7 +106,7 @@
 
                                                         <div class="col-lg-5">
                                                             <label class="form-label">Skema</label>
-                                                            <select class="form-control select2 skema-select @error(`skema_ref.$i`) is-invalid @enderror" name="skema_ref[{{ $i }}][]" multiple disabled>
+                                                            <select class="form-control rounded-3 select2 skema-select @error(`skema_ref.$i`) is-invalid @enderror" name="skema_ref[{{ $i }}][]" multiple disabled>
                                                             </select>
                                                             @error("skema_ref.$i")
                                                                 <div class="invalid-feedback" bis_skin_checked="1">
@@ -117,7 +117,7 @@
 
                                                         <div class="col-lg-2">
                                                             <label class="form-label">Kuota</label>
-                                                            <input type="number" class="form-control" name="kuota_lsp[{{ $i }}]" min="1" value="{{ old("kuota_lsp.$i") }}">
+                                                            <input type="number" class="form-control rounded-3" name="kuota_lsp[{{ $i }}]" min="1" value="{{ old("kuota_lsp.$i") }}">
                                                             @error("kuota_lsp.$i")
                                                                 <div class="text-danger">{{ $message }}</div>
                                                             @enderror
@@ -125,7 +125,7 @@
 
                                                         <div class="col-lg-2">
                                                             <label class="form-label">Tanggal</label>
-                                                            <input type="text" class="form-control daterangepicker-input" name="date_range[{{ $i }}]">
+                                                            <input type="text" class="form-control rounded-3 daterangepicker-input" name="date_range[{{ $i }}]">
                                                         </div>
 
                                                     </div>
@@ -136,7 +136,7 @@
 
                                 </div>
                                 <div class="mb-3 mt-3">
-                                    <button class="btn btn-primary" type="submit"><i class="ri-add-box-fill"></i> Add New Kegiatan</button>
+                                    <button class="btn btn-dinas" type="submit"><i class="ri-add-box-fill"></i> Buat Kegiatan</button>
                                 </div>
                             </div>
                         </div>

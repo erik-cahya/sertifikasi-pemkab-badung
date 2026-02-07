@@ -4,7 +4,7 @@
     <div class="row">
         <div class="col-12">
             <div class="card">
-                <div class="card-header">
+                <div class="card-header bg-dinas text-white">
                     <h4 class=".card-title">Tambah Data Departemen</h4>
                 </div>
                 <form action="{{ route('departemen.store') }}" method="POST">
@@ -25,7 +25,7 @@
 
                             <div class="col-lg-2">
                                 <div class="mt-3">
-                                    <button type="submit" class="btn btn-outline-primary rounded-3"><i class="ri-add-fill"></i> Tambah</button>
+                                    <button type="submit" class="btn btn-dinas rounded-3"><i class="ri-add-fill"></i> Tambah</button>
                                 </div>
                             </div>
                         </div><!-- end row-->
@@ -38,7 +38,7 @@
     <div class="row">
         <div class="col-12">
             <div class="card">
-                <div class="card-header">
+                <div class="card-header bg-dinas text-white">
                     <h4 class=".card-title">Daftar Departemen</h4>
                 </div>
                 <div class="card-body">
@@ -59,14 +59,13 @@
                                     <td>{{ $item->departemen_nama }}</td>
                                     <td>{{ $item->name }} <br> {{ $item->created_at->format('Y-m-d') }}</td>
                                     <td>
-                                        <a href="{{ route('departemen.edit', $item->ref) }}" class="text-reset fs-16 px-1">
-                                            <button type="button" class="btn btn-sm btn-outline-primary"><i class="ri-pencil-line"></i> Edit</button>
-                                        </a>
+                                        <div class="btn-group" role="group" aria-label="Basic outlined example">
 
-                                        <input type="hidden" class="departemenID" value="{{ $item->ref }}">
-                                        <a href="javascript:void(0)" class="text-reset fs-16 deleteButton px-1" data-nama="{{ $item->departemen_nama }}">
-                                            <button type="button" class="btn btn-sm btn-outline-danger"><i class="ri-delete-bin-5-line"></i> Hapus</button>
-                                        </a>
+                                            <a href="{{ route('departemen.edit', $item->ref) }}" class="btn btn-sm btn-info" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Edit Departemen" data-bs-custom-class="info-tooltip"><i class="mdi mdi-pencil"></i></a>
+
+                                            <input type="hidden" class="departemenID" value="{{ $item->ref }}">
+                                            <a href="javascript:void(0)"data-nama="{{ $item->departemen_nama }}"class="btn btn-sm btn-danger" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Hapus Departemen" data-bs-custom-class="danger-tooltip"><i class="mdi mdi-trash-can"></i></a>
+                                        </div>
                                     </td>
                                 </tr>
                             @endforeach

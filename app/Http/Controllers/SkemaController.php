@@ -42,7 +42,7 @@ class SkemaController extends Controller
 
         )->withCount('details as unitCount')->with('details')->join('lsp', 'lsp.ref', '=', 'skema.lsp_ref');
 
-        if (Auth::user()->roles !== 'master') {
+        if (Auth::user()->roles == 'lsp') {
             $dataLSP = LSPModel::where('user_ref', Auth::user()->ref)->firstOrFail();
             $query->where('lsp_ref', $dataLSP->ref);
         }

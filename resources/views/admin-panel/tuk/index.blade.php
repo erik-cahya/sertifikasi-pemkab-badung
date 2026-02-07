@@ -5,12 +5,12 @@
     <div class="row">
         <div class="col-12">
             <div class="card">
-                <div class="card-header">
+                <div class="card-header bg-dinas text-white">
                     <h4 class=".card-title">Daftar TUK</h4>
                 </div>
                 <div class="card-body">
 
-                    <table id="fixed-columns-datatable" class="table table-striped nowrap row-border order-column w-100">
+                    <table id="datatable-dashboard" class="table table-striped nowrap row-border order-column w-100">
                         <thead>
                             <tr>
                                 <th>LSP</th>
@@ -59,14 +59,11 @@
                                     </td>
                                     <td>{{ $item->created_at->format('Y-m-d') }}</td>
                                     <td>
-                                         <a href="{{ route('tukAdmin.edit', $item->ref) }}" class="text-reset fs-16 px-1">
-                                            <button type="button" class="btn btn-sm btn-outline-primary"><i class="ri-pencil-line"></i> Edit</button>
-                                        </a>
-
-                                        <input type="hidden" class="tukID" value="{{ $item->ref }}">
-                                        <a href="javascript:void(0)" class="text-reset fs-16 deleteButton px-1" data-nama="{{ $item->tuk_nama }}">
-                                            <button type="button" class="btn btn-sm btn-outline-danger"><i class=" ri-delete-bin-5-line"></i> Hapus</button>
-                                        </a>
+                                        <div class="btn-group" role="group" aria-label="Basic outlined example">
+                                            <a href="{{ route('tukAdmin.edit', $item->ref) }}" class="btn btn-sm btn-info" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Edit TUK" data-bs-custom-class="info-tooltip"><i class="mdi mdi-pencil"></i></a>
+                                            <input type="hidden" class="tukID" value="{{ $item->ref }}">
+                                            <a href="javascript:void(0)" data-nama="{{ $item->tuk_nama }}" class="btn btn-sm btn-danger" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Hapus TUK" data-bs-custom-class="danger-tooltip"><i class="mdi mdi-trash-can"></i></a>
+                                        </div>
                                     </td>
                                 </tr>
                             @endforeach

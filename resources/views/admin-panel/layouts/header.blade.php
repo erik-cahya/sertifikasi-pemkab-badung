@@ -32,7 +32,7 @@
 
             <!-- Page Title -->
             <h4 class="page-title d-none d-sm-block">{{ $title ?? 'Dashboard' }}</h4>
-            <h5 class="d-none d-sm-block">{{ '{roles: ' . Auth::user()->roles . '}' }}</h5>
+            {{-- <h5 class="d-none d-sm-block">{{ '{roles: ' . Auth::user()->roles . '}' }}</h5> --}}
         </div>
 
         <ul class="topbar-menu d-flex align-items-center gap-3">

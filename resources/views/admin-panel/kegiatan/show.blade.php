@@ -113,7 +113,7 @@
 
             <div class="col-lg-12" bis_skin_checked="1">
                 <div class="card" bis_skin_checked="1">
-                    <h5 class="card-header bg-light-subtle">Data Peserta</h5>
+                    <h5 class="card-header bg-dinas text-white">Data Peserta</h5>
                     <div class="card-body" bis_skin_checked="1">
                         <div class="table-responsive">
                             <table class="table-sm table-bordered w-100 table">
@@ -313,12 +313,12 @@
             // Delegate click event to the document (or a parent element that won't change)
             $(document).on('click', '.edited', function() {
                 var span = $(this);
-                var itemText = span.text();
+                var itemText = $.trim($(this).text());
                 var itemId = span.attr('id'); // Get the id
                 var itemRef = span.attr('ref'); // Get the ref
 
                 // Create an input field with the current text
-                var input = $('<input type="text" class="form-control"/>').val(itemText).attr('id', itemId).attr('ref', itemRef);
+                var input = $('<input type="text" class="form-control"/>').val(itemText).attr('id', itemId).attr('ref', itemRef) .css({ width: '100%', boxSizing: 'border-box' });;
 
                 // Replace the span with the input field
                 span.replaceWith(input);

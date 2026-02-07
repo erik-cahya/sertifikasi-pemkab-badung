@@ -6,9 +6,9 @@
             <div class="row">
                 <div class="col-xl-12">
                     <div class="card">
-                        <div class="card-header">
-                            <h4 class="card-title">Create LSP Baru</h4>
-                            <p class="text-muted mb-0">Tambahkan data LSP baru pada form berikut.</p>
+                        <div class="card-header bg-dinas text-white">
+                            <h4 class="card-title">Tambah LSP Baru</h4>
+                            <p class="mb-0">Tambahkan data LSP baru pada form berikut.</p>
                         </div>
                         <form action="{{ route('lsp.store') }}" method="POST" enctype="multipart/form-data">
                             @csrf
@@ -99,7 +99,7 @@
                                 </div>
 
                                 <div class="mb-3 mt-3">
-                                    <button class="btn btn-primary" type="submit">Tambahkan Data LSP</button>
+                                    <button class="btn btn-dinas" type="submit">Tambahkan Data LSP</button>
                                 </div>
                             </div>
                         </form>

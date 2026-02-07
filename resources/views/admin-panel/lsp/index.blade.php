@@ -4,13 +4,13 @@
     <div class="row">
         <div class="col-12">
             <div class="card">
-                <div class="card-header">
-                    <h4 class=".card-title">All Data LSP</h4>
+                <div class="card-header bg-dinas text-white">
+                    <h4 class=".card-title">Data LSP</h4>
                 </div>
                 <div class="card-body">
 
                     <table id="datatable-dashboard" class="table-striped table-bordered w-100 nowrap table">
-                        <thead>
+                        <thead class="text-center">
                             <tr>
                                 <th>No</th>
                                 <th>Nama LSP</th>
@@ -19,15 +19,13 @@
                                 <th>No Telp LSP</th>
                                 <th>Status LSP</th>
                                 <th>Username</th>
-                                <th>Action</th>
+                                <th width="5%">Action</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($dataLSP as $lsp)
                                 <tr class="align-middle">
-                                    <td>
-                                        <span class="bg-primary rounded-4 px-2 text-white">{{ $loop->iteration }}</span>
-                                    </td>
+                                    <td class="text-center">{{ $loop->iteration }}</td>
                                     <td>
                                         <span>
                                             {{ $lsp->lsp_nama }}
@@ -39,11 +37,11 @@
                                             </span>
                                         </span>
                                     </td>
-                                    <td>{{ $lsp->lsp_no_lisensi }}</td>
+                                    <td class="text-center">{{ $lsp->lsp_no_lisensi }}</td>
                                     <td>{{ $lsp->lsp_email }}</td>
                                     <td>{{ $lsp->lsp_telp }}</td>
-                                    <td><span class="badge {{ $lsp->is_active == 1 ? 'bg-success' : 'bg-danger' }}">{{ $lsp->is_active == 1 ? 'Active' : 'Not Active' }}</span></td>
-                                    <td>
+                                    <td class="text-center"><span class="badge {{ $lsp->is_active == 1 ? 'bg-success' : 'bg-danger' }}">{{ $lsp->is_active == 1 ? 'Active' : 'Not Active' }}</span></td>
+                                    <td class="text-center">
                                         <span class="badge bg-dark rounded-pill px-2">
                                             {{ $lsp->username }}
                                         </span>

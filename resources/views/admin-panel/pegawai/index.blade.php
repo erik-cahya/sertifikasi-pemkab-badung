@@ -5,7 +5,7 @@
     <div class="row">
         <div class="col-12">
             <div class="card">
-                <div class="card-header">
+                <div class="card-header bg-dinas text-white">
                     <h4 class=".card-title">Daftar Pegawai</h4>
                 </div>
                 <div class="card-body">

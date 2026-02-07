@@ -50,7 +50,6 @@
                             </a>
                         </li>
 
-                        {{-- @if (Auth::user()->roles === 'lsp') --}}
                         @role('lsp')
                             <li class="side-nav-item {{ request()->routeIs('skema.create') ? 'menuitem-active' : '' }}">
                                 <a class="side-nav-link {{ request()->routeIs('skema.create') ? 'active' : '' }}" href="{{ route('skema.create') }}">
@@ -78,34 +77,35 @@
                         </li>
 
                         {{-- @if (Auth::user()->roles === 'lsp') --}}
-                        {{-- @role('lsp') --}}
+                        @role('lsp')
                         <li class="side-nav-item {{ request()->routeIs('tukAdmin.create') ? 'menuitem-active' : '' }}">
                             <a class="side-nav-link {{ request()->routeIs('tukAdmin.create') ? 'active' : '' }}" href="{{ route('tukAdmin.create') }}">
                                 Tambah TUK
                             </a>
                         </li>
-                        {{-- @endrole --}}
+                        @endrole
 
                     </ul>
                 </div>
             </li>
-
-            <li class="side-nav-item {{ request()->routeIs('pegawai.list') ? 'menuitem-active' : '' }}">
-                <a data-bs-toggle="collapse" href="#pegawaiMenu" aria-expanded="false" aria-controls="pegawaiMenu" class="side-nav-link">
-                    <i class="ri-contacts-line"></i>
-                    <span> Pegawai </span>
-                    <span class="menu-arrow"></span>
-                </a>
-                <div class="{{ request()->routeIs('pegawai.list') ? 'show' : '' }} collapse" id="pegawaiMenu">
-                    <ul class="side-nav-second-level">
-                        <li class="side-nav-item {{ request()->routeIs('pegawai.list') ? 'menuitem-active' : '' }}">
-                            <a class="side-nav-link {{ request()->routeIs('pegawai.list') ? 'active' : '' }}" href="{{ route('pegawai.list') }}">
-                                Daftar Pegawai
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </li>
+            @role('master', 'dinas')
+                <li class="side-nav-item {{ request()->routeIs('pegawai.list') ? 'menuitem-active' : '' }}">
+                    <a data-bs-toggle="collapse" href="#pegawaiMenu" aria-expanded="false" aria-controls="pegawaiMenu" class="side-nav-link">
+                        <i class="ri-contacts-line"></i>
+                        <span> Pegawai </span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <div class="{{ request()->routeIs('pegawai.list') ? 'show' : '' }} collapse" id="pegawaiMenu">
+                        <ul class="side-nav-second-level">
+                            <li class="side-nav-item {{ request()->routeIs('pegawai.list') ? 'menuitem-active' : '' }}">
+                                <a class="side-nav-link {{ request()->routeIs('pegawai.list') ? 'active' : '' }}" href="{{ route('pegawai.list') }}">
+                                    Daftar Pegawai
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+            @endrole
 
             <li class="side-nav-item {{ request()->routeIs('asesiAdmin.index') ? 'menuitem-active' : '' }}">
                 <a data-bs-toggle="collapse" href="#asesiMenu" aria-expanded="false" aria-controls="asesiMenu" class="side-nav-link">
@@ -124,7 +124,7 @@
                 </div>
             </li>
 
-            @role('master')
+            @role('master', 'dinas')
                 <li class="side-nav-item {{ request()->routeIs('lsp.*') ? 'menuitem-active' : '' }}">
                     <a data-bs-toggle="collapse" href="#lspMenu" aria-expanded="false" aria-controls="lspMenu" class="side-nav-link">
                         <i class="ri-team-line"></i>
@@ -180,7 +180,7 @@
                 </div>
             </li>
 
-            @role('master')
+            @role('master', 'dinas')
                 <li class="side-nav-item {{ request()->routeIs('item.*') ? 'menuitem-active' : '' }}">
                     <a data-bs-toggle="collapse" href="#itemMenu" aria-expanded="false" aria-controls="itemMenu" class="side-nav-link">
                         <i class="ri-settings-2-line"></i>

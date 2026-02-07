@@ -4,7 +4,7 @@
     <div class="row">
         <div class="col-12">
             <div class="card">
-                <div class="card-header">
+                <div class="card-header bg-dinas text-white">
                     <h4 class=".card-title">Tambah Data TUK</h4>
                 </div>
                 <form action="{{ route('tukAdmin.store') }}" method="POST">
@@ -74,7 +74,7 @@
 
                             <div class="col-lg-12">
                                 <div class="mb-1 mt-1">
-                                    <button type="submit" class="btn btn-outline-primary rounded-3"><i class="ri-save-3-line"></i> Tambah Data TUK</button>
+                                    <button type="submit" class="btn btn-dinas rounded-3"><i class="ri-save-3-line"></i> Tambah Data TUK</button>
                                 </div>
                             </div>
                         </div><!-- end row-->

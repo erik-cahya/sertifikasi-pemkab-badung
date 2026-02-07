@@ -5,7 +5,7 @@
         <div class="row">
             <div class="col-12">
                 <div class="card">
-                    <div class="card-header">
+                    <div class="card-header bg-dinas text-white">
                         <h4 class=".card-title">Edit Data TUK</h4>
                     </div>
                     <form action="{{ route('tukAdmin.update', $item->ref) }}" method="POST">
@@ -73,7 +73,7 @@
 
                                 <div class="col-lg-12">
                                     <div class="mt-1 mb-1">
-                                        <button type="submit" class="btn btn-outline-primary rounded-3"><i class="ri-save-3-line"></i> Edit</button>
+                                        <button type="submit" class="btn btn-dinas rounded-3"><i class="ri-save-3-line"></i> Edit</button>
                                     </div>
                                 </div>
                             </div><!-- end row-->

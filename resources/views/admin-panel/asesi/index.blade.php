@@ -4,7 +4,7 @@
     <div class="row">
         <div class="col-12">
             <div class="card">
-                <div class="card-header">
+                <div class="card-header bg-dinas text-white">
                     <h4 class=".card-title">Daftar Calon Asesi</h4>
                 </div>
                 <div class="card-body">
@@ -31,13 +31,15 @@
                                 <th>Email Perusahaan</th>
                                 <th class="no-export">Dokumen</th>
                                 <th>Jadwal Asesmen</th>
+                                <th>No Sertifikat</th>
+                                <th>Sertifikat</th>
                                 <th>Mendaftar pada</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($dataAsesi as $item )
                                 <tr>
-                                    <td><span class="bg-primary rounded-4 px-2 text-white">{{ $item->kegiatan->nama_kegiatan }}</span></td>
+                                    <td><span class="bg-dinas rounded-4 px-2 text-white">{{ $item->kegiatan->nama_kegiatan }}</span></td>
                                     <td>{{ $item->nama_lengkap }}</td>
                                     <td>{{ $item->nik }}</td>
                                     <td>{{ $item->tempat_lahir }}</td>
@@ -120,6 +122,8 @@
                                             </tr>
                                         </table>
                                     </td>
+                                    <td class="text-center">{{ $item->no_sertifikat }}</td>
+                                    <td>@if(!empty($item->sertifikat_file))<a href="{{ asset('asesi_files/'.$item->sertifikat_file) }}" target="_blank"> <i class="mdi mdi-file-image"></i></a>@else - @endif</td>
                                     <td>{{ $item->created_at->format('Y/m/d') }}</td>
                                 </tr>
                             @endforeach

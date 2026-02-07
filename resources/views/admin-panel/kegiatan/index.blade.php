@@ -4,14 +4,14 @@
     <div class="row">
         <div class="col-12">
             <div class="card">
-                <div class="card-header">
+                <div class="card-header bg-dinas text-white">
                     <h4 class=".card-title">Daftar Kegiatan</h4>
                 </div>
                 <div class="card-body">
                     <table id="datatable-dashboard" class="table-striped w-100 nowrap table">
-                        <thead>
+                        <thead class="text-center">
                             <tr>
-                                <th>Nomor</th>
+                                <th>No</th>
                                 <th>Nama Kegiatan</th>
                                 @role('master')
                                     <th>LSP Terlibat</th>
@@ -20,15 +20,13 @@
                                 <th>Mulai Kegiatan</th>
                                 <th>Kegiatan Selesai</th>
                                 <th>Status Kegiatan</th>
-                                <th>Action</th>
+                                <th width="5%">Action</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($dataKegiatan as $kegiatan)
                                 <tr>
-                                    <td>
-                                        <span class="bg-primary rounded-4 px-2 text-white">{{ $loop->iteration }}</span>
-                                    </td>
+                                    <td class="text-center">{{ $loop->iteration }}</td>
                                     <td>
                                         <span class="badge {{ $kegiatan->status == 1 ? 'bg-success' : 'bg-danger' }} rounded-circle p-1"><small></small></span>
                                         {{ $kegiatan->nama_kegiatan }}
@@ -64,7 +62,7 @@
                                     @endrole('master')
                                     <td>{{ \Carbon\Carbon::parse($kegiatan->mulai_kegiatan)->locale('id')->translatedFormat('l, d F Y') }}</td>
                                     <td>{{ \Carbon\Carbon::parse($kegiatan->selesai_kegiatan)->locale('id')->translatedFormat('l, d F Y') }}</td>
-                                    <td><span class="badge {{ $kegiatan->status == 1 ? 'bg-success' : 'bg-danger' }}">{{ $kegiatan->status == 1 ? 'Aktif' : 'Tidak Aktif' }}</span></td>
+                                    <td class="text-center"><span class="badge {{ $kegiatan->status == 1 ? 'bg-success' : 'bg-danger' }}">{{ $kegiatan->status == 1 ? 'Aktif' : 'Tidak Aktif' }}</span></td>
                                     <td>
                                         <div class="btn-group" role="group" aria-label="Basic outlined example">
                                             @role('lsp')
