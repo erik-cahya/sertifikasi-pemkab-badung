@@ -105,7 +105,7 @@
                                 <!-- settings -->
                                 <div id="edit-profile" class="tab-pane">
                                     <div class="user-profile-content">
-                                        <form action="{{ route('profile.update', $dataLSP->ref) }}" method="POST">
+                                        <form action="{{ route('profile.update', $dataLSP->ref) }}" method="POST" enctype="multipart/form-data">
                                             @csrf
                                             @method('PUT')
                                             <div class="row">
@@ -118,6 +118,7 @@
                                                 <x-form.input className="col-md-6 mb-3" type="text" name="lsp_direktur_telp" label="Kontak Direktur LSP" value="{{ $dataLSP->lsp_direktur_telp }}" />
                                                 <x-form.input className="col-md-6 mb-3" type="date" name="lsp_tanggal_lisensi" label="Tanggal Lisensi LSP" value="{{ $dataLSP->lsp_tanggal_lisensi }}" />
                                                 <x-form.input className="col-md-6 mb-3" type="date" name="lsp_expired_lisensi" label="Tanggal Expired LSP" value="{{ $dataLSP->lsp_expired_lisensi }}" />
+                                                <x-form.input className="col-md-6 mb-3" type="file" name="lsp_logo" label="Upload Logo" />
                                             </div>
                                             <button class="btn btn-dinas" type="submit"><i class="mdi mdi-content-save-outline fs-16 lh-1 me-1"></i> Save</button>
                                         </form>

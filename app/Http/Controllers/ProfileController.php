@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\View\View;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class ProfileController extends Controller
 {
@@ -51,7 +53,28 @@ class ProfileController extends Controller
             'lsp_nama' => 'required|unique:lsp,lsp_nama,' . $id . ',ref',
             'lsp_no_lisensi' => 'required|unique:lsp,lsp_no_lisensi,' . $id . ',ref',
             'lsp_email' => 'required|unique:lsp,lsp_email,' . $id . ',ref',
+            'lsp_logo' => 'nullable|mimes:png|max:2048',
+
         ])->validateWithBag('update_lsp');
+
+        $lsp = LSPModel::where('ref', $id)->firstOrFail();
+
+        /* ================== UPDATE LOGO ================== */
+        if($request->hasFile('lsp_logo')) {
+
+            // DELETE LOGO LAMA
+            if ($lsp->lsp_logo && Storage::disk('logo-lsp')->exists($lsp->lsp_logo)) {
+                Storage::disk('logo-lsp')->delete($lsp->lsp_logo);
+            }
+
+            $lsp_nama = Str::slug($request->lsp_nama);
+            $ext = $request->file('lsp_logo')->extension();
+            $filename = "{$lsp_nama}-{$request->lsp_no_lisensi}.{$ext}";
+            $lsp_logo = Storage::disk('logo-lsp')->putFileAs('logo-lsp', $request->file('lsp_logo'), $filename);
+        } 
+        else {
+            $lsp_logo = $lsp->lsp_logo; // kalau ga upload baru
+        }
 
         LSPModel::where('ref', $id)->update([
             'lsp_nama' => $request->lsp_nama,
@@ -64,6 +87,7 @@ class ProfileController extends Controller
             'lsp_direktur_telp' => $request->lsp_direktur_telp,
             'lsp_tanggal_lisensi' => $request->lsp_tanggal_lisensi,
             'lsp_expired_lisensi' => $request->lsp_expired_lisensi,
+            'lsp_logo' => $lsp_logo,
         ]);
 
         $flashData = [
