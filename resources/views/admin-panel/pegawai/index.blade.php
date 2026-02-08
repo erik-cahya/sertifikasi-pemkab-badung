@@ -28,6 +28,7 @@
                     <table id="datatable-dashboard" class="table-striped table-bordered nowrap row-border order-column w-100 table">
                         <thead>
                             <tr>
+                                <th>No</th>
                                 <th>Nama Hotel</th>
                                 <th>Housekeeping</th>
                                 <th>F&B Service</th>
@@ -43,6 +44,7 @@
                         <tbody>
                             @foreach ($dataPegawai as $item)
                                 <tr>
+                                    <td>{{ $loop->iteration }}</td>
                                     <td>{{ $item->pegawai_nama_hotel }}</td>
                                     <td class="text-center">{{ $item->pegawai_hk }}</td>
                                     <td class="text-center">{{ $item->pegawai_fbs }}</td>
@@ -147,7 +149,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-warning">Update</button>
+                        <button type="submit" class="btn btn-dinas">Update</button>
                     </div>
                 </form>
             </div>
