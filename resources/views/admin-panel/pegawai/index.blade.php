@@ -1,20 +1,5 @@
 @extends('admin-panel.layouts.app')
-@push('style')
-    <style>
-        table.dataTable>thead .sorting:before,
-        table.dataTable>thead .sorting_asc:before,
-        table.dataTable>thead .sorting_desc:before,
-        table.dataTable>thead .sorting_asc_disabled:before,
-        table.dataTable>thead .sorting_desc_disabled:before,
-        table.dataTable>thead .sorting:after,
-        table.dataTable>thead .sorting_asc:after,
-        table.dataTable>thead .sorting_desc:after,
-        table.dataTable>thead .sorting_asc_disabled:after,
-        table.dataTable>thead .sorting_desc_disabled:after {
-            font-size: 12px !important;
-        }
-    </style>
-@endpush
+
 
 @section('content')
     <div class="row">

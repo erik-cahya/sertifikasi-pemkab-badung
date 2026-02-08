@@ -9,6 +9,13 @@
     <meta content="Techzaa" name="author" />
 
     @stack('style')
+    <style>
+        table.dataTable thead th.sorting::before,
+    table.dataTable thead th.sorting::after {
+        font-size: 9px;
+        opacity: 0.5;
+    }
+    </style>
 
     {{-- !-- App favicon --> --}}
     <link rel="shortcut icon" href="{{ asset('admin') }}/assets/images/favicon.ico">
