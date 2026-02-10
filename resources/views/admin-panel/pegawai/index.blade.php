@@ -22,6 +22,7 @@
                                 <th>Engineering</th>
                                 <th>Lainnya</th>
                                 <th>Total</th>
+                                <th>File</th>
                                 <th>Ditambahkan pada</th>
                                 <th>Aksi</th>
                             </tr>
@@ -38,6 +39,7 @@
                                     <td class="text-center">{{ $item->pegawai_eng }}</td>
                                     <td class="text-center">{{ $item->pegawai_oth }}</td>
                                     <td class="text-center">{{ $item->pegawai_total }}</td>
+                                    <td class="text-center">@if(!empty($item->pegawai_file))<a href="{{ asset('pegawai_files/'.$item->pegawai_file) }}" target="_blank"> <i class="mdi mdi-download"></i> Download</a>@else - @endif</td>
                                     <td class="text-center">{{ $item->created_at->format('Y-m-d') }}</td>
                                     <td class="text-center">
                                         <button class="btn btn-sm btn-warning editButton" 
@@ -74,7 +76,7 @@
                 <div class="modal-header bg-dinas text-white">
                     <h5 class="modal-title" id="editModalLabel">Edit Data Pegawai</h5>
                 </div>
-                <form id="editForm">
+                <form id="editForm" enctype="multipart/form-data">
                     <div class="modal-body">
                         <input type="hidden" id="edit_ref" name="ref">
                         
@@ -132,6 +134,12 @@
                             <label>Total Pegawai</label>
                             <input type="text" class="rounded-3 form-control" id="edit_total" readonly>
                         </div>
+
+                        {{-- <div class="form-group mt-2">
+                            <label>Update File (opsional)</label>
+                            <input type="file" class="form-control rounded-3" name="pegawai_file" id="edit_file" accept="application/pdf">
+                            <small class="text-muted" style="color: red !important;">Kosongkan jika tidak ingin update file</small>
+                        </div> --}}
                     </div>
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-dinas">Update</button>

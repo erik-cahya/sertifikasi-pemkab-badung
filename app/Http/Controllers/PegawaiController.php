@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use App\Models\PegawaiModel;
+use Illuminate\Support\Facades\Storage;
 
 class PegawaiController extends Controller
 {
@@ -33,6 +34,7 @@ class PegawaiController extends Controller
             'pegawai_fo' => 'required',
             'pegawai_eng' => 'required',
             'pegawai_oth' => 'required',
+            'pegawai_file' => 'required|file|mimes:pdf|max:5120',
         ], [
             'pegawai_nama_hotel.required' => 'Nama tidak boleh kosong',
             'pegawai_hk.required' => 'Data Pegawai Housekeeping tidak boleh kosong',
@@ -41,8 +43,17 @@ class PegawaiController extends Controller
             'pegawai_fo.required' => 'Data Pegawai Kantor Depan tidak boleh kosong',
             'pegawai_eng.required' => 'Data Pegawai Engineering tidak boleh kosong',
             'pegawai_oth.required' => 'Data Pegawai Lainnya tidak boleh kosong',
+            'pegawai_file.required' => 'File Data Pegawai wajib diunggah.',
+            'pegawai_file.file'     => 'File tidak valid',
+            'pegawai_file.mimes'    => 'Format file harus PDF',
+            'pegawai_file.max'      => 'Ukuran file maksimal 5 MB',
         ]);
 
+        $ext  = $request->file('pegawai_file')->extension();
+        $time = time();
+        $hotel  = $request->pegawai_nama_hotel;
+        $filename = "DATA-PEGAWAI-{$hotel}-{$time}.{$ext}";
+        $path = Storage::disk('pegawai_hotel')->putFileAs("pegawai_hotel", $request->file('pegawai_file'), $filename);
 
         PegawaiModel::create([
             'pegawai_nama_hotel' => $request->pegawai_nama_hotel,
@@ -53,10 +64,11 @@ class PegawaiController extends Controller
             'pegawai_eng' => $request->pegawai_eng,
             'pegawai_oth' => $request->pegawai_oth,
             'pegawai_total' => $request->pegawai_total,
+            'pegawai_file' => $path,
         ]);
 
         $flashData = [
-            'title' => 'Pendataan Jumlah Pegawai Hotel Berhasii',
+            'title' => 'Pendataan Jumlah Pegawai Hotel Berhasil',
             'message' => 'Data Anda Berhasil Dikirim',
             'type' => 'success',
         ];

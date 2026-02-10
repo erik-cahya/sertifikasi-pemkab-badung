@@ -141,6 +141,14 @@ return [
             'throw' => false,
         ],
 
+        'pegawai_hotel' => [
+            'driver' => 'local',
+            'root' => public_path('pegawai_files'),
+            'url' => rtrim(env('APP_URL'), '/').'/pegawai_files',
+            'visibility' => 'public',
+            'throw' => false,
+        ],
+
     ],
 
     /*
