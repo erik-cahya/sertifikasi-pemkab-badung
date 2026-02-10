@@ -32,7 +32,9 @@ return new class extends Migration
             $table->string('no_asesor');
             $table->string('no_reg_asesor');
 
+            // Dokumen
             $table->string('bukti_asesmen')->nullable();
+            $table->string('dokumentasi_asesmen')->nullable();
 
             $table->foreignUlid('created_by')->nullable()->references('ref')->on('users')->nullOnDelete();
             $table->timestamps();

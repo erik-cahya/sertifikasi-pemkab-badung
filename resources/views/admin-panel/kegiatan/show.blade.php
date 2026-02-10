@@ -123,6 +123,10 @@
                                         <th>Nama LSP</th>
                                         <th>Jumlah Skema</th>
                                         <th>Kuota</th>
+                                        <th>Laporan Asesmen</th>
+                                        @role('lsp')
+                                            <th>Upload Laporan Asesmen</th>
+                                        @endrole
                                         <th>Details</th>
                                     </tr>
                                 </thead>
@@ -143,8 +147,26 @@
                                             </td>
 
                                             <td>
-                                                {{ $kegiatan->kuota_lsp ?? 0 }} Peserta
+                                                {{ $kegiatan->kuota_lsp ?? 0 }} Orang
                                             </td>
+
+                                            <td>
+                                                <div class="d-flex gap-2 align-items-center">
+                                                    <span id="laporan-{{ $kegiatan->ref }}">
+                                                        @if ($kegiatan->laporan_asesmen)
+                                                            <a href="{{ asset('asesmen_files/' . $kegiatan->laporan_asesmen) }}" target="_blank" class="text-danger fs-5" title="Lihat Laporan Asesmen"> <i class="mdi mdi-download"></i> Download </a>
+                                                        @else
+                                                            <span class="text-muted">-</span>
+                                                        @endif
+                                                    </span>
+                                                </div>
+                                            </td>
+
+                                            @role('lsp')
+                                                <td>
+                                                    <input type="file" class="form-control upload-laporan-asesmen form-control-sm" data-ref="{{ $kegiatan->ref }}" accept="application/pdf">
+                                                </td>
+                                            @endrole
 
                                             <td>
                                                 <button class="btn btn-link text-decoration-none fs-12 p-0" data-bs-toggle="collapse" data-bs-target="#jadwal-{{ $kegiatan->ref }}" aria-expanded="false" aria-controls="jadwal-{{ $kegiatan->ref }}">
@@ -154,7 +176,7 @@
                                         </tr>
                                         <tr class="bg-light collapse" id="jadwal-{{ $kegiatan->ref }}" data-bs-parent="#dataPeserta">
 
-                                            <td colspan="5" class="">
+                                            <td colspan="7" class="">
                                                 <div class="card mb-0 border-0 shadow-sm">
                                                     <div class="card-body p-0">
                                                         <div class="card-header bg-dinas text-white" bis_skin_checked="1">
@@ -166,9 +188,9 @@
                                                                 <tr>
                                                                     <th>No</th>
                                                                     <th>Total Asesi</th>
-                                                                    <th>Tanggal Asesmen</th>
-                                                                    <th>Tempat Asesmen</th>
-                                                                    <th>Skema Asesmen</th>
+                                                                    <th>Tanggal Uji Kompetensi</th>
+                                                                    <th>Tempat Uji Kompetensi</th>
+                                                                    <th>Skema</th>
                                                                     {{-- <th>Penanggung Jawab</th>
                                                                     <th>Penyelenggara Uji</th>
                                                                     <th>Asesor</th> --}}
@@ -176,8 +198,10 @@
                                                                     <th>Form Daftar Penerimaan</th>
                                                                     <th>Form Tanda Terima Sertifikat</th>
                                                                     <th>Bukti Asesmen</th>
+                                                                    <th>Dokumentasi Asesmen</th>
                                                                     @role('lsp')
                                                                         <th>Upload Bukti Asesmen</th>
+                                                                        <th>Upload Dokumentasi Asesmen</th>
                                                                     @endrole
                                                                     <th>Action</th>
                                                                 </tr>
@@ -185,7 +209,8 @@
                                                             <tbody id="detailJadwal-{{ $kegiatan->ref }}">
                                                                 {{-- {{ dd($kegiatan->lsp->lsp_nama) }} --}}
                                                                 @foreach ($jadwalKegiatan[$kegiatan->lsp->lsp_nama] ?? [] as $asesmen)
-                                                                    <tr>
+                                                                    {{-- <tr> --}}
+                                                                    <tr class="{{ count($dataAsesi[$asesmen->ref] ?? []) != $asesmen->kuota_harian ? 'bg-warning' : '' }}">
                                                                         <td>{{ $loop->iteration }}</td>
                                                                         <td>{{ count($dataAsesi[$asesmen->ref] ?? []) }} / {{ $asesmen->kuota_harian }} Orang</td>
                                                                         <td class="{{ count($dataAsesi[$asesmen->ref] ?? []) >= 1 ? 'fw-bold' : '' }}">{{ \Carbon\Carbon::parse($asesmen->jadwal_asesmen)->locale('id')->translatedFormat('l, d F Y') }}</td>
@@ -208,10 +233,24 @@
                                                                                 </span>
                                                                             </div>
                                                                         </td>
+                                                                        <td>
+                                                                            <div class="d-flex gap-2 align-items-center">
+                                                                                <span id="dokumentasi-{{ $asesmen->ref }}">
+                                                                                    @if ($asesmen->dokumentasi_asesmen)
+                                                                                        <a href="{{ asset('asesmen_files/' . $asesmen->dokumentasi_asesmen) }}" target="_blank" class="text-danger fs-5" title="Lihat Dokumentasi"> <i class="mdi mdi-download"></i> Download </a>
+                                                                                    @else
+                                                                                        <span class="text-muted">-</span>
+                                                                                    @endif
+                                                                                </span>
+                                                                            </div>
+                                                                        </td>
 
                                                                         @role('lsp')
                                                                             <td>
                                                                                 <input type="file" class="form-control upload-bukti-asesmen form-control-sm" data-ref="{{ $asesmen->ref }}" accept="application/pdf">
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="file" class="form-control upload-dokumentasi-asesmen form-control-sm" data-ref="{{ $asesmen->ref }}" accept="application/pdf">
                                                                             </td>
                                                                         @endrole
 
@@ -224,7 +263,7 @@
                                                                         </td>
                                                                     </tr>
                                                                     <tr class="bg-light collapse" id="asesi_list-{{ $asesmen->ref }}" data-bs-parent="#detailJadwal-{{ $kegiatan->ref }}">
-                                                                        <td colspan="14" class="p-3">
+                                                                        <td colspan="16" class="p-3">
                                                                             <div class="card mb-0 border-0 shadow-sm">
                                                                                 <div class="card-body p-1">
                                                                                     <div class="card-header text-white bg-dinas px-3" bis_skin_checked="1">
@@ -236,8 +275,10 @@
                                                                                             <tr>
                                                                                                 <th>No</th>
                                                                                                 <th>Nama Asesi</th>
-                                                                                                <th>Nomor Sertifikat <small class="fw-normal fs-10">( Klik Kolom untuk tambah/edit )</small></th>
-                                                                                                <th width="20%">Upload Sertifikat</th>
+                                                                                                <th>Nomor Sertifikat  @role('lsp')<small class="fw-normal fs-10">( Klik Kolom untuk tambah/edit )</small>@endrole</th>
+                                                                                                @role('lsp')
+                                                                                                    <th width="20%">Upload Sertifikat</th>
+                                                                                                @endrole
                                                                                                 <th>Download Sertifikat</th>
                                                                                             </tr>
                                                                                         </thead>
@@ -247,13 +288,16 @@
                                                                                                 <tr>
                                                                                                     <td>{{ $loop->iteration }}</td>
                                                                                                     <td>{{ $asesi->nama_lengkap }}</td>
-                                                                                                    <td><span class="edited" id="no_sertifikat" ref="{{ $asesi->ref }}">
+                                                                                                    <td><span @role('lsp') class="edited" @endrole id="no_sertifikat" ref="{{ $asesi->ref }}">
                                                                                                             @if ($asesi->no_sertifikat != null)
                                                                                                             {{ $asesi->no_sertifikat }} @else-
                                                                                                             @endif
-                                                                                                        </span></td>
-                                                                                                    <td><input type="file" class="form-control upload-sertifikat" data-ref="{{ $asesi->ref }}" accept="application/pdf"></td>
-                                                                                                    <td class="d-flex gap-2 align-items-center">
+                                                                                                        </span>
+                                                                                                    </td>
+                                                                                                    @role('lsp')
+                                                                                                        <td><input type="file" class="form-control upload-sertifikat" data-ref="{{ $asesi->ref }}" accept="application/pdf"></td>
+                                                                                                    @endrole
+                                                                                                        <td class="d-flex gap-2 align-items-center">
                                                                                                         <span id="sertifikat-{{ $asesi->ref }}">
                                                                                                             @if ($asesi->sertifikat_file)
                                                                                                                 <a href="{{ asset('asesi_files/' . $asesi->sertifikat_file) }}" target="_blank" class="text-danger fs-5" title="Lihat Sertifikat"> <i class="mdi mdi-download"></i> Download </a>
@@ -303,6 +347,50 @@
 
             $(this).on('apply.daterangepicker', function(ev, picker) {
                 $(this).val(picker.startDate.format('DD/MM/YYYY'));
+            });
+        });
+    </script>
+
+    <!-- Upload Laporan Asesmen -->
+    <script>
+        $(document).on('change', '.upload-laporan-asesmen', function() {
+            let input = this;
+            let file = this.files[0];
+            let ref = $(this).data('ref');
+
+            if (!file) return;
+
+            let formData = new FormData();
+            formData.append('laporan_asesmen', file);
+            formData.append('ref', ref);
+            formData.append('_token', '{{ csrf_token() }}');
+
+            $.ajax({
+                url: "{{ route('kegiatan.uploadLaporanAsesmen') }}",
+                type: "POST",
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function(res) {
+                    input.value = '';
+                    Swal.fire({
+                        icon: 'success',
+                        text: res.message,
+                        timer: 1500,
+                        showConfirmButton: false
+                    });
+                    $('#laporan-' + ref).html(`
+                        <a href="${res.url}" target="_blank" class="text-danger fs-5">
+                            <i class="mdi mdi-download"></i> Download
+                        </a>
+                    `);
+                },
+                error: function(xhr) {
+                    Swal.fire({
+                        icon: 'error',
+                        text: xhr.responseJSON?.message ?? 'Upload gagal'
+                    });
+                }
             });
         });
     </script>
@@ -395,6 +483,50 @@
                         showConfirmButton: false
                     });
                     $('#asesmen-' + ref).html(`
+                        <a href="${res.url}" target="_blank" class="text-danger fs-5">
+                            <i class="mdi mdi-download"></i> Download
+                        </a>
+                    `);
+                },
+                error: function(xhr) {
+                    Swal.fire({
+                        icon: 'error',
+                        text: xhr.responseJSON?.message ?? 'Upload gagal'
+                    });
+                }
+            });
+        });
+    </script>
+
+    <!-- Upload Dokumentasi Asesmen -->
+    <script>
+        $(document).on('change', '.upload-dokumentasi-asesmen', function() {
+            let input = this;
+            let file = this.files[0];
+            let ref = $(this).data('ref');
+
+            if (!file) return;
+
+            let formData = new FormData();
+            formData.append('dokumentasi_asesmen', file);
+            formData.append('ref', ref);
+            formData.append('_token', '{{ csrf_token() }}');
+
+            $.ajax({
+                url: "{{ route('kegiatan.uploadDokumentasiAsesmen') }}",
+                type: "POST",
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function(res) {
+                    input.value = '';
+                    Swal.fire({
+                        icon: 'success',
+                        text: res.message,
+                        timer: 1500,
+                        showConfirmButton: false
+                    });
+                    $('#dokumentasi-' + ref).html(`
                         <a href="${res.url}" target="_blank" class="text-danger fs-5">
                             <i class="mdi mdi-download"></i> Download
                         </a>

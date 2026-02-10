@@ -50,4 +50,10 @@ class KegiatanJadwalModel extends Model
             'ref'
         );
     }
+
+    public function asesmen()
+    {
+        return $this->hasMany(AsesmenModel::class, 'kegiatan_jadwal_ref', 'ref');
+    }
+
 }

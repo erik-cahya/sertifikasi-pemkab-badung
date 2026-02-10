@@ -125,6 +125,22 @@ return [
             'throw' => false,
         ],
 
+        'dokumentasi_asesmen' => [
+            'driver' => 'local',
+            'root' => public_path('asesmen_files'),
+            'url' => rtrim(env('APP_URL'), '/').'/asesmen_files',
+            'visibility' => 'public',
+            'throw' => false,
+        ],
+
+        'laporan_asesmen' => [
+            'driver' => 'local',
+            'root' => public_path('asesmen_files'),
+            'url' => rtrim(env('APP_URL'), '/').'/asesmen_files',
+            'visibility' => 'public',
+            'throw' => false,
+        ],
+
     ],
 
     /*

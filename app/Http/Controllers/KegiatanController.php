@@ -371,4 +371,91 @@ class KegiatanController extends Controller
 
         ]);
     }
+
+    public function uploadDokumentasiAsesmen(Request $request)
+    {
+        $request->validate([
+            'ref' => 'required',
+            // Max file 10MB
+            'dokumentasi_asesmen' => 'required|file|mimes:pdf|max:10240',
+        ]);
+
+        $asesmen = AsesmenModel::where('ref', $request->ref)->first();
+
+        if (!$asesmen) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Data Asesi tidak ditemukan'
+            ], 404);
+        }
+
+        $ext  = $request->file('dokumentasi_asesmen')->extension();
+        $time = time();
+        $lsp  = $asesmen->nama_lsp;
+        $tuk  = $asesmen->nama_tuk;
+        $tgl  = $asesmen->jadwal_asesmen;
+        $filename = "DOKUMENTASI-ASESMEN-{$lsp}-{$tuk}-{$tgl}-{$time}.{$ext}";
+
+        // hapus file lama
+        if ($asesmen->dokumentasi_asesmen && Storage::disk('dokumentasi_asesmen')->exists($asesmen->dokumentasi_asesmen)) {
+            Storage::disk('dokumentasi_asesmen')->delete($asesmen->dokumentasi_asesmen);
+        }
+
+        // simpan file
+        $path = Storage::disk('dokumentasi_asesmen')->putFileAs("dokumentasi_asesmen", $request->file('dokumentasi_asesmen'), $filename);
+
+        //update tb
+        $asesmen->update(['dokumentasi_asesmen' => $path]);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Dokuemntasi Asesmen - ' . $asesmen->nama_lsp . ' - ' . $asesmen->nama_tuk . ' - ' . $asesmen->jadwal_asesmen . ' berhasil diupload',
+            'path'    => $path,
+            'url'     => asset('asesmen_files/' . $path),
+
+        ]);
+    }
+    
+    public function uploadLaporanAsesmen(Request $request)
+    {
+        $request->validate([
+            'ref' => 'required',
+            // Max file 50MB
+            'laporan_asesmen' => 'required|file|mimes:pdf|max:51200',
+        ]);
+
+        $jadwal = KegiatanJadwalModel::with(['lsp', 'kegiatan'])->where('ref', $request->ref)->first();
+
+        if (!$jadwal) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Data Asesi tidak ditemukan'
+            ], 404);
+        }
+
+        $ext  = $request->file('laporan_asesmen')->extension();
+        $time = time();
+        $lsp  = $jadwal->lsp->lsp_nama;
+        $kegiatan  = $jadwal->kegiatan->nama_kegiatan;
+        $filename = "LAPORAN-{$kegiatan}-{$lsp}-{$time}.{$ext}";
+
+        // hapus file lama
+        if ($jadwal->laporan_asesmen && Storage::disk('laporan_asesmen')->exists($jadwal->laporan_asesmen)) {
+            Storage::disk('laporan_asesmen')->delete($jadwal->laporan_asesmen);
+        }
+
+        // simpan file
+        $path = Storage::disk('laporan_asesmen')->putFileAs("laporan_asesmen", $request->file('laporan_asesmen'), $filename);
+
+        //update tb
+        $jadwal->update(['laporan_asesmen' => $path]);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Laporan - ' . $kegiatan . ' - ' . $lsp.' berhasil diupload',
+            'path'    => $path,
+            'url'     => asset('asesmen_files/' . $path),
+
+        ]);
+    }
 }
