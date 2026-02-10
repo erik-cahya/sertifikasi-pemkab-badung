@@ -87,7 +87,8 @@ class PegawaiController extends Controller
 
     public function update(Request $request, $ref)
     {
-        $validated = $request->validate([
+        // Validasi data dasar
+        $rules = [
             'pegawai_nama_hotel' => 'required',
             'pegawai_hk' => 'required|numeric|min:0',
             'pegawai_fbs' => 'required|numeric|min:0',
@@ -95,7 +96,9 @@ class PegawaiController extends Controller
             'pegawai_fo' => 'required|numeric|min:0',
             'pegawai_eng' => 'required|numeric|min:0',
             'pegawai_oth' => 'required|numeric|min:0',
-        ], [
+        ];
+
+        $messages = [
             'pegawai_nama_hotel.required' => 'Nama hotel tidak boleh kosong',
             'pegawai_hk.required' => 'Data Pegawai Housekeeping tidak boleh kosong',
             'pegawai_fbs.required' => 'Data Pegawai F&B Service tidak boleh kosong',
@@ -103,14 +106,24 @@ class PegawaiController extends Controller
             'pegawai_fo.required' => 'Data Pegawai Kantor Depan tidak boleh kosong',
             'pegawai_eng.required' => 'Data Pegawai Engineering tidak boleh kosong',
             'pegawai_oth.required' => 'Data Pegawai Lainnya tidak boleh kosong',
-        ]);
+        ];
+
+        if ($request->hasFile('pegawai_file')) {
+            $rules['pegawai_file'] = 'file|mimes:pdf|max:5120';
+            $messages['pegawai_file.file'] = 'File tidak valid';
+            $messages['pegawai_file.mimes'] = 'Format file harus PDF';
+            $messages['pegawai_file.max'] = 'Ukuran file maksimal 5 MB';
+        }
+
+        $validated = $request->validate($rules, $messages);
 
         $pegawai = PegawaiModel::findOrFail($ref);
 
         $total = $request->pegawai_hk + $request->pegawai_fbs + $request->pegawai_fbp +
             $request->pegawai_fo + $request->pegawai_eng + $request->pegawai_oth;
 
-        $pegawai->update([
+        // Data yang akan diupdate
+        $dataToUpdate = [
             'pegawai_nama_hotel' => $request->pegawai_nama_hotel,
             'pegawai_hk' => $request->pegawai_hk,
             'pegawai_fbs' => $request->pegawai_fbs,
@@ -119,7 +132,27 @@ class PegawaiController extends Controller
             'pegawai_eng' => $request->pegawai_eng,
             'pegawai_oth' => $request->pegawai_oth,
             'pegawai_total' => $total,
-        ]);
+        ];
+
+        // Jika ada file yang diupload, proses upload dan hapus file lama
+        if ($request->hasFile('pegawai_file')) {
+            // Hapus file lama jika ada
+            if ($pegawai->pegawai_file && Storage::disk('pegawai_hotel')->exists($pegawai->pegawai_file)) {
+                Storage::disk('pegawai_hotel')->delete($pegawai->pegawai_file);
+            }
+
+            // Upload file baru
+            $ext = $request->file('pegawai_file')->extension();
+            $time = time();
+            $hotel = $request->pegawai_nama_hotel;
+            $filename = "DATA-PEGAWAI-{$hotel}-{$time}.{$ext}";
+            $path = Storage::disk('pegawai_hotel')->putFileAs("pegawai_hotel", $request->file('pegawai_file'), $filename);
+
+            // Tambahkan path file ke data yang akan diupdate
+            $dataToUpdate['pegawai_file'] = $path;
+        }
+
+        $pegawai->update($dataToUpdate);
 
         return response()->json([
             'judul' => 'Berhasil!',
@@ -133,6 +166,13 @@ class PegawaiController extends Controller
         try {
             $pegawai = PegawaiModel::findOrFail($ref);
             $namaHotel = $pegawai->pegawai_nama_hotel;
+
+            // Hapus file dari storage jika ada
+            if ($pegawai->pegawai_file && Storage::disk('pegawai_hotel')->exists($pegawai->pegawai_file)) {
+                Storage::disk('pegawai_hotel')->delete($pegawai->pegawai_file);
+            }
+
+            // Hapus data dari database
             $pegawai->delete();
 
             return response()->json([

@@ -60,7 +60,7 @@ class ProfileController extends Controller
         $lsp = LSPModel::where('ref', $id)->firstOrFail();
 
         /* ================== UPDATE LOGO ================== */
-        if($request->hasFile('lsp_logo')) {
+        if ($request->hasFile('lsp_logo')) {
 
             // DELETE LOGO LAMA
             if ($lsp->lsp_logo && Storage::disk('logo-lsp')->exists($lsp->lsp_logo)) {
@@ -71,8 +71,7 @@ class ProfileController extends Controller
             $ext = $request->file('lsp_logo')->extension();
             $filename = "{$lsp_nama}-{$request->lsp_no_lisensi}.{$ext}";
             $lsp_logo = Storage::disk('logo-lsp')->putFileAs('logo-lsp', $request->file('lsp_logo'), $filename);
-        } 
-        else {
+        } else {
             $lsp_logo = $lsp->lsp_logo; // kalau ga upload baru
         }
 
@@ -85,7 +84,7 @@ class ProfileController extends Controller
             'lsp_telp' => $request->lsp_telp,
             'lsp_direktur' => $request->lsp_direktur,
             'lsp_direktur_telp' => $request->lsp_direktur_telp,
-            'lsp_tanggal_lisensi' => $request->lsp_tanggal_lisensi,
+            // 'lsp_tanggal_lisensi' => $request->lsp_tanggal_lisensi,
             'lsp_expired_lisensi' => $request->lsp_expired_lisensi,
             'lsp_logo' => $lsp_logo,
         ]);

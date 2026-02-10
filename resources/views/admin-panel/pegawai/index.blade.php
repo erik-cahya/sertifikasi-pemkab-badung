@@ -135,11 +135,11 @@
                             <input type="text" class="rounded-3 form-control" id="edit_total" readonly>
                         </div>
 
-                        {{-- <div class="form-group mt-2">
+                        <div class="form-group mt-2">
                             <label>Update File (opsional)</label>
                             <input type="file" class="form-control rounded-3" name="pegawai_file" id="edit_file" accept="application/pdf">
                             <small class="text-muted" style="color: red !important;">Kosongkan jika tidak ingin update file</small>
-                        </div> --}}
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-dinas">Update</button>
@@ -201,27 +201,39 @@
                 e.preventDefault();
                 
                 const ref = document.getElementById('edit_ref').value;
-                const formData = {
-                    pegawai_nama_hotel: document.getElementById('edit_nama_hotel').value,
-                    pegawai_hk: document.getElementById('edit_hk').value,
-                    pegawai_fbs: document.getElementById('edit_fbs').value,
-                    pegawai_fbp: document.getElementById('edit_fbp').value,
-                    pegawai_fo: document.getElementById('edit_fo').value,
-                    pegawai_eng: document.getElementById('edit_eng').value,
-                    pegawai_oth: document.getElementById('edit_oth').value,
-                };
+                
+                // Gunakan FormData untuk mendukung file upload
+                const formData = new FormData();
+                formData.append('_method', 'PUT'); // Method spoofing untuk Laravel
+                formData.append('pegawai_nama_hotel', document.getElementById('edit_nama_hotel').value);
+                formData.append('pegawai_hk', document.getElementById('edit_hk').value);
+                formData.append('pegawai_fbs', document.getElementById('edit_fbs').value);
+                formData.append('pegawai_fbp', document.getElementById('edit_fbp').value);
+                formData.append('pegawai_fo', document.getElementById('edit_fo').value);
+                formData.append('pegawai_eng', document.getElementById('edit_eng').value);
+                formData.append('pegawai_oth', document.getElementById('edit_oth').value);
+                
+                // Tambahkan file jika ada yang dipilih
+                const fileInput = document.getElementById('edit_file');
+                if (fileInput.files.length > 0) {
+                    formData.append('pegawai_file', fileInput.files[0]);
+                }
 
                 fetch('/pegawaiAdmin/' + ref, {
-                    method: 'PUT',
+                    method: 'POST', // Gunakan POST dengan _method spoofing
                     headers: {
                         'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                        'Content-Type': 'application/json'
+                        // JANGAN set Content-Type, biarkan browser yang set otomatis dengan boundary
                     },
-                    body: JSON.stringify(formData)
+                    body: formData
                 })
                 .then(response => response.json())
                 .then(data => {
                     $('#editModal').modal('hide');
+                    
+                    // Reset form dan file input
+                    document.getElementById('editForm').reset();
+                    
                     Swal.fire({
                         title: data.judul,
                         text: data.pesan,

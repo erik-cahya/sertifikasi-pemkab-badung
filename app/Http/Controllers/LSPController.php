@@ -68,7 +68,7 @@ class LSPController extends Controller
             // 'lsp_telp' => 'required',
             // 'lsp_direktur' => 'required',
             // 'lsp_direktur_telp' => 'required',
-            'lsp_tanggal_lisensi' => 'required',
+            // 'lsp_tanggal_lisensi' => 'required',
             'lsp_expired_lisensi' => 'required',
 
             'name' => 'required',
@@ -119,7 +119,7 @@ class LSPController extends Controller
             'lsp_direktur' => $request->lsp_direktur,
             'lsp_direktur_telp' => $request->lsp_direktur_telp,
             'lsp_logo' => $lsp_logo,
-            'lsp_tanggal_lisensi' => Carbon::createFromFormat('d/m/Y', $request->lsp_tanggal_lisensi)->format('Y-m-d'),
+            'lsp_tanggal_lisensi' => NULL,
             'lsp_expired_lisensi' => Carbon::createFromFormat('d/m/Y', $request->lsp_expired_lisensi)->format('Y-m-d'),
             'created_by' => Auth::user()->ref,
 

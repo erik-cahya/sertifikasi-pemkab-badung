@@ -116,7 +116,7 @@
                                                 <x-form.input className="col-md-6 mb-3" type="text" name="lsp_email" label="Email LSP" value="{{ $dataLSP->lsp_email }}" />
                                                 <x-form.input className="col-md-6 mb-3" type="text" name="lsp_direktur" label="Direktur LSP" value="{{ $dataLSP->lsp_direktur }}" />
                                                 <x-form.input className="col-md-6 mb-3" type="text" name="lsp_direktur_telp" label="Kontak Direktur LSP" value="{{ $dataLSP->lsp_direktur_telp }}" />
-                                                <x-form.input className="col-md-6 mb-3" type="date" name="lsp_tanggal_lisensi" label="Tanggal Lisensi LSP" value="{{ $dataLSP->lsp_tanggal_lisensi }}" />
+                                                {{-- <x-form.input className="col-md-6 mb-3" type="date" name="lsp_tanggal_lisensi" label="Tanggal Lisensi LSP" value="{{ $dataLSP->lsp_tanggal_lisensi }}" /> --}}
                                                 <x-form.input className="col-md-6 mb-3" type="date" name="lsp_expired_lisensi" label="Tanggal Expired LSP" value="{{ $dataLSP->lsp_expired_lisensi }}" />
                                                 <x-form.input className="col-md-6 mb-3" type="file" name="lsp_logo" label="Upload Logo" />
                                             </div>
