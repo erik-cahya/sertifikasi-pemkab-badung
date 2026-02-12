@@ -316,7 +316,7 @@
                                         <div class="col-lg-4">
                                             <div class="mb-3">
                                                 <label for="email_perusahaan" class="form-label">Email</label><span class="text-danger">*</span>
-                                                <input type="email" class="form-control rounded-3 @error('email_perusahaan') is-invalid @enderror" id="email_perusahaan" name="email_perusahaan" placeholder="Masukkan Aalamt Email Perusahaan" value="{{ old('email_perusahaan') }}">
+                                                <input type="email" class="form-control rounded-3 @error('email_perusahaan') is-invalid @enderror" id="email_perusahaan" name="email_perusahaan" placeholder="Masukkan Alamat Email Perusahaan" value="{{ old('email_perusahaan') }}">
                                                 @error('email_perusahaan')
                                                     <div class="invalid-feedback" bis_skin_checked="1">{{ $message }}</div>
                                                 @enderror
@@ -395,12 +395,13 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-lg-12">
-                                            <div class="mb-2 mt-3">
-                                                <button type="button" id="btnSubmit" class="btn btn-dinas rounded-3 fw-semibold px-4 py-2"><i class="ri-save-3-line"></i> DAFTAR</button>
+                                        @if($dataKegiatan->isNotEmpty())
+                                            <div class="col-lg-12">
+                                                <div class="mb-2 mt-3">
+                                                    <button type="button" id="btnSubmit" class="btn btn-dinas rounded-3 fw-semibold px-4 py-2"><i class="ri-save-3-line"></i> DAFTAR</button>
+                                                </div>
                                             </div>
-                                        </div>
-
+                                        @endif
                                     </div>
                                 </div>
                             </form>
