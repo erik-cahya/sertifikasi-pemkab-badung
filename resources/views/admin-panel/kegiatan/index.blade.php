@@ -13,7 +13,7 @@
                             <tr>
                                 <th>No</th>
                                 <th>Nama Kegiatan</th>
-                                @role('master')
+                                @role('master', 'dinas')
                                     <th>LSP Terlibat</th>
                                     <th>Kuota Peserta</th>
                                 @endrole
@@ -32,7 +32,7 @@
                                         {{ $kegiatan->nama_kegiatan }}
                                     </td>
 
-                                    @role('master')
+                                    @role('master', 'dinas')
                                         <td>
                                             @php
                                                 $lsps = $kegiatan->kegiatanJadwal
@@ -59,7 +59,7 @@
                                             </div>
                                         </td>
                                         <td>{{ $kegiatan->total_kuota ?? '0' }} Peserta</td>
-                                    @endrole('master')
+                                    @endrole
                                     <td>{{ \Carbon\Carbon::parse($kegiatan->mulai_kegiatan)->locale('id')->translatedFormat('l, d F Y') }}</td>
                                     <td>{{ \Carbon\Carbon::parse($kegiatan->selesai_kegiatan)->locale('id')->translatedFormat('l, d F Y') }}</td>
                                     <td class="text-center"><span class="badge {{ $kegiatan->status == 1 ? 'bg-success' : 'bg-danger' }}">{{ $kegiatan->status == 1 ? 'Aktif' : 'Tidak Aktif' }}</span></td>

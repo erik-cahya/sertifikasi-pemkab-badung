@@ -2,7 +2,7 @@
 @section('content')
     <div class="col-xxl-12 order-lg-1 order-2">
         <div class="card">
-            <div class="card-header bg-dinas text-white d-flex justify-content-between align-items-center flex-wrap">
+            <div class="card-header bg-dinas d-flex justify-content-between align-items-center flex-wrap text-white">
                 <div class="">
                     <h4 class="card-title">Add New User</h4>
                 </div>
@@ -20,10 +20,9 @@
                                     <x-form.input className="col-md-4 mb-3" type="text" name="email" label="Email" value="{{ old('email') }}" />
                                     <x-form.input className="col-md-4 mb-3" type="text" name="username" label="Username" value="{{ old('username') }}" />
 
-
                                     <div class="col-md-4 mb-3">
                                         <label for="roles" class="form-label">Role User</label>
-                                        <select class="text-capitalize form-select rounded-3 @error('roles') is-invalid @enderror" id="roles" name="roles">
+                                        <select class="text-capitalize rounded-3 @error('roles') is-invalid @enderror form-select" id="roles" name="roles">
                                             <option value="#" disabled selected hidden>Pilih Role User</option>
                                             <option value="Master" {{ old('roles') === 'Master' ? 'selected' : '' }}>Master</option>
                                             <option value="Dinas" {{ old('roles') === 'Dinas' ? 'selected' : '' }}>Dinas</option>
@@ -39,8 +38,6 @@
 
                                     <x-form.input className="col-md-4 mb-3" type="password" name="password" label="Password" />
                                     <x-form.input className="col-md-4 mb-3" type="password" name="password_confirmation" label="Password Confirmation" />
-
-
 
                                 </div>
 
@@ -60,14 +57,14 @@
 
     <div class="col-xxl-12 order-lg-1 order-2">
         <div class="card">
-            <div class="card-header bg-dinas text-white d-flex justify-content-between align-items-center flex-wrap">
+            <div class="card-header bg-dinas d-flex justify-content-between align-items-center flex-wrap text-white">
                 <div>
                     <h4 class="card-title">User List</h4>
                 </div>
             </div>
             <div class="card-body p-0">
                 <div class="table-responsive">
-                    <table class="datatable-dashboard mb-0 table align-middle">
+                    <table class="datatable-dashboard table-bordered table-sm fs-12 mb-0 table align-middle">
                         <thead>
                             <tr class="table-light text-capitalize">
                                 <th>Name</th>
@@ -85,11 +82,11 @@
                                 <tr>
                                     <td>
                                         <div class="d-flex align-items-center">
-                                             <div class="rounded-circle bg-dinas d-flex align-items-center justify-content-center text-white" style="width:40px;height:40px;">
-                                                <i class="bi bi-person-fill fs-3"></i>
+                                            <div class="rounded-circle bg-dinas d-flex align-items-center justify-content-center text-white" style="width:30px;height:30px;">
+                                                <i class="bi bi-person-fill"></i>
                                             </div>
-                                            <div class="ps-2">
-                                                <h5 class="mb-1">{{ $user->name }}</h5>
+                                            <div class="fs-12">
+                                                <span class="fw-semibold mx-1 mb-1">{{ $user->name }}</span>
                                             </div>
                                         </div>
                                     </td>
@@ -97,7 +94,7 @@
                                         <span class="fw-semibold">{{ $user->email }}</span>
                                     </td>
                                     <td>
-                                        <span class="fw-semibold ">{{ $user->username }}</span>
+                                        <span class="fw-semibold fst-italic">{{ $user->username }}</span>
                                     </td>
                                     <td>
                                         @php
@@ -171,8 +168,6 @@
                                 </div>
                                 <!-- End Edit Data Modal -->
                             @endforeach
-
-
 
                         </tbody>
                         <!-- end table body -->

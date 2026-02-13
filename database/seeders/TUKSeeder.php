@@ -17,7 +17,7 @@ class TUKSeeder extends Seeder
      */
     public function run(): void
     {
-        $lsp = LSPModel::where('lsp_nama', 'LSP Indonesia')->value('ref');
+        $lsp = LSPModel::where('lsp_nama', 'LSP Engineering Hospitality Indonesia')->value('ref');
 
 
         $data = [

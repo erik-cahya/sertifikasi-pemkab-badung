@@ -3,7 +3,7 @@
     <!-- Logo Light -->
     <a href="{{ route('dashboard') }}" class="logo logo-light bg-dinas">
         <span class="logo-lg">
-            <img src="{{ asset('img/logo_dinas_title.png') }}" style="height: 38px; margin-left: -15px" alt="logo">
+            <img src="{{ asset('img/logo_dinas_title.png') }}" style="height: 36px; margin-left: -15px" alt="logo">
             {{-- <h4 class="mt-3 text-white">Gse Management</h4> --}}
         </span>
         <span class="logo-sm">
@@ -15,7 +15,7 @@
     <!-- Logo Dark -->
     <a href="{{ route('dashboard') }}" class="logo logo-dark bg-dinas">
         <span class="logo-lg">
-            <img src="{{ asset('img/logo_dinas_title.png') }}" style="height: 38px; margin-left: -15px" alt="logo">
+            <img src="{{ asset('img/logo_dinas_title.png') }}" style="height: 36px; margin-left: -15px" alt="logo">
         </span>
         <span class="logo-sm">
             <img src="{{ asset('img/logo_dinas_no_title.png') }}" alt="small logo" style="height: 40px">
@@ -78,11 +78,11 @@
 
                         {{-- @if (Auth::user()->roles === 'lsp') --}}
                         @role('lsp')
-                        <li class="side-nav-item {{ request()->routeIs('tukAdmin.create') ? 'menuitem-active' : '' }}">
-                            <a class="side-nav-link {{ request()->routeIs('tukAdmin.create') ? 'active' : '' }}" href="{{ route('tukAdmin.create') }}">
-                                Tambah TUK
-                            </a>
-                        </li>
+                            <li class="side-nav-item {{ request()->routeIs('tukAdmin.create') ? 'menuitem-active' : '' }}">
+                                <a class="side-nav-link {{ request()->routeIs('tukAdmin.create') ? 'active' : '' }}" href="{{ route('tukAdmin.create') }}">
+                                    Tambah TUK
+                                </a>
+                            </li>
                         @endrole
 
                     </ul>

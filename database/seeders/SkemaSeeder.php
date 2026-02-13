@@ -16,11 +16,11 @@ class SkemaSeeder extends Seeder
     public function run(): void
     {
 
-        $lspEhi = LSPModel::where('lsp_nama', 'LSP Indonesia')
+        $lspEhi = LSPModel::where('lsp_nama', 'LSP Engineering Hospitality Indonesia')
             ->with('user')
             ->firstOrFail();
 
-        $lspTekno = LSPModel::where('lsp_nama', 'LSP P3 Teknologi Digital')
+        $lspTekno = LSPModel::where('lsp_nama', 'LSP Pariwisata Nugraha Internasional')
             ->with('user')
             ->firstOrFail();
 
