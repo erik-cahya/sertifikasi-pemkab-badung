@@ -46,7 +46,7 @@
                                         <div class="row">
                                             <div class="col-lg-4 mb-3">
                                                 <label for="nama_tuk" class="form-label">Pilih TUK</label>
-                                                <select class="select2 @error('nama_tuk') is-invalid @enderror form-select" data-toggle="select2" id="nama_tuk" name="nama_tuk">
+                                                <select class="select2 @error('nama_tuk') is-invalid @enderror form-select rounded-3" data-toggle="select2" id="nama_tuk" name="nama_tuk">
                                                     <option value="#" hidden disabled selected>Pilih TUK</option>
                                                     @foreach ($dataTUK as $tuk)
                                                         <option value="{{ $tuk->tuk_nama }}">{{ $tuk->tuk_nama }}</option>
@@ -70,7 +70,7 @@
                                             </div>
                                             <div class="col-lg-4 mb-3">
                                                 <label for="skema_sertifikasi" class="form-label">Skema Sertifikasi</label>
-                                                <select class="select2 @error('skema_sertifikasi') is-invalid @enderror form-select" data-toggle="select2" id="skema_sertifikasi" name="skema_sertifikasi">
+                                                <select class="select2 @error('skema_sertifikasi') is-invalid @enderror form-select rounded-3" data-toggle="select2" id="skema_sertifikasi" name="skema_sertifikasi">
                                                     <option value="#" hidden disabled selected>Pilih Skema</option>
                                                     @foreach ($dataSkema as $dtSkema)
                                                         <option value="{{ $dtSkema->skema->skema_judul }}">{{ $dtSkema->skema->skema_judul }}</option>
@@ -85,8 +85,8 @@
                                             <input type="hidden" name="kegiatan_lsp_ref" value="{{ $kegiatan_lsp_ref }}">
                                             <input type="hidden" name="kegiatan_ref" value="{{ $kegiatan_ref }}">
                                             <input type="hidden" name="kegiatan_jadwal_ref" value="{{ $kegiatan_jadwal_ref }}">
-                                            <x-form.input className="col-md-6 mb-3" type="text" name="nama_penanggung_jawab" label="Nama Penanggung Jawab" value="{{ old('nama_penanggung_jawab') }}" />
-                                            <x-form.input className="col-md-6 mb-3" type="text" name="no_penanggung_jawab" label="Nomor HP Penanggung Jawab" value="{{ old('no_penanggung_jawab') }}" />
+                                            {{-- <x-form.input className="col-md-6 mb-3" type="text" name="nama_penanggung_jawab" label="Nama Penanggung Jawab" value="{{ old('nama_penanggung_jawab') }}" /> --}}
+                                            {{-- <x-form.input className="col-md-6 mb-3" type="text" name="no_penanggung_jawab" label="Nomor HP Penanggung Jawab" value="{{ old('no_penanggung_jawab') }}" /> --}}
                                             <x-form.input className="col-md-6 mb-3" type="text" name="nama_penyelenggara_uji" label="Nama Penyelenggara Uji" value="{{ old('nama_penyelenggara_uji') }}" />
                                             <x-form.input className="col-md-6 mb-3" type="text" name="no_penyelenggara_uji" label="No HP Penyelenggara Uji" value="{{ old('no_penyelenggara_uji') }}" />
                                             <x-form.input className="col-md-4 mb-3" type="text" name="nama_asesor" label="Nama Asesor" value="{{ old('nama_asesor') }}" />

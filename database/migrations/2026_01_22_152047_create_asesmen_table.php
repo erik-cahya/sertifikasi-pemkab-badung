@@ -24,8 +24,8 @@ return new class extends Migration
             $table->integer('kuota_harian');
 
             // TAMBAHAN
-            $table->string('nama_penanggung_jawab');
-            $table->string('no_penanggung_jawab');
+            $table->string('nama_penanggung_jawab')->nullable();
+            $table->string('no_penanggung_jawab')->nullable();
             $table->string('nama_penyelenggara_uji');
             $table->string('no_penyelenggara_uji');
             $table->string('nama_asesor');

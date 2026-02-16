@@ -29,6 +29,8 @@
                                 <th>Jabatan</th>
                                 <th>Telp Perusahaan</th>
                                 <th>Email Perusahaan</th>
+                                <th>Nama Kontak Person Perusahaan</th>
+                                <th>Nomor HP Kontak Person Perusahaan</th>
                                 <th class="no-export">Dokumen</th>
                                 <th>Jadwal Asesmen</th>
                                 <th>No Sertifikat</th>
@@ -82,8 +84,14 @@
                                         </table>
                                     </td>
                                     <td>{{ $item->email_perusahaan }}</td>
+                                    <td>{{ $item->nama_kontak_person }}</td>
+                                    <td>{{ $item->no_kontak_person }}</td>
                                     <td class="no-export">
                                         <table>
+                                             <tr>
+                                                <td>KTP</td>
+                                                <td>: @if(!empty($item->ktp_file))<a href="{{ asset('asesi_files/'.$item->ktp_file) }}" target="_blank"> <i class="mdi mdi-file-pdf-box"></i></a>@else - @endif</td>
+                                            </tr>
                                             <tr>
                                                 <td>IJAZAH</td>
                                                 <td>: @if(!empty($item->ijazah_file))<a href="{{ asset('asesi_files/'.$item->ijazah_file) }}" target="_blank"> <i class="mdi mdi-file-pdf-box"></i></a>@else - @endif</td>

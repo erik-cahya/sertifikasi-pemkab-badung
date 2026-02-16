@@ -120,13 +120,15 @@ class AsesiController extends Controller
             'telp_perusahaan' => 'required',
             'fax_perusahaan' => 'nullable',
             'email_perusahaan' => 'required|email',
-
+            'nama_kontak_person' => 'required',
+            'no_kontak_person' => 'required',
+            
             // FILE VALIDATION
             'sertikom_file' => 'nullable|file|mimes:pdf|max:2048',
             'ijazah_file' => 'nullable|file|mimes:pdf|max:2048',
-            'ktp_file' => 'nullable|file|mimes:pdf|max:2048',
-            'keterangan_kerja_file' => 'nullable|file|mimes:pdf|max:2048',
-            'pas_foto_file' => 'nullable|file|mimes:jpg,png|max:2048',
+            'ktp_file' => 'required|file|mimes:pdf|max:2048',
+            'keterangan_kerja_file' => 'required|file|mimes:pdf|max:2048',
+            'pas_foto_file' => 'required|file|mimes:jpg,png|max:2048',
         ], [
             'kegiatan_ref.required' => 'Kegiatan tidak boleh kosong',
             'lsp_ref.required' => 'LSP tidak boleh kosong',
@@ -153,6 +155,29 @@ class AsesiController extends Controller
             'telp_perusahaan.required' => 'Telepon perusahaan tidak boleh kosong',
             'email_perusahaan.required' => 'Email perusahaan tidak boleh kosong',
             'email_perusahaan.email' => 'Format email perusahaan tidak valid',
+
+            // NEW
+            'nama_kontak_person.required' => 'Nama Kontak Person Tempat Bekerja/Perusahaan tidak boleh kosong',
+            'no_kontak_person.required' => 'Nomor HP Kontak Person Tempat Bekerja/Perusahaan tidak boleh kosong',
+
+            'ktp_file.required' => 'KTP tidak boleh kosong.',
+            'ktp_file.mimes'    => 'File KTP harus berformat PDF.',
+            'ktp_file.max'      => 'Ukuran file KTP maksimal 2 MB.',
+
+            'keterangan_kerja_file.required' => 'Surat Keterangan Kerja tidak boleh kosong.',
+            'keterangan_kerja_file.mimes'    => 'File Surat Keterangan Kerja harus berformat PDF.',
+            'keterangan_kerja_file.max'      => 'Ukuran file Surat Keterangan Kerja maksimal 2 MB.',
+
+            'sertikom_file.mimes' => 'File Sertifikat Kompetensi harus berformat PDF.',
+            'sertikom_file.max'   => 'Ukuran file Sertifikat Kompetensi maksimal 2 MB.',
+
+            'ijazah_file.mimes' => 'File Ijazah harus berformat PDF.',
+            'ijazah_file.max'   => 'Ukuran file Ijazah maksimal 2 MB.',
+
+            'pas_foto_file.required' => 'Pas Foto tidak boleh kosong.',
+            'pas_foto_file.mimes'    => 'Pas Foto harus berformat JPG atau PNG.',
+            'pas_foto_file.max'      => 'Ukuran Pas Foto maksimal 2 MB.',
+
         ]);
 
         // CEK NIK + 3 TAHUN 1 HARI
@@ -285,6 +310,10 @@ class AsesiController extends Controller
             'ktp_file' => $ktp,
             'keterangan_kerja_file' => $skb,
             'pas_foto_file' => $pasfoto,
+            
+            'nama_kontak_person' => $request->nama_kontak_person,
+            'no_kontak_person' => $request->no_kontak_person,
+
             'status' => NULL,
             'kompeten' => NULL,
 
