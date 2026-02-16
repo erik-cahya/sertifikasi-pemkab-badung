@@ -24,7 +24,9 @@
                                 <th>Total</th>
                                 <th>File</th>
                                 <th>Ditambahkan pada</th>
+                                @role('master', 'dinas')
                                 <th>Aksi</th>
+                                @endrole
                             </tr>
                         </thead>
                         <tbody>
@@ -41,6 +43,7 @@
                                     <td class="text-center">{{ $item->pegawai_total }}</td>
                                     <td class="text-center">@if(!empty($item->pegawai_file))<a href="{{ asset('pegawai_files/'.$item->pegawai_file) }}" target="_blank"> <i class="mdi mdi-download"></i> Download</a>@else - @endif</td>
                                     <td class="text-center">{{ $item->created_at->format('Y-m-d') }}</td>
+                                    @role('master', 'dinas')
                                     <td class="text-center">
                                         <button class="btn btn-sm btn-warning editButton" 
                                                 data-ref="{{ $item->ref }}"
@@ -59,6 +62,7 @@
                                             <i class="mdi mdi-delete"></i>
                                         </button>
                                     </td>
+                                    @endrole
                                 </tr>
                             @endforeach
                         </tbody>

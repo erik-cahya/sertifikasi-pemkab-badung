@@ -47,6 +47,7 @@ Route::middleware('auth')->group(function () {
     Route::post('kegiatan/uploadBuktiAsesmen', [KegiatanController::class, 'uploadBuktiAsesmen'])->name('kegiatan.uploadBuktiAsesmen');
     Route::post('kegiatan/uploadDokumentasiAsesmen', [KegiatanController::class, 'uploadDokumentasiAsesmen'])->name('kegiatan.uploadDokumentasiAsesmen');
     Route::post('kegiatan/uploadLaporanAsesmen', [KegiatanController::class, 'uploadLaporanAsesmen'])->name('kegiatan.uploadLaporanAsesmen');
+    Route::post('kegiatan/uploadBuktiTerimaSertifikat', [KegiatanController::class, 'uploadBuktiTerimaSertifikat'])->name('kegiatan.uploadBuktiTerimaSertifikat');
 
     Route::get('asesmen/create/{id}', [AsesmenController::class, 'create'])->name('asesmen.create');
     Route::post('asesment', [AsesmenController::class, 'store'])->name('asesmen.store');

@@ -34,7 +34,7 @@ class PegawaiController extends Controller
             'pegawai_fo' => 'required',
             'pegawai_eng' => 'required',
             'pegawai_oth' => 'required',
-            'pegawai_file' => 'required|file|mimes:pdf|max:5120',
+            'pegawai_file' => 'required|file|mimes:xls,xlsx|max:5120',
         ], [
             'pegawai_nama_hotel.required' => 'Nama tidak boleh kosong',
             'pegawai_hk.required' => 'Data Pegawai Housekeeping tidak boleh kosong',
@@ -45,7 +45,7 @@ class PegawaiController extends Controller
             'pegawai_oth.required' => 'Data Pegawai Lainnya tidak boleh kosong',
             'pegawai_file.required' => 'File Data Pegawai wajib diunggah.',
             'pegawai_file.file'     => 'File tidak valid',
-            'pegawai_file.mimes'    => 'Format file harus PDF',
+            'pegawai_file.mimes'    => 'Format file harus Excel (.xls atau .xlsx)',
             'pegawai_file.max'      => 'Ukuran file maksimal 5 MB',
         ]);
 

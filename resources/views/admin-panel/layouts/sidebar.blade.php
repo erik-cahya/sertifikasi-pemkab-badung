@@ -88,7 +88,7 @@
                     </ul>
                 </div>
             </li>
-            @role('master', 'dinas')
+            @role('master', 'dinas', 'lsp')
                 <li class="side-nav-item {{ request()->routeIs('pegawai.list') ? 'menuitem-active' : '' }}">
                     <a data-bs-toggle="collapse" href="#pegawaiMenu" aria-expanded="false" aria-controls="pegawaiMenu" class="side-nav-link">
                         <i class="ri-contacts-line"></i>
@@ -109,15 +109,15 @@
 
             <li class="side-nav-item {{ request()->routeIs('asesiAdmin.index') ? 'menuitem-active' : '' }}">
                 <a data-bs-toggle="collapse" href="#asesiMenu" aria-expanded="false" aria-controls="asesiMenu" class="side-nav-link">
-                    <i class="ri-contacts-line"></i>
-                    <span> Calon Asesi </span>
+                    <i class="ri-team-line"></i>
+                    <span> Asesi </span>
                     <span class="menu-arrow"></span>
                 </a>
                 <div class="{{ request()->routeIs('asesiAdmin.index') ? 'show' : '' }} collapse" id="asesiMenu">
                     <ul class="side-nav-second-level">
                         <li class="side-nav-item {{ request()->routeIs('asesiAdmin.index') ? 'menuitem-active' : '' }}">
                             <a class="side-nav-link {{ request()->routeIs('asesiAdmin.index') ? 'active' : '' }}" href="{{ route('asesiAdmin.index') }}">
-                                Daftar Calon Asesi
+                                Daftar Asesi
                             </a>
                         </li>
                     </ul>
@@ -127,7 +127,7 @@
             @role('master', 'dinas')
                 <li class="side-nav-item {{ request()->routeIs('lsp.*') ? 'menuitem-active' : '' }}">
                     <a data-bs-toggle="collapse" href="#lspMenu" aria-expanded="false" aria-controls="lspMenu" class="side-nav-link">
-                        <i class="ri-team-line"></i>
+                        <i class="ri-p2p-fill "></i>
                         <span> LSP </span>
                         <span class="menu-arrow"></span>
                     </a>

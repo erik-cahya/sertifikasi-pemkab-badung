@@ -421,7 +421,7 @@ class KegiatanController extends Controller
         $request->validate([
             'ref' => 'required',
             // Max file 50MB
-            'laporan_asesmen' => 'required|file|mimes:pdf|max:51200',
+            'file' => 'required|file|mimes:pdf|max:51200',
         ]);
 
         $jadwal = KegiatanJadwalModel::with(['lsp', 'kegiatan'])->where('ref', $request->ref)->first();
@@ -433,26 +433,73 @@ class KegiatanController extends Controller
             ], 404);
         }
 
-        $ext  = $request->file('laporan_asesmen')->extension();
+        $index = $request->index;
+        $field = 'laporan_asesmen' . ($index == 1 ? '' : $index);
+
+        $ext  = $request->file('file')->extension();
         $time = time();
         $lsp  = $jadwal->lsp->lsp_nama;
         $kegiatan  = $jadwal->kegiatan->nama_kegiatan;
-        $filename = "LAPORAN-{$kegiatan}-{$lsp}-{$time}.{$ext}";
+        $filename = "LAPORAN-{$index}-{$kegiatan}-{$lsp}-{$time}.{$ext}";
 
         // hapus file lama
-        if ($jadwal->laporan_asesmen && Storage::disk('laporan_asesmen')->exists($jadwal->laporan_asesmen)) {
-            Storage::disk('laporan_asesmen')->delete($jadwal->laporan_asesmen);
+        if ($jadwal->$field && Storage::disk('laporan_asesmen')->exists($jadwal->$field)) {
+            Storage::disk('laporan_asesmen')->delete($jadwal->$field);
         }
 
         // simpan file
-        $path = Storage::disk('laporan_asesmen')->putFileAs("laporan_asesmen", $request->file('laporan_asesmen'), $filename);
+        $path = Storage::disk('laporan_asesmen')->putFileAs("laporan_asesmen", $request->file('file'), $filename);
 
         //update tb
-        $jadwal->update(['laporan_asesmen' => $path]);
+        $jadwal->update([$field => $path]);
 
         return response()->json([
             'success' => true,
-            'message' => 'Laporan - ' . $kegiatan . ' - ' . $lsp.' berhasil diupload',
+            'message' => 'Laporan - '.$index. ' - ' . $kegiatan . ' - ' . $lsp.' berhasil diupload',
+            'path'    => $path,
+            'url'     => asset('asesmen_files/' . $path),
+
+        ]);
+    }
+
+     public function uploadBuktiTerimaSertifikat(Request $request)
+    {
+        $request->validate([
+            'ref' => 'required',
+            // Max file 10MB
+            'bukti_terima_sertifikat' => 'required|file|mimes:pdf|max:10240',
+        ]);
+
+        $asesmen = AsesmenModel::where('ref', $request->ref)->first();
+
+        if (!$asesmen) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Data Asesi tidak ditemukan'
+            ], 404);
+        }
+
+        $ext  = $request->file('bukti_terima_sertifikat')->extension();
+        $time = time();
+        $lsp  = $asesmen->nama_lsp;
+        $tuk  = $asesmen->nama_tuk;
+        $tgl  = $asesmen->jadwal_asesmen;
+        $filename = "BUKTI-TERIMA-SEERTIFIKAT-{$lsp}-{$tuk}-{$tgl}-{$time}.{$ext}";
+
+        // hapus file lama
+        if ($asesmen->bukti_terima_sertifikat && Storage::disk('bukti_terima_sertifikat')->exists($asesmen->bukti_terima_sertifikat)) {
+            Storage::disk('bukti_terima_sertifikat')->delete($asesmen->bukti_terima_sertifikat);
+        }
+
+        // simpan file
+        $path = Storage::disk('bukti_terima_sertifikat')->putFileAs("bukti_terima_sertifikat", $request->file('bukti_terima_sertifikat'), $filename);
+
+        //update tb
+        $asesmen->update(['bukti_terima_sertifikat' => $path]);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Bukti Terima Sertifikat - ' . $asesmen->nama_lsp . ' - ' . $asesmen->nama_tuk . ' - ' . $asesmen->jadwal_asesmen . ' berhasil diupload',
             'path'    => $path,
             'url'     => asset('asesmen_files/' . $path),
 

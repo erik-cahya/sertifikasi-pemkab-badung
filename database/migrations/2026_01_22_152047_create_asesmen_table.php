@@ -34,6 +34,7 @@ return new class extends Migration
 
             // Dokumen
             $table->string('bukti_asesmen')->nullable();
+            $table->string('bukti_terima_sertifikat')->nullable();
             $table->string('dokumentasi_asesmen')->nullable();
 
             $table->foreignUlid('created_by')->nullable()->references('ref')->on('users')->nullOnDelete();

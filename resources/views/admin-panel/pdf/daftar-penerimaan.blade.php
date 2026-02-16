@@ -190,7 +190,7 @@
                 @endfor
                 <tr>
                     <td class="center">11</td>
-                    <td>Penanggung Jawab <br> {{ $item->nama_penanggung_jawab }}</td>
+                    <td>Penanggung Jawab <br> {{ $item->kegiatanJadwal->lsp->lsp_direktur }}</td>
                     <td>{{ $item->kegiatanJadwal->lsp->lsp_nama }}</td>
                     <td class="signature" colspan = '4'></td>
                     <td class="signature"> 11.</td>
