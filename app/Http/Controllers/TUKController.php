@@ -156,7 +156,8 @@ class TUKController extends Controller
 
     public function edit(string $id)
     {
-        $tuk = TUKModel::join('lsp', 'lsp.ref', '=', 'tuk.lsp_ref')
+        $tuk = TUKModel::where('tuk.ref', $id)
+            ->join('lsp', 'lsp.ref', '=', 'tuk.lsp_ref')
             ->select('tuk.*', 'lsp.lsp_nama')
             ->orderBy('tuk.created_at', 'desc')
             ->get();
