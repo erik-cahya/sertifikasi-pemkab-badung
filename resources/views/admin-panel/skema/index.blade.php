@@ -44,7 +44,7 @@
                                         <div class="btn-group" role="group" aria-label="Basic outlined example">
                                             <a href="{{ route('skema.show', $skema->ref) }}" class="btn btn-sm btn-info" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Edit Skema" data-bs-custom-class="info-tooltip"><i class="mdi mdi-pencil"></i></a>
                                             <input type="hidden" class="skemaID" value="{{ $skema->ref }}">
-                                            <a href="javascript:void(0)" data-nama="{{ $skema->skema_judul }}" class="btn btn-sm btn-danger" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Hapus Skema" data-bs-custom-class="danger-tooltip"><i class="mdi mdi-trash-can"></i></a>
+                                            <a href="javascript:void(0)" data-nama="{{ $skema->skema_judul }}" class="btn btn-sm btn-danger deleteButton" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Hapus Skema" data-bs-custom-class="danger-tooltip"><i class="mdi mdi-trash-can"></i></a>
                                             {{-- <a href="javascript: void(0);" class="text-reset fs-16 px-1">
                                                 <i class="ri-pencil-line"></i>
                                             </a> --}}

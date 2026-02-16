@@ -77,7 +77,7 @@
 </a>
 
                                             <input type="hidden" class="jabatanID" value="{{ $item->ref }}">
-                                            <a href="javascript:void(0)" data-nama="{{ $item->jabatan_nama }}"class="btn btn-sm btn-danger" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Hapus Jabatan" data-bs-custom-class="danger-tooltip"><i class="mdi mdi-trash-can"></i></a>
+                                            <a href="javascript:void(0)" data-nama="{{ $item->jabatan_nama }}"class="btn btn-sm btn-danger deleteButton" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Hapus Jabatan" data-bs-custom-class="danger-tooltip"><i class="mdi mdi-trash-can"></i></a>
                                         </div>
                                     </td>
                                 </tr>

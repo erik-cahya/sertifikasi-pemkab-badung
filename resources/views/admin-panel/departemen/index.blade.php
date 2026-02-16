@@ -64,7 +64,7 @@
                                             <a href="{{ route('departemen.edit', $item->ref) }}" class="btn btn-sm btn-info" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Edit Departemen" data-bs-custom-class="info-tooltip"><i class="mdi mdi-pencil"></i></a>
 
                                             <input type="hidden" class="departemenID" value="{{ $item->ref }}">
-                                            <a href="javascript:void(0)"data-nama="{{ $item->departemen_nama }}"class="btn btn-sm btn-danger" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Hapus Departemen" data-bs-custom-class="danger-tooltip"><i class="mdi mdi-trash-can"></i></a>
+                                            <a href="javascript:void(0)"data-nama="{{ $item->departemen_nama }}"class="btn btn-sm btn-danger deleteButton" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Hapus Departemen" data-bs-custom-class="danger-tooltip"><i class="mdi mdi-trash-can"></i></a>
                                         </div>
                                     </td>
                                 </tr>

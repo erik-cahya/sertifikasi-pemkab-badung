@@ -62,7 +62,7 @@
                                         <div class="btn-group" role="group" aria-label="Basic outlined example">
                                             <a href="{{ route('tukAdmin.edit', $item->ref) }}" class="btn btn-sm btn-info" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Edit TUK" data-bs-custom-class="info-tooltip"><i class="mdi mdi-pencil"></i></a>
                                             <input type="hidden" class="tukID" value="{{ $item->ref }}">
-                                            <a href="javascript:void(0)" data-nama="{{ $item->tuk_nama }}" class="btn btn-sm btn-danger" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Hapus TUK" data-bs-custom-class="danger-tooltip"><i class="mdi mdi-trash-can"></i></a>
+                                            <a href="javascript:void(0)" data-nama="{{ $item->tuk_nama }}" class="btn btn-sm btn-danger deleteButton" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Hapus TUK" data-bs-custom-class="danger-tooltip"><i class="mdi mdi-trash-can"></i></a>
                                         </div>
                                     </td>
                                 </tr>
