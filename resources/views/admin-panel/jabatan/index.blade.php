@@ -72,9 +72,7 @@
                                     <td>{{ $item->name }} <br> {{ $item->created_at->format('Y-m-d') }}</td>
                                     <td>
                                         <div class="btn-group" role="group" aria-label="Basic outlined example">
-
                                             <a href="{{ route('jabatan.edit', $item->ref) }}" class="btn btn-sm btn-info" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Edit Jabatan" data-bs-custom-class="info-tooltip"><i class="mdi mdi-pencil"></i></a>
-</a>
 
                                             <input type="hidden" class="jabatanID" value="{{ $item->ref }}">
                                             <a href="javascript:void(0)" data-nama="{{ $item->jabatan_nama }}"class="btn btn-sm btn-danger deleteButton" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Hapus Jabatan" data-bs-custom-class="danger-tooltip"><i class="mdi mdi-trash-can"></i></a>

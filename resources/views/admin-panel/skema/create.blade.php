@@ -8,7 +8,7 @@
                     <div class="card">
                         <div class="card-header bg-dinas text-white">
                             <h4 class=".card-title">Tambah Skema & Kode Unit</h4>
-                            <p class=" mb-0">Tambahkan data Skema & Kode Unit pada form berikut</p>
+                            <p class="mb-0">Tambahkan data Skema & Kode Unit pada form berikut</p>
                         </div>
                         @php
                             $activeTab = session('active_tab', 'create_skema');
@@ -19,153 +19,62 @@
                             }
                         @endphp
                         <div class="card-body">
-                            <ul class="nav nav-pills bg-nav-pills nav-justified mb-3">
-                                <li class="nav-item">
-                                    <a href="#create_skema" data-bs-toggle="tab" class="nav-link rounded-0 {{ $activeTab === 'create_skema' ? 'active' : '' }}">
-                                        Tambah Skema Baru
-                                    </a>
-                                </li>
+                            <form action="{{ route('skema.store') }}" method="POST">
+                                @csrf
+                                <div class="row">
+                                    <div class="col-lg-6 mt-2">
+                                        <label for="lsp_nama" class="form-label">Nama LSP</label>
+                                        <input type="text" id="lsp_nama" class="form-control rounded-3" name="lsp_nama" value="{{ $dataLsp->lsp_nama }}" disabled>
+                                    </div>
 
-                                <li class="nav-item">
-                                    <a href="#create_kode_unit" data-bs-toggle="tab" class="nav-link rounded-0 {{ $activeTab === 'create_kode_unit' ? 'active' : '' }}">
-                                        Tambah Kode Unit
-                                    </a>
-                                </li>
-                            </ul>
+                                    <div class="col-lg-6 mt-2">
+                                        <label for="lsp_nama" class="form-label">No Lisensi</label>
+                                        <input type="text" id="lsp_nama" class="form-control rounded-3" name="lsp_nama" value="{{ $dataLsp->lsp_no_lisensi }}" disabled>
+                                    </div>
 
-                            <div class="tab-content">
-                                <div class="tab-pane fade {{ $activeTab === 'create_skema' ? 'show active' : '' }}" id="create_skema">
-                                    <form action="{{ route('skema.store') }}" method="POST">
-                                        @csrf
-                                        <div class="row">
-                                            <div class="col-lg-6 mt-2">
-                                                <label for="lsp_nama" class="form-label">Nama LSP</label>
-                                                <input type="text" id="lsp_nama" class="form-control rounded-3" name="lsp_nama" value="{{ $dataLsp->lsp_nama }}" disabled>
+                                    <div class="col-lg-6 mt-2">
+                                        <label for="skema_judul" class="form-label">Judul Skema</label>
+                                        <input type="text" id="skema_judul" class="form-control rounded-3 @error('skema_judul', 'create_skema') is-invalid @enderror" name="skema_judul" value="{{ old('skema_judul') }}">
+                                        @error('skema_judul', 'create_skema')
+                                            <div class="invalid-feedback" bis_skin_checked="1">
+                                                {{ $message }}
                                             </div>
+                                        @enderror
+                                    </div>
 
-                                            <div class="col-lg-6 mt-2">
-                                                <label for="lsp_nama" class="form-label">No Lisensi</label>
-                                                <input type="text" id="lsp_nama" class="form-control rounded-3" name="lsp_nama" value="{{ $dataLsp->lsp_no_lisensi }}" disabled>
+                                    <div class="col-lg-6 mt-2">
+                                        <label for="skema_kode" class="form-label">Kode Skema</label>
+                                        <input type="text" id="skema_kode" class="form-control rounded-3 @error('skema_kode', 'create_skema') is-invalid @enderror" name="skema_kode" value="{{ old('skema_kode') }}">
+                                        @error('skema_kode', 'create_skema')
+                                            <div class="invalid-feedback" bis_skin_checked="1">
+                                                {{ $message }}
                                             </div>
+                                        @enderror
+                                    </div>
 
-                                            <div class="col-lg-6 mt-2">
-                                                <label for="skema_judul" class="form-label">Judul Skema</label>
-                                                <input type="text" id="skema_judul" class="form-control rounded-3 @error('skema_judul', 'create_skema') is-invalid @enderror" name="skema_judul" value="{{ old('skema_judul') }}">
-                                                @error('skema_judul', 'create_skema')
-                                                    <div class="invalid-feedback" bis_skin_checked="1">
-                                                        {{ $message }}
-                                                    </div>
-                                                @enderror
+                                    <div class="col-lg-6 mt-2">
+                                        <label for="skema_kategori" class="form-label">Kategori Skema</label>
+                                        <select class="text-capitalize @error('skema_kategori', 'create_skema') is-invalid @enderror rounded-3 form-select" id="skema_kategori" name="skema_kategori">
+                                            <option value="#" disabled selected hidden>Pilih Kategori Skema</option>
+                                            <option value="KKNI" {{ old('skema_kategori') === 'KKNI' ? 'selected' : '' }}>KKNI</option>
+                                            <option value="Okupasi" {{ old('skema_kategori') === 'Okupasi' ? 'selected' : '' }}>Okupasi</option>
+                                            <option value="Klaster" {{ old('skema_kategori') === 'Klaster' ? 'selected' : '' }}>Klaster</option>
+                                        </select>
+                                        @error('skema_kategori', 'create_skema')
+                                            <div class="invalid-feedback" bis_skin_checked="1">
+                                                {{ $message }}
                                             </div>
-
-                                            <div class="col-lg-6 mt-2">
-                                                <label for="skema_kode" class="form-label">Kode Skema</label>
-                                                <input type="text" id="skema_kode" class="form-control rounded-3 @error('skema_kode', 'create_skema') is-invalid @enderror" name="skema_kode" value="{{ old('skema_kode') }}">
-                                                @error('skema_kode', 'create_skema')
-                                                    <div class="invalid-feedback" bis_skin_checked="1">
-                                                        {{ $message }}
-                                                    </div>
-                                                @enderror
-                                            </div>
-
-                                            <div class="col-lg-6 mt-2">
-                                                <label for="skema_kategori" class="form-label">Kategori Skema</label>
-                                                <select class="text-capitalize @error('skema_kategori', 'create_skema') is-invalid @enderror form-select rounded-3" id="skema_kategori" name="skema_kategori">
-                                                    <option value="#" disabled selected hidden>Pilih Kategori Skema</option>
-                                                    <option value="KKNI" {{ old('skema_kategori') === 'KKNI' ? 'selected' : '' }}>KKNI</option>
-                                                    <option value="Okupasi" {{ old('skema_kategori') === 'Okupasi' ? 'selected' : '' }}>Okupasi</option>
-                                                    <option value="Klaster" {{ old('skema_kategori') === 'Klaster' ? 'selected' : '' }}>Klaster</option>
-                                                    {{-- <option value="Unit Kompetensi" {{ old('skema_kategori') === 'Unit Kompetensi' ? 'selected' : '' }}>Unit Kompetensi</option> --}}
-                                                    {{-- <option value="Profisiensi" {{ old('skema_kategori') === 'Profisiensi' ? 'selected' : '' }}>Profisiensi</option> --}}
-                                                </select>
-                                                @error('skema_kategori', 'create_skema')
-                                                    <div class="invalid-feedback" bis_skin_checked="1">
-                                                        {{ $message }}
-                                                    </div>
-                                                @enderror
-                                            </div>
-                                        </div>
-
-                                        <div class="mb-3 mt-3">
-                                            <button class="btn btn-dinas" type="submit">Tambah Skema</button>
-                                        </div>
-                                    </form>
+                                        @enderror
+                                    </div>
                                 </div>
-                                <div class="tab-pane fade {{ $activeTab === 'create_kode_unit' ? 'show active' : '' }}" id="create_kode_unit">
-                                    <form action="{{ route('kode_unit.store') }}" method="POST">
-                                        @csrf
-                                        <div class="row">
-                                            <div class="col-lg-12 mt-2">
-                                                <label for="lsp_nama" class="form-label">Nama LSP</label>
-                                                <input type="text" id="lsp_nama" class="form-control rounded-3" name="lsp_nama" value="{{ $dataLsp->lsp_nama }}" disabled>
-                                            </div>
 
-                                            <div class="col-lg-12 mt-2">
-                                                <label for="skema_ref" class="form-label">Skema</label>
-                                                <select class="text-capitalize @error('skema_ref', 'create_kode_unit') is-invalid @enderror form-select rounded-3" id="skema_ref" name="skema_ref">
-                                                    <option value="#" disabled selected hidden>Pilih Skema LSP Anda</option>
-                                                    @foreach ($dataSkema as $skema)
-                                                        <option value="{{ $skema->ref }}" {{ old('skema_ref') === $skema->ref ? 'selected' : '' }}>{{ $skema->skema_judul }}</option>
-                                                    @endforeach
-                                                </select>
-                                                @error('skema_ref', 'create_kode_unit')
-                                                    <div class="invalid-feedback" bis_skin_checked="1">
-                                                        {{ $message }}
-                                                    </div>
-                                                @enderror
-                                            </div>
-
-                                            <div class="col-lg-12">
-                                                <div id="kegiatan-container">
-                                                    <div class="card border-secondary mt-4">
-                                                        <div class="card-body">
-                                                            <div class="row g-3" id="kegiatan-row">
-                                                                <div class="col-lg-6">
-                                                                    <label class="form-label">Judul Unit</label>
-                                                                    <input type="text" class="form-control rounded-3 @error('judul_unit.*', 'create_kode_unit') is-invalid @enderror" name="judul_unit[]" value="{{ old('judul_unit.0') }}">
-                                                                </div>
-
-                                                                <div class="col-lg-6">
-                                                                    <label class="form-label">Kode Unit</label>
-                                                                    <input type="text" class="form-control rounded-3 @error('kode_unit.*', 'create_kode_unit') is-invalid @enderror" name="kode_unit[]" value="{{ old('kode_unit.0') }}">
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="d-flex mt-3 gap-2">
-                                                                <button type="button" class="btn btn-sm btn-dinas add-kegiatan-btn">
-                                                                    + Tambah Unit
-                                                                </button>
-
-                                                                <button type="button" class="btn btn-sm btn-danger remove-kegiatan-btn d-none">
-                                                                    Hapus
-                                                                </button>
-                                                            </div>
-
-                                                        </div>
-                                                    </div>
-
-                                                </div>
-
-                                                {{-- error summary --}}
-                                                @error('judul_unit.*', 'create_kode_unit')
-                                                    <div class="text-danger mt-2">{{ $message }}</div>
-                                                @enderror
-                                                @error('kode_unit.*', 'create_kode_unit')
-                                                    <div class="text-danger mt-2">{{ $message }}</div>
-                                                @enderror
-                                            </div>
-
-                                        </div>
-
-                                        <div class="mb-3 mt-3">
-                                            <button class="btn btn-dinas" type="submit">Tambahkan Kode Unit Baru</button>
-                                        </div>
-                                    </form>
+                                <div class="mb-3 mt-3">
+                                    <button class="btn btn-dinas" type="submit">Tambah Skema</button>
                                 </div>
-                            </div>
-                        </div> <!-- end card-body -->
-                    </div> <!-- end card-->
-                </div> <!-- end col -->
+                            </form>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

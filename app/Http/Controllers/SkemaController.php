@@ -40,7 +40,7 @@ class SkemaController extends Controller
 
             'lsp.lsp_nama'
 
-        )->withCount('details as unitCount')->with('details')->join('lsp', 'lsp.ref', '=', 'skema.lsp_ref');
+        )->join('lsp', 'lsp.ref', '=', 'skema.lsp_ref');
 
         if (Auth::user()->roles == 'lsp') {
             $dataLSP = LSPModel::where('user_ref', Auth::user()->ref)->firstOrFail();
@@ -81,10 +81,11 @@ class SkemaController extends Controller
 
         Validator::make($request->all(), [
             'skema_judul' => 'required',
-            'skema_kode' => 'required',
+            'skema_kode' => 'required|unique:skema,skema_kode,except,ref',
             'skema_kategori' => 'required',
         ], [
             'skema_judul.required' => 'Silahkan inputkan nama skema',
+            'skema_kode.unique' => 'Kode skema ini sudah terdaftar',
             'skema_kode.required' => 'Silahkan inputkan kode skema',
             'skema_kategori.required' => 'Silahkan pilih kategori skema',
         ])->validateWithBag('create_skema');
@@ -97,7 +98,6 @@ class SkemaController extends Controller
             'skema_kategori' => $request->skema_kategori,
             'created_by' => Auth::user()->ref,
         ]);
-
 
         return redirect()
             ->back()
@@ -114,7 +114,7 @@ class SkemaController extends Controller
      */
     public function show(string $id)
     {
-        $data['skema'] = SkemaModel::where('ref', $id)->with('details')->firstOrFail();
+        $data['skema'] = SkemaModel::where('ref', $id)->firstOrFail();
 
         return view('admin-panel.skema.show', $data);
     }

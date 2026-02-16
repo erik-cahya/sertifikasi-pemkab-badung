@@ -1,6 +1,5 @@
 @extends('admin-panel.layouts.app')
 
-
 @section('content')
     <div class="row">
         <div class="col-12">
@@ -25,7 +24,7 @@
                                 <th>File</th>
                                 <th>Ditambahkan pada</th>
                                 @role('master', 'dinas')
-                                <th>Aksi</th>
+                                    <th>Aksi</th>
                                 @endrole
                             </tr>
                         </thead>
@@ -41,11 +40,17 @@
                                     <td class="text-center">{{ $item->pegawai_eng }}</td>
                                     <td class="text-center">{{ $item->pegawai_oth }}</td>
                                     <td class="text-center">{{ $item->pegawai_total }}</td>
-                                    <td class="text-center">@if(!empty($item->pegawai_file))<a href="{{ asset('pegawai_files/'.$item->pegawai_file) }}" target="_blank"> <i class="mdi mdi-download"></i> Download</a>@else - @endif</td>
+                                    <td class="text-center">
+                                        @if (!empty($item->pegawai_file))
+                                            <a href="{{ asset('pegawai_files/' . $item->pegawai_file) }}" target="_blank"> <i class="mdi mdi-download"></i> Download</a>
+                                        @else
+                                            -
+                                        @endif
+                                    </td>
                                     <td class="text-center">{{ $item->created_at->format('Y-m-d') }}</td>
                                     @role('master', 'dinas')
-                                    <td class="text-center">
-                                        <button class="btn btn-sm btn-warning editButton" 
+                                        <td class="text-center">
+                                            <button class="btn btn-sm btn-warning editButton"
                                                 data-ref="{{ $item->ref }}"
                                                 data-nama="{{ $item->pegawai_nama_hotel }}"
                                                 data-hk="{{ $item->pegawai_hk }}"
@@ -54,14 +59,11 @@
                                                 data-fo="{{ $item->pegawai_fo }}"
                                                 data-eng="{{ $item->pegawai_eng }}"
                                                 data-oth="{{ $item->pegawai_oth }}">
-                                            <i class="mdi mdi-pencil"></i>
-                                        </button>
-                                        <button class="btn btn-sm btn-danger deleteButton" 
-                                                data-ref="{{ $item->ref }}"
-                                                data-nama="{{ $item->pegawai_nama_hotel }}">
-                                            <i class="mdi mdi-delete"></i>
-                                        </button>
-                                    </td>
+                                                <i class="mdi mdi-pencil"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-danger deleteButton" data-ref="{{ $item->ref }}" data-nama="{{ $item->pegawai_nama_hotel }}"><i class="mdi mdi-delete"></i>
+                                            </button>
+                                        </td>
                                     @endrole
                                 </tr>
                             @endforeach
@@ -83,20 +85,20 @@
                 <form id="editForm" enctype="multipart/form-data">
                     <div class="modal-body">
                         <input type="hidden" id="edit_ref" name="ref">
-                        
+
                         <div class="form-group">
                             <label for="edit_nama_hotel">Nama Hotel <span class="text-danger">*</span></label>
                             <input type="text" class="rounded-3 form-control" id="edit_nama_hotel" name="pegawai_nama_hotel" required>
                         </div>
 
                         <div class="row">
-                            <div class="mt-2 col-md-6">
+                            <div class="col-md-6 mt-2">
                                 <div class="form-group">
                                     <label for="edit_hk">Housekeeping <span class="text-danger">*</span></label>
                                     <input type="number" class="rounded-3 form-control pegawai-count" id="edit_hk" name="pegawai_hk" min="0" required>
                                 </div>
                             </div>
-                            <div class="mt-2 col-md-6">
+                            <div class="col-md-6 mt-2">
                                 <div class="form-group">
                                     <label for="edit_fbs">F&B Service <span class="text-danger">*</span></label>
                                     <input type="number" class="rounded-3 form-control pegawai-count" id="edit_fbs" name="pegawai_fbs" min="0" required>
@@ -105,13 +107,13 @@
                         </div>
 
                         <div class="row">
-                            <div class="mt-2 col-md-6">
+                            <div class="col-md-6 mt-2">
                                 <div class="form-group">
                                     <label for="edit_fbp">F&B Product <span class="text-danger">*</span></label>
                                     <input type="number" class="rounded-3 form-control pegawai-count" id="edit_fbp" name="pegawai_fbp" min="0" required>
                                 </div>
                             </div>
-                            <div class="mt-2 col-md-6">
+                            <div class="col-md-6 mt-2">
                                 <div class="form-group">
                                     <label for="edit_fo">Kantor Depan <span class="text-danger">*</span></label>
                                     <input type="number" class="rounded-3 form-control pegawai-count" id="edit_fo" name="pegawai_fo" min="0" required>
@@ -120,13 +122,13 @@
                         </div>
 
                         <div class="row">
-                            <div class="mt-2 col-md-6">
+                            <div class="col-md-6 mt-2">
                                 <div class="form-group">
                                     <label for="edit_eng">Engineering <span class="text-danger">*</span></label>
                                     <input type="number" class="rounded-3 form-control pegawai-count" id="edit_eng" name="pegawai_eng" min="0" required>
                                 </div>
                             </div>
-                            <div class="mt-2 col-md-6">
+                            <div class="col-md-6 mt-2">
                                 <div class="form-group">
                                     <label for="edit_oth">Lainnya <span class="text-danger">*</span></label>
                                     <input type="number" class="rounded-3 form-control pegawai-count" id="edit_oth" name="pegawai_oth" min="0" required>
@@ -172,7 +174,7 @@
                 const fo = parseInt(document.getElementById('edit_fo').value) || 0;
                 const eng = parseInt(document.getElementById('edit_eng').value) || 0;
                 const oth = parseInt(document.getElementById('edit_oth').value) || 0;
-                
+
                 const total = hk + fbs + fbp + fo + eng + oth;
                 document.getElementById('edit_total').value = total;
             }
@@ -182,7 +184,7 @@
             editButtons.forEach(button => {
                 button.addEventListener('click', function(e) {
                     e.preventDefault();
-                    
+
                     // Populate modal with data
                     document.getElementById('edit_ref').value = this.getAttribute('data-ref');
                     document.getElementById('edit_nama_hotel').value = this.getAttribute('data-nama');
@@ -192,9 +194,9 @@
                     document.getElementById('edit_fo').value = this.getAttribute('data-fo');
                     document.getElementById('edit_eng').value = this.getAttribute('data-eng');
                     document.getElementById('edit_oth').value = this.getAttribute('data-oth');
-                    
+
                     calculateTotal();
-                    
+
                     // Show modal
                     $('#editModal').modal('show');
                 });
@@ -203,9 +205,9 @@
             // Edit form submit handler
             document.getElementById('editForm').addEventListener('submit', function(e) {
                 e.preventDefault();
-                
+
                 const ref = document.getElementById('edit_ref').value;
-                
+
                 // Gunakan FormData untuk mendukung file upload
                 const formData = new FormData();
                 formData.append('_method', 'PUT'); // Method spoofing untuk Laravel
@@ -216,7 +218,7 @@
                 formData.append('pegawai_fo', document.getElementById('edit_fo').value);
                 formData.append('pegawai_eng', document.getElementById('edit_eng').value);
                 formData.append('pegawai_oth', document.getElementById('edit_oth').value);
-                
+
                 // Tambahkan file jika ada yang dipilih
                 const fileInput = document.getElementById('edit_file');
                 if (fileInput.files.length > 0) {
@@ -224,34 +226,34 @@
                 }
 
                 fetch('/pegawaiAdmin/' + ref, {
-                    method: 'POST', // Gunakan POST dengan _method spoofing
-                    headers: {
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                        // JANGAN set Content-Type, biarkan browser yang set otomatis dengan boundary
-                    },
-                    body: formData
-                })
-                .then(response => response.json())
-                .then(data => {
-                    $('#editModal').modal('hide');
-                    
-                    // Reset form dan file input
-                    document.getElementById('editForm').reset();
-                    
-                    Swal.fire({
-                        title: data.judul,
-                        text: data.pesan,
-                        icon: data.type,
+                        method: 'POST', // Gunakan POST dengan _method spoofing
+                        headers: {
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                            // JANGAN set Content-Type, biarkan browser yang set otomatis dengan boundary
+                        },
+                        body: formData
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        $('#editModal').modal('hide');
+
+                        // Reset form dan file input
+                        document.getElementById('editForm').reset();
+
+                        Swal.fire({
+                            title: data.judul,
+                            text: data.pesan,
+                            icon: data.type,
+                        });
+
+                        setTimeout(() => {
+                            location.reload();
+                        }, 1500);
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        Swal.fire('Error', 'Terjadi kesalahan saat mengupdate data!', 'error');
                     });
-                    
-                    setTimeout(() => {
-                        location.reload();
-                    }, 1500);
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    Swal.fire('Error', 'Terjadi kesalahan saat mengupdate data!', 'error');
-                });
             });
 
             // Delete button handler
@@ -275,28 +277,28 @@
                     }).then((result) => {
                         if (result.isConfirmed) {
                             fetch('/pegawaiAdmin/' + ref, {
-                                method: 'DELETE',
-                                headers: {
-                                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                                    'Content-Type': 'application/json'
-                                }
-                            })
-                            .then(response => response.json())
-                            .then(data => {
-                                Swal.fire({
-                                    title: data.judul,
-                                    text: data.pesan,
-                                    icon: data.type,
-                                });
+                                    method: 'DELETE',
+                                    headers: {
+                                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                                        'Content-Type': 'application/json'
+                                    }
+                                })
+                                .then(response => response.json())
+                                .then(data => {
+                                    Swal.fire({
+                                        title: data.judul,
+                                        text: data.pesan,
+                                        icon: data.type,
+                                    });
 
-                                setTimeout(() => {
-                                    location.reload();
-                                }, 1500);
-                            })
-                            .catch(error => {
-                                console.error('Error:', error);
-                                Swal.fire('Error', 'Terjadi kesalahan saat menghapus data!', 'error');
-                            });
+                                    setTimeout(() => {
+                                        location.reload();
+                                    }, 1500);
+                                })
+                                .catch(error => {
+                                    console.error('Error:', error);
+                                    Swal.fire('Error', 'Terjadi kesalahan saat menghapus data!', 'error');
+                                });
                         }
                     });
                 });

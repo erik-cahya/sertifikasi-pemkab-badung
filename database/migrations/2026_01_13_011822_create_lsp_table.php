@@ -22,8 +22,13 @@ return new class extends Migration
             $table->string('lsp_direktur')->nullable();
             $table->string('lsp_direktur_telp')->nullable();
             $table->text('lsp_logo')->nullable();
-            $table->date('lsp_tanggal_lisensi')->nullable();
+            // $table->date('lsp_tanggal_lisensi')->nullable();
             $table->date('lsp_expired_lisensi')->nullable();
+
+            $table->string('nama_cp_1');
+            $table->string('nomor_cp_1');
+            $table->string('nama_cp_2')->nullable();
+            $table->string('nomor_cp_2')->nullable();
             $table->foreignUlid('created_by')->references('ref')->on('users')->cascadeOnDelete();
             $table->timestamps();
         });

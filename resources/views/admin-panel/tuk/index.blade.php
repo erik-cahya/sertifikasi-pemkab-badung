@@ -1,7 +1,6 @@
 @extends('admin-panel.layouts.app')
 
 @section('content')
-
     <div class="row">
         <div class="col-12">
             <div class="card">
@@ -10,7 +9,7 @@
                 </div>
                 <div class="card-body">
 
-                    <table id="datatable-dashboard" class="table table-striped nowrap row-border order-column w-100">
+                    <table id="datatable-dashboard" class="table-striped nowrap row-border order-column w-100 table">
                         <thead>
                             <tr>
                                 <th>LSP</th>
@@ -27,7 +26,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($dataTUK as $item )
+                            @foreach ($dataTUK as $item)
                                 <tr>
                                     <td>{{ $item->lsp_nama }}</td>
                                     <td>{{ $item->tuk_nama }}</td>
@@ -37,22 +36,22 @@
                                     <td>{{ $item->tuk_cp_nama }}</td>
                                     <td>{{ $item->tuk_cp_email }}</td>
                                     <td>{{ $item->tuk_cp_telp }}</td>
-                                    {{-- <td>@if($item->tuk_verif==0)  <a href="{{ route('tukAdmin.verifikasi',  [$item->ref, 1]) }}"><i class=" ri-close-fill fs-3 text-danger fw-bold text-center d-block"></a>@else <a href="{{ route('tukAdmin.verifikasi',  [$item->ref, 0]) }}"><i class="ri-check-fill  fs-3 text-success fw-bold text-center d-block" ></i></a> @endif</td> --}}
+                                    {{-- <td>@if ($item->tuk_verif == 0)  <a href="{{ route('tukAdmin.verifikasi',  [$item->ref, 1]) }}"><i class=" ri-close-fill fs-3 text-danger fw-bold text-center d-block"></a>@else <a href="{{ route('tukAdmin.verifikasi',  [$item->ref, 0]) }}"><i class="ri-check-fill  fs-3 text-success fw-bold text-center d-block" ></i></a> @endif</td> --}}
                                     <td class="text-center">
-                                        @if($item->tuk_verif == 0)
+                                        @if ($item->tuk_verif == 0)
                                             <a href="javascript:void(0)"
-                                            class="verifButton"
-                                            data-url="{{ route('tukAdmin.verifikasi', [$item->ref, 1]) }}"
-                                            data-nama="{{ $item->tuk_nama }}"
-                                            data-action="verifikasi">
+                                                class="verifButton"
+                                                data-url="{{ route('tukAdmin.verifikasi', [$item->ref, 1]) }}"
+                                                data-nama="{{ $item->tuk_nama }}"
+                                                data-action="verifikasi">
                                                 <i class="ri-close-fill fs-3 text-danger fw-bold d-block"></i>
                                             </a>
                                         @else
                                             <a href="javascript:void(0)"
-                                            class="verifButton"
-                                            data-url="{{ route('tukAdmin.verifikasi', [$item->ref, 0]) }}"
-                                            data-nama="{{ $item->tuk_nama }}"
-                                            data-action="batalkan verifikasi">
+                                                class="verifButton"
+                                                data-url="{{ route('tukAdmin.verifikasi', [$item->ref, 0]) }}"
+                                                data-nama="{{ $item->tuk_nama }}"
+                                                data-action="batalkan verifikasi">
                                                 <i class="ri-check-fill fs-3 text-success fw-bold d-block"></i>
                                             </a>
                                         @endif
@@ -74,7 +73,6 @@
             </div> <!-- end card -->
         </div><!-- end col-->
     </div> <!-- end row-->
-
 @endsection
 @push('script')
     {{-- Sweet Alert --}}
@@ -133,14 +131,14 @@
         });
 
         // Verifikasi TUK
-        document.addEventListener('DOMContentLoaded', function () {
+        document.addEventListener('DOMContentLoaded', function() {
             document.querySelectorAll('.verifButton').forEach(btn => {
-                btn.addEventListener('click', function (e) {
+                btn.addEventListener('click', function(e) {
                     e.preventDefault();
 
-                    const url   = this.dataset.url;
-                    const nama  = this.dataset.nama;
-                    const aksi  = this.dataset.action;
+                    const url = this.dataset.url;
+                    const nama = this.dataset.nama;
+                    const aksi = this.dataset.action;
 
                     Swal.fire({
                         title: 'Konfirmasi',

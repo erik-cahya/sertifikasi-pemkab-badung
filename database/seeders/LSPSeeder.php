@@ -34,8 +34,12 @@ class LSPSeeder extends Seeder
             'lsp_direktur' => 'Drs. I Gusti Nyoman Wiantara, M.M',
             'lsp_direktur_telp' => '087860706785',
             'lsp_logo' => NULL,
-            'lsp_tanggal_lisensi' => NULL,
+            // 'lsp_tanggal_lisensi' => NULL,
             'lsp_expired_lisensi' => '2027-01-24',
+            'nama_cp_1' => 'Soni Arimbawa',
+            'nomor_cp_1' => '089580033614',
+            'nama_cp_2' => 'Indah Melanie',
+            'nomor_cp_2' => '081337803127',
             'created_by' => $user,
         ]);
 
@@ -57,8 +61,12 @@ class LSPSeeder extends Seeder
             'lsp_direktur' => 'Intan Gemalapuri',
             'lsp_direktur_telp' => '081353904937',
             'lsp_logo' => NULL,
-            'lsp_tanggal_lisensi' => NULL,
+            // 'lsp_tanggal_lisensi' => NULL,
             'lsp_expired_lisensi' => '2029-08-09',
+            'nama_cp_1' => 'Made Mekar',
+            'nomor_cp_1' => '085333779354',
+            'nama_cp_2' => 'Ega',
+            'nomor_cp_2' => '089626436133',
             'created_by' => $user,
         ]);
 
@@ -80,8 +88,12 @@ class LSPSeeder extends Seeder
             'lsp_direktur' => 'Ni Wayan Wulaningsih',
             'lsp_direktur_telp' => '081916402518',
             'lsp_logo' => NULL,
-            'lsp_tanggal_lisensi' => NULL,
+            // 'lsp_tanggal_lisensi' => NULL,
             'lsp_expired_lisensi' => '2030-05-29',
+            'nama_cp_1' => 'Wulan',
+            'nomor_cp_1' => '081916402518',
+            'nama_cp_2' => 'Setia',
+            'nomor_cp_2' => '085792382157',
             'created_by' => $user,
         ]);
 
@@ -103,8 +115,12 @@ class LSPSeeder extends Seeder
             'lsp_direktur' => 'I Ketut Putra Suarthana',
             'lsp_direktur_telp' => '0811394502',
             'lsp_logo' => NULL,
-            'lsp_tanggal_lisensi' => NULL,
+            // 'lsp_tanggal_lisensi' => NULL,
             'lsp_expired_lisensi' => '2030-02-21',
+            'nama_cp_1' => 'Rosalina',
+            'nomor_cp_1' => '081322212279',
+            'nama_cp_2' => 'Vira',
+            'nomor_cp_2' => '0881037517754',
             'created_by' => $user,
         ]);
 
@@ -126,8 +142,12 @@ class LSPSeeder extends Seeder
             'lsp_direktur' => 'I Made Sudarsana Adi',
             'lsp_direktur_telp' => '08123656534',
             'lsp_logo' => NULL,
-            'lsp_tanggal_lisensi' => NULL,
+            // 'lsp_tanggal_lisensi' => NULL,
             'lsp_expired_lisensi' => '2025-03-19',
+            'nama_cp_1' => 'Agnes',
+            'nomor_cp_1' => '08122102505',
+            'nama_cp_2' => 'Santi',
+            'nomor_cp_2' => '082247211116',
             'created_by' => $user,
         ]);
     }

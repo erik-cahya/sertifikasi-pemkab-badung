@@ -9,14 +9,13 @@
                 </div>
                 <div class="card-body">
 
-                    <table id="datatable-dashboard" class="table-striped table-bordered w-100 nowrap table">
+                    <table id="datatable-dashboard" class="table-striped table-bordered table-sm fs-12 w-100 nowrap table">
                         <thead class="text-center">
                             <tr>
                                 <th>No</th>
                                 <th>Nama LSP</th>
                                 <th>No Lisensi</th>
                                 <th>Email LSP</th>
-                                <th>No Telp LSP</th>
                                 <th>Status LSP</th>
                                 <th>Username</th>
                                 <th width="5%">Action</th>
@@ -30,16 +29,22 @@
                                         <span>
                                             {{ $lsp->lsp_nama }}
                                             <hr class="m-1">
-                                            <span class="font-size-6 fw-bold d-flex justify-content-evenly">
-                                                <small>TUK : {{ $lsp->tuk_count }}</small>
-                                                <small>|</small>
-                                                <small>Skema : {{ $lsp->skemas_count }}</small>
+                                            <span class="fw-bold fst-italic d-flex justify-content-evenly">
+                                                <small class="fs-11">TUK : {{ $lsp->tuk_count }}</small>
+                                                <small class="fs-11">|</small>
+                                                <small class="fs-11">Skema : {{ $lsp->skemas_count }}</small>
                                             </span>
                                         </span>
                                     </td>
                                     <td class="text-center">{{ $lsp->lsp_no_lisensi }}</td>
-                                    <td>{{ $lsp->lsp_email }}</td>
-                                    <td>{{ $lsp->lsp_telp }}</td>
+                                    <td>
+                                        {{ $lsp->lsp_email }}
+                                        <hr class="m-1">
+                                        <span class="fw-bold fst-italic d-flex">
+                                            <small class="fs-11">Telp : {{ $lsp->lsp_telp }}</small>
+                                        </span>
+
+                                    </td>
                                     <td class="text-center"><span class="badge {{ $lsp->is_active == 1 ? 'bg-success' : 'bg-danger' }}">{{ $lsp->is_active == 1 ? 'Active' : 'Not Active' }}</span></td>
                                     <td class="text-center">
                                         <span class="badge bg-dark rounded-pill px-2">
@@ -91,9 +96,7 @@
                         showCancelButton: true,
                         confirmButtonText: 'Yes, delete it!',
                     }).then(result => {
-
                         if (!result.isConfirmed) return;
-
                         fetch(`/lsp/${dataID}`, {
                                 method: 'DELETE',
                                 credentials: 'same-origin',
