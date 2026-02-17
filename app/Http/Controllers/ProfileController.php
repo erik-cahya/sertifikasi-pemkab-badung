@@ -21,14 +21,12 @@ class ProfileController extends Controller
         /** @var \App\Models\User $user */
         $user = Auth::user();
         $user->loadMissing('lspData');
-        $query = LSPModel::with('user')->with([
-            'skemas' => function ($q) {
-                $q->withCount('kodeUnits');
-            }
-        ]);
+        $query = LSPModel::with('user');
+
         if ($user->roles === 'lsp' && $user->lspData) {
             $query->where('user_ref', $user->ref);
         }
+        
         $data['dataLSP'] = $query->firstOrFail();
 
         return view('admin-panel.profile.index', $data);

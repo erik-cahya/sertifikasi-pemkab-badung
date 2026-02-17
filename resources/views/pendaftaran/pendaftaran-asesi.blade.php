@@ -544,9 +544,13 @@
                 .then(data => {
                     let opt = '<option value="" disabled selected>Pilih Jadwal Sertifikasi</option>';
                     data.forEach(item => {
-                        console.table(item);
                         const isSelected = oldAsesmenRef === item.asesmen_ref ? 'selected' : '';
+                        
                         opt += `<option value="${item.asesmen_ref}" ${isSelected}>${item.nama_tuk} - ${item.nama_skema} | ${formatTanggalIndo(item.jadwal_asesmen)} | Kuota: ${item.sisa_kuota}</option>`;
+                        opt += `<option value="" disabled style="color: red;">
+                                Hubungi WhatsApp Kontak person LSP jika TUK tidak tersedia : 
+                                ${item.nama_cp_1} (${item.nomor_cp_1}) / ${item.nama_cp_2} (${item.nomor_cp_2})
+                            </option>`;
                     });
                     jadwalAsesmen.innerHTML = opt;
                     jadwalAsesmen.disabled = false;

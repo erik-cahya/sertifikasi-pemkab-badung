@@ -50,11 +50,14 @@ class AsesiController extends Controller
 
 
         $data = AsesmenModel::where('kegiatan_ref', $request->kegiatan_ref)->where('nama_lsp', $request->lsp_ref)
+            ->join('lsp', 'asesmen.nama_lsp', 'lsp.lsp_nama')
+            ->select('asesmen.*', 'lsp.nama_cp_1', 'lsp.nomor_cp_1', 'lsp.nama_cp_2', 'lsp.nomor_cp_2')
             ->get()
             ->map(function ($asesmen) use ($asesiPerAsesmen) {
 
                 $terpakai = $asesiPerAsesmen[$asesmen->ref] ?? 0;
                 $sisa = max($asesmen->kuota_harian - $terpakai, 0);
+
 
                 return [
                     'asesmen_ref' => $asesmen->ref,
@@ -64,9 +67,14 @@ class AsesiController extends Controller
                     'sisa_kuota' => $sisa,
                     'nama_tuk' => $asesmen->nama_tuk,
                     'nama_skema' => $asesmen->nama_skema,
-
+                    'nama_cp_1' => $asesmen->nama_cp_1,
+                    'nomor_cp_1' => $asesmen->nomor_cp_1,
+                    'nama_cp_2' => $asesmen->nama_cp_2,
+                    'nomor_cp_2' => $asesmen->nomor_cp_2,
                 ];
             });
+
+
         return response()->json($data);
     }
 
