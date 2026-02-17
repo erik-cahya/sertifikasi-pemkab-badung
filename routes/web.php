@@ -131,16 +131,14 @@ Route::get('files/asesi/ijazah/{filename}', [FileController::class, 'getIjazahAs
 Route::get('files/asesi/sertikom/{filename}', [FileController::class, 'getSertikomAsesi'])->name('files.asesi.sertikom');
 Route::get('files/asesi/skb/{filename}', [FileController::class, 'getSkbAsesi'])->name('files.asesi.skb');
 Route::get('files/asesi/pasfoto/{filename}', [FileController::class, 'getPasFotoAsesi'])->name('files.asesi.pasfoto');
-
 Route::get('files/asesmen/{filename}', [FileController::class, 'serveAsesmenFile'])->name('files.asesmen');
 Route::get('files/pegawai/{filename}', [FileController::class, 'servePegawaiFile'])->name('files.pegawai');
+
+
 
 // ################################ Pendaftaraan Asesi
 Route::get('asesi', [AsesiController::class, 'index'])->name('asesi.index');
 Route::post('asesi/store', [AsesiController::class, 'store'])->name('asesi.store');
-
-// ################################ Pendaftaraan TUK
-Route::get('tuk', [TUKController::class, 'index'])->name('tuk.index');
 Route::post('tuk/added', [TUKController::class, 'added'])->name('tuk.added');
 
 // ################################ Data Pegawai
