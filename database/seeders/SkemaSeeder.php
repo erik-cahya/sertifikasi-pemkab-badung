@@ -210,8 +210,8 @@ class SkemaSeeder extends Seeder
             ],
         ];
 
-        foreach ($kode_unit as $row) {
-            SkemaDetailModel::create($row);
-        }
+        // foreach ($kode_unit as $row) {
+        //     SkemaDetailModel::create($row);
+        // }
     }
 }

@@ -29,9 +29,9 @@
                                         <span>
                                             {{ $lsp->lsp_nama }}
                                             <hr class="m-1">
-                                            <span class="fw-bold fst-italic d-flex justify-content-evenly">
+                                            <span class="fw-bold fst-italic d-flex justify-content-start">
                                                 <small class="fs-11">TUK : {{ $lsp->tuk_count }}</small>
-                                                <small class="fs-11">|</small>
+                                                <small class="fs-11 mx-2">|</small>
                                                 <small class="fs-11">Skema : {{ $lsp->skemas_count }}</small>
                                             </span>
                                         </span>

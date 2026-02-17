@@ -224,8 +224,8 @@ class AsesiController extends Controller
         /* ================== KTP ================== */
         if ($request->hasFile('ktp_file')) {
             $ext = $request->file('ktp_file')->extension();
-            $filename = "KTP-{$nik}-{$time}.{$ext}";
-            $ktp = Storage::disk('KTP')->putFileAs("KTP", $request->file('ktp_file'), $filename);
+            $filenameKTP = Str::uuid() . ".{$ext}";
+            $ktp = Storage::disk('KTP')->putFileAs("KTP", $request->file('ktp_file'), $filenameKTP);
 
             // $validated['ktp_file'] = $request->file('ktp_file')
             //     ->storeAs('asesi/ktp', $filename, 'public');
@@ -235,8 +235,8 @@ class AsesiController extends Controller
         /* ================== IJAZAH ================== */
         if ($request->hasFile('ijazah_file')) {
             $ext = $request->file('ijazah_file')->extension();
-            $filename = "IJAZAH-{$nik}-{$time}.{$ext}";
-            $ijazah = Storage::disk('ijazah')->putFileAs("ijazah", $request->file('ijazah_file'), $filename);
+            $filenameIjazah = Str::uuid() . ".{$ext}";
+            $ijazah = Storage::disk('ijazah')->putFileAs("ijazah", $request->file('ijazah_file'), $filenameIjazah);
 
             // $validated['ijazah_file'] = $request->file('ijazah_file')
             // ->storeAs('asesi/ijazah', $filename, 'public');
@@ -246,8 +246,8 @@ class AsesiController extends Controller
         /* ================== SERTIFIKAT KOMPETENSI ================== */
         if ($request->hasFile('sertikom_file')) {
             $ext = $request->file('sertikom_file')->extension();
-            $filename = "SERTIKOM-{$nik}-{$time}.{$ext}";
-            $sertikom = Storage::disk('sertikom')->putFileAs("sertikom", $request->file('sertikom_file'), $filename);
+            $filenameSertikom = Str::uuid() . ".{$ext}";
+            $sertikom = Storage::disk('sertikom')->putFileAs("sertikom", $request->file('sertikom_file'), $filenameSertikom);
 
             // $validated['sertikom_file'] = $request->file('sertikom_file')
             //     ->storeAs('asesi/sertikom', $filename, 'public');
@@ -256,8 +256,8 @@ class AsesiController extends Controller
         /* ================== KETERANGAN KERJA ================== */
         if ($request->hasFile('keterangan_kerja_file')) {
             $ext = $request->file('keterangan_kerja_file')->extension();
-            $filename = "SKB-{$nik}-{$time}.{$ext}";
-            $skb = Storage::disk('SKB')->putFileAs("SKB", $request->file('keterangan_kerja_file'), $filename);
+            $filenameSKB = Str::uuid() . ".{$ext}";
+            $skb = Storage::disk('SKB')->putFileAs("SKB", $request->file('keterangan_kerja_file'), $filenameSKB);
 
             // $validated['keterangan_kerja_file'] = $request->file('keterangan_kerja_file')
             //     ->storeAs('asesi/keterangan_kerja', $filename, 'public');
@@ -266,8 +266,8 @@ class AsesiController extends Controller
         /* ================== PAS FOTO ================== */
         if ($request->hasFile('pas_foto_file')) {
             $ext = $request->file('pas_foto_file')->extension();
-            $filename = "PASFOTO-{$nik}-{$time}.{$ext}";
-            $pasfoto = Storage::disk('pas-foto')->putFileAs("pas-foto", $request->file('pas_foto_file'), $filename);
+            $filenamePasFoto = Str::uuid() . ".{$ext}";
+            $pasfoto = Storage::disk('pas-foto')->putFileAs("pas-foto", $request->file('pas_foto_file'), $filenamePasFoto);
 
             // $validated['pas_foto_file'] = $request->file('pas_foto_file')
             //     ->storeAs('asesi/pas_foto', $filename, 'public');
@@ -305,11 +305,11 @@ class AsesiController extends Controller
             'fax_perusahaan' => $request->fax_perusahaan,
             'email_perusahaan' => $request->email_perusahaan,
 
-            'sertikom_file' => $sertikom,
-            'ijazah_file' => $ijazah,
-            'ktp_file' => $ktp,
-            'keterangan_kerja_file' => $skb,
-            'pas_foto_file' => $pasfoto,
+            'sertikom_file' => $filenameSertikom,
+            'ijazah_file' => $filenameIjazah,
+            'ktp_file' => $filenameKTP,
+            'keterangan_kerja_file' => $filenameSKB,
+            'pas_foto_file' => $filenamePasFoto,
             
             'nama_kontak_person' => $request->nama_kontak_person,
             'no_kontak_person' => $request->no_kontak_person,

@@ -90,23 +90,23 @@
                                         <table>
                                              <tr>
                                                 <td>KTP</td>
-                                                <td>: @if(!empty($item->ktp_file))<a href="{{ asset('asesi_files/'.$item->ktp_file) }}" target="_blank"> <i class="mdi mdi-file-pdf-box"></i></a>@else - @endif</td>
+                                                <td>: @if(!empty($item->ktp_file))<a href="{{ route('files.asesi.ktp', $item->ktp_file) }}" target="_blank"> <i class="mdi mdi-file-pdf-box"></i></a>@else - @endif</td>
                                             </tr>
                                             <tr>
                                                 <td>IJAZAH</td>
-                                                <td>: @if(!empty($item->ijazah_file))<a href="{{ asset('asesi_files/'.$item->ijazah_file) }}" target="_blank"> <i class="mdi mdi-file-pdf-box"></i></a>@else - @endif</td>
+                                                <td>: @if(!empty($item->ijazah_file))<a href="{{ route('files.asesi.ijazah', $item->ijazah_file) }}" target="_blank"> <i class="mdi mdi-file-pdf-box"></i></a>@else - @endif</td>
                                             </tr>
                                             <tr>
                                                 <td>SERTIKOM</td>
-                                                <td>: @if(!empty($item->sertikom_file))<a href="{{ asset('asesi_files/'.$item->sertikom_file) }}" target="_blank"> <i class="mdi mdi-file-pdf-box"></i></a>@else - @endif</td>
+                                                <td>: @if(!empty($item->sertikom_file))<a href="{{ route('files.asesi.sertikom', $item->sertikom_file) }}" target="_blank"> <i class="mdi mdi-file-pdf-box"></i></a>@else - @endif</td>
                                             </tr>
                                             <tr>
                                                 <td>SKB</td>
-                                                <td>: @if(!empty($item->keterangan_kerja_file))<a href="{{ asset('asesi_files/'.$item->keterangan_kerja_file) }}" target="_blank"> <i class="mdi mdi-file-pdf-box"></i></a>@else - @endif</td>
+                                                <td>: @if(!empty($item->keterangan_kerja_file))<a href="{{ route('files.asesi.skb', $item->keterangan_kerja_file) }}" target="_blank"> <i class="mdi mdi-file-pdf-box"></i></a>@else - @endif</td>
                                             </tr>
                                             <tr>
                                                 <td>PAS FOTO</td>
-                                                <td>: @if(!empty($item->pas_foto_file))<a href="{{ asset('asesi_files/'.$item->pas_foto_file) }}" target="_blank"> <i class="mdi mdi-file-image"></i></a>@else - @endif</td>
+                                                <td>: @if(!empty($item->pas_foto_file))<a href="{{ route('files.asesi.pasfoto', $item->pas_foto_file) }}" target="_blank"> <i class="mdi mdi-file-image"></i></a>@else - @endif</td>
                                             </tr>
                                         </table>
                                     </td>

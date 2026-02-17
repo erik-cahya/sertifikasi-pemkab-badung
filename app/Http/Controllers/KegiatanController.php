@@ -64,10 +64,11 @@ class KegiatanController extends Controller
      */
     public function create()
     {
-        $data['dataLSP'] = LSPModel::get();
+        $data['dataLSP'] = LSPModel::join('users', 'users.ref', '=', 'lsp.user_ref')
+            ->where('users.is_active', 1)
+            ->select('lsp.ref', 'lsp.lsp_nama')
+            ->get();
 
-        // Jika data kegiatan sudah dibuat, maka tidak ditampilkan lagi
-        // $data['dataKegiatan'] = KegiatanModel::select('ref', 'nama_kegiatan')->whereDoesntHave('details')->get();
         $data['dataKegiatan'] = KegiatanModel::select('ref', 'nama_kegiatan')->get();
         return view('admin-panel.kegiatan.create', $data);
     }
@@ -324,7 +325,7 @@ class KegiatanController extends Controller
             'success' => true,
             'message' => 'Sertifikat Kompetensi - ' . $asesi->nama_lengkap . ' berhasil diupload',
             'path'    => $path,
-            'url'     => asset('asesi_files/' . $path),
+            'url'     => route('files.asesi', ['filename' => basename($path)]),
 
         ]);
     }
@@ -367,7 +368,7 @@ class KegiatanController extends Controller
             'success' => true,
             'message' => 'Bukti Asesmen - ' . $asesmen->nama_lsp . ' - ' . $asesmen->nama_tuk . ' - ' . $asesmen->jadwal_asesmen . ' berhasil diupload',
             'path'    => $path,
-            'url'     => asset('asesmen_files/' . $path),
+            'url'     => route('files.asesmen', ['filename' => basename($path)]),
 
         ]);
     }
@@ -411,7 +412,7 @@ class KegiatanController extends Controller
             'success' => true,
             'message' => 'Dokuemntasi Asesmen - ' . $asesmen->nama_lsp . ' - ' . $asesmen->nama_tuk . ' - ' . $asesmen->jadwal_asesmen . ' berhasil diupload',
             'path'    => $path,
-            'url'     => asset('asesmen_files/' . $path),
+            'url'     => route('files.asesmen', ['filename' => basename($path)]),
 
         ]);
     }
@@ -457,7 +458,7 @@ class KegiatanController extends Controller
             'success' => true,
             'message' => 'Laporan - '.$index. ' - ' . $kegiatan . ' - ' . $lsp.' berhasil diupload',
             'path'    => $path,
-            'url'     => asset('asesmen_files/' . $path),
+            'url'     => route('files.asesmen', ['filename' => basename($path)]),
 
         ]);
     }
@@ -501,7 +502,7 @@ class KegiatanController extends Controller
             'success' => true,
             'message' => 'Bukti Terima Sertifikat - ' . $asesmen->nama_lsp . ' - ' . $asesmen->nama_tuk . ' - ' . $asesmen->jadwal_asesmen . ' berhasil diupload',
             'path'    => $path,
-            'url'     => asset('asesmen_files/' . $path),
+            'url'     => route('files.asesmen', ['filename' => basename($path)]),
 
         ]);
     }

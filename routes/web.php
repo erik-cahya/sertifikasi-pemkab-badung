@@ -16,6 +16,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SkemaController;
 use App\Http\Controllers\PDFController;
 use App\Http\Controllers\UserManagementController;
+use App\Http\Controllers\FileController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -120,7 +121,19 @@ Route::middleware('auth')->group(function () {
 
     // ################################ User Management
     Route::resource('/user-management', UserManagementController::class)->except(['show', 'edit', 'create'])->middleware('role:dinas,master');
+
+    
 });
+
+// ################################ Protected File Access
+Route::get('files/asesi/ktp/{filename}', [FileController::class, 'getKTPAsesi'])->name('files.asesi.ktp');
+Route::get('files/asesi/ijazah/{filename}', [FileController::class, 'getIjazahAsesi'])->name('files.asesi.ijazah');
+Route::get('files/asesi/sertikom/{filename}', [FileController::class, 'getSertikomAsesi'])->name('files.asesi.sertikom');
+Route::get('files/asesi/skb/{filename}', [FileController::class, 'getSkbAsesi'])->name('files.asesi.skb');
+Route::get('files/asesi/pasfoto/{filename}', [FileController::class, 'getPasFotoAsesi'])->name('files.asesi.pasfoto');
+
+Route::get('files/asesmen/{filename}', [FileController::class, 'serveAsesmenFile'])->name('files.asesmen');
+Route::get('files/pegawai/{filename}', [FileController::class, 'servePegawaiFile'])->name('files.pegawai');
 
 // ################################ Pendaftaraan Asesi
 Route::get('asesi', [AsesiController::class, 'index'])->name('asesi.index');

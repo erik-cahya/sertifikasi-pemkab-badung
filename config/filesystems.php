@@ -70,90 +70,79 @@ return [
 
         'KTP' => [
             'driver' => 'local',
-            'root' => public_path('asesi_files'),
-            'url' => rtrim(env('APP_URL'), '/').'/asesi_files',
-            'visibility' => 'public',
+            'root' => storage_path('app/private/asesi_files'),
+            'visibility' => 'private',
             'throw' => false,
         ],
 
         'ijazah' => [
             'driver' => 'local',
-            'root' => public_path('asesi_files'),
-            'url' => rtrim(env('APP_URL'), '/').'/asesi_files',
-            'visibility' => 'public',
+            'root' => storage_path('app/private/asesi_files'),
+            'visibility' => 'private',
             'throw' => false,
         ],
 
         'sertikom' => [
             'driver' => 'local',
-            'root' => public_path('asesi_files'),
-            'url' => rtrim(env('APP_URL'), '/').'/asesi_files',
-            'visibility' => 'public',
+            'root' => storage_path('app/private/asesi_files'),
+            'visibility' => 'private',
             'throw' => false,
         ],
 
         'SKB' => [
             'driver' => 'local',
-            'root' => public_path('asesi_files'),
-            'url' => rtrim(env('APP_URL'), '/').'/asesi_files',
-            'visibility' => 'public',
+            'root' => storage_path('app/private/asesi_files'),
+            'visibility' => 'private',
             'throw' => false,
         ],
 
         
         'pas-foto' => [
             'driver' => 'local',
-            'root' => public_path('asesi_files'),
-            'url' => rtrim(env('APP_URL'), '/').'/asesi_files',
-            'visibility' => 'public',
+            'root' => storage_path('app/private/asesi_files'),
+            'visibility' => 'private',
             'throw' => false,
         ],
 
         'sertifikat' => [
             'driver' => 'local',
-            'root' => public_path('asesi_files'),
-            'url' => rtrim(env('APP_URL'), '/').'/asesi_files',
-            'visibility' => 'public',
+            'root' => storage_path('app/private/asesi_files'),
+            'visibility' => 'private',
             'throw' => false,
         ],
 
         'bukti_asesmen' => [
             'driver' => 'local',
-            'root' => public_path('asesmen_files'),
-            'url' => rtrim(env('APP_URL'), '/').'/asesmen_files',
-            'visibility' => 'public',
+            'root' => storage_path('app/private/asesmen_files'),
+            'visibility' => 'private',
             'throw' => false,
         ],
 
         'dokumentasi_asesmen' => [
             'driver' => 'local',
-            'root' => public_path('asesmen_files'),
-            'url' => rtrim(env('APP_URL'), '/').'/asesmen_files',
-            'visibility' => 'public',
+            'root' => storage_path('app/private/asesmen_files'),
+            'visibility' => 'private',
             'throw' => false,
         ],
 
         'laporan_asesmen' => [
             'driver' => 'local',
-            'root' => public_path('asesmen_files'),
-            'url' => rtrim(env('APP_URL'), '/').'/asesmen_files',
-            'visibility' => 'public',
+            'root' => storage_path('app/private/asesmen_files'),
+            'visibility' => 'private',
             'throw' => false,
         ],
 
         'pegawai_hotel' => [
             'driver' => 'local',
-            'root' => public_path('pegawai_files'),
-            'url' => rtrim(env('APP_URL'), '/').'/pegawai_files',
-            'visibility' => 'public',
+            'root' => storage_path('app/private/pegawai_files'),
+            'visibility' => 'private',
             'throw' => false,
         ],
 
         'bukti_terima_sertifikat' => [
             'driver' => 'local',
-            'root' => public_path('asesmen_files'),
-            'url' => rtrim(env('APP_URL'), '/').'/asesmen_files',
-            'visibility' => 'public',
+            'root' => storage_path('app/private/asesmen_files'),
+            'visibility' => 'private',
             'throw' => false,
         ],
 

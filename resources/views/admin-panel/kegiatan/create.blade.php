@@ -85,19 +85,20 @@
                                         <div class="card-body kegiatan-item">
                                             <div id="kegiatan-container">
                                                 <!-- Item pertama -->
-                                                @for ($i = 0; $i < 5; $i++)
+                                                {{-- @for ($i = 0; $i < 5; $i++) --}}
+                                                @foreach ($dataLSP as $lsp)
                                                     <div class="row kegiatan-row mb-3">
 
                                                         <div class="col-lg-3">
                                                             <label class="form-label">Nama LSP</label>
-                                                            <select class="lsp-select @error(`lsp_ref.$i`) is-invalid @enderror form-select rounded-3" name="lsp_ref[{{ $i }}]">
+                                                            <select class="lsp-select @error(`lsp_ref.$loop->index`) is-invalid @enderror form-select rounded-3" name="lsp_ref[{{ $loop->index }}]">
                                                                 <option value="" selected>Pilih LSP</option>
                                                                 @foreach ($dataLSP as $lsp)
-                                                                    <option value="{{ $lsp->ref }}" {{ old('lsp_ref.' . $i) == $lsp->ref ? 'selected' : '' }}>{{ $lsp->lsp_nama }}</option>
+                                                                    <option value="{{ $lsp->ref }}" {{ old('lsp_ref.' . $loop->index) == $lsp->ref ? 'selected' : '' }}>{{ $lsp->lsp_nama }}</option>
                                                                 @endforeach
                                                             </select>
 
-                                                            @error("lsp_ref.$i")
+                                                            @error("lsp_ref.$loop->index")
                                                                 <div class="invalid-feedback" bis_skin_checked="1">
                                                                     {{ $message }}
                                                                 </div>
@@ -106,9 +107,9 @@
 
                                                         <div class="col-lg-5">
                                                             <label class="form-label">Skema</label>
-                                                            <select class="form-control rounded-3 select2 skema-select @error(`skema_ref.$i`) is-invalid @enderror" name="skema_ref[{{ $i }}][]" multiple disabled>
+                                                            <select class="form-control rounded-3 select2 skema-select @error(`skema_ref.$loop->index`) is-invalid @enderror" name="skema_ref[{{ $loop->index }}][]" multiple disabled>
                                                             </select>
-                                                            @error("skema_ref.$i")
+                                                            @error("skema_ref.$loop->index")
                                                                 <div class="invalid-feedback" bis_skin_checked="1">
                                                                     {{ $message }}
                                                                 </div>
@@ -117,19 +118,19 @@
 
                                                         <div class="col-lg-2">
                                                             <label class="form-label">Kuota</label>
-                                                            <input type="number" class="form-control rounded-3" name="kuota_lsp[{{ $i }}]" min="1" value="{{ old("kuota_lsp.$i") }}">
-                                                            @error("kuota_lsp.$i")
+                                                            <input type="number" class="form-control rounded-3" name="kuota_lsp[{{ $loop->index }}]" min="1" value="{{ old("kuota_lsp.$loop->index") }}">
+                                                            @error("kuota_lsp.$loop->index")
                                                                 <div class="text-danger">{{ $message }}</div>
                                                             @enderror
                                                         </div>
 
                                                         <div class="col-lg-2">
                                                             <label class="form-label">Tanggal</label>
-                                                            <input type="text" class="form-control rounded-3 daterangepicker-input" name="date_range[{{ $i }}]">
+                                                            <input type="text" class="form-control rounded-3 daterangepicker-input" name="date_range[{{ $loop->index }}]">
                                                         </div>
 
                                                     </div>
-                                                @endfor
+                                                @endforeach
                                             </div>
                                         </div>
                                     </div>

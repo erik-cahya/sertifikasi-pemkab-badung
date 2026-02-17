@@ -207,7 +207,7 @@
 
                                         <div class="col-lg-4">
                                             <div class="mb-3">
-                                                <label for="ktp_file" class="form-label">KTP</label><span class="text-danger">*</span>
+                                                <label for="ktp_file" class="form-label">Scan KTP (format PDF)</label><span class="text-danger">*</span>
                                                 <input type="file" id="ktp_file" class="form-control rounded-3 @error('ktp_file') is-invalid @enderror" name="ktp_file" required>
                                                 @error('ktp_file')
                                                     <div class="invalid-feedback" bis_skin_checked="1">{{ $message }}</div>
