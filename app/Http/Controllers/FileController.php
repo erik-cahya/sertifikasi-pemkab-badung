@@ -19,7 +19,7 @@ class FileController extends Controller
     public function getKTPAsesi($filename)
     {
         if(!Auth::check()) {
-            abort(401, 'Unauthorized');
+            abort(403, 'Anda tidak memiliki akses');
         }
         $this->checkAsesiFileAuthorization($filename, 'ktp_file');
 
@@ -40,7 +40,7 @@ class FileController extends Controller
     public function getIjazahAsesi($filename)
     {
         if(!Auth::check()) {
-            abort(401, 'Unauthorized');
+            abort(403, 'Anda tidak memiliki akses');
         }
 
         $this->checkAsesiFileAuthorization($filename, 'ijazah_file');
@@ -62,7 +62,7 @@ class FileController extends Controller
     public function getSertikomAsesi($filename)
     {
         if(!Auth::check()) {
-            abort(401, 'Unauthorized');
+            abort(403, 'Anda tidak memiliki akses');
         }
 
         $this->checkAsesiFileAuthorization($filename, 'sertikom_file');
@@ -84,7 +84,7 @@ class FileController extends Controller
     public function getSkbAsesi($filename)
     {
         if(!Auth::check()) {
-            abort(401, 'Unauthorized');
+            abort(403, 'Anda tidak memiliki akses');
         }
 
         $this->checkAsesiFileAuthorization($filename, 'keterangan_kerja_file');
@@ -107,7 +107,7 @@ class FileController extends Controller
     public function getPasFotoAsesi($filename)
     {
         if(!Auth::check()) {
-            abort(401, 'Unauthorized');
+            abort(403, 'Anda tidak memiliki akses');
         }
 
         $this->checkAsesiFileAuthorization($filename, 'pas_foto_file');
