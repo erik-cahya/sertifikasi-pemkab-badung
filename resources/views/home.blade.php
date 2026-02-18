@@ -6,11 +6,11 @@
             <div class="row justify-content-center">
                 <div class="col-lg-8 text-center">
                     <h1 class="fw-bold text-white mb-4 display-6">
-                        Sistem Informasi Pelatihan dan Sertifikasi
+                        Sistem Informasi Pelatihan dan Sertifikasi TEST WEBHOOK
                     </h1>
 
                     <p class="fs-5 text-white mb-5">
-                        Portal resmi Bidang Pelatihan dan Sertifikasi TEST WEBHOOK
+                        Portal resmi Bidang Pelatihan dan Sertifikasi
                         <br>
                         Dinas Perindustrian dan Ketenagakerjaan Kabupaten Badung
                         untuk pengelolaan sertifikasi tenaga kerja wilayah Kabupaten Badung.
