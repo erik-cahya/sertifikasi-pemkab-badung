@@ -6,7 +6,7 @@
             <div class="row justify-content-center">
                 <div class="col-lg-8 text-center">
                     <h1 class="fw-bold text-white mb-4 display-6">
-                        Sistem Informasi Pelatihan dan Sertifikasi Test Webhook
+                        Sistem Informasi Pelatihan dan Sertifikasi
                     </h1>
 
                     <p class="fs-5 text-white mb-5">
