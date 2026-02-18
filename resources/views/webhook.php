@@ -13,6 +13,6 @@ if (!hash_equals($hash, $signature)) {
 }
 
 // pull repo
-shell_exec('cd /pemkab.satuproject.web.id/sertifikasi-pemkab-badung/ && git pull origin main 2>&1');
+shell_exec('cd /home/satuproj/pemkab.satuproject.web.id/sertifikasi-pemkab-badung/ && git pull origin main 2>&1');
 
 echo "Deploy success";
