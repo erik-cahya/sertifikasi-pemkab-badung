@@ -1,17 +1,16 @@
 @extends('pendaftaran.layouts.app')
 
 @section('content')
-
     <section class="hero-gradient py-5 py-md-6">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-lg-8 text-center">
                     <h1 class="fw-bold text-white mb-4 display-6">
-                        Sistem Informasi Pelatihan dan Sertifikasi
+                        Sistem Informasi Pelatihan dan Sertifikasi Test Webhook
                     </h1>
 
                     <p class="fs-5 text-white mb-5">
-                        Portal resmi Bidang Pelatihan dan Sertifikasi 
+                        Portal resmi Bidang Pelatihan dan Sertifikasi
                         <br>
                         Dinas Perindustrian dan Ketenagakerjaan Kabupaten Badung
                         untuk pengelolaan sertifikasi tenaga kerja wilayah Kabupaten Badung.
@@ -98,7 +97,7 @@
                     </a>
                 </div>
             </div> --}}
-        </div>
+            </div>
     </section>
 
     <section class="py-5 bg-light">
@@ -129,7 +128,4 @@
             </div>
         </div>
     </section>
-
-
-
 @endsection
