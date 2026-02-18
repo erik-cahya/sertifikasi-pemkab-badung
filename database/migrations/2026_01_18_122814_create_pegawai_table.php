@@ -30,6 +30,8 @@ return new class extends Migration
             $table->unsignedInteger('pegawai_eng');
             $table->unsignedInteger('pegawai_oth');
             $table->unsignedInteger('pegawai_total');
+            // Dokumen
+            $table->string('pegawai_file')->nullable();
             $table->timestamps();
         });
     }

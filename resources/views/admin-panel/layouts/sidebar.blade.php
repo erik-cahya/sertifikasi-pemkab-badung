@@ -3,7 +3,7 @@
     <!-- Logo Light -->
     <a href="{{ route('dashboard') }}" class="logo logo-light bg-dinas">
         <span class="logo-lg">
-            <img src="{{ asset('img/logo_dinas_title.png') }}" style="height: 38px; margin-left: -15px" alt="logo">
+            <img src="{{ asset('img/logo_dinas_title.png') }}" style="height: 36px; margin-left: -15px" alt="logo">
             {{-- <h4 class="mt-3 text-white">Gse Management</h4> --}}
         </span>
         <span class="logo-sm">
@@ -15,7 +15,7 @@
     <!-- Logo Dark -->
     <a href="{{ route('dashboard') }}" class="logo logo-dark bg-dinas">
         <span class="logo-lg">
-            <img src="{{ asset('img/logo_dinas_title.png') }}" style="height: 38px; margin-left: -15px" alt="logo">
+            <img src="{{ asset('img/logo_dinas_title.png') }}" style="height: 36px; margin-left: -15px" alt="logo">
         </span>
         <span class="logo-sm">
             <img src="{{ asset('img/logo_dinas_no_title.png') }}" alt="small logo" style="height: 40px">
@@ -50,7 +50,6 @@
                             </a>
                         </li>
 
-                        {{-- @if (Auth::user()->roles === 'lsp') --}}
                         @role('lsp')
                             <li class="side-nav-item {{ request()->routeIs('skema.create') ? 'menuitem-active' : '' }}">
                                 <a class="side-nav-link {{ request()->routeIs('skema.create') ? 'active' : '' }}" href="{{ route('skema.create') }}">
@@ -78,56 +77,57 @@
                         </li>
 
                         {{-- @if (Auth::user()->roles === 'lsp') --}}
-                        {{-- @role('lsp') --}}
-                        <li class="side-nav-item {{ request()->routeIs('tukAdmin.create') ? 'menuitem-active' : '' }}">
-                            <a class="side-nav-link {{ request()->routeIs('tukAdmin.create') ? 'active' : '' }}" href="{{ route('tukAdmin.create') }}">
-                                Tambah TUK
-                            </a>
-                        </li>
-                        {{-- @endrole --}}
+                        @role('lsp')
+                            <li class="side-nav-item {{ request()->routeIs('tukAdmin.create') ? 'menuitem-active' : '' }}">
+                                <a class="side-nav-link {{ request()->routeIs('tukAdmin.create') ? 'active' : '' }}" href="{{ route('tukAdmin.create') }}">
+                                    Tambah TUK
+                                </a>
+                            </li>
+                        @endrole
 
                     </ul>
                 </div>
             </li>
-
-            <li class="side-nav-item {{ request()->routeIs('pegawai.list') ? 'menuitem-active' : '' }}">
-                <a data-bs-toggle="collapse" href="#pegawaiMenu" aria-expanded="false" aria-controls="pegawaiMenu" class="side-nav-link">
-                    <i class="ri-contacts-line"></i>
-                    <span> Pegawai </span>
-                    <span class="menu-arrow"></span>
-                </a>
-                <div class="{{ request()->routeIs('pegawai.list') ? 'show' : '' }} collapse" id="pegawaiMenu">
-                    <ul class="side-nav-second-level">
-                        <li class="side-nav-item {{ request()->routeIs('pegawai.list') ? 'menuitem-active' : '' }}">
-                            <a class="side-nav-link {{ request()->routeIs('pegawai.list') ? 'active' : '' }}" href="{{ route('pegawai.list') }}">
-                                Daftar Pegawai
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </li>
+            @role('master', 'dinas', 'lsp')
+                <li class="side-nav-item {{ request()->routeIs('pegawai.list') ? 'menuitem-active' : '' }}">
+                    <a data-bs-toggle="collapse" href="#pegawaiMenu" aria-expanded="false" aria-controls="pegawaiMenu" class="side-nav-link">
+                        <i class="ri-contacts-line"></i>
+                        <span> Pegawai </span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <div class="{{ request()->routeIs('pegawai.list') ? 'show' : '' }} collapse" id="pegawaiMenu">
+                        <ul class="side-nav-second-level">
+                            <li class="side-nav-item {{ request()->routeIs('pegawai.list') ? 'menuitem-active' : '' }}">
+                                <a class="side-nav-link {{ request()->routeIs('pegawai.list') ? 'active' : '' }}" href="{{ route('pegawai.list') }}">
+                                    Daftar Pegawai
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+            @endrole
 
             <li class="side-nav-item {{ request()->routeIs('asesiAdmin.index') ? 'menuitem-active' : '' }}">
                 <a data-bs-toggle="collapse" href="#asesiMenu" aria-expanded="false" aria-controls="asesiMenu" class="side-nav-link">
-                    <i class="ri-contacts-line"></i>
-                    <span> Calon Asesi </span>
+                    <i class="ri-team-line"></i>
+                    <span> Asesi </span>
                     <span class="menu-arrow"></span>
                 </a>
                 <div class="{{ request()->routeIs('asesiAdmin.index') ? 'show' : '' }} collapse" id="asesiMenu">
                     <ul class="side-nav-second-level">
                         <li class="side-nav-item {{ request()->routeIs('asesiAdmin.index') ? 'menuitem-active' : '' }}">
                             <a class="side-nav-link {{ request()->routeIs('asesiAdmin.index') ? 'active' : '' }}" href="{{ route('asesiAdmin.index') }}">
-                                Daftar Calon Asesi
+                                Daftar Asesi
                             </a>
                         </li>
                     </ul>
                 </div>
             </li>
 
-            @role('master')
+            @role('master', 'dinas')
                 <li class="side-nav-item {{ request()->routeIs('lsp.*') ? 'menuitem-active' : '' }}">
                     <a data-bs-toggle="collapse" href="#lspMenu" aria-expanded="false" aria-controls="lspMenu" class="side-nav-link">
-                        <i class="ri-team-line"></i>
+                        <i class="ri-p2p-fill "></i>
                         <span> LSP </span>
                         <span class="menu-arrow"></span>
                     </a>
@@ -180,7 +180,7 @@
                 </div>
             </li>
 
-            @role('master')
+            @role('master', 'dinas')
                 <li class="side-nav-item {{ request()->routeIs('item.*') ? 'menuitem-active' : '' }}">
                     <a data-bs-toggle="collapse" href="#itemMenu" aria-expanded="false" aria-controls="itemMenu" class="side-nav-link">
                         <i class="ri-settings-2-line"></i>

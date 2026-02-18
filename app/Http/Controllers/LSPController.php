@@ -56,10 +56,6 @@ class LSPController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->all());
-        // dd($request->hasFile('lsp_logo'), $request->file('lsp_logo'));
-
-
         $validated = $request->validate([
             'lsp_nama' => 'required|unique:lsp,lsp_nama',
             'lsp_no_lisensi' => 'required',
@@ -68,12 +64,15 @@ class LSPController extends Controller
             // 'lsp_telp' => 'required',
             // 'lsp_direktur' => 'required',
             // 'lsp_direktur_telp' => 'required',
-            'lsp_tanggal_lisensi' => 'required',
+            // 'lsp_tanggal_lisensi' => 'required',
             'lsp_expired_lisensi' => 'required',
 
             'name' => 'required',
             'username' => 'required',
             'password' => 'required|confirmed',
+
+            'nama_cp_1' => 'required',
+            'nomor_cp_1' => 'required',
 
             // FILE VALIDATION
             'lsp_logo' => 'nullable|mimes:png|max:2048',
@@ -82,6 +81,8 @@ class LSPController extends Controller
             'lsp_nama.unique' => 'Nama LSP ini sudah ada',
             'lsp_logo.max'   => 'Logo maksimal 2 MB',
             'lsp_logo.mimes' => 'Format logo harus PNG',
+            'nama_cp_1.required' => 'Silahkan inputkan nama CP 1',
+            'nomor_cp_1.required' => 'Silahkan inputkan nomor CP 1',
         ]);
 
         // ================== SIMPAN FILE ==================
@@ -94,10 +95,6 @@ class LSPController extends Controller
             $ext = $request->file('lsp_logo')->extension();
             $filename = "{$lsp_nama}-{$lsp_no_lisensi}.{$ext}";
             $lsp_logo = Storage::disk('logo-lsp')->putFileAs("logo-lsp", $request->file('lsp_logo'), $filename);
-
-            //  $lsp_logo = $request->file('lsp_logo')
-            // ->storeAs("LSP/{$request->lsp_nama}", $filename, 'public');
-
         }
 
         $userCreated = User::create([
@@ -119,8 +116,12 @@ class LSPController extends Controller
             'lsp_direktur' => $request->lsp_direktur,
             'lsp_direktur_telp' => $request->lsp_direktur_telp,
             'lsp_logo' => $lsp_logo,
-            'lsp_tanggal_lisensi' => Carbon::createFromFormat('d/m/Y', $request->lsp_tanggal_lisensi)->format('Y-m-d'),
+            'lsp_tanggal_lisensi' => NULL,
             'lsp_expired_lisensi' => Carbon::createFromFormat('d/m/Y', $request->lsp_expired_lisensi)->format('Y-m-d'),
+            'nama_cp_1' => $request->nama_cp_1,
+            'nomor_cp_1' => $request->nomor_cp_1,
+            'nama_cp_2' => $request->nama_cp_2,
+            'nomor_cp_2' => $request->nomor_cp_2,
             'created_by' => Auth::user()->ref,
 
         ]);

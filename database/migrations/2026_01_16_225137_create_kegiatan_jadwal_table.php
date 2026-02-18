@@ -19,6 +19,14 @@ return new class extends Migration
             $table->dateTime('mulai_asesmen');
             $table->dateTime('selesai_asesmen');
             $table->integer('kuota_lsp');
+
+            // Dokumen
+            $table->string('laporan_asesmen')->nullable();
+            $table->string('laporan_asesmen2')->nullable();
+            $table->string('laporan_asesmen3')->nullable();
+            $table->string('laporan_asesmen4')->nullable();
+            $table->string('laporan_asesmen5')->nullable();
+
             $table->foreignUlid('created_by')->references('ref')->on('users')->cascadeOnDelete();
             $table->timestamps();
         });

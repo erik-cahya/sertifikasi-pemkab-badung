@@ -243,9 +243,9 @@
             <tbody class="value">
                 <tr>
                     <td class="center">1</td>
-                    <td>{{ $item->nama_penanggung_jawab }}</td>
+                    <td>{{ $item->kegiatanJadwal->lsp->lsp_direktur }}</td>
                     <td class="center">Penanggung Jawab</td>
-                    <td class="center">{{ $item->no_penanggung_jawab }}</td>
+                    <td class="center">{{ $item->kegiatanJadwal->lsp->lsp_direktur_telp }}</td>
                     <td class="signature"> 1.</td>
                 </tr>
                 <tr>

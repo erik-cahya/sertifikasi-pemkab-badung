@@ -33,19 +33,19 @@ class SkemaModel extends Model
         }
     }
 
-    public function kodeUnits()
-    {
-        return $this->hasMany(SkemaDetailModel::class, 'skema_ref', 'ref');
-    }
+    // public function kodeUnits()
+    // {
+    //     return $this->hasMany(SkemaDetailModel::class, 'skema_ref', 'ref');
+    // }
 
-    public function details()
-    {
-        return $this->hasMany(
-            SkemaDetailModel::class,
-            'skema_ref',
-            'ref'
-        );
-    }
+    // public function details()
+    // {
+    //     return $this->hasMany(
+    //         SkemaDetailModel::class,
+    //         'skema_ref',
+    //         'ref'
+    //     );
+    // }
 
     public function kegiatans()
     {

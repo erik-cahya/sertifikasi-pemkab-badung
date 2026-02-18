@@ -35,16 +35,6 @@ class LSPModel extends Model
         return $this->belongsTo(User::class, 'user_ref', 'ref');
     }
 
-
-    // public function kegiatanDetails()
-    // {
-    //     return $this->hasMany(
-    //         KegiatanDetailModel::class,
-    //         'lsp_ref',
-    //         'ref'
-    //     );
-    // }
-
     public function skemas()
     {
         return $this->hasMany(SkemaModel::class, 'lsp_ref', 'ref');
@@ -56,17 +46,17 @@ class LSPModel extends Model
     }
 
 
-    public function kodeUnits()
-    {
-        return $this->hasManyThrough(
-            SkemaDetailModel::class,
-            SkemaModel::class,
-            'lsp_ref',     // FK di skema
-            'skema_ref',   // FK di kode_unit
-            'ref',
-            'ref'
-        );
-    }
+    // public function kodeUnits()
+    // {
+    //     return $this->hasManyThrough(
+    //         SkemaDetailModel::class,
+    //         SkemaModel::class,
+    //         'lsp_ref',     // FK di skema
+    //         'skema_ref',   // FK di kode_unit
+    //         'ref',
+    //         'ref'
+    //     );
+    // }
 
 
 

@@ -22,7 +22,7 @@
                                     </ul>
                                 </div>
                             @endif
-                            <form action="{{ route('pegawai.store') }}" method="POST" class="form-dinas">
+                            <form action="{{ route('pegawai.store') }}" method="POST" class="form-dinas" enctype="multipart/form-data">
                             @csrf
                                 <div class="card-body">
                                     <div class="row">
@@ -82,6 +82,13 @@
                                             </div>
                                         </div>
 
+                                         <div class="col-lg-12">
+                                            <div class="mb-3">
+                                                <label for="example-fileinput" class="form-label">Upload File</label><span class="text-danger">*</span>
+                                                <input type="file" id="example-fileinput" class="form-control rounded-3" name="pegawai_file" required>
+                                            </div>
+                                        </div>
+
                                         <div class="col-lg-12">
                                             <div class="mb-2 mt-2">
                                                 <button type="button" id="btnSubmit" class="btn btn-dinas rounded-3 px-4 py-2 fw-semibold"><i class="ri-save-3-line"></i> SIMPAN</button>
@@ -103,60 +110,60 @@
     @push('script')
         {{-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> --}}
         <script>
-        document.addEventListener('DOMContentLoaded', function () {
+            document.addEventListener('DOMContentLoaded', function () {
 
-            // hitung total pegawai
-            document.addEventListener('input', function () {
-                let total = 0;
+                // hitung total pegawai
+                document.addEventListener('input', function () {
+                    let total = 0;
 
-                document.querySelectorAll('.pegawai-input').forEach(function (el) {
-                    total += parseInt(el.value) || 0;
+                    document.querySelectorAll('.pegawai-input').forEach(function (el) {
+                        total += parseInt(el.value) || 0;
+                    });
+
+                    document.querySelector('[name="pegawai_total"]').value = total;
                 });
 
-                document.querySelector('[name="pegawai_total"]').value = total;
-            });
+                // tombol submit
+                const btn = document.getElementById('btnSubmit');
+                if (!btn) {
+                    console.error('Tombol SIMPAN tidak ditemukan');
+                    return;
+                }
 
-            // tombol submit
-            const btn = document.getElementById('btnSubmit');
-            if (!btn) {
-                console.error('Tombol SIMPAN tidak ditemukan');
-                return;
-            }
+                btn.addEventListener('click', function () {
 
-            btn.addEventListener('click', function () {
+                    const getVal = name =>
+                        document.querySelector(`[name="${name}"]`)?.value || '-';
 
-                const getVal = name =>
-                    document.querySelector(`[name="${name}"]`)?.value || '-';
+                    Swal.fire({
+                        title: 'Konfirmasi Data Pegawai',
+                        html: `
+                            <table class="table table-bordered text-start">
+                                <tr><th>Nama Hotel</th><td>${getVal('pegawai_nama_hotel')}</td></tr>
+                                <tr><th>Housekeeping</th><td>${getVal('pegawai_hk')}</td></tr>
+                                <tr><th>F&B Service</th><td>${getVal('pegawai_fbs')}</td></tr>
+                                <tr><th>F&B Product</th><td>${getVal('pegawai_fbp')}</td></tr>
+                                <tr><th>Kantor Depan</th><td>${getVal('pegawai_fo')}</td></tr>
+                                <tr><th>Engineering</th><td>${getVal('pegawai_eng')}</td></tr>
+                                <tr><th>Lainnya</th><td>${getVal('pegawai_oth')}</td></tr>
+                                <tr class="fw-bold">
+                                    <th>Total</th><td>${getVal('pegawai_total')}</td>
+                                </tr>
+                            </table>
+                        `,
+                        icon: 'question',
+                        showCancelButton: true,
+                        confirmButtonText: 'Ya, Simpan',
+                        cancelButtonText: 'Batal'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            document.querySelector('form.form-dinas').submit();
+                        }
+                    });
 
-                Swal.fire({
-                    title: 'Konfirmasi Data Pegawai',
-                    html: `
-                        <table class="table table-bordered text-start">
-                            <tr><th>Nama Hotel</th><td>${getVal('pegawai_nama_hotel')}</td></tr>
-                            <tr><th>Housekeeping</th><td>${getVal('pegawai_hk')}</td></tr>
-                            <tr><th>F&B Service</th><td>${getVal('pegawai_fbs')}</td></tr>
-                            <tr><th>F&B Product</th><td>${getVal('pegawai_fbp')}</td></tr>
-                            <tr><th>Kantor Depan</th><td>${getVal('pegawai_fo')}</td></tr>
-                            <tr><th>Engineering</th><td>${getVal('pegawai_eng')}</td></tr>
-                            <tr><th>Lainnya</th><td>${getVal('pegawai_oth')}</td></tr>
-                            <tr class="fw-bold">
-                                <th>Total</th><td>${getVal('pegawai_total')}</td>
-                            </tr>
-                        </table>
-                    `,
-                    icon: 'question',
-                    showCancelButton: true,
-                    confirmButtonText: 'Ya, Simpan',
-                    cancelButtonText: 'Batal'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        document.querySelector('form.form-dinas').submit();
-                    }
                 });
 
             });
-
-        });
         </script>
     @endpush
 

@@ -19,7 +19,9 @@
 /storage/*.key
 /storage/pail
 /vendor
-/public/asesi_files
 Homestead.json
 Homestead.yaml
 Thumbs.db
+/public/asesi_files
+/public/asesmen_files
+/public/img/logo-lsp

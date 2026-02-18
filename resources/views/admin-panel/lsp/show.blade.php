@@ -5,54 +5,51 @@
         <div class="row">
             <div class="col-12">
                 <div class="card">
-                    <div class="card-header">
+                    <div class="card-header bg-dinas text-white">
                         <div class="d-flex justify-content-between align-items-center">
 
                             <h4 class=".card-title">LSP Details</h4>
 
-                            @role('lsp')
-                                <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#editLSPModal">
-                                    <i class="ri-edit-2-line"></i> Edit Data LSP
-                                </button>
+                            <button type="button" class="btn btn-sm btn-dark" data-bs-toggle="modal" data-bs-target="#editLSPModal">
+                                <i class="ri-edit-2-line"></i> Edit Data LSP
+                            </button>
 
-                                {{-- Modal Ganti Password --}}
-                                <div id="editLSPModal" class="modal modal-lg fade" tabindex="-1" role="dialog"
-                                    aria-labelledby="primary-header-modalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+                            {{-- Modal Ganti Password --}}
+                            <div id="editLSPModal" class="modal modal-lg fade" tabindex="-1" role="dialog"
+                                aria-labelledby="primary-header-modalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
 
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <form action="{{ route('lsp.update', $dataLSP->ref) }}" method="POST">
-                                                @csrf
-                                                @method('PUT')
-                                                <div class="modal-header modal-colored-header bg-primary">
-                                                    <h5 class="modal-title" id="primary-header-modalLabel">Edit Data LSP</h5>
-                                                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <form action="{{ route('lsp.update', $dataLSP->ref) }}" method="POST">
+                                            @csrf
+                                            @method('PUT')
+                                            <div class="modal-header modal-colored-header bg-dinas">
+                                                <h5 class="modal-title" id="primary-header-modalLabel">Edit Data LSP</h5>
+                                                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+
+                                            <div class="modal-body text-dark">
+                                                <div class="row">
+                                                    <x-form.input className="col-md-6 mb-3" type="text" name="lsp_nama" label="Nama LSP" value="{{ $dataLSP->lsp_nama }}" errorBag="update_lsp" />
+                                                    <x-form.input className="col-md-6 mb-3" type="text" name="lsp_no_lisensi" label="No Lisensi LSP" value="{{ $dataLSP->lsp_no_lisensi }}" />
+                                                    <x-form.input className="col-md-6 mb-3" type="text" name="lsp_telp" label="Kontak LSP" value="{{ $dataLSP->lsp_telp }}" />
+                                                    <x-form.input className="col-md-6 mb-3" type="text" name="lsp_alamat" label="Alamat LSP" value="{{ $dataLSP->lsp_alamat }}" />
+                                                    <x-form.input className="col-md-6 mb-3" type="text" name="lsp_email" label="Email LSP" value="{{ $dataLSP->lsp_email }}" />
+                                                    <x-form.input className="col-md-6 mb-3" type="text" name="lsp_direktur" label="Direktur LSP" value="{{ $dataLSP->lsp_direktur }}" />
+                                                    <x-form.input className="col-md-6 mb-3" type="text" name="lsp_direktur_telp" label="Kontak Direktur LSP" value="{{ $dataLSP->lsp_direktur_telp }}" />
+                                                    {{-- <x-form.input className="col-md-6 mb-3" type="date" name="lsp_tanggal_lisensi" label="Tanggal Lisensi LSP" value="{{ $dataLSP->lsp_tanggal_lisensi }}" /> --}}
+                                                    <x-form.input className="col-md-6 mb-3" type="date" name="lsp_expired_lisensi" label="Tanggal Expired LSP" value="{{ $dataLSP->lsp_expired_lisensi }}" />
                                                 </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                                                <button type="submit" class="btn btn-dinas">Edit Data</button>
+                                            </div>
+                                        </form>
 
-                                                <div class="modal-body">
-
-                                                    <div class="row">
-                                                        <x-form.input className="col-md-6 mb-3" type="text" name="lsp_nama" label="Nama LSP" value="{{ $dataLSP->lsp_nama }}" errorBag="update_lsp" />
-                                                        <x-form.input className="col-md-6 mb-3" type="text" name="lsp_no_lisensi" label="No Lisensi LSP" value="{{ $dataLSP->lsp_no_lisensi }}" />
-                                                        <x-form.input className="col-md-6 mb-3" type="text" name="lsp_telp" label="Kontak LSP" value="{{ $dataLSP->lsp_telp }}" />
-                                                        <x-form.input className="col-md-6 mb-3" type="text" name="lsp_alamat" label="Alamat LSP" value="{{ $dataLSP->lsp_alamat }}" />
-                                                        <x-form.input className="col-md-6 mb-3" type="text" name="lsp_email" label="Email LSP" value="{{ $dataLSP->lsp_email }}" />
-                                                        <x-form.input className="col-md-6 mb-3" type="text" name="lsp_direktur" label="Direktur LSP" value="{{ $dataLSP->lsp_direktur }}" />
-                                                        <x-form.input className="col-md-6 mb-3" type="text" name="lsp_direktur_telp" label="Kontak Direktur LSP" value="{{ $dataLSP->lsp_direktur_telp }}" />
-                                                        <x-form.input className="col-md-6 mb-3" type="date" name="lsp_tanggal_lisensi" label="Tanggal Lisensi LSP" value="{{ $dataLSP->lsp_tanggal_lisensi }}" />
-                                                        <x-form.input className="col-md-6 mb-3" type="date" name="lsp_expired_lisensi" label="Tanggal Expired LSP" value="{{ $dataLSP->lsp_expired_lisensi }}" />
-                                                    </div>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-                                                    <button type="submit" class="btn btn-primary">Edit Data</button>
-                                                </div>
-                                            </form>
-
-                                        </div>
                                     </div>
-                                </div><!-- / END Modal Ganti Password -->
-                            @endrole
+                                </div>
+                            </div><!-- / END Modal Ganti Password -->
                         </div>
                     </div>
                     <div class="card-body">
@@ -108,16 +105,28 @@
                                 </div>
 
                                 <div class="row mb-3">
-                                    <label class="col-md-3 col-form-label" for="serial_gse"><i class="ri-edit-2-line"></i> Tanggal Lisensi LSP</label>
+                                    <label class="col-md-3 col-form-label" for="serial_gse"><i class="ri-edit-2-line"></i> Tanggal Expired Lisensi</label>
                                     <div class="col-md-9">
-                                        <input disabled type="text" class="form-control" id="serial_gse" name="serial_gse" value="{{ \Carbon\Carbon::parse($dataLSP->lsp_tanggal_lisensi)->locale('id')->translatedFormat('l, d F Y') }}">
+                                        <input disabled type="text" class="form-control" id="serial_gse" name="serial_gse" value="{{ \Carbon\Carbon::parse($dataLSP->lsp_expired_lisensi)->locale('id')->translatedFormat('l, d F Y') }}">
                                     </div>
                                 </div>
 
                                 <div class="row mb-3">
-                                    <label class="col-md-3 col-form-label" for="serial_gse"><i class="ri-edit-2-line"></i> Tanggal Expired Lisensi</label>
-                                    <div class="col-md-9">
-                                        <input disabled type="text" class="form-control" id="serial_gse" name="serial_gse" value="{{ \Carbon\Carbon::parse($dataLSP->lsp_expired_lisensi)->locale('id')->translatedFormat('l, d F Y') }}">
+                                    <label class="col-md-3 col-form-label" for="serial_gse"><i class="ri-edit-2-line"></i> Kontak Person 1</label>
+                                    <div class="col-md-5">
+                                        <input disabled type="text" class="form-control" id="serial_gse" name="serial_gse" value="{{ $dataLSP->nama_cp_1 }}">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <input disabled type="text" class="form-control" id="serial_gse" name="serial_gse" value="{{ $dataLSP->nomor_cp_1 }}">
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <label class="col-md-3 col-form-label" for="serial_gse"><i class="ri-edit-2-line"></i> Kontak Person 2</label>
+                                    <div class="col-md-5">
+                                        <input disabled type="text" class="form-control" id="serial_gse" name="serial_gse" value="{{ $dataLSP->nama_cp_2 ?? '-' }}">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <input disabled type="text" class="form-control" id="serial_gse" name="serial_gse" value="{{ $dataLSP->nomor_cp_2 ?? '-' }}">
                                     </div>
                                 </div>
 
@@ -138,7 +147,7 @@
         <div class="row">
             <div class="col-4">
                 <div class="card">
-                    <div class="card-header">
+                    <div class="card-header bg-dinas text-white">
                         <div class="d-flex justify-content-between align-items-center">
 
                             <h4 class=".card-title">LSP Account</h4>
@@ -162,7 +171,7 @@
 
                             @role('master')
                                 <div class="col-12 mt-2">
-                                    <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#gantiPasswordModal">
+                                    <button type="button" class="btn btn-sm btn-dinas" data-bs-toggle="modal" data-bs-target="#gantiPasswordModal">
                                         <i class="ri-lock-password-fill"></i> Ganti Password
                                     </button>
                                 </div>
@@ -175,7 +184,7 @@
                                         <div class="modal-content">
                                             <form action="{{ route('lsp.change-password', $dataLSP->ref) }}" method="POST">
                                                 @csrf
-                                                <div class="modal-header modal-colored-header bg-primary">
+                                                <div class="modal-header modal-colored-header bg-dinas">
                                                     <h5 class="modal-title" id="primary-header-modalLabel">Ganti Password</h5>
                                                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                                                 </div>
@@ -187,7 +196,7 @@
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-                                                    <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Change Password</button>
+                                                    <button type="submit" class="btn btn-dinas" data-bs-dismiss="modal">Change Password</button>
                                                 </div>
                                             </form>
 
@@ -202,12 +211,12 @@
 
             <div class="col-8">
                 <div class="card">
-                    <div class="card-header">
+                    <div class="card-header bg-dinas text-white">
                         <div class="d-flex justify-content-between align-items-center">
 
                             <h4 class=".card-title">LSP Skema</h4>
                             @role('lsp')
-                                <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#editModal">
+                                <button type="button" class="btn btn-sm btn-dinas" data-bs-toggle="modal" data-bs-target="#editModal">
                                     <i class="ri-edit-2-line"></i> Edit Data LSP
                                 </button>
                             @endrole
@@ -247,7 +256,7 @@
 
                                 <div class="modal-dialog">
                                     <div class="modal-content">
-                                        <div class="modal-header modal-colored-header bg-primary">
+                                        <div class="modal-header modal-colored-header bg-dinas">
                                             <h4 class="modal-title" id="primary-header-modalLabel">List Kode Unit</h4>
                                             <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
@@ -255,7 +264,7 @@
                                             <div class="mb-2">
                                                 <h5 class="">{{ $skema->lsp_nama }}
                                                 </h5>
-                                                <span class="badge bg-primary-subtle text-primary">{{ $skema->skema_judul }}</span>
+                                                <span class="badge bg-dinas-subtle text-primary">{{ $skema->skema_judul }}</span>
                                             </div>
                                             <table class="table-striped table-sm table-bordered w-100 nowrap table" style="font-size: 12px">
                                                 <thead>

@@ -48,6 +48,10 @@ return new class extends Migration
             $table->string('keterangan_kerja_file')->nullable();
             $table->string('pas_foto_file')->nullable();
 
+            $table->string('nama_kontak_person');
+            $table->string('no_kontak_person');
+
+
             $table->boolean('status')->nullable();
             $table->boolean('kompeten')->nullable();
 

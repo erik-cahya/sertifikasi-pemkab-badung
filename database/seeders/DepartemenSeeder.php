@@ -18,19 +18,18 @@ class DepartemenSeeder extends Seeder
     {
         $user = User::where('email', 'master@gmail.com')->value('ref');
 
-
         $data = [
             [
                 'ref' => (string) Str::ulid(),
+                'departemen_nama' => 'Engineering',
                 'departemen_kode' => 1,
-                'departemen_nama' => 'Human Resources',
                 'created_by' => $user,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
                 'ref' => (string) Str::ulid(),
-                'departemen_nama' => 'IT',
+                'departemen_nama' => 'Front Office',
                 'departemen_kode' => 2,
                 'created_by' => $user,
                 'created_at' => now(),
@@ -38,8 +37,24 @@ class DepartemenSeeder extends Seeder
             ],
             [
                 'ref' => (string) Str::ulid(),
-                'departemen_nama' => 'Engineering',
+                'departemen_nama' => 'House Keeping',
                 'departemen_kode' => 3,
+                'created_by' => $user,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'ref' => (string) Str::ulid(),
+                'departemen_nama' => 'Food & Beverage Service',
+                'departemen_kode' => 4,
+                'created_by' => $user,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'ref' => (string) Str::ulid(),
+                'departemen_nama' => 'Food & Beverage Product',
+                'departemen_kode' => 5,
                 'created_by' => $user,
                 'created_at' => now(),
                 'updated_at' => now(),

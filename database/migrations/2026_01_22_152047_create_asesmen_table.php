@@ -24,15 +24,18 @@ return new class extends Migration
             $table->integer('kuota_harian');
 
             // TAMBAHAN
-            $table->string('nama_penanggung_jawab');
-            $table->string('no_penanggung_jawab');
+            $table->string('nama_penanggung_jawab')->nullable();
+            $table->string('no_penanggung_jawab')->nullable();
             $table->string('nama_penyelenggara_uji');
             $table->string('no_penyelenggara_uji');
             $table->string('nama_asesor');
             $table->string('no_asesor');
             $table->string('no_reg_asesor');
 
+            // Dokumen
             $table->string('bukti_asesmen')->nullable();
+            $table->string('bukti_terima_sertifikat')->nullable();
+            $table->string('dokumentasi_asesmen')->nullable();
 
             $table->foreignUlid('created_by')->nullable()->references('ref')->on('users')->nullOnDelete();
             $table->timestamps();

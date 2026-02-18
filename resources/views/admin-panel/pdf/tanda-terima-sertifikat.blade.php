@@ -125,7 +125,7 @@
             </tr>
             <tr>
                 <td class="info-label">2. Tanggal</td>
-                <td class="value">: {{ \Carbon\Carbon::parse($item->jadwal_asesmen)->locale('id')->translatedFormat('j F Y') }}</td>
+                <td class="value">: </td>
             </tr>
             <tr>
                 <td class="info-label">3. Skema</td>

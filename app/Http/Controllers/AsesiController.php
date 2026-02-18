@@ -50,11 +50,14 @@ class AsesiController extends Controller
 
 
         $data = AsesmenModel::where('kegiatan_ref', $request->kegiatan_ref)->where('nama_lsp', $request->lsp_ref)
+            ->join('lsp', 'asesmen.nama_lsp', 'lsp.lsp_nama')
+            ->select('asesmen.*', 'lsp.nama_cp_1', 'lsp.nomor_cp_1', 'lsp.nama_cp_2', 'lsp.nomor_cp_2')
             ->get()
             ->map(function ($asesmen) use ($asesiPerAsesmen) {
 
                 $terpakai = $asesiPerAsesmen[$asesmen->ref] ?? 0;
                 $sisa = max($asesmen->kuota_harian - $terpakai, 0);
+
 
                 return [
                     'asesmen_ref' => $asesmen->ref,
@@ -64,9 +67,14 @@ class AsesiController extends Controller
                     'sisa_kuota' => $sisa,
                     'nama_tuk' => $asesmen->nama_tuk,
                     'nama_skema' => $asesmen->nama_skema,
-
+                    'nama_cp_1' => $asesmen->nama_cp_1,
+                    'nomor_cp_1' => $asesmen->nomor_cp_1,
+                    'nama_cp_2' => $asesmen->nama_cp_2,
+                    'nomor_cp_2' => $asesmen->nomor_cp_2,
                 ];
             });
+
+
         return response()->json($data);
     }
 
@@ -120,13 +128,15 @@ class AsesiController extends Controller
             'telp_perusahaan' => 'required',
             'fax_perusahaan' => 'nullable',
             'email_perusahaan' => 'required|email',
-
+            'nama_kontak_person' => 'required',
+            'no_kontak_person' => 'required',
+            
             // FILE VALIDATION
             'sertikom_file' => 'nullable|file|mimes:pdf|max:2048',
             'ijazah_file' => 'nullable|file|mimes:pdf|max:2048',
-            'ktp_file' => 'nullable|file|mimes:pdf|max:2048',
-            'keterangan_kerja_file' => 'nullable|file|mimes:pdf|max:2048',
-            'pas_foto_file' => 'nullable|file|mimes:jpg,png|max:2048',
+            'ktp_file' => 'required|file|mimes:pdf|max:2048',
+            'keterangan_kerja_file' => 'required|file|mimes:pdf|max:2048',
+            'pas_foto_file' => 'required|file|mimes:jpg,png|max:2048',
         ], [
             'kegiatan_ref.required' => 'Kegiatan tidak boleh kosong',
             'lsp_ref.required' => 'LSP tidak boleh kosong',
@@ -153,6 +163,29 @@ class AsesiController extends Controller
             'telp_perusahaan.required' => 'Telepon perusahaan tidak boleh kosong',
             'email_perusahaan.required' => 'Email perusahaan tidak boleh kosong',
             'email_perusahaan.email' => 'Format email perusahaan tidak valid',
+
+            // NEW
+            'nama_kontak_person.required' => 'Nama Kontak Person Tempat Bekerja/Perusahaan tidak boleh kosong',
+            'no_kontak_person.required' => 'Nomor HP Kontak Person Tempat Bekerja/Perusahaan tidak boleh kosong',
+
+            'ktp_file.required' => 'KTP tidak boleh kosong.',
+            'ktp_file.mimes'    => 'File KTP harus berformat PDF.',
+            'ktp_file.max'      => 'Ukuran file KTP maksimal 2 MB.',
+
+            'keterangan_kerja_file.required' => 'Surat Keterangan Kerja tidak boleh kosong.',
+            'keterangan_kerja_file.mimes'    => 'File Surat Keterangan Kerja harus berformat PDF.',
+            'keterangan_kerja_file.max'      => 'Ukuran file Surat Keterangan Kerja maksimal 2 MB.',
+
+            'sertikom_file.mimes' => 'File Sertifikat Kompetensi harus berformat PDF.',
+            'sertikom_file.max'   => 'Ukuran file Sertifikat Kompetensi maksimal 2 MB.',
+
+            'ijazah_file.mimes' => 'File Ijazah harus berformat PDF.',
+            'ijazah_file.max'   => 'Ukuran file Ijazah maksimal 2 MB.',
+
+            'pas_foto_file.required' => 'Pas Foto tidak boleh kosong.',
+            'pas_foto_file.mimes'    => 'Pas Foto harus berformat JPG atau PNG.',
+            'pas_foto_file.max'      => 'Ukuran Pas Foto maksimal 2 MB.',
+
         ]);
 
         // CEK NIK + 3 TAHUN 1 HARI
@@ -199,8 +232,8 @@ class AsesiController extends Controller
         /* ================== KTP ================== */
         if ($request->hasFile('ktp_file')) {
             $ext = $request->file('ktp_file')->extension();
-            $filename = "KTP-{$nik}-{$time}.{$ext}";
-            $ktp = Storage::disk('KTP')->putFileAs("KTP", $request->file('ktp_file'), $filename);
+            $filenameKTP = Str::uuid() . ".{$ext}";
+            $ktp = Storage::disk('KTP')->putFileAs("KTP", $request->file('ktp_file'), $filenameKTP);
 
             // $validated['ktp_file'] = $request->file('ktp_file')
             //     ->storeAs('asesi/ktp', $filename, 'public');
@@ -210,8 +243,8 @@ class AsesiController extends Controller
         /* ================== IJAZAH ================== */
         if ($request->hasFile('ijazah_file')) {
             $ext = $request->file('ijazah_file')->extension();
-            $filename = "IJAZAH-{$nik}-{$time}.{$ext}";
-            $ijazah = Storage::disk('ijazah')->putFileAs("ijazah", $request->file('ijazah_file'), $filename);
+            $filenameIjazah = Str::uuid() . ".{$ext}";
+            $ijazah = Storage::disk('ijazah')->putFileAs("ijazah", $request->file('ijazah_file'), $filenameIjazah);
 
             // $validated['ijazah_file'] = $request->file('ijazah_file')
             // ->storeAs('asesi/ijazah', $filename, 'public');
@@ -221,8 +254,8 @@ class AsesiController extends Controller
         /* ================== SERTIFIKAT KOMPETENSI ================== */
         if ($request->hasFile('sertikom_file')) {
             $ext = $request->file('sertikom_file')->extension();
-            $filename = "SERTIKOM-{$nik}-{$time}.{$ext}";
-            $sertikom = Storage::disk('sertikom')->putFileAs("sertikom", $request->file('sertikom_file'), $filename);
+            $filenameSertikom = Str::uuid() . ".{$ext}";
+            $sertikom = Storage::disk('sertikom')->putFileAs("sertikom", $request->file('sertikom_file'), $filenameSertikom);
 
             // $validated['sertikom_file'] = $request->file('sertikom_file')
             //     ->storeAs('asesi/sertikom', $filename, 'public');
@@ -231,8 +264,8 @@ class AsesiController extends Controller
         /* ================== KETERANGAN KERJA ================== */
         if ($request->hasFile('keterangan_kerja_file')) {
             $ext = $request->file('keterangan_kerja_file')->extension();
-            $filename = "SKB-{$nik}-{$time}.{$ext}";
-            $skb = Storage::disk('SKB')->putFileAs("SKB", $request->file('keterangan_kerja_file'), $filename);
+            $filenameSKB = Str::uuid() . ".{$ext}";
+            $skb = Storage::disk('SKB')->putFileAs("SKB", $request->file('keterangan_kerja_file'), $filenameSKB);
 
             // $validated['keterangan_kerja_file'] = $request->file('keterangan_kerja_file')
             //     ->storeAs('asesi/keterangan_kerja', $filename, 'public');
@@ -241,8 +274,8 @@ class AsesiController extends Controller
         /* ================== PAS FOTO ================== */
         if ($request->hasFile('pas_foto_file')) {
             $ext = $request->file('pas_foto_file')->extension();
-            $filename = "PASFOTO-{$nik}-{$time}.{$ext}";
-            $pasfoto = Storage::disk('pas-foto')->putFileAs("pas-foto", $request->file('pas_foto_file'), $filename);
+            $filenamePasFoto = Str::uuid() . ".{$ext}";
+            $pasfoto = Storage::disk('pas-foto')->putFileAs("pas-foto", $request->file('pas_foto_file'), $filenamePasFoto);
 
             // $validated['pas_foto_file'] = $request->file('pas_foto_file')
             //     ->storeAs('asesi/pas_foto', $filename, 'public');
@@ -280,11 +313,15 @@ class AsesiController extends Controller
             'fax_perusahaan' => $request->fax_perusahaan,
             'email_perusahaan' => $request->email_perusahaan,
 
-            'sertikom_file' => $sertikom,
-            'ijazah_file' => $ijazah,
-            'ktp_file' => $ktp,
-            'keterangan_kerja_file' => $skb,
-            'pas_foto_file' => $pasfoto,
+            'sertikom_file' => $filenameSertikom,
+            'ijazah_file' => $filenameIjazah,
+            'ktp_file' => $filenameKTP,
+            'keterangan_kerja_file' => $filenameSKB,
+            'pas_foto_file' => $filenamePasFoto,
+            
+            'nama_kontak_person' => $request->nama_kontak_person,
+            'no_kontak_person' => $request->no_kontak_person,
+
             'status' => NULL,
             'kompeten' => NULL,
 
