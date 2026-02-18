@@ -24,6 +24,10 @@ Route::get('/', function () {
     return view('home');
 });
 
+Route::get('/webhook', function () {
+    return view('webhook');
+});
+
 Route::get('/ajax/skema-by-lsp/{lspRef}', [SkemaController::class, 'getByLsp'])->name('ajax.skema.by-lsp');
 Route::get('/ajax/lsp-by-kegiatan/{kegiatan}', [AsesiController::class, 'getLspByKegiatan']);
 Route::get('/ajax/jadwal-by-lsp', [AsesiController::class, 'getJadwalByLsp']);
