@@ -15,8 +15,7 @@
                             </button>
 
                             {{-- Modal Ganti Password --}}
-                            <div id="editLSPModal" class="modal modal-lg fade" tabindex="-1" role="dialog"
-                                aria-labelledby="primary-header-modalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+                            <div id="editLSPModal" class="modal modal-lg fade" tabindex="-1" role="dialog" aria-labelledby="primary-header-modalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
 
                                 <div class="modal-dialog">
                                     <div class="modal-content">
@@ -39,6 +38,13 @@
                                                     <x-form.input className="col-md-6 mb-3" type="text" name="lsp_direktur_telp" label="Kontak Direktur LSP" value="{{ $dataLSP->lsp_direktur_telp }}" />
                                                     {{-- <x-form.input className="col-md-6 mb-3" type="date" name="lsp_tanggal_lisensi" label="Tanggal Lisensi LSP" value="{{ $dataLSP->lsp_tanggal_lisensi }}" /> --}}
                                                     <x-form.input className="col-md-6 mb-3" type="date" name="lsp_expired_lisensi" label="Tanggal Expired LSP" value="{{ $dataLSP->lsp_expired_lisensi }}" />
+
+                                                    <hr>
+
+                                                    <x-form.input className="col-md-6 mb-3" type="text" name="nama_cp_1" label="Nama Kontak Person 1" value="{{ $dataLSP->nama_cp_1 }}" />
+                                                    <x-form.input className="col-md-6 mb-3" type="text" name="nomor_cp_1" label="Nomor Kontak Person 1" value="{{ $dataLSP->nomor_cp_1 }}" />
+                                                    <x-form.input className="col-md-6 mb-3" type="text" name="nama_cp_2" label="Nama Kontak Person 2 (opsional)" value="{{ $dataLSP->nama_cp_2 }}" />
+                                                    <x-form.input className="col-md-6 mb-3" type="text" name="nomor_cp_2" label="Nomor Kontak Person 2 (opsional)" value="{{ $dataLSP->nomor_cp_2 }}" />
                                                 </div>
                                             </div>
                                             <div class="modal-footer">
@@ -177,8 +183,7 @@
                                 </div>
 
                                 {{-- Modal Ganti Password --}}
-                                <div id="gantiPasswordModal" class="modal modal fade" tabindex="-1" role="dialog"
-                                    aria-labelledby="primary-header-modalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+                                <div id="gantiPasswordModal" class="modal modal fade" tabindex="-1" role="dialog" aria-labelledby="primary-header-modalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
 
                                     <div class="modal-dialog">
                                         <div class="modal-content">
@@ -230,7 +235,7 @@
                                     <th>Nama Skema</th>
                                     <th>Kode Skema</th>
                                     <th>Kategori Skema</th>
-                                    <th>Jumlah Kode Unit</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody style="font-size: 12px">
@@ -241,59 +246,65 @@
                                         <td>{{ $dataSkema->skema_kode }}</td>
                                         <td>{{ $dataSkema->skema_kategori }}</td>
                                         <td>
-                                            <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#editModal-{{ $dataSkema->ref }}">
-                                                {{ $dataSkema->kode_units_count }} Unit
+                                            <a href="javascript:void(0)" class="btn btn-sm btn-dinas" data-bs-toggle="modal" data-bs-target="#editModal-{{ $dataSkema->ref }}">
+                                                <i class="ri-pencil-line"></i>
                                             </a>
                                         </td>
                                     </tr>
+
+                                    <!-- Edit Data Modal -->
+                                    <div id="editModal-{{ $dataSkema->ref }}" class="modal modal-lg fade" tabindex="-1" role="dialog" aria-labelledby="primary-header-modalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <form action="{{ route('skema.update', $dataSkema->ref) }}" method="POST">
+                                                    @method('PUT')
+                                                    @csrf
+                                                    <div class="modal-header modal-colored-header bg-dinas">
+                                                        <h4 class="modal-title" id="primary-header-modalLabel">Edit Skema {{ $dataSkema->skema_judul }}</h4>
+                                                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <div class="row">
+                                                            <input type="hidden" name="skema_ref" value="{{ $dataSkema->ref }}">
+                                                            <div class="col-lg-12">
+                                                                <label for="skema_judul" class="form-label">Skema Judul</label>
+                                                                <input type="text" id="skema_judul" class="form-control rounded-3" name="skema_judul" value="{{ $dataSkema->skema_judul }}">
+                                                            </div>
+
+                                                            <div class="col-lg-12 mt-3">
+                                                                <label for="skema_kode" class="form-label">Kode Skema</label>
+                                                                <input type="text" id="skema_kode" class="form-control rounded-3" name="skema_kode" value="{{ $dataSkema->skema_kode }}">
+                                                            </div>
+
+                                                            <div class="col-lg-12 mt-2">
+                                                                <label for="skema_kategori" class="form-label">Kategori Skema</label>
+                                                                <select class="text-capitalize @error('skema_kategori', 'create_skema') is-invalid @enderror rounded-3 form-select" id="skema_kategori" name="skema_kategori">
+                                                                    <option value="#" disabled selected hidden>Pilih Kategori Skema</option>
+                                                                    <option value="KKNI" {{ $dataSkema->skema_kategori === 'KKNI' ? 'selected' : '' }}>KKNI</option>
+                                                                    <option value="Okupasi" {{ $dataSkema->skema_kategori === 'Okupasi' ? 'selected' : '' }}>Okupasi</option>
+                                                                    <option value="Klaster" {{ $dataSkema->skema_kategori === 'Klaster' ? 'selected' : '' }}>Klaster</option>
+                                                                    {{-- <option value="Unit Kompetensi" {{ $dataSkema->skema_kategori === 'Unit Kompetensi' ? 'selected' : '' }}>Unit Kompetensi</option> --}}
+                                                                    {{-- <option value="Profisiensi" {{ $dataSkema->skema_kategori === 'Profisiensi' ? 'selected' : '' }}>Profisiensi</option> --}}
+                                                                </select>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                                                        <button type="submit" class="btn btn-dinas">Simpan Perubahan</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- / END Edit Data modal -->
                                 @endforeach
                             </tbody>
                         </table>
 
-                        @foreach ($dataLSP->skemas as $skema)
-                            <div id="editModal-{{ $skema->ref }}" class="modal modal-lg fade" tabindex="-1" role="dialog"
-                                aria-labelledby="primary-header-modalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
 
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header modal-colored-header bg-dinas">
-                                            <h4 class="modal-title" id="primary-header-modalLabel">List Kode Unit</h4>
-                                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <div class="mb-2">
-                                                <h5 class="">{{ $skema->lsp_nama }}
-                                                </h5>
-                                                <span class="badge bg-dinas-subtle text-primary">{{ $skema->skema_judul }}</span>
-                                            </div>
-                                            <table class="table-striped table-sm table-bordered w-100 nowrap table" style="font-size: 12px">
-                                                <thead>
-                                                    <tr>
-                                                        <th>No</th>
-                                                        <th>Judul Unit</th>
-                                                        <th>Kode Unit</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    @foreach ($skema->details as $unit)
-                                                        <tr>
-                                                            <td>{{ $loop->iteration }}</td>
-                                                            <td>{{ $unit->judul_unit }}</td>
-                                                            <td>{{ $unit->kode_unit }}</td>
-                                                        </tr>
-                                                    @endforeach
-                                                </tbody>
-                                            </table>
-
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div><!-- / END Edit Data modal -->
-                        @endforeach
                     </div>
                 </div>
             </div>

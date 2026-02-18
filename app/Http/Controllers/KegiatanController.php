@@ -308,7 +308,7 @@ class KegiatanController extends Controller
         $ext  = $request->file('sertifikat_file')->extension();
         $time = time();
         $nik  = $asesi->nik;
-        $filename = "SERTIFIKAT-{$nik}-{$time}.{$ext}";
+        $filename = Str::uuid() . ".{$ext}";
 
         // hapus file lama
         if ($asesi->sertifikat_file && Storage::disk('sertifikat')->exists($asesi->sertifikat_file)) {
@@ -319,13 +319,13 @@ class KegiatanController extends Controller
         $path = Storage::disk('sertifikat')->putFileAs("sertifikat", $request->file('sertifikat_file'), $filename);
 
         //update tb
-        $asesi->update(['sertifikat_file' => $path]);
+        $asesi->update(['sertifikat_file' => $filename]);
 
         return response()->json([
             'success' => true,
             'message' => 'Sertifikat Kompetensi - ' . $asesi->nama_lengkap . ' berhasil diupload',
             'path'    => $path,
-            'url'     => route('files.asesi', ['filename' => basename($path)]),
+            'url'     => route('files.asesi.sertifikat', ['filename' => basename($path)]),
 
         ]);
     }
@@ -351,7 +351,7 @@ class KegiatanController extends Controller
         $lsp  = $asesmen->nama_lsp;
         $tuk  = $asesmen->nama_tuk;
         $tgl  = $asesmen->jadwal_asesmen;
-        $filename = "BUKTI-ASESMEN-{$lsp}-{$tuk}-{$tgl}-{$time}.{$ext}";
+        $filename = "BUKTI-ASESMEN-" . Str::uuid() . ".{$ext}";
 
         // hapus file lama
         if ($asesmen->bukti_asesmen && Storage::disk('bukti_asesmen')->exists($asesmen->bukti_asesmen)) {
@@ -362,13 +362,13 @@ class KegiatanController extends Controller
         $path = Storage::disk('bukti_asesmen')->putFileAs("bukti_asesmen", $request->file('bukti_asesmen'), $filename);
 
         //update tb
-        $asesmen->update(['bukti_asesmen' => $path]);
+        $asesmen->update(['bukti_asesmen' => $filename]);
 
         return response()->json([
             'success' => true,
             'message' => 'Bukti Asesmen - ' . $asesmen->nama_lsp . ' - ' . $asesmen->nama_tuk . ' - ' . $asesmen->jadwal_asesmen . ' berhasil diupload',
             'path'    => $path,
-            'url'     => route('files.asesmen', ['filename' => basename($path)]),
+            'url'     => route('files.asesmen.bukti_asesmen', ['filename' => basename($path)]),
 
         ]);
     }
@@ -395,7 +395,7 @@ class KegiatanController extends Controller
         $lsp  = $asesmen->nama_lsp;
         $tuk  = $asesmen->nama_tuk;
         $tgl  = $asesmen->jadwal_asesmen;
-        $filename = "DOKUMENTASI-ASESMEN-{$lsp}-{$tuk}-{$tgl}-{$time}.{$ext}";
+        $filename = Str::uuid() . ".{$ext}";
 
         // hapus file lama
         if ($asesmen->dokumentasi_asesmen && Storage::disk('dokumentasi_asesmen')->exists($asesmen->dokumentasi_asesmen)) {
@@ -406,17 +406,17 @@ class KegiatanController extends Controller
         $path = Storage::disk('dokumentasi_asesmen')->putFileAs("dokumentasi_asesmen", $request->file('dokumentasi_asesmen'), $filename);
 
         //update tb
-        $asesmen->update(['dokumentasi_asesmen' => $path]);
+        $asesmen->update(['dokumentasi_asesmen' => $filename]);
 
         return response()->json([
             'success' => true,
-            'message' => 'Dokuemntasi Asesmen - ' . $asesmen->nama_lsp . ' - ' . $asesmen->nama_tuk . ' - ' . $asesmen->jadwal_asesmen . ' berhasil diupload',
+            'message' => 'Dokumentasi Asesmen - ' . $asesmen->nama_lsp . ' - ' . $asesmen->nama_tuk . ' - ' . $asesmen->jadwal_asesmen . ' berhasil diupload',
             'path'    => $path,
-            'url'     => route('files.asesmen', ['filename' => basename($path)]),
+            'url'     => route('files.asesmen.dokumentasi_asesmen', ['filename' => basename($path)]),
 
         ]);
     }
-    
+
     public function uploadLaporanAsesmen(Request $request)
     {
         $request->validate([
@@ -456,14 +456,14 @@ class KegiatanController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => 'Laporan - '.$index. ' - ' . $kegiatan . ' - ' . $lsp.' berhasil diupload',
+            'message' => 'Laporan - ' . $index . ' - ' . $kegiatan . ' - ' . $lsp . ' berhasil diupload',
             'path'    => $path,
             'url'     => route('files.asesmen', ['filename' => basename($path)]),
 
         ]);
     }
 
-     public function uploadBuktiTerimaSertifikat(Request $request)
+    public function uploadBuktiTerimaSertifikat(Request $request)
     {
         $request->validate([
             'ref' => 'required',
@@ -485,7 +485,7 @@ class KegiatanController extends Controller
         $lsp  = $asesmen->nama_lsp;
         $tuk  = $asesmen->nama_tuk;
         $tgl  = $asesmen->jadwal_asesmen;
-        $filename = "BUKTI-TERIMA-SEERTIFIKAT-{$lsp}-{$tuk}-{$tgl}-{$time}.{$ext}";
+        $filename = Str::uuid() . ".{$ext}";
 
         // hapus file lama
         if ($asesmen->bukti_terima_sertifikat && Storage::disk('bukti_terima_sertifikat')->exists($asesmen->bukti_terima_sertifikat)) {
@@ -496,13 +496,13 @@ class KegiatanController extends Controller
         $path = Storage::disk('bukti_terima_sertifikat')->putFileAs("bukti_terima_sertifikat", $request->file('bukti_terima_sertifikat'), $filename);
 
         //update tb
-        $asesmen->update(['bukti_terima_sertifikat' => $path]);
+        $asesmen->update(['bukti_terima_sertifikat' => $filename]);
 
         return response()->json([
             'success' => true,
             'message' => 'Bukti Terima Sertifikat - ' . $asesmen->nama_lsp . ' - ' . $asesmen->nama_tuk . ' - ' . $asesmen->jadwal_asesmen . ' berhasil diupload',
             'path'    => $path,
-            'url'     => route('files.asesmen', ['filename' => basename($path)]),
+            'url'     => route('files.asesmen.bukti_terima_sertifikat', ['filename' => basename($path)]),
 
         ]);
     }

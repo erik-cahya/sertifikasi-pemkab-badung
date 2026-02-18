@@ -9,9 +9,11 @@
                             <img src="{{ asset('img/' . $dataLSP->lsp_logo) }}" alt="" style="width: 150px; height: 150px;">
                         </div>
                         <div class="p-1 pt-2 text-start">
-                            <h4 class="fs-17 ellipsis fw-bold">{{ $dataLSP->lsp_nama }}</h4>
-                            <p class="font-13 fw-bold"> {{ $dataLSP->lsp_no_lisensi }}</p>
-                            <p class="text-muted mb-0"><small>{{ $dataLSP->lsp_alamat }}</small></p>
+                            <h4 class="ellipsis fw-bold">{{ $dataLSP->lsp_nama }}</h4>
+                            <p class="font-13 fw-bold fst-italic"> {{ $dataLSP->lsp_no_lisensi }}</p>
+                            <p class="text-muted mb-0">
+                                {{ $dataLSP->lsp_alamat }}
+                            </p>
 
                             {{-- <div class="d-flex align-items-center justify-content-center flex-xl-nowrap flex-lg-wrap justify-content-md-start pt-3">
                                 <button type="button" class="btn btn-soft-danger me-sm-2 mt-1">
@@ -34,12 +36,10 @@
                                 </tr>
                                 <tr class="text-danger">
                                     <td class="fw-bold">Lisensi Expired </td>
-                                    <td><span class="ms-2">: {{ $dataLSP->lsp_expired_lisensi }}</span></td>
+                                    <td><span class="ms-2">: {{ \Carbon\Carbon::parse($dataLSP->lsp_expired_lisensi)->locale('id')->translatedFormat('d F Y') }}</span></td>
                                 </tr>
                             </table>
-                            {{-- <p class="text-muted font-13 mb-2"><strong>Telp LSP :</strong><span class="ms-2">{{ $dataLSP->lsp_telp }}</span></p>
-                            <p class="text-muted font-13 mb-2"><strong>Email :</strong> <span class="ms-2">{{ $dataLSP->lsp_email }}</span></p>
-                            <p class="text-muted font-13 mb-1"><strong>Lisensi Expired :</strong> <span class="ms-2">{{ $dataLSP->lsp_expired_lisensi }}</span></p> --}}
+
                         </div>
 
                     </div>
@@ -62,35 +62,47 @@
                                             <tbody>
                                                 <tr>
                                                     <th scope="row">Nama LSP</th>
-                                                    <td><span>{{ $dataLSP->lsp_nama }}</span></td>
+                                                    <td colspan="3"><span>{{ $dataLSP->lsp_nama ?? '-' }}</span></td>
                                                 </tr>
                                                 <tr>
                                                     <th scope="row">Nomor Lisensi</th>
-                                                    <td><span>{{ $dataLSP->lsp_no_lisensi }}</span></td>
+                                                    <td colspan="3"><span>{{ $dataLSP->lsp_no_lisensi ?? '-' }}</span></td>
                                                 </tr>
                                                 <tr>
                                                     <th scope="row">Expired Lisensi</th>
-                                                    <td><span>{{ $dataLSP->lsp_expired_lisensi }}</span></td>
+                                                    <td colspan="3"><span>{{ \Carbon\Carbon::parse($dataLSP->lsp_expired_lisensi)->locale('id')->translatedFormat('d F Y') ?? '-' }}</span></td>
                                                 </tr>
                                                 <tr>
                                                     <th scope="row">Telp LSP</th>
-                                                    <td><span>{{ $dataLSP->lsp_telp }}</span></td>
+                                                    <td colspan="3"><span>{{ $dataLSP->lsp_telp ?? '-' }}</span></td>
                                                 </tr>
                                                 <tr>
                                                     <th scope="row">Alamat LSP</th>
-                                                    <td><span>{{ $dataLSP->lsp_alamat }}</span></td>
+                                                    <td colspan="3"><span>{{ $dataLSP->lsp_alamat ?? '-' }}</span></td>
                                                 </tr>
                                                 <tr>
                                                     <th scope="row">Email LSP</th>
-                                                    <td><span>{{ $dataLSP->lsp_email }}</span></td>
+                                                    <td colspan="3"><span>{{ $dataLSP->lsp_email ?? '-' }}</span></td>
                                                 </tr>
                                                 <tr>
                                                     <th scope="row">Nama Direktur</th>
-                                                    <td><span>{{ $dataLSP->lsp_direktur }}</span></td>
+                                                    <td colspan="3"><span>{{ $dataLSP->lsp_direktur ?? '-' }}</span></td>
                                                 </tr>
                                                 <tr>
                                                     <th scope="row">Telp Direktur</th>
-                                                    <td><span>{{ $dataLSP->lsp_direktur_telp }}</span></td>
+                                                    <td colspan="3"><span>{{ $dataLSP->lsp_direktur_telp ?? '-' }}</span></td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row">Nama CP 1</th>
+                                                    <td><span>{{ $dataLSP->nama_cp_1 }}</span></td>
+                                                    <th scope="row">Nomor CP 1</th>
+                                                    <td><span>{{ $dataLSP->nomor_cp_1 }}</span></td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row">Nama CP 2</th>
+                                                    <td><span>{{ $dataLSP->nama_cp_2 ?? '-' }}</span></td>
+                                                    <th scope="row">Nomor CP 2</th>
+                                                    <td><span>{{ $dataLSP->nomor_cp_2 ?? '-' }}</span></td>
                                                 </tr>
 
                                             </tbody>
@@ -112,9 +124,14 @@
                                                 <x-form.input className="col-md-6 mb-3" type="text" name="lsp_email" label="Email LSP" value="{{ $dataLSP->lsp_email }}" />
                                                 <x-form.input className="col-md-6 mb-3" type="text" name="lsp_direktur" label="Direktur LSP" value="{{ $dataLSP->lsp_direktur }}" />
                                                 <x-form.input className="col-md-6 mb-3" type="text" name="lsp_direktur_telp" label="Kontak Direktur LSP" value="{{ $dataLSP->lsp_direktur_telp }}" />
-                                                {{-- <x-form.input className="col-md-6 mb-3" type="date" name="lsp_tanggal_lisensi" label="Tanggal Lisensi LSP" value="{{ $dataLSP->lsp_tanggal_lisensi }}" /> --}}
                                                 <x-form.input className="col-md-6 mb-3" type="date" name="lsp_expired_lisensi" label="Tanggal Expired LSP" value="{{ $dataLSP->lsp_expired_lisensi }}" />
+                                                <x-form.input className="col-md-6 mb-3" type="text" name="nama_cp_1" label="Nama Kontak Person 1" value="{{ $dataLSP->nama_cp_1 }}" />
+                                                <x-form.input className="col-md-6 mb-3" type="text" name="nomor_cp_1" label="Nomor Kontak Person 1" value="{{ $dataLSP->nomor_cp_1 }}" />
+                                                <x-form.input className="col-md-6 mb-3" type="text" name="nama_cp_2" label="Nama Kontak Person 2 (opsional)" value="{{ $dataLSP->nama_cp_2 }}" />
+                                                <x-form.input className="col-md-6 mb-3" type="text" name="nomor_cp_2" label="Nomor Kontak Person 2 (opsional)" value="{{ $dataLSP->nomor_cp_2 }}" />
                                                 <x-form.input className="col-md-6 mb-3" type="file" name="lsp_logo" label="Upload Logo" />
+
+
                                             </div>
                                             <button class="btn btn-dinas" type="submit"><i class="mdi mdi-content-save-outline fs-16 lh-1 me-1"></i> Save</button>
                                         </form>

@@ -138,7 +138,7 @@ class SkemaController extends Controller
         ]);
 
         return redirect()
-            ->route('skema.index')
+            ->back()
             ->with('flashData', [
                 'title' => 'Edit Data Success',
                 'message' => 'Skema Berhasil Diubah',

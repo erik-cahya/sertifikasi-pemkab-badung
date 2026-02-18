@@ -86,6 +86,10 @@ class ProfileController extends Controller
             // 'lsp_tanggal_lisensi' => $request->lsp_tanggal_lisensi,
             'lsp_expired_lisensi' => $request->lsp_expired_lisensi,
             'lsp_logo' => $lsp_logo,
+            'nama_cp_1' => $request->nama_cp_1,
+            'nomor_cp_1' => $request->nomor_cp_1,
+            'nama_cp_2' => $request->nama_cp_2,
+            'nomor_cp_2' => $request->nomor_cp_2,
         ]);
 
         $flashData = [

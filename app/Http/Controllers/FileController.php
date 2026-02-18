@@ -18,7 +18,7 @@ class FileController extends Controller
      */
     public function getKTPAsesi($filename)
     {
-        if(!Auth::check()) {
+        if (!Auth::check()) {
             abort(403, 'Anda tidak memiliki akses');
         }
         $this->checkAsesiFileAuthorization($filename, 'ktp_file');
@@ -29,8 +29,9 @@ class FileController extends Controller
             abort(404, 'File tidak ditemukan');
         }
 
+        $fileName = AsesiModel::where('ktp_file', $filename)->select('nama_lengkap')->first();
         return response()->file($path, [
-            'Content-Disposition' => 'inline; filename="' . 'ktp' . '"'
+            'Content-Disposition' => 'inline; filename="KTP - ' . $fileName->nama_lengkap . '"'
         ]);
     }
 
@@ -39,7 +40,7 @@ class FileController extends Controller
      */
     public function getIjazahAsesi($filename)
     {
-        if(!Auth::check()) {
+        if (!Auth::check()) {
             abort(403, 'Anda tidak memiliki akses');
         }
 
@@ -51,8 +52,9 @@ class FileController extends Controller
             abort(404, 'File tidak ditemukan');
         }
 
+        $fileName = AsesiModel::where('ijazah_file', $filename)->select('nama_lengkap')->first();
         return response()->file($path, [
-            'Content-Disposition' => 'inline; filename="' . $filename . '"'
+            'Content-Disposition' => 'inline; filename="Ijazah - ' . $fileName->nama_lengkap . '"'
         ]);
     }
 
@@ -61,7 +63,7 @@ class FileController extends Controller
      */
     public function getSertikomAsesi($filename)
     {
-        if(!Auth::check()) {
+        if (!Auth::check()) {
             abort(403, 'Anda tidak memiliki akses');
         }
 
@@ -73,8 +75,31 @@ class FileController extends Controller
             abort(404, 'File tidak ditemukan');
         }
 
+        $fileName = AsesiModel::where('sertikom_file', $filename)->select('nama_lengkap')->first();
         return response()->file($path, [
-            'Content-Disposition' => 'inline; filename="' . $filename . '"'
+            'Content-Disposition' => 'inline; filename="Sertifikat Kompetensi - ' . $fileName->nama_lengkap . '"'
+        ]);
+    }
+    /**
+     * Akses file sertifikat asesi
+     */
+    public function getSertifikatAsesi($filename)
+    {
+        if (!Auth::check()) {
+            abort(403, 'Anda tidak memiliki akses');
+        }
+
+        $this->checkAsesiFileAuthorization($filename, 'sertifikat_file');
+
+        $path = storage_path('app/private/asesi_files/sertifikat/' . $filename);
+
+        if (!file_exists($path)) {
+            abort(404, 'File tidak ditemukan');
+        }
+
+        $fileName = AsesiModel::where('sertifikat_file', $filename)->select('nama_lengkap')->first();
+        return response()->file($path, [
+            'Content-Disposition' => 'inline; filename="Sertifikat - ' . $fileName->nama_lengkap . '"'
         ]);
     }
 
@@ -83,7 +108,7 @@ class FileController extends Controller
      */
     public function getSkbAsesi($filename)
     {
-        if(!Auth::check()) {
+        if (!Auth::check()) {
             abort(403, 'Anda tidak memiliki akses');
         }
 
@@ -95,8 +120,9 @@ class FileController extends Controller
             abort(404, 'File tidak ditemukan');
         }
 
+        $fileName = AsesiModel::where('keterangan_kerja_file', $filename)->select('nama_lengkap')->first();
         return response()->file($path, [
-            'Content-Disposition' => 'inline; filename="' . $filename . '"'
+            'Content-Disposition' => 'inline; filename="Surat Keterangan Bekerja - ' . $fileName->nama_lengkap . '"'
         ]);
     }
 
@@ -106,7 +132,7 @@ class FileController extends Controller
      */
     public function getPasFotoAsesi($filename)
     {
-        if(!Auth::check()) {
+        if (!Auth::check()) {
             abort(403, 'Anda tidak memiliki akses');
         }
 
@@ -118,8 +144,9 @@ class FileController extends Controller
             abort(404, 'File tidak ditemukan');
         }
 
+        $fileName = AsesiModel::where('pas_foto_file', $filename)->select('nama_lengkap')->first();
         return response()->file($path, [
-            'Content-Disposition' => 'inline; filename="' . $filename . '"'
+            'Content-Disposition' => 'inline; filename="Pas Foto - ' . $fileName->nama_lengkap . '"'
         ]);
     }
 
@@ -127,19 +154,55 @@ class FileController extends Controller
     /**
      * Serve asesmen files (bukti, dokumentasi, laporan) dengan autentikasi
      */
-    public function serveAsesmenFile($filename)
+    public function getBuktiAsesmen($filename)
     {
-        $this->checkAsesmenFileAuthorization($filename);
+        if (!Auth::check()) {
+            abort(403, 'Anda tidak memiliki akses');
+        }
 
-        $path = storage_path('app/private/asesmen_files/' . $filename);
+        $path = storage_path('app/private/asesmen_files/bukti_asesmen/' . $filename);
 
         if (!file_exists($path)) {
             abort(404, 'File tidak ditemukan');
         }
 
+        $fileName = AsesmenModel::where('bukti_asesmen', $filename)->select('nama_lsp')->first();
         return response()->file($path, [
-            'Content-Type' => 'application/pdf',
-            'Content-Disposition' => 'inline; filename="' . $filename . '"'
+            'Content-Disposition' => 'inline; filename="Bukti Asesmen - ' . $fileName->nama_lsp . '"'
+        ]);
+    }
+    public function getDokumentasiAsesmen($filename)
+    {
+        if (!Auth::check()) {
+            abort(403, 'Anda tidak memiliki akses');
+        }
+
+        $path = storage_path('app/private/asesmen_files/dokumentasi_asesmen/' . $filename);
+
+        if (!file_exists($path)) {
+            abort(404, 'File tidak ditemukan');
+        }
+
+        $fileName = AsesmenModel::where('dokumentasi_asesmen', $filename)->select('nama_lsp')->first();
+        return response()->file($path, [
+            'Content-Disposition' => 'inline; filename="Dokumentasi Asesmen - ' . $fileName->nama_lsp . '"'
+        ]);
+    }
+    public function getBuktiTerimaSertifikat($filename)
+    {
+        if (!Auth::check()) {
+            abort(403, 'Anda tidak memiliki akses');
+        }
+
+        $path = storage_path('app/private/asesmen_files/bukti_terima_sertifikat/' . $filename);
+
+        if (!file_exists($path)) {
+            abort(404, 'File tidak ditemukan');
+        }
+
+        $fileName = AsesmenModel::where('bukti_terima_sertifikat', $filename)->select('nama_lsp')->first();
+        return response()->file($path, [
+            'Content-Disposition' => 'inline; filename="Bukti Terima Sertifikat - ' . $fileName->nama_lsp . '"'
         ]);
     }
 

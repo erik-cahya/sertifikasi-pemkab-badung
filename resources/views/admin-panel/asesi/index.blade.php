@@ -39,7 +39,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($dataAsesi as $item )
+                            @foreach ($dataAsesi as $item)
                                 <tr>
                                     <td><span class="bg-dinas rounded-4 px-2 text-white">{{ $item->kegiatan->nama_kegiatan }}</span></td>
                                     <td>{{ $item->nama_lengkap }}</td>
@@ -88,25 +88,50 @@
                                     <td>{{ $item->no_kontak_person }}</td>
                                     <td class="no-export">
                                         <table>
-                                             <tr>
+                                            <tr>
                                                 <td>KTP</td>
-                                                <td>: @if(!empty($item->ktp_file))<a href="{{ route('files.asesi.ktp', $item->ktp_file) }}" target="_blank"> <i class="mdi mdi-file-pdf-box"></i></a>@else - @endif</td>
+                                                <td>: @if (!empty($item->ktp_file))
+                                                        <a href="{{ route('files.asesi.ktp', $item->ktp_file) }}" target="_blank"> <i class="mdi mdi-file-pdf-box"></i></a>
+                                                    @else
+                                                        -
+                                                    @endif
+                                                </td>
                                             </tr>
                                             <tr>
                                                 <td>IJAZAH</td>
-                                                <td>: @if(!empty($item->ijazah_file))<a href="{{ route('files.asesi.ijazah', $item->ijazah_file) }}" target="_blank"> <i class="mdi mdi-file-pdf-box"></i></a>@else - @endif</td>
+                                                <td>: @if (!empty($item->ijazah_file))
+                                                        <a href="{{ route('files.asesi.ijazah', $item->ijazah_file) }}" target="_blank"> <i class="mdi mdi-file-pdf-box"></i></a>
+                                                    @else
+                                                        -
+                                                    @endif
+                                                </td>
                                             </tr>
                                             <tr>
                                                 <td>SERTIKOM</td>
-                                                <td>: @if(!empty($item->sertikom_file))<a href="{{ route('files.asesi.sertikom', $item->sertikom_file) }}" target="_blank"> <i class="mdi mdi-file-pdf-box"></i></a>@else - @endif</td>
+                                                <td>: @if (!empty($item->sertikom_file))
+                                                        <a href="{{ route('files.asesi.sertikom', $item->sertikom_file) }}" target="_blank"> <i class="mdi mdi-file-pdf-box"></i></a>
+                                                    @else
+                                                        -
+                                                    @endif
+                                                </td>
                                             </tr>
                                             <tr>
                                                 <td>SKB</td>
-                                                <td>: @if(!empty($item->keterangan_kerja_file))<a href="{{ route('files.asesi.skb', $item->keterangan_kerja_file) }}" target="_blank"> <i class="mdi mdi-file-pdf-box"></i></a>@else - @endif</td>
+                                                <td>: @if (!empty($item->keterangan_kerja_file))
+                                                        <a href="{{ route('files.asesi.skb', $item->keterangan_kerja_file) }}" target="_blank"> <i class="mdi mdi-file-pdf-box"></i></a>
+                                                    @else
+                                                        -
+                                                    @endif
+                                                </td>
                                             </tr>
                                             <tr>
                                                 <td>PAS FOTO</td>
-                                                <td>: @if(!empty($item->pas_foto_file))<a href="{{ route('files.asesi.pasfoto', $item->pas_foto_file) }}" target="_blank"> <i class="mdi mdi-file-image"></i></a>@else - @endif</td>
+                                                <td>: @if (!empty($item->pas_foto_file))
+                                                        <a href="{{ route('files.asesi.pasfoto', $item->pas_foto_file) }}" target="_blank"> <i class="mdi mdi-file-image"></i></a>
+                                                    @else
+                                                        -
+                                                    @endif
+                                                </td>
                                             </tr>
                                         </table>
                                     </td>
@@ -131,7 +156,13 @@
                                         </table>
                                     </td>
                                     <td class="text-center">{{ $item->no_sertifikat }}</td>
-                                    <td>@if(!empty($item->sertifikat_file))<a href="{{ asset('asesi_files/'.$item->sertifikat_file) }}" target="_blank"> <i class="mdi mdi-file-image"></i></a>@else - @endif</td>
+                                    <td>
+                                        @if (!empty($item->sertifikat_file))
+                                            <a href="{{ asset('asesi_files/' . $item->sertifikat_file) }}" target="_blank"> <i class="mdi mdi-file-image"></i></a>
+                                        @else
+                                            -
+                                        @endif
+                                    </td>
                                     <td>{{ $item->created_at->format('Y/m/d') }}</td>
                                 </tr>
                             @endforeach
@@ -142,7 +173,6 @@
             </div> <!-- end card -->
         </div><!-- end col-->
     </div> <!-- end row-->
-
 @endsection
 @push('script')
     {{-- Sweet Alert --}}

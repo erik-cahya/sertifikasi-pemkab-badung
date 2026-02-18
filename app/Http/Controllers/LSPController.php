@@ -86,8 +86,6 @@ class LSPController extends Controller
         ]);
 
         // ================== SIMPAN FILE ==================
-        $lsp_nama  = Str::slug($request->lsp_nama);
-        $lsp_no_lisensi  = $request->lsp_no_lisensi;
         $lsp_logo = null;
 
         /* ================== LOGO LSP ================== */
@@ -139,11 +137,7 @@ class LSPController extends Controller
      */
     public function show(string $id)
     {
-        $data['dataLSP'] = LSPModel::where('ref', $id)->with('user')->with([
-            'skemas' => function ($q) {
-                $q->withCount('kodeUnits');
-            }
-        ])
+        $data['dataLSP'] = LSPModel::where('ref', $id)->with('user')
             ->firstOrFail();
 
         // dd($data['dataLSP']);
@@ -181,8 +175,11 @@ class LSPController extends Controller
             'lsp_telp' => $request->lsp_telp,
             'lsp_direktur' => $request->lsp_direktur,
             'lsp_direktur_telp' => $request->lsp_direktur_telp,
-            'lsp_tanggal_lisensi' => $request->lsp_tanggal_lisensi,
             'lsp_expired_lisensi' => $request->lsp_expired_lisensi,
+            'nama_cp_1' => $request->nama_cp_1,
+            'nomor_cp_1' => $request->nomor_cp_1,
+            'nama_cp_2' => $request->nama_cp_2,
+            'nomor_cp_2' => $request->nomor_cp_2,
         ]);
 
         $flashData = [

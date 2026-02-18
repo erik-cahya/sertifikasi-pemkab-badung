@@ -62,9 +62,7 @@
                                             <div class="col-md-4 mt-2">
                                                 <label class="form-label" for="lsp_expired_lisensi">Tanggal Expired Lisensi</label>
 
-                                                <input type="text" id="lsp_expired_lisensi" name="lsp_expired_lisensi"
-                                                    class="form-control rounded-3 single-date @error('lsp_expired_lisensi') is-invalid @enderror"
-                                                    value="{{ old('lsp_expired_lisensi') }}" autocomplete="off">
+                                                <input type="text" id="lsp_expired_lisensi" name="lsp_expired_lisensi" class="form-control rounded-3 single-date @error('lsp_expired_lisensi') is-invalid @enderror" value="{{ old('lsp_expired_lisensi') }}" autocomplete="off">
 
                                                 @error('lsp_expired_lisensi')
                                                     <div class="invalid-feedback" bis_skin_checked="1">
@@ -93,14 +91,10 @@
                                                 <div class="mb-3">
                                                     <div class="row g-2">
 
-                                                        <x-form.input className="col-md-6 mt-2" type="text" name="name"
-                                                            label="Nama LSP" value="{{ old('name') }}" />
-                                                        <x-form.input className="col-md-6 mt-2" type="text" name="username"
-                                                            label="Username" value="{{ old('username') }}" />
-                                                        <x-form.input className="col-md-6 mt-2" type="password"
-                                                            name="password" label="Password" />
-                                                        <x-form.input className="col-md-6 mt-2" type="password"
-                                                            name="password_confirmation" label="Password Confirmation" />
+                                                        <x-form.input className="col-md-6 mt-2" type="text" name="name" label="Nama LSP" value="{{ old('name') }}" />
+                                                        <x-form.input className="col-md-6 mt-2" type="text" name="username" label="Username" value="{{ old('username') }}" />
+                                                        <x-form.input className="col-md-6 mt-2" type="password" name="password" label="Password" />
+                                                        <x-form.input className="col-md-6 mt-2" type="password" name="password_confirmation" label="Password Confirmation" />
 
 
 
@@ -128,8 +122,8 @@
 @endsection
 @push('script')
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            $(function () {
+        document.addEventListener('DOMContentLoaded', function() {
+            $(function() {
                 $('.single-date').daterangepicker({
                     singleDatePicker: true,
                     autoUpdateInput: false,
@@ -138,9 +132,9 @@
                     }
                 });
 
-                $('.single-date').on('apply.daterangepicker', function (ev, picker) {
+                $('.single-date').on('apply.daterangepicker', function(ev, picker) {
                     $(this).val(picker.startDate.format('DD/MM/YYYY'));
-                }).on('cancel.daterangepicker', function () {
+                }).on('cancel.daterangepicker', function() {
                     $(this).val('');
                 });
             });

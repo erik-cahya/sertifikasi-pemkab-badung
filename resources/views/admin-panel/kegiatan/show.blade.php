@@ -117,7 +117,7 @@
                     <div class="card-body" bis_skin_checked="1">
                         <div class="table-responsive">
                             <table class="table-sm table-bordered w-100 table">
-                                 <thead class="align-middle text-center">
+                                <thead class="align-middle text-center">
                                     <tr>
                                         <th>No</th>
                                         <th>Nama LSP</th>
@@ -152,9 +152,9 @@
 
                                             <td>
                                                 <div class="d-flex gap-2 align-items-center mb-2">
-                                                   <div style="width:120px;">Laporan 1</div>
+                                                    <div style="width:120px;">Laporan 1</div>
                                                     <div style="width:15px;">:</div>
-                                                    <span id="laporan-{{ $kegiatan->ref }}-1"   class="flex-fill">
+                                                    <span id="laporan-{{ $kegiatan->ref }}-1" class="flex-fill">
                                                         @if ($kegiatan->laporan_asesmen)
                                                             <a href="{{ asset('asesmen_files/' . $kegiatan->laporan_asesmen) }}" target="_blank" class="text-danger d-inline-flex align-items-center gap-1" title="Lihat Laporan Asesmen"> <i class="mdi mdi-download"></i> Download </a>
                                                         @else
@@ -164,9 +164,9 @@
                                                 </div>
 
                                                 <div class="d-flex gap-2 align-items-center mb-2">
-                                                   <div style="width:120px;">Laporan 2</div>
+                                                    <div style="width:120px;">Laporan 2</div>
                                                     <div style="width:15px;">:</div>
-                                                    <span id="laporan-{{ $kegiatan->ref }}-2"   class="flex-fill">
+                                                    <span id="laporan-{{ $kegiatan->ref }}-2" class="flex-fill">
                                                         @if ($kegiatan->laporan_asesmen2)
                                                             <a href="{{ asset('asesmen_files/' . $kegiatan->laporan_asesmen2) }}" target="_blank" class="text-danger d-inline-flex align-items-center gap-1" title="Lihat Laporan Asesmen"> <i class="mdi mdi-download"></i> Download </a>
                                                         @else
@@ -176,9 +176,9 @@
                                                 </div>
 
                                                 <div class="d-flex gap-2 align-items-center mb-2">
-                                                   <div style="width:120px;">Laporan 3</div>
+                                                    <div style="width:120px;">Laporan 3</div>
                                                     <div style="width:15px;">:</div>
-                                                    <span id="laporan-{{ $kegiatan->ref }}-3"   class="flex-fill">
+                                                    <span id="laporan-{{ $kegiatan->ref }}-3" class="flex-fill">
                                                         @if ($kegiatan->laporan_asesmen3)
                                                             <a href="{{ asset('asesmen_files/' . $kegiatan->laporan_asesmen3) }}" target="_blank" class="text-danger d-inline-flex align-items-center gap-1" title="Lihat Laporan Asesmen"> <i class="mdi mdi-download"></i> Download </a>
                                                         @else
@@ -187,10 +187,10 @@
                                                     </span>
                                                 </div>
 
-                                                 <div class="d-flex gap-2 align-items-center mb-2">
-                                                   <div style="width:120px;">Laporan 4</div>
+                                                <div class="d-flex gap-2 align-items-center mb-2">
+                                                    <div style="width:120px;">Laporan 4</div>
                                                     <div style="width:15px;">:</div>
-                                                    <span id="laporan-{{ $kegiatan->ref }}-4"   class="flex-fill">
+                                                    <span id="laporan-{{ $kegiatan->ref }}-4" class="flex-fill">
                                                         @if ($kegiatan->laporan_asesmen4)
                                                             <a href="{{ asset('asesmen_files/' . $kegiatan->laporan_asesmen4) }}" target="_blank" class="text-danger d-inline-flex align-items-center gap-1" title="Lihat Laporan Asesmen"> <i class="mdi mdi-download"></i> Download </a>
                                                         @else
@@ -200,9 +200,9 @@
                                                 </div>
 
                                                 <div class="d-flex gap-2 align-items-center mb-2">
-                                                   <div style="width:120px;">Laporan 5</div>
+                                                    <div style="width:120px;">Laporan 5</div>
                                                     <div style="width:15px;">:</div>
-                                                    <span id="laporan-{{ $kegiatan->ref }}-5"   class="flex-fill">
+                                                    <span id="laporan-{{ $kegiatan->ref }}-5" class="flex-fill">
                                                         @if ($kegiatan->laporan_asesmen5)
                                                             <a href="{{ asset('asesmen_files/' . $kegiatan->laporan_asesmen5) }}" target="_blank" class="text-danger d-inline-flex align-items-center gap-1" title="Lihat Laporan Asesmen"> <i class="mdi mdi-download"></i> Download </a>
                                                         @else
@@ -294,12 +294,12 @@
                                                                                 <div style="width:15px;">:</div>
                                                                                 <a href="{{ route('pdf.daftar-hadir', $asesmen->ref) }}" target="_blank" class="d-inline-flex align-items-center gap-1" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Download Daftar Hadir" data-bs-custom-class="info-tooltip"><i class="mdi mdi-download"></i> Download </a>
                                                                             </div>
-                                                                             <div class="d-flex align-items-center mb-2">
+                                                                            <div class="d-flex align-items-center mb-2">
                                                                                 <div style="width:180px;">Daftar Penerimaan</div>
                                                                                 <div style="width:15px;">:</div>
                                                                                 <a href="{{ route('pdf.daftar-hadir', $asesmen->ref) }}" target="_blank" class="d-inline-flex align-items-center gap-1" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Download Daftar Hadir" data-bs-custom-class="info-tooltip"><i class="mdi mdi-download"></i> Download </a>
                                                                             </div>
-                                                                             <div class="d-flex align-items-center mb-2">
+                                                                            <div class="d-flex align-items-center mb-2">
                                                                                 <div style="width:180px;">Tanda Terima Sertifikat</div>
                                                                                 <div style="width:15px;">:</div>
                                                                                 <a href="{{ route('pdf.daftar-hadir', $asesmen->ref) }}" target="_blank" class="d-inline-flex align-items-center gap-1" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Download Daftar Hadir" data-bs-custom-class="info-tooltip"><i class="mdi mdi-download"></i> Download </a>
@@ -312,29 +312,29 @@
                                                                                 <div style="width:15px;">:</div>
                                                                                 <span id="asesmen-{{ $asesmen->ref }}">
                                                                                     @if ($asesmen->bukti_asesmen)
-                                                                                        <a href="{{ asset('asesmen_files/' . $asesmen->bukti_asesmen) }}" target="_blank" class="text-danger d-inline-flex align-items-center gap-1" title="Lihat Sertifikat"> <i class="mdi mdi-download"></i> Download </a>
+                                                                                        <a href="{{ route('files.asesmen.bukti_asesmen', $asesmen->bukti_asesmen) }}" target="_blank" class="text-danger d-inline-flex align-items-center gap-1" title="Lihat Bukti Asesmen"> <i class="mdi mdi-download"></i> Download </a>
                                                                                     @else
                                                                                         <span class="text-muted">-</span>
                                                                                     @endif
                                                                                 </span>
                                                                             </div>
-                                                                             <div class="d-flex align-items-center mb-2">
+                                                                            <div class="d-flex align-items-center mb-2">
                                                                                 <div style="width:180px;">Dokumentasi Asesmen</div>
                                                                                 <div style="width:15px;">:</div>
                                                                                 <span id="dokumentasi-{{ $asesmen->ref }}">
                                                                                     @if ($asesmen->dokumentasi_asesmen)
-                                                                                        <a href="{{ asset('asesmen_files/' . $asesmen->dokumentasi_asesmen) }}" target="_blank" class="text-danger d-inline-flex align-items-center gap-1" title="Lihat Dokumentasi"> <i class="mdi mdi-download"></i> Download </a>
+                                                                                        <a href="{{ route('files.asesmen.dokumentasi_asesmen', $asesmen->dokumentasi_asesmen) }}" target="_blank" class="text-danger d-inline-flex align-items-center gap-1" title="Lihat Dokumentasi Asesmen"> <i class="mdi mdi-download"></i> Download </a>
                                                                                     @else
                                                                                         <span class="text-muted">-</span>
                                                                                     @endif
                                                                                 </span>
                                                                             </div>
-                                                                             <div class="d-flex align-items-center mb-2">
+                                                                            <div class="d-flex align-items-center mb-2">
                                                                                 <div style="width:180px;">Bukti Terima Sertifikat</div>
                                                                                 <div style="width:15px;">:</div>
-                                                                                 <span id="bukti-terima-{{ $asesmen->ref }}">
+                                                                                <span id="bukti-terima-{{ $asesmen->ref }}">
                                                                                     @if ($asesmen->bukti_terima_sertifikat)
-                                                                                        <a href="{{ asset('asesmen_files/' . $asesmen->bukti_terima_sertifikat) }}" target="_blank" class="text-danger d-inline-flex align-items-center gap-1" title="Lihat Dokumentasi"> <i class="mdi mdi-download"></i> Download </a>
+                                                                                        <a href="{{ route('files.asesmen.bukti_terima_sertifikat', $asesmen->bukti_terima_sertifikat) }}" target="_blank" class="text-danger d-inline-flex align-items-center gap-1" title="Lihat Bukti Terima Sertifikat"> <i class="mdi mdi-download"></i> Download </a>
                                                                                     @else
                                                                                         <span class="text-muted">-</span>
                                                                                     @endif
@@ -343,25 +343,25 @@
                                                                         </td>
                                                                         <!-- Upload Bukti -->
                                                                         @role('lsp')
-                                                                        <td>
-                                                                            <div class="d-flex align-items-center mb-2">
-                                                                                <div style="width:180px;">Bukti Asesmen</div>
-                                                                                <div style="width:15px;">:</div>
-                                                                                <input type="file" class="form-control form-control-sm upload-bukti-asesmen" data-ref="{{ $asesmen->ref }}" accept="application/pdf">
-                                                                            </div>
+                                                                            <td>
+                                                                                <div class="d-flex align-items-center mb-2">
+                                                                                    <div style="width:180px;">Bukti Asesmen</div>
+                                                                                    <div style="width:15px;">:</div>
+                                                                                    <input type="file" class="form-control form-control-sm upload-bukti-asesmen" data-ref="{{ $asesmen->ref }}" accept="application/pdf">
+                                                                                </div>
 
-                                                                            <div class="d-flex align-items-center mb-2">
-                                                                                <div style="width:180px;">Dokumentasi Asesmen</div>
-                                                                                <div style="width:15px;">:</div>
-                                                                                <input type="file" class="form-control form-control-sm upload-dokumentasi-asesmen" data-ref="{{ $asesmen->ref }}" accept="application/pdf">
-                                                                            </div>
+                                                                                <div class="d-flex align-items-center mb-2">
+                                                                                    <div style="width:180px;">Dokumentasi Asesmen</div>
+                                                                                    <div style="width:15px;">:</div>
+                                                                                    <input type="file" class="form-control form-control-sm upload-dokumentasi-asesmen" data-ref="{{ $asesmen->ref }}" accept="application/pdf">
+                                                                                </div>
 
-                                                                            <div class="d-flex align-items-center mb-2">
-                                                                                <div style="width:180px;">Bukti Terima Sertifikat</div>
-                                                                                <div style="width:15px;">:</div>
-                                                                                <input type="file" class="form-control form-control-sm upload-bukti-terima" data-ref="{{ $asesmen->ref }}" accept="application/pdf">
-                                                                            </div>
-                                                                        </td>
+                                                                                <div class="d-flex align-items-center mb-2">
+                                                                                    <div style="width:180px;">Bukti Terima Sertifikat</div>
+                                                                                    <div style="width:15px;">:</div>
+                                                                                    <input type="file" class="form-control form-control-sm upload-bukti-terima" data-ref="{{ $asesmen->ref }}" accept="application/pdf">
+                                                                                </div>
+                                                                            </td>
                                                                         @endrole
                                                                         <td>
                                                                             <div class="d-flex gap-2">
@@ -380,11 +380,14 @@
                                                                                         <h6>{{ \Carbon\Carbon::parse($asesmen->jadwal_asesmen)->locale('id')->translatedFormat('l, d F Y') }}</h6>
                                                                                     </div>
                                                                                     <table class="table-sm table-bordered table" style="font-size: 12px">
-                                                                                         <thead class="align-middle text-center">
+                                                                                        <thead class="align-middle text-center">
                                                                                             <tr>
                                                                                                 <th>No</th>
                                                                                                 <th>Nama Asesi</th>
-                                                                                                <th>Nomor Sertifikat  @role('lsp')<small class="fw-normal fs-10">( Klik Kolom untuk tambah/edit )</small>@endrole</th>
+                                                                                                <th>Nomor Sertifikat @role('lsp')
+                                                                                                        <small class="fw-normal fs-10">( Klik Kolom untuk tambah/edit )</small>
+                                                                                                    @endrole
+                                                                                                </th>
                                                                                                 @role('lsp')
                                                                                                     <th width="20%">Upload Sertifikat</th>
                                                                                                 @endrole
@@ -409,7 +412,7 @@
                                                                                                     <td class="d-flex gap-2 align-items-center text-center">
                                                                                                         <span id="sertifikat-{{ $asesi->ref }}">
                                                                                                             @if ($asesi->sertifikat_file)
-                                                                                                                <a href="{{ asset('asesi_files/' . $asesi->sertifikat_file) }}" target="_blank" class="text-danger" title="Lihat Sertifikat"> <i class="mdi mdi-download"></i> Download </a>
+                                                                                                                <a href="{{ route('files.asesi.sertifikat', $asesi->sertifikat_file) }}" target="_blank" class="text-danger" title="Lihat Sertifikat"> <i class="mdi mdi-download"></i> Download </a>
                                                                                                             @else
                                                                                                                 <span class="text-muted">-</span>
                                                                                                             @endif
@@ -483,7 +486,7 @@
                 data: formData,
                 processData: false,
                 contentType: false,
-                
+
                 // beforeSend: function() {
                 //     Swal.fire({
                 //         title: 'Uploading...',
@@ -496,7 +499,7 @@
                 //     });
                 // },
 
-                beforeSend: function () {
+                beforeSend: function() {
                     Swal.fire({
                         title: 'Mengunggah...',
                         html: `
@@ -524,9 +527,9 @@
                 },
 
 
-                xhr: function () {
+                xhr: function() {
                     let xhr = new window.XMLHttpRequest();
-                    xhr.upload.addEventListener("progress", function (evt) {
+                    xhr.upload.addEventListener("progress", function(evt) {
                         if (evt.lengthComputable) {
                             let percent = Math.round((evt.loaded / evt.total) * 100);
 
@@ -551,7 +554,7 @@
                         </a>
                     `);
                 },
-                
+
                 error: function(xhr) {
                     Swal.fire({
                         icon: 'error',
@@ -573,7 +576,10 @@
                 var itemRef = span.attr('ref'); // Get the ref
 
                 // Create an input field with the current text
-                var input = $('<input type="text" class="form-control"/>').val(itemText).attr('id', itemId).attr('ref', itemRef) .css({ width: '100%', boxSizing: 'border-box' });;
+                var input = $('<input type="text" class="form-control"/>').val(itemText).attr('id', itemId).attr('ref', itemRef).css({
+                    width: '100%',
+                    boxSizing: 'border-box'
+                });;
 
                 // Replace the span with the input field
                 span.replaceWith(input);
@@ -642,7 +648,7 @@
                 processData: false,
                 contentType: false,
 
-                beforeSend: function () {
+                beforeSend: function() {
                     Swal.fire({
                         title: 'Mengunggah...',
                         html: `
@@ -670,9 +676,9 @@
                 },
 
 
-                xhr: function () {
+                xhr: function() {
                     let xhr = new window.XMLHttpRequest();
-                    xhr.upload.addEventListener("progress", function (evt) {
+                    xhr.upload.addEventListener("progress", function(evt) {
                         if (evt.lengthComputable) {
                             let percent = Math.round((evt.loaded / evt.total) * 100);
 
@@ -727,8 +733,8 @@
                 data: formData,
                 processData: false,
                 contentType: false,
-                
-                beforeSend: function () {
+
+                beforeSend: function() {
                     Swal.fire({
                         title: 'Mengunggah...',
                         html: `
@@ -756,9 +762,9 @@
                 },
 
 
-                xhr: function () {
+                xhr: function() {
                     let xhr = new window.XMLHttpRequest();
-                    xhr.upload.addEventListener("progress", function (evt) {
+                    xhr.upload.addEventListener("progress", function(evt) {
                         if (evt.lengthComputable) {
                             let percent = Math.round((evt.loaded / evt.total) * 100);
 
@@ -813,8 +819,8 @@
                 data: formData,
                 processData: false,
                 contentType: false,
-                
-                beforeSend: function () {
+
+                beforeSend: function() {
                     Swal.fire({
                         title: 'Mengunggah...',
                         html: `
@@ -842,9 +848,9 @@
                 },
 
 
-                xhr: function () {
+                xhr: function() {
                     let xhr = new window.XMLHttpRequest();
-                    xhr.upload.addEventListener("progress", function (evt) {
+                    xhr.upload.addEventListener("progress", function(evt) {
                         if (evt.lengthComputable) {
                             let percent = Math.round((evt.loaded / evt.total) * 100);
 

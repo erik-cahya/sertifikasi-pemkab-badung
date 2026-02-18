@@ -114,14 +114,16 @@ Route::middleware('auth')->group(function () {
     // ################################ Asesi by admin
     Route::get('asesiAdmin', [AsesiController::class, 'list'])->name('asesiAdmin.index');
 
-    // ################################ Generate PDF
-    Route::get('daftar-hadir/{id}', [PDFController::class, 'daftarHadir'])->name('pdf.daftar-hadir');
-    Route::get('daftar-penerimaan/{id}', [PDFController::class, 'daftarPenerimaan'])->name('pdf.daftar-penerimaan');
-    Route::get('tanda-terima-sertifikat/{id}', [PDFController::class, 'tandaTerimaSertifikat'])->name('pdf.tanda-terima-sertifikat');
+
 
     // ################################ User Management
     Route::resource('/user-management', UserManagementController::class)->except(['show', 'edit', 'create'])->middleware('role:dinas,master');
 });
+
+// ################################ Generate PDF
+Route::get('daftar-hadir/{id}', [PDFController::class, 'daftarHadir'])->name('pdf.daftar-hadir');
+Route::get('daftar-penerimaan/{id}', [PDFController::class, 'daftarPenerimaan'])->name('pdf.daftar-penerimaan');
+Route::get('tanda-terima-sertifikat/{id}', [PDFController::class, 'tandaTerimaSertifikat'])->name('pdf.tanda-terima-sertifikat');
 
 // ################################ Protected File Access
 Route::get('files/asesi/ktp/{filename}', [FileController::class, 'getKTPAsesi'])->name('files.asesi.ktp');
@@ -129,7 +131,11 @@ Route::get('files/asesi/ijazah/{filename}', [FileController::class, 'getIjazahAs
 Route::get('files/asesi/sertikom/{filename}', [FileController::class, 'getSertikomAsesi'])->name('files.asesi.sertikom');
 Route::get('files/asesi/skb/{filename}', [FileController::class, 'getSkbAsesi'])->name('files.asesi.skb');
 Route::get('files/asesi/pasfoto/{filename}', [FileController::class, 'getPasFotoAsesi'])->name('files.asesi.pasfoto');
+Route::get('files/asesi/sertifikat/{filename}', [FileController::class, 'getSertifikatAsesi'])->name('files.asesi.sertifikat');
 
+Route::get('files/asesmen/bukti_asesmen/{filename}', [FileController::class, 'getBuktiAsesmen'])->name('files.asesmen.bukti_asesmen');
+Route::get('files/asesmen/dokumentasi_asesmen/{filename}', [FileController::class, 'getDokumentasiAsesmen'])->name('files.asesmen.dokumentasi_asesmen');
+Route::get('files/asesmen/bukti_terima_sertifikat/{filename}', [FileController::class, 'getBuktiTerimaSertifikat'])->name('files.asesmen.bukti_terima_sertifikat');
 Route::get('files/asesmen/{filename}', [FileController::class, 'serveAsesmenFile'])->name('files.asesmen');
 Route::get('files/pegawai/{filename}', [FileController::class, 'servePegawaiFile'])->name('files.pegawai');
 
