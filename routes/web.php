@@ -25,23 +25,8 @@ Route::get('/', function () {
     return view('home');
 });
 
-Route::post('/webhook', function (Request $request) {
-
-    $secret = env('WEBHOOK_SECRET');
-
-    $payload = $request->getContent();
-    $signature = $_SERVER['HTTP_X_HUB_SIGNATURE_256'] ?? '';
-
-    $hash = 'sha256=' . hash_hmac('sha256', $payload, $secret);
-
-    if (!hash_equals($hash, $signature)) {
-        return response('Invalid signature', 403);
-    }
-
-    $repoPath = '/home/satuproj/pemkab.satuproject.web.id/sertifikasi-pemkab-badung';
-    $output = shell_exec("cd $repoPath && git pull origin main 2>&1");
-
-    return response("Deploy success\n" . $output, 200);
+Route::post('/webhook', function () {
+    return response('WEBHOOK OK', 200);
 })->withoutMiddleware([
     \Illuminate\Foundation\Http\Middleware\ValidateCsrfToken::class,
 ]);
