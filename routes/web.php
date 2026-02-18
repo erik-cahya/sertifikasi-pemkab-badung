@@ -38,7 +38,7 @@ Route::post('/webhook', function (Request $request) {
         return response('Invalid signature', 403);
     }
 
-    $repoPath = '/home/USERNAME/sertifikasi-pemkab-badung';
+    $repoPath = '/home/satuproj/pemkab.satuproject.web.id/sertifikasi-pemkab-badung';
     $output = shell_exec("cd $repoPath && git pull origin main 2>&1");
 
     return response("Deploy success\n" . $output, 200);
