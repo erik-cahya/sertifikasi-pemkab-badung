@@ -41,7 +41,7 @@ return [
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),
-            'url' => rtrim(env('APP_URL'), '/').'/storage',
+            'url' => rtrim(env('APP_URL'), '/') . '/storage',
             'visibility' => 'public',
             'throw' => false,
             'report' => false,
@@ -63,7 +63,7 @@ return [
         'logo-lsp' => [
             'driver' => 'local',
             'root' => public_path('img'),
-            'url' => rtrim(env('APP_URL'), '/').'/img',
+            'url' => rtrim(env('APP_URL'), '/') . '/img',
             'visibility' => 'public',
             'throw' => false,
         ],
@@ -96,7 +96,7 @@ return [
             'throw' => false,
         ],
 
-        
+
         'pas-foto' => [
             'driver' => 'local',
             'root' => storage_path('app/private/asesi_files'),

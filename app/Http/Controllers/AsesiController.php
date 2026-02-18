@@ -130,7 +130,7 @@ class AsesiController extends Controller
             'email_perusahaan' => 'required|email',
             'nama_kontak_person' => 'required',
             'no_kontak_person' => 'required',
-            
+
             // FILE VALIDATION
             'sertikom_file' => 'nullable|file|mimes:pdf|max:2048',
             'ijazah_file' => 'nullable|file|mimes:pdf|max:2048',
@@ -318,7 +318,7 @@ class AsesiController extends Controller
             'ktp_file' => $filenameKTP,
             'keterangan_kerja_file' => $filenameSKB,
             'pas_foto_file' => $filenamePasFoto,
-            
+
             'nama_kontak_person' => $request->nama_kontak_person,
             'no_kontak_person' => $request->no_kontak_person,
 
@@ -345,6 +345,7 @@ class AsesiController extends Controller
         // ->get();
 
         $asesi = AsesiModel::with(['kegiatan', 'asesmen'])->get();
+
         return view('admin-panel.asesi.index', [
             'dataAsesi' => $asesi,
         ]);

@@ -121,8 +121,6 @@ Route::middleware('auth')->group(function () {
 
     // ################################ User Management
     Route::resource('/user-management', UserManagementController::class)->except(['show', 'edit', 'create'])->middleware('role:dinas,master');
-
-    
 });
 
 // ################################ Protected File Access
@@ -131,6 +129,7 @@ Route::get('files/asesi/ijazah/{filename}', [FileController::class, 'getIjazahAs
 Route::get('files/asesi/sertikom/{filename}', [FileController::class, 'getSertikomAsesi'])->name('files.asesi.sertikom');
 Route::get('files/asesi/skb/{filename}', [FileController::class, 'getSkbAsesi'])->name('files.asesi.skb');
 Route::get('files/asesi/pasfoto/{filename}', [FileController::class, 'getPasFotoAsesi'])->name('files.asesi.pasfoto');
+
 Route::get('files/asesmen/{filename}', [FileController::class, 'serveAsesmenFile'])->name('files.asesmen');
 Route::get('files/pegawai/{filename}', [FileController::class, 'servePegawaiFile'])->name('files.pegawai');
 

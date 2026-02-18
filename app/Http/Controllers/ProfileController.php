@@ -26,7 +26,7 @@ class ProfileController extends Controller
         if ($user->roles === 'lsp' && $user->lspData) {
             $query->where('user_ref', $user->ref);
         }
-        
+
         $data['dataLSP'] = $query->firstOrFail();
 
         return view('admin-panel.profile.index', $data);
@@ -47,6 +47,7 @@ class ProfileController extends Controller
      */
     public function update(Request $request, $id)
     {
+        // dd($request->all());
         Validator::make($request->all(), [
             'lsp_nama' => 'required|unique:lsp,lsp_nama,' . $id . ',ref',
             'lsp_no_lisensi' => 'required|unique:lsp,lsp_no_lisensi,' . $id . ',ref',
@@ -67,7 +68,7 @@ class ProfileController extends Controller
 
             $lsp_nama = Str::slug($request->lsp_nama);
             $ext = $request->file('lsp_logo')->extension();
-            $filename = "{$lsp_nama}-{$request->lsp_no_lisensi}.{$ext}";
+            $filename = Str::uuid() . ".{$ext}";
             $lsp_logo = Storage::disk('logo-lsp')->putFileAs('logo-lsp', $request->file('lsp_logo'), $filename);
         } else {
             $lsp_logo = $lsp->lsp_logo; // kalau ga upload baru

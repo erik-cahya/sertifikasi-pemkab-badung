@@ -93,7 +93,7 @@ class LSPController extends Controller
         /* ================== LOGO LSP ================== */
         if ($request->hasFile('lsp_logo')) {
             $ext = $request->file('lsp_logo')->extension();
-            $filename = "{$lsp_nama}-{$lsp_no_lisensi}.{$ext}";
+            $filename = Str::uuid() . ".{$ext}";
             $lsp_logo = Storage::disk('logo-lsp')->putFileAs("logo-lsp", $request->file('lsp_logo'), $filename);
         }
 
