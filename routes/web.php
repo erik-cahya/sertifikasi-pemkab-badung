@@ -202,7 +202,7 @@ Route::post('/command/seed', function (Illuminate\Http\Request $request) {
     // if (!Auth::check()) {
     //     abort(403, 'Anda tidak memiliki akses');
     // }
-    if ($request->query('className') !== config('app.deploy_key')) {
+    if ($request->query('key') !== config('app.deploy_key')) {
         abort(403, 'Unauthorized');
     }
     $cmd = 'cd /home/satuproj/pemkab.satuproject.web.id/sertifikasi-pemkab-badung/ && php artisan db:seed --class=' . $request->query('className') . ' 2>&1';
