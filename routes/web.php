@@ -18,18 +18,13 @@ use App\Http\Controllers\PDFController;
 use App\Http\Controllers\UserManagementController;
 use App\Http\Controllers\FileController;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 
 Route::get('/', function () {
     return view('home');
 });
-
-Route::post('/webhook', function () {
-    return response('WEBHOOK OK', 200);
-})->withoutMiddleware([
-    \Illuminate\Foundation\Http\Middleware\ValidateCsrfToken::class,
-]);
 
 Route::get('/ajax/skema-by-lsp/{lspRef}', [SkemaController::class, 'getByLsp'])->name('ajax.skema.by-lsp');
 Route::get('/ajax/lsp-by-kegiatan/{kegiatan}', [AsesiController::class, 'getLspByKegiatan']);
@@ -159,6 +154,26 @@ Route::get('pegawaiAdmin', [PegawaiController::class, 'list'])->name('pegawai.li
 Route::post('pegawai/store', [PegawaiController::class, 'store'])->name('pegawai.store');
 Route::put('pegawaiAdmin/{ref}', [PegawaiController::class, 'update'])->name('pegawai.update');
 Route::delete('pegawaiAdmin/{ref}', [PegawaiController::class, 'destroy'])->name('pegawai.destroy');
+
+
+// Route untuk command terminal
+Route::post('/webhook', function (Illuminate\Http\Request $request) {
+
+    // if (!Auth::check()) {
+    //     abort(403, 'Anda tidak memiliki akses');
+    // }
+    if ($request->query('key') !== config('app.deploy_key')) {
+        abort(403, 'Unauthorized');
+    }
+    // $cmd = 'cd /home/satuproj/pemkab.satuproject.web.id/sertifikasi-pemkab-badung/ && php artisan migrate:fresh 2>&1';
+    $cmd = 'cd ~/Documents/Project/sertifikasi-pemkab-badung/ && php artisan migrate:fresh --seed 2>&1';
+
+    $output = shell_exec($cmd);
+
+    return "<pre>$output</pre>";
+})->withoutMiddleware([
+    \Illuminate\Foundation\Http\Middleware\ValidateCsrfToken::class,
+]);
 
 
 require __DIR__ . '/auth.php';

@@ -1,22 +1,22 @@
 @extends('pendaftaran.layouts.app')
 
 @section('content')
-    <section class="hero-gradient py-5 py-md-6">
+    <section class="hero-gradient py-md-6 py-5">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-lg-8 text-center">
-                    <h1 class="fw-bold text-white mb-4 display-6">
-                        Sistem Informasi Pelatihan dan Sertifikasi TEST WEBHOOK
+                    <h1 class="fw-bold display-6 mb-4 text-white">
+                        Sistem Informasi Pelatihan dan Sertifikasi
                     </h1>
 
-                    <p class="fs-5 text-white mb-5">
+                    <p class="fs-5 mb-5 text-white">
                         Portal resmi Bidang Pelatihan dan Sertifikasi
                         <br>
                         Dinas Perindustrian dan Ketenagakerjaan Kabupaten Badung
                         untuk pengelolaan sertifikasi tenaga kerja wilayah Kabupaten Badung.
                     </p>
 
-                    <div class="d-flex flex-wrap justify-content-center gap-3">
+                    <div class="d-flex justify-content-center flex-wrap gap-3">
                         <a href="/asesi" class="btn btn-orange d-flex align-items-center text-white">
                             Daftar Calon Asesi
                             <i class="bi bi-arrow-right ms-2"></i>
@@ -31,10 +31,10 @@
         </div>
     </section>
 
-    <section class="py-5 py-md-6">
+    <section class="py-md-6 py-5">
         <div class="container">
             <!-- Header -->
-            <div class="text-center mb-5">
+            <div class="mb-5 text-center">
                 <h2 class="fw-bold mb-3">
                     Layanan Kami
                 </h2>
@@ -100,12 +100,12 @@
             </div>
     </section>
 
-    <section class="py-5 bg-light">
+    <section class="bg-light py-5">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-lg-8">
-                    <div class="bg-white rounded-4 shadow-lg p-4 p-md-5">
-                        <h2 class="fw-bold text-center mb-4 text-orange">
+                    <div class="rounded-4 p-md-5 bg-white p-4 shadow-lg">
+                        <h2 class="fw-bold text-orange mb-4 text-center">
                             Tentang Bidang Pelatihan dan Sertifikasi
                         </h2>
 
