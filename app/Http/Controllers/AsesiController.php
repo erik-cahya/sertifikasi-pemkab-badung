@@ -223,11 +223,8 @@ class AsesiController extends Controller
         // ================== SIMPAN FILE ==================
         $nik  = $request->nik;
         $time = time();
-        $ktp = NULL;
-        $ijazah = NULL;
-        $sertikom = NULL;
-        $skb = NULL;
-        $pasfoto = NULL;
+        $ktp = NULL; $ijazah = NULL; $sertikom = NULL; $skb = NULL; $pasfoto = NULL;
+        $filenameKTP = NULL; $filenameIjazah = NULL; $filenameSertikom = NULL; $filenameSKB = NULL; $filenamePasFoto = NULL; 
 
         /* ================== KTP ================== */
         if ($request->hasFile('ktp_file')) {
