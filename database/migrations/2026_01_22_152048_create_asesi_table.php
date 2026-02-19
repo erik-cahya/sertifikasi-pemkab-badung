@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('nama_lengkap');
             $table->string('nik');
             $table->string('tempat_lahir');
-            $table->dateTime('tgl_lahir');
+            $table->date('tgl_lahir');
             $table->string('jenis_kelamin');
             $table->string('kewarganegaraan');
             $table->string('alamat');

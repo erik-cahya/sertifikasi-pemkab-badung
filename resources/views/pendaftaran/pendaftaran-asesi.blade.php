@@ -426,8 +426,8 @@
                                             </div>
                                         </div>
 
-                                        
-                                        @if($dataKegiatan->isNotEmpty())
+
+                                        @if ($dataKegiatan->isNotEmpty())
                                             <div class="col-lg-12">
                                                 <div class="mb-2 mt-3">
                                                     <button type="button" id="btnSubmit" class="btn btn-dinas rounded-3 fw-semibold px-4 py-2"><i class="ri-save-3-line"></i> DAFTAR</button>
@@ -545,7 +545,7 @@
                     let opt = '<option value="" disabled selected>Pilih Jadwal Sertifikasi</option>';
                     data.forEach(item => {
                         const isSelected = oldAsesmenRef === item.asesmen_ref ? 'selected' : '';
-                        
+
                         opt += `<option value="${item.asesmen_ref}" ${isSelected}>${item.nama_tuk} - ${item.nama_skema} | ${formatTanggalIndo(item.jadwal_asesmen)} | Kuota: ${item.sisa_kuota}</option>`;
                         opt += `<option value="" disabled style="color: red;">
                                 Hubungi WhatsApp Kontak person LSP jika TUK tidak tersedia : 

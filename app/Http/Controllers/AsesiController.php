@@ -342,7 +342,7 @@ class AsesiController extends Controller
         return redirect()->route('asesi.index')->with('flashData', $flashData);
     }
 
-    public function list()
+    public function list(Request $request)
     {
         /** @var \App\Models\User $user */
         $user = Auth::user();
@@ -350,14 +350,79 @@ class AsesiController extends Controller
 
         $query = AsesiModel::with(['kegiatan', 'asesmen']);
 
+        // Role-based filter: LSP hanya lihat miliknya
         if ($user->roles === 'lsp' && $user->lspData) {
             $query->where('lsp_ref', $user->lspData->ref);
         }
 
-        $asesi = $query->get();
+        // Filter per LSP (khusus dinas/master)
+        $filterLsp = $request->filter_lsp;
+        if ($user->roles !== 'lsp' && $filterLsp) {
+            $query->where('lsp_ref', $filterLsp);
+        }
+
+        // Filter berdasarkan tanggal/bulan/tahun
+        $filterType = $request->filter_type;
+        $filterValue = $request->filter_value;
+
+        if ($filterType && $filterValue) {
+            switch ($filterType) {
+                case 'tanggal':
+                    $query->whereDate('created_at', $filterValue);
+                    break;
+                case 'bulan':
+                    // format: YYYY-MM
+                    $query->whereYear('created_at', substr($filterValue, 0, 4))
+                        ->whereMonth('created_at', substr($filterValue, 5, 2));
+                    break;
+                case 'tahun':
+                    $query->whereYear('created_at', $filterValue);
+                    break;
+            }
+        }
+
+        $asesi = $query->orderBy('created_at', 'desc')->get();
+
+        // Data LSP untuk filter dropdown (khusus dinas/master)
+        $dataLsp = ($user->roles !== 'lsp') ? LSPModel::orderBy('lsp_nama')->get() : collect();
 
         return view('admin-panel.asesi.index', [
             'dataAsesi' => $asesi,
+            'filterType' => $filterType,
+            'filterValue' => $filterValue,
+            'filterLsp' => $filterLsp ?? '',
+            'dataLsp' => $dataLsp,
+            'userRole' => $user->roles,
         ]);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $asesi = AsesiModel::findOrFail($id);
+        $asesi->update($request->all());
+
+        $flashData = [
+            'title' => 'Data Asesi Berhasii Diupdate',
+            'message' => 'Data Berhasil Diupdate',
+            'type' => 'success',
+        ];
+        return redirect()->route('asesiAdmin.index')->with('flashData', $flashData);
+    }
+
+    public function destroy($id)
+    {
+        // $asesi = AsesiModel::findOrFail($id);
+        // $asesi->delete();
+
+        AsesiModel::where('ref', $id)->delete();
+
+
+        $flashData = [
+            'judul' => 'Hapus Data Success',
+            'pesan' => 'Data Asesi Berhasil Dihapus ',
+            'type' => 'success',
+        ];
+
+        return response()->json($flashData);
     }
 }

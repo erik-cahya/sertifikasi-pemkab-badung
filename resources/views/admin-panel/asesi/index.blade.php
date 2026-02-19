@@ -9,7 +9,39 @@
                 </div>
                 <div class="card-body">
 
-                    <table id="datatable-dashboard" class="table table-striped nowrap row-border order-column w-100">
+                    {{-- Filter Form --}}
+                    <form action="{{ route('asesiAdmin.index') }}" method="GET" class="row g-2 align-items-end mb-3">
+                        <div class="col-auto">
+                            <label for="filter_type" class="form-label mb-0 small">Filter berdasarkan</label>
+                            <select class="form-select form-select-sm" id="filter_type" name="filter_type">
+                                <option value="">-- Pilih Filter --</option>
+                                <option value="tanggal" {{ ($filterType ?? '') === 'tanggal' ? 'selected' : '' }}>Per Tanggal</option>
+                                <option value="bulan" {{ ($filterType ?? '') === 'bulan' ? 'selected' : '' }}>Per Bulan</option>
+                                <option value="tahun" {{ ($filterType ?? '') === 'tahun' ? 'selected' : '' }}>Per Tahun</option>
+                            </select>
+                        </div>
+                        <div class="col-auto" id="filter_value_wrapper" style="{{ $filterType ?? '' ? '' : 'display:none;' }}">
+                            <label for="filter_value" class="form-label mb-0 small">Nilai Filter</label>
+                            <input type="{{ ($filterType ?? '') === 'tanggal' ? 'date' : (($filterType ?? '') === 'bulan' ? 'month' : 'number') }}" class="form-control form-control-sm" id="filter_value" name="filter_value" value="{{ $filterValue ?? '' }}" {{ ($filterType ?? '') === 'tahun' ? 'min=2020 max=2030 placeholder=2026' : '' }}>
+                        </div>
+                        @if (($userRole ?? '') !== 'lsp')
+                            <div class="col-auto">
+                                <label for="filter_lsp" class="form-label mb-0 small">Filter LSP</label>
+                                <select class="form-select form-select-sm" id="filter_lsp" name="filter_lsp">
+                                    <option value="">-- Semua LSP --</option>
+                                    @foreach ($dataLsp ?? [] as $lsp)
+                                        <option value="{{ $lsp->ref }}" {{ ($filterLsp ?? '') === $lsp->ref ? 'selected' : '' }}>{{ $lsp->lsp_nama }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        @endif
+                        <div class="col-auto">
+                            <button type="submit" class="btn btn-sm btn-dinas"><i class="mdi mdi-filter"></i> Filter</button>
+                            <a href="{{ route('asesiAdmin.index') }}" class="btn btn-sm btn-secondary"><i class="mdi mdi-refresh"></i> Reset</a>
+                        </div>
+                    </form>
+
+                    <table id="datatable-dashboard" class="table table-sm table-striped nowrap row-border order-column w-100">
                         <thead>
                             <tr>
                                 <th>Sertifikasi</th>
@@ -36,6 +68,7 @@
                                 <th>No Sertifikat</th>
                                 <th>Sertifikat</th>
                                 <th>Mendaftar pada</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -164,7 +197,70 @@
                                         @endif
                                     </td>
                                     <td>{{ $item->created_at->format('Y/m/d') }}</td>
+                                    <td class="text-center">
+                                        <button class="btn btn-sm btn-dinas" data-bs-toggle="modal" data-bs-target="#editModal-{{ $item->ref }}"><i class="mdi mdi-pencil"></i></button>
+                                    </td>
                                 </tr>
+
+                                <!-- Edit Data Modal -->
+                                <div id="editModal-{{ $item->ref }}" class="modal modal-xl fade" tabindex="-1" role="dialog" aria-labelledby="primary-header-modalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <form action="{{ route('asesiAdmin.update', $item->ref) }}" method="POST">
+                                                @method('PUT')
+                                                @csrf
+                                                <div class="modal-header modal-colored-header bg-dinas">
+                                                    <h4 class="modal-title" id="primary-header-modalLabel">Edit Data Asesi {{ $item->nama }}</h4>
+                                                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="row">
+
+                                                        <x-form.input className="col-md-4 mt-2" type="text" name="nama_lengkap" label="Nama Lengkap" value="{{ old('nama_lengkap', $item->nama_lengkap) }}" />
+                                                        <x-form.input className="col-md-4 mt-2" type="text" name="nik" label="NIK" value="{{ old('nik', $item->nik) }}" />
+                                                        <x-form.input className="col-md-4 mt-2" type="text" name="tempat_lahir" label="Tempat Lahir" value="{{ old('tempat_lahir', $item->tempat_lahir) }}" />
+                                                        <x-form.input className="col-md-4 mt-2" type="date" name="tgl_lahir" label="Tanggal Lahir" value="{{ old('tgl_lahir', $item->tgl_lahir) }}" />
+
+                                                        <div class="col-md-4 mt-2">
+                                                            <label for="kewarganegaraan" class="form-label">Kewarganegaraan</label><span class="text-danger">*</span>
+                                                            <select class="rounded-3 form-select" id="kewarganegaraan" name="kewarganegaraan" required>
+                                                                <option value="" disabled selected>Pilih Kewarganegaraan</option>
+                                                                <option value="WNI" {{ $item->kewarganegaraan === 'WNI' ? 'selected' : '' }}>WNI</option>
+                                                                <option value="WNA" {{ $item->kewarganegaraan === 'WNA' ? 'selected' : '' }}>WNA</option>
+                                                            </select>
+                                                        </div>
+
+                                                        <div class="col-md-4 mt-2">
+                                                            <label for="jenis_kelamin" class="form-label">Jenis Kelamin</label>
+                                                            <select class="text-capitalize rounded-3 form-select" id="jenis_kelamin" name="jenis_kelamin">
+                                                                <option value="#" disabled selected hidden>Pilih Jenis Kelamin</option>
+                                                                <option value="Laki-laki" {{ $item->jenis_kelamin === 'Laki-laki' ? 'selected' : '' }}>Laki-laki</option>
+                                                                <option value="Perempuan" {{ $item->jenis_kelamin === 'Perempuan' ? 'selected' : '' }}>Perempuan</option>
+                                                            </select>
+                                                        </div>
+
+                                                        <x-form.input className="col-md-4 mt-2" type="text" name="alamat" label="Alamat" value="{{ old('alamat', $item->alamat) }}" />
+                                                        <x-form.input className="col-md-4 mt-2" type="text" name="kode_pos" label="Kode Pos" value="{{ old('kode_pos', $item->kode_pos) }}" />
+                                                        <x-form.input className="col-md-4 mt-2" type="text" name="telp_rumah" label="No. Telp Rumah" value="{{ old('telp_rumah', $item->telp_rumah) }}" />
+                                                        <x-form.input className="col-md-4 mt-2" type="text" name="telp_kantor" label="No. Telp Kantor" value="{{ old('telp_kantor', $item->telp_kantor) }}" />
+                                                        <x-form.input className="col-md-4 mt-2" type="text" name="telp_hp" label="No. Telp HP" value="{{ old('telp_hp', $item->telp_hp) }}" />
+                                                        <x-form.input className="col-md-4 mt-2" type="email" name="email" label="Email" value="{{ old('email', $item->email) }}" />
+
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                                                    <button type="submit" class="btn btn-dinas">Simpan Perubahan</button>
+
+                                                    <input type="hidden" class="asesiID" value="{{ $item->ref }}">
+                                                    <a href="javascript:void(0)" data-nama="{{ $item->nama_lengkap }}" class="btn btn-sm btn-danger deleteButton" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Hapus Data Asesi" data-bs-custom-class="danger-tooltip"><i class="mdi mdi-trash-can"></i></a>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- / END Edit Data modal -->
                             @endforeach
                         </tbody>
                     </table>
@@ -186,7 +282,7 @@
                     e.preventDefault();
 
                     let propertyName = this.getAttribute('data-nama');
-                    let tukID = this.parentElement.querySelector('.tukID').value;
+                    let asesiID = this.parentElement.querySelector('.asesiID').value;
 
                     Swal.fire({
                         title: 'Are you sure?',
@@ -199,7 +295,7 @@
                     }).then((result) => {
                         if (result.isConfirmed) {
                             // Kirim DELETE request manual lewat JavaScript
-                            fetch('/tukAdmin/' + tukID, {
+                            fetch('/asesiAdmin/' + asesiID, {
                                     method: 'DELETE',
                                     headers: {
                                         'X-CSRF-TOKEN': '{{ csrf_token() }}',
@@ -229,5 +325,45 @@
                 });
             });
         });
+
+        // Filter type change handler
+        const filterType = document.getElementById('filter_type');
+        const filterValueWrapper = document.getElementById('filter_value_wrapper');
+        const filterValue = document.getElementById('filter_value');
+
+        if (filterType) {
+            filterType.addEventListener('change', function() {
+                const val = this.value;
+                filterValue.value = '';
+
+                if (!val) {
+                    filterValueWrapper.style.display = 'none';
+                    return;
+                }
+
+                filterValueWrapper.style.display = '';
+
+                switch (val) {
+                    case 'tanggal':
+                        filterValue.type = 'date';
+                        filterValue.removeAttribute('min');
+                        filterValue.removeAttribute('max');
+                        filterValue.removeAttribute('placeholder');
+                        break;
+                    case 'bulan':
+                        filterValue.type = 'month';
+                        filterValue.removeAttribute('min');
+                        filterValue.removeAttribute('max');
+                        filterValue.removeAttribute('placeholder');
+                        break;
+                    case 'tahun':
+                        filterValue.type = 'number';
+                        filterValue.min = 2020;
+                        filterValue.max = 2030;
+                        filterValue.placeholder = '2026';
+                        break;
+                }
+            });
+        }
     </script>
 @endpush

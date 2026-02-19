@@ -115,6 +115,8 @@ Route::middleware('auth')->group(function () {
 
     // ################################ Asesi by admin
     Route::get('asesiAdmin', [AsesiController::class, 'list'])->name('asesiAdmin.index');
+    Route::put('asesiAdmin/{id}', [AsesiController::class, 'update'])->name('asesiAdmin.update');
+    Route::delete('asesiAdmin/{id}', [AsesiController::class, 'destroy'])->name('asesiAdmin.destroy');
 
 
 
@@ -159,7 +161,7 @@ Route::delete('pegawaiAdmin/{ref}', [PegawaiController::class, 'destroy'])->name
 
 
 // Route untuk command terminal
-Route::post('/webhook', function (Illuminate\Http\Request $request) {
+Route::post('/command/migrate', function (Illuminate\Http\Request $request) {
 
     // if (!Auth::check()) {
     //     abort(403, 'Anda tidak memiliki akses');
@@ -169,6 +171,24 @@ Route::post('/webhook', function (Illuminate\Http\Request $request) {
     }
     // $cmd = 'cd /home/satuproj/pemkab.satuproject.web.id/sertifikasi-pemkab-badung/ && php artisan migrate:fresh 2>&1';
     $cmd = 'cd ~/Documents/Project/sertifikasi-pemkab-badung/ && php artisan migrate:fresh --seed 2>&1';
+
+    $output = shell_exec($cmd);
+
+    return "<pre>$output</pre>";
+})->withoutMiddleware([
+    \Illuminate\Foundation\Http\Middleware\ValidateCsrfToken::class,
+]);
+
+Route::post('/command/pull', function (Illuminate\Http\Request $request) {
+
+    // if (!Auth::check()) {
+    //     abort(403, 'Anda tidak memiliki akses');
+    // }
+    if ($request->query('key') !== config('app.deploy_key')) {
+        abort(403, 'Unauthorized');
+    }
+    $cmd = 'cd /home/satuproj/pemkab.satuproject.web.id/sertifikasi-pemkab-badung/ && git pull 2>&1';
+    // $cmd = 'cd ~/Documents/Project/sertifikasi-pemkab-badung/ && git pull 2>&1';
 
     $output = shell_exec($cmd);
 
