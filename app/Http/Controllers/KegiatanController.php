@@ -185,11 +185,18 @@ class KegiatanController extends Controller
         // $data['dataLSP'] = LSPModel::get();
 
         $query = KegiatanModel::where('ref', $id)
-            ->withSum(
-                'kegiatanJadwal as total_peserta',
-                'kuota_lsp',
-            )->withCount('skemas', 'asesi');      // total skema kegiatan
+            ->withCount('skemas');      // total skema kegiatan
+
         if ($user->roles === 'lsp' && $user->lspData) {
+            // LSP user: hitung asesi & total_peserta hanya milik LSP-nya
+            $query->withCount(['asesi' => function ($q) use ($user) {
+                $q->where('lsp_ref', $user->lspData->ref);
+            }])->withSum(
+                ['kegiatanJadwal as total_peserta' => function ($q) use ($user) {
+                    $q->where('lsp_ref', $user->lspData->ref);
+                }],
+                'kuota_lsp',
+            );
             $query->whereHas('kegiatanJadwal', function ($q) use ($user) {
                 $q->where('lsp_ref', $user->lspData->ref);
             })
@@ -198,6 +205,10 @@ class KegiatanController extends Controller
                         $q->where('lsp_ref', $user->lspData->ref);
                     }
                 ]);
+        } else {
+            // Dinas/Master: hitung semua asesi & total_peserta
+            $query->withCount('asesi')
+                ->withSum('kegiatanJadwal as total_peserta', 'kuota_lsp');
         }
         $data['dataKegiatan'] = $query->firstOrFail();
 
