@@ -223,8 +223,16 @@ class AsesiController extends Controller
         // ================== SIMPAN FILE ==================
         $nik  = $request->nik;
         $time = time();
-        $ktp = NULL; $ijazah = NULL; $sertikom = NULL; $skb = NULL; $pasfoto = NULL;
-        $filenameKTP = NULL; $filenameIjazah = NULL; $filenameSertikom = NULL; $filenameSKB = NULL; $filenamePasFoto = NULL; 
+        $ktp = NULL;
+        $ijazah = NULL;
+        $sertikom = NULL;
+        $skb = NULL;
+        $pasfoto = NULL;
+        $filenameKTP = NULL;
+        $filenameIjazah = NULL;
+        $filenameSertikom = NULL;
+        $filenameSKB = NULL;
+        $filenamePasFoto = NULL;
 
         /* ================== KTP ================== */
         if ($request->hasFile('ktp_file')) {
@@ -336,12 +344,17 @@ class AsesiController extends Controller
 
     public function list()
     {
-        // $asesi = AsesiModel::join('lsp', 'lsp.ref', '=', 'tuk.lsp_ref')
-        // ->select('tuk.*','lsp.lsp_nama')
-        // ->orderBy('tuk.created_at', 'desc')
-        // ->get();
+        /** @var \App\Models\User $user */
+        $user = Auth::user();
+        $user->loadMissing('lspData');
 
-        $asesi = AsesiModel::with(['kegiatan', 'asesmen'])->get();
+        $query = AsesiModel::with(['kegiatan', 'asesmen']);
+
+        if ($user->roles === 'lsp' && $user->lspData) {
+            $query->where('lsp_ref', $user->lspData->ref);
+        }
+
+        $asesi = $query->get();
 
         return view('admin-panel.asesi.index', [
             'dataAsesi' => $asesi,
