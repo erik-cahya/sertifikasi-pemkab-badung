@@ -441,7 +441,7 @@ class KegiatanController extends Controller
         $time = time();
         $lsp  = $jadwal->lsp->lsp_nama;
         $kegiatan  = $jadwal->kegiatan->nama_kegiatan;
-        $filename = "LAPORAN-{$index}-{$kegiatan}-{$lsp}-{$time}.{$ext}";
+        $filename = "LAPORAN-{$index}-" . Str::uuid() . ".{$ext}";
 
         // hapus file lama
         if ($jadwal->$field && Storage::disk('laporan_asesmen')->exists($jadwal->$field)) {
@@ -452,14 +452,13 @@ class KegiatanController extends Controller
         $path = Storage::disk('laporan_asesmen')->putFileAs("laporan_asesmen", $request->file('file'), $filename);
 
         //update tb
-        $jadwal->update([$field => $path]);
+        $jadwal->update([$field => $filename]);
 
         return response()->json([
             'success' => true,
             'message' => 'Laporan - ' . $index . ' - ' . $kegiatan . ' - ' . $lsp . ' berhasil diupload',
             'path'    => $path,
             'url'     => route('files.asesmen', ['filename' => basename($path)]),
-
         ]);
     }
 

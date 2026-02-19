@@ -156,7 +156,7 @@
                                                     <div style="width:15px;">:</div>
                                                     <span id="laporan-{{ $kegiatan->ref }}-1" class="flex-fill">
                                                         @if ($kegiatan->laporan_asesmen)
-                                                            <a href="{{ asset('asesmen_files/' . $kegiatan->laporan_asesmen) }}" target="_blank" class="text-danger d-inline-flex align-items-center gap-1" title="Lihat Laporan Asesmen"> <i class="mdi mdi-download"></i> Download </a>
+                                                            <a href="{{ route('files.asesmen.laporan_asesmen', $kegiatan->laporan_asesmen) }}" target="_blank" class="text-danger d-inline-flex align-items-center gap-1" title="Lihat Laporan Asesmen"> <i class="mdi mdi-download"></i> Download </a>
                                                         @else
                                                             <span class="text-muted">-</span>
                                                         @endif
@@ -168,7 +168,7 @@
                                                     <div style="width:15px;">:</div>
                                                     <span id="laporan-{{ $kegiatan->ref }}-2" class="flex-fill">
                                                         @if ($kegiatan->laporan_asesmen2)
-                                                            <a href="{{ asset('asesmen_files/' . $kegiatan->laporan_asesmen2) }}" target="_blank" class="text-danger d-inline-flex align-items-center gap-1" title="Lihat Laporan Asesmen"> <i class="mdi mdi-download"></i> Download </a>
+                                                            <a href="{{ route('files.asesmen.laporan_asesmen', $kegiatan->laporan_asesmen2) }}" target="_blank" class="text-danger d-inline-flex align-items-center gap-1" title="Lihat Laporan Asesmen"> <i class="mdi mdi-download"></i> Download </a>
                                                         @else
                                                             <span class="text-muted">-</span>
                                                         @endif
@@ -180,7 +180,7 @@
                                                     <div style="width:15px;">:</div>
                                                     <span id="laporan-{{ $kegiatan->ref }}-3" class="flex-fill">
                                                         @if ($kegiatan->laporan_asesmen3)
-                                                            <a href="{{ asset('asesmen_files/' . $kegiatan->laporan_asesmen3) }}" target="_blank" class="text-danger d-inline-flex align-items-center gap-1" title="Lihat Laporan Asesmen"> <i class="mdi mdi-download"></i> Download </a>
+                                                            <a href="{{ route('files.asesmen.laporan_asesmen', $kegiatan->laporan_asesmen3) }}" target="_blank" class="text-danger d-inline-flex align-items-center gap-1" title="Lihat Laporan Asesmen"> <i class="mdi mdi-download"></i> Download </a>
                                                         @else
                                                             <span class="text-muted">-</span>
                                                         @endif
@@ -192,7 +192,7 @@
                                                     <div style="width:15px;">:</div>
                                                     <span id="laporan-{{ $kegiatan->ref }}-4" class="flex-fill">
                                                         @if ($kegiatan->laporan_asesmen4)
-                                                            <a href="{{ asset('asesmen_files/' . $kegiatan->laporan_asesmen4) }}" target="_blank" class="text-danger d-inline-flex align-items-center gap-1" title="Lihat Laporan Asesmen"> <i class="mdi mdi-download"></i> Download </a>
+                                                            <a href="{{ route('files.asesmen.laporan_asesmen', $kegiatan->laporan_asesmen4) }}" target="_blank" class="text-danger d-inline-flex align-items-center gap-1" title="Lihat Laporan Asesmen"> <i class="mdi mdi-download"></i> Download </a>
                                                         @else
                                                             <span class="text-muted">-</span>
                                                         @endif
@@ -204,7 +204,7 @@
                                                     <div style="width:15px;">:</div>
                                                     <span id="laporan-{{ $kegiatan->ref }}-5" class="flex-fill">
                                                         @if ($kegiatan->laporan_asesmen5)
-                                                            <a href="{{ asset('asesmen_files/' . $kegiatan->laporan_asesmen5) }}" target="_blank" class="text-danger d-inline-flex align-items-center gap-1" title="Lihat Laporan Asesmen"> <i class="mdi mdi-download"></i> Download </a>
+                                                            <a href="{{ route('files.asesmen.laporan_asesmen', $kegiatan->laporan_asesmen5) }}" target="_blank" class="text-danger d-inline-flex align-items-center gap-1" title="Lihat Laporan Asesmen"> <i class="mdi mdi-download"></i> Download </a>
                                                         @else
                                                             <span class="text-muted">-</span>
                                                         @endif

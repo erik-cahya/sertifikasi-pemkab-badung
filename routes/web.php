@@ -138,7 +138,9 @@ Route::get('files/asesi/sertifikat/{filename}', [FileController::class, 'getSert
 Route::get('files/asesmen/bukti_asesmen/{filename}', [FileController::class, 'getBuktiAsesmen'])->name('files.asesmen.bukti_asesmen');
 Route::get('files/asesmen/dokumentasi_asesmen/{filename}', [FileController::class, 'getDokumentasiAsesmen'])->name('files.asesmen.dokumentasi_asesmen');
 Route::get('files/asesmen/bukti_terima_sertifikat/{filename}', [FileController::class, 'getBuktiTerimaSertifikat'])->name('files.asesmen.bukti_terima_sertifikat');
-Route::get('files/asesmen/{filename}', [FileController::class, 'serveAsesmenFile'])->name('files.asesmen');
+Route::get('files/asesmen/laporan_asesmen/{filename}', [FileController::class, 'getLaporanAsesmen'])->name('files.asesmen.laporan_asesmen');
+
+// Route::get('files/asesmen/{filename}', [FileController::class, 'serveAsesmenFile'])->name('files.asesmen');
 Route::get('files/pegawai/{filename}', [FileController::class, 'servePegawaiFile'])->name('files.pegawai');
 
 

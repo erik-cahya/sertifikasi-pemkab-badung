@@ -126,7 +126,6 @@ class FileController extends Controller
         ]);
     }
 
-
     /**
      * Akses file pas foto asesi
      */
@@ -150,7 +149,6 @@ class FileController extends Controller
         ]);
     }
 
-
     /**
      * Serve asesmen files (bukti, dokumentasi, laporan) dengan autentikasi
      */
@@ -159,6 +157,8 @@ class FileController extends Controller
         if (!Auth::check()) {
             abort(403, 'Anda tidak memiliki akses');
         }
+
+        $this->checkAsesmenFileAuthorization($filename);
 
         $path = storage_path('app/private/asesmen_files/bukti_asesmen/' . $filename);
 
@@ -177,6 +177,9 @@ class FileController extends Controller
             abort(403, 'Anda tidak memiliki akses');
         }
 
+        $this->checkAsesmenFileAuthorization($filename);
+
+
         $path = storage_path('app/private/asesmen_files/dokumentasi_asesmen/' . $filename);
 
         if (!file_exists($path)) {
@@ -188,11 +191,15 @@ class FileController extends Controller
             'Content-Disposition' => 'inline; filename="Dokumentasi Asesmen - ' . $fileName->nama_lsp . '"'
         ]);
     }
+
     public function getBuktiTerimaSertifikat($filename)
     {
         if (!Auth::check()) {
             abort(403, 'Anda tidak memiliki akses');
         }
+
+        $this->checkAsesmenFileAuthorization($filename);
+
 
         $path = storage_path('app/private/asesmen_files/bukti_terima_sertifikat/' . $filename);
 
@@ -203,6 +210,34 @@ class FileController extends Controller
         $fileName = AsesmenModel::where('bukti_terima_sertifikat', $filename)->select('nama_lsp')->first();
         return response()->file($path, [
             'Content-Disposition' => 'inline; filename="Bukti Terima Sertifikat - ' . $fileName->nama_lsp . '"'
+        ]);
+    }
+
+    public function getLaporanAsesmen($filename)
+    {
+        if (!Auth::check()) {
+            abort(403, 'Anda tidak memiliki akses');
+        }
+
+        $this->checkAsesmenFileAuthorization($filename);
+
+        $path = storage_path('app/private/asesmen_files/laporan_asesmen/' . $filename);
+
+        if (!file_exists($path)) {
+            abort(404, 'File tidak ditemukan');
+        }
+
+        $fileName = KegiatanJadwalModel::where('kegiatan_jadwal.laporan_asesmen', $filename)
+            ->orWhere('kegiatan_jadwal.laporan_asesmen2', $filename)
+            ->orWhere('kegiatan_jadwal.laporan_asesmen3', $filename)
+            ->orWhere('kegiatan_jadwal.laporan_asesmen4', $filename)
+            ->orWhere('kegiatan_jadwal.laporan_asesmen5', $filename)
+            ->join('lsp', 'kegiatan_jadwal.lsp_ref', '=', 'lsp.ref')
+            ->select('lsp_nama')
+            ->first();
+
+        return response()->file($path, [
+            'Content-Disposition' => 'inline; filename="Laporan Asesmen - ' . $fileName->lsp_nama . '"'
         ]);
     }
 
