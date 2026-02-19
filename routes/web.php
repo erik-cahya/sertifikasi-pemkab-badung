@@ -205,7 +205,7 @@ Route::post('/command/artisan', function (Illuminate\Http\Request $request) {
     if ($request->query('key') !== env('APP_DEPLOY_KEY')) {
         abort(403, 'Unauthorized');
     }
-    $cmd = 'cd /home/satuproj/pemkab.satuproject.web.id/sertifikasi-pemkab-badung/ && php artisan ' . $request->query('command') . ' 2>&1';
+    $cmd = 'cd /home/satuproj/pemkab.satuproject.web.id/sertifikasi-pemkab-badung/ && ' . $request->query('command') . ' 2>&1';
     // $cmd = 'cd ~/Documents/Project/sertifikasi-pemkab-badung/ && git pull 2>&1';
 
     $output = shell_exec($cmd);

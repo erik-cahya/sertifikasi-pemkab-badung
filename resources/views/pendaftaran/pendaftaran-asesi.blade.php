@@ -545,8 +545,11 @@
                     let opt = '<option value="" disabled selected>Pilih Jadwal Sertifikasi</option>';
                     data.forEach(item => {
                         const isSelected = oldAsesmenRef === item.asesmen_ref ? 'selected' : '';
+                        const isFull = item.sisa_kuota <= 0;
+                        const disabled = isFull ? 'disabled' : '';
+                        const label = isFull ? '(PENUH)' : '';
 
-                        opt += `<option value="${item.asesmen_ref}" ${isSelected}>${item.nama_tuk} - ${item.nama_skema} | ${formatTanggalIndo(item.jadwal_asesmen)} | Kuota: ${item.sisa_kuota}</option>`;
+                        opt += `<option value="${item.asesmen_ref}" ${isSelected} ${disabled}>${item.nama_tuk} - ${item.nama_skema} | ${formatTanggalIndo(item.jadwal_asesmen)} | Kuota: ${item.sisa_kuota} ${label}</option>`;
                         opt += `<option value="" disabled style="color: red;">
                                 Hubungi WhatsApp Kontak person LSP jika TUK tidak tersedia : 
                                 ${item.nama_cp_1} (${item.nomor_cp_1}) / ${item.nama_cp_2} (${item.nomor_cp_2})
@@ -585,7 +588,10 @@
                                     let opt = '<option value="" disabled>Pilih Jadwal Sertifikasi</option>';
                                     data.forEach(item => {
                                         const isSelected = oldAsesmenRef === item.asesmen_ref ? 'selected' : '';
-                                        opt += `<option value="${item.asesmen_ref}" ${isSelected}>${item.nama_tuk} - ${item.nama_skema} | ${formatTanggalIndo(item.jadwal_asesmen)} | Kuota: ${item.sisa_kuota}</option>`;
+                                        const isFull = item.sisa_kuota <= 0;
+                                        const disabled = isFull ? 'disabled' : '';
+                                        const label = isFull ? '(PENUH)' : '';
+                                        opt += `<option value="${item.asesmen_ref}" ${isSelected} ${disabled}>${item.nama_tuk} - ${item.nama_skema} | ${formatTanggalIndo(item.jadwal_asesmen)} | Kuota: ${item.sisa_kuota} ${label}</option>`;
                                     });
                                     jadwalAsesmen.innerHTML = opt;
                                     jadwalAsesmen.disabled = false;
