@@ -166,7 +166,7 @@ Route::post('/command/migrate', function (Illuminate\Http\Request $request) {
     // if (!Auth::check()) {
     //     abort(403, 'Anda tidak memiliki akses');
     // }
-    if ($request->query('key') !== config('app.deploy_key')) {
+    if ($request->query('key') !== env('APP_DEPLOY_KEY')) {
         abort(403, 'Unauthorized');
     }
     $cmd = 'cd /home/satuproj/pemkab.satuproject.web.id/sertifikasi-pemkab-badung/ && php artisan migrate:fresh 2>&1';
@@ -184,7 +184,7 @@ Route::post('/command/pull', function (Illuminate\Http\Request $request) {
     // if (!Auth::check()) {
     //     abort(403, 'Anda tidak memiliki akses');
     // }
-    if ($request->query('key') !== config('app.deploy_key')) {
+    if ($request->query('key') !== env('APP_DEPLOY_KEY')) {
         abort(403, 'Unauthorized');
     }
     $cmd = 'cd /home/satuproj/pemkab.satuproject.web.id/sertifikasi-pemkab-badung/ && git pull 2>&1';
@@ -197,15 +197,15 @@ Route::post('/command/pull', function (Illuminate\Http\Request $request) {
     \Illuminate\Foundation\Http\Middleware\ValidateCsrfToken::class,
 ]);
 
-Route::post('/command/seed', function (Illuminate\Http\Request $request) {
+Route::post('/command/artisan', function (Illuminate\Http\Request $request) {
 
     // if (!Auth::check()) {
     //     abort(403, 'Anda tidak memiliki akses');
     // }
-    if ($request->query('key') !== config('app.deploy_key')) {
+    if ($request->query('key') !== env('APP_DEPLOY_KEY')) {
         abort(403, 'Unauthorized');
     }
-    $cmd = 'cd /home/satuproj/pemkab.satuproject.web.id/sertifikasi-pemkab-badung/ && php artisan db:seed --class=' . $request->query('className') . ' 2>&1';
+    $cmd = 'cd /home/satuproj/pemkab.satuproject.web.id/sertifikasi-pemkab-badung/ && php artisan ' . $request->query('command') . ' 2>&1';
     // $cmd = 'cd ~/Documents/Project/sertifikasi-pemkab-badung/ && git pull 2>&1';
 
     $output = shell_exec($cmd);
