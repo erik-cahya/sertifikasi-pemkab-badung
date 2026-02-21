@@ -117,7 +117,7 @@
                     <div class="card-body" bis_skin_checked="1">
                         <div class="table-responsive">
                             <table class="table-sm table-bordered w-100 table">
-                                <thead class="align-middle text-center">
+                                <thead class="text-center align-middle">
                                     <tr>
                                         <th>No</th>
                                         <th>Nama LSP</th>
@@ -151,7 +151,7 @@
                                             </td>
 
                                             <td>
-                                                <div class="d-flex gap-2 align-items-center mb-2">
+                                                <div class="d-flex align-items-center mb-2 gap-2">
                                                     <div style="width:120px;">Laporan 1</div>
                                                     <div style="width:15px;">:</div>
                                                     <span id="laporan-{{ $kegiatan->ref }}-1" class="flex-fill">
@@ -163,7 +163,7 @@
                                                     </span>
                                                 </div>
 
-                                                <div class="d-flex gap-2 align-items-center mb-2">
+                                                <div class="d-flex align-items-center mb-2 gap-2">
                                                     <div style="width:120px;">Laporan 2</div>
                                                     <div style="width:15px;">:</div>
                                                     <span id="laporan-{{ $kegiatan->ref }}-2" class="flex-fill">
@@ -175,7 +175,7 @@
                                                     </span>
                                                 </div>
 
-                                                <div class="d-flex gap-2 align-items-center mb-2">
+                                                <div class="d-flex align-items-center mb-2 gap-2">
                                                     <div style="width:120px;">Laporan 3</div>
                                                     <div style="width:15px;">:</div>
                                                     <span id="laporan-{{ $kegiatan->ref }}-3" class="flex-fill">
@@ -187,7 +187,7 @@
                                                     </span>
                                                 </div>
 
-                                                <div class="d-flex gap-2 align-items-center mb-2">
+                                                <div class="d-flex align-items-center mb-2 gap-2">
                                                     <div style="width:120px;">Laporan 4</div>
                                                     <div style="width:15px;">:</div>
                                                     <span id="laporan-{{ $kegiatan->ref }}-4" class="flex-fill">
@@ -199,7 +199,7 @@
                                                     </span>
                                                 </div>
 
-                                                <div class="d-flex gap-2 align-items-center mb-2">
+                                                <div class="d-flex align-items-center mb-2 gap-2">
                                                     <div style="width:120px;">Laporan 5</div>
                                                     <div style="width:15px;">:</div>
                                                     <span id="laporan-{{ $kegiatan->ref }}-5" class="flex-fill">
@@ -263,7 +263,7 @@
                                                             </h4>
                                                         </div>
                                                         <table class="table-sm table-bordered table" style="font-size: 12px">
-                                                            <thead class="align-middle text-center">
+                                                            <thead class="text-center align-middle">
                                                                 <tr>
                                                                     <th>No</th>
                                                                     <th>Total Asesi</th>
@@ -297,12 +297,12 @@
                                                                             <div class="d-flex align-items-center mb-2">
                                                                                 <div style="width:180px;">Daftar Penerimaan</div>
                                                                                 <div style="width:15px;">:</div>
-                                                                                <a href="{{ route('pdf.daftar-hadir', $asesmen->ref) }}" target="_blank" class="d-inline-flex align-items-center gap-1" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Download Daftar Hadir" data-bs-custom-class="info-tooltip"><i class="mdi mdi-download"></i> Download </a>
+                                                                                <a href="{{ route('pdf.daftar-penerimaan', $asesmen->ref) }}" target="_blank" class="d-inline-flex align-items-center gap-1" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Download Daftar Hadir" data-bs-custom-class="info-tooltip"><i class="mdi mdi-download"></i> Download </a>
                                                                             </div>
                                                                             <div class="d-flex align-items-center mb-2">
                                                                                 <div style="width:180px;">Tanda Terima Sertifikat</div>
                                                                                 <div style="width:15px;">:</div>
-                                                                                <a href="{{ route('pdf.daftar-hadir', $asesmen->ref) }}" target="_blank" class="d-inline-flex align-items-center gap-1" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Download Daftar Hadir" data-bs-custom-class="info-tooltip"><i class="mdi mdi-download"></i> Download </a>
+                                                                                <a href="{{ route('pdf.tanda-terima-sertifikat', $asesmen->ref) }}" target="_blank" class="d-inline-flex align-items-center gap-1" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Download Daftar Hadir" data-bs-custom-class="info-tooltip"><i class="mdi mdi-download"></i> Download </a>
                                                                             </div>
                                                                         </td>
                                                                         <!-- Download Bukti -->
@@ -375,12 +375,12 @@
                                                                         <td colspan="16" class="p-3">
                                                                             <div class="card mb-0 border-0 shadow-sm">
                                                                                 <div class="card-body p-1">
-                                                                                    <div class="card-header text-white bg-dinas px-3" bis_skin_checked="1">
+                                                                                    <div class="card-header bg-dinas px-3 text-white" bis_skin_checked="1">
                                                                                         <h4 class="card-title"> List Asesi</h4>
                                                                                         <h6>{{ \Carbon\Carbon::parse($asesmen->jadwal_asesmen)->locale('id')->translatedFormat('l, d F Y') }}</h6>
                                                                                     </div>
                                                                                     <table class="table-sm table-bordered table" style="font-size: 12px">
-                                                                                        <thead class="align-middle text-center">
+                                                                                        <thead class="text-center align-middle">
                                                                                             <tr>
                                                                                                 <th>No</th>
                                                                                                 <th>Nama Asesi</th>
@@ -409,7 +409,7 @@
                                                                                                     @role('lsp')
                                                                                                         <td><input type="file" class="form-control upload-sertifikat" data-ref="{{ $asesi->ref }}" accept="application/pdf"></td>
                                                                                                     @endrole
-                                                                                                    <td class="d-flex gap-2 align-items-center text-center">
+                                                                                                    <td class="d-flex align-items-center gap-2 text-center">
                                                                                                         <span id="sertifikat-{{ $asesi->ref }}">
                                                                                                             @if ($asesi->sertifikat_file)
                                                                                                                 <a href="{{ route('files.asesi.sertifikat', $asesi->sertifikat_file) }}" target="_blank" class="text-danger" title="Lihat Sertifikat"> <i class="mdi mdi-download"></i> Download </a>

@@ -52,7 +52,7 @@ class PegawaiController extends Controller
         $ext  = $request->file('pegawai_file')->extension();
         $time = time();
         $hotel  = $request->pegawai_nama_hotel;
-        $filename = "DATA-PEGAWAI-{$hotel}-{$time}.{$ext}";
+        $filename = "DATA-PEGAWAI-" . Str::uuid() . ".{$ext}";
         $path = Storage::disk('pegawai_hotel')->putFileAs("pegawai_hotel", $request->file('pegawai_file'), $filename);
 
         PegawaiModel::create([
@@ -64,7 +64,7 @@ class PegawaiController extends Controller
             'pegawai_eng' => $request->pegawai_eng,
             'pegawai_oth' => $request->pegawai_oth,
             'pegawai_total' => $request->pegawai_total,
-            'pegawai_file' => $path,
+            'pegawai_file' => $filename,
         ]);
 
         $flashData = [

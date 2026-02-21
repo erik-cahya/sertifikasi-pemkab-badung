@@ -2,14 +2,14 @@
 
 @section('content')
     <!-- Simple form -->
-    <div class="container mt-2 mb-2">
+    <div class="container mb-2 mt-2">
         <div class="content">
             <!-- Start Content-->
             <div class="container-fluid">
                 <div class="row justify-content-center">
                     <div class="col-12 col-lg-6">
-                        <div class="card shadow-lg border-0 rounded-4 mt-2">
-                            <div class="text-center text-dinas mt-4 mb-2 px-3">
+                        <div class="card rounded-4 mt-2 border-0 shadow-lg">
+                            <div class="text-dinas mb-2 mt-4 px-3 text-center">
                                 <h3 class="card-title fw-bold">FORMULIR PENDATAAN JUMLAH PEGAWAI HOTEL</h3>
                             </div>
                             @if ($errors->any())
@@ -23,7 +23,7 @@
                                 </div>
                             @endif
                             <form action="{{ route('pegawai.store') }}" method="POST" class="form-dinas" enctype="multipart/form-data">
-                            @csrf
+                                @csrf
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col-lg-12">
@@ -78,11 +78,11 @@
                                         <div class="col-lg-12">
                                             <div class="mb-3">
                                                 <label for="example-number" class="form-label">Total Jumlah Pegawai</label><span class="text-danger">*</span>
-                                                <input type="number" id="example-number" class="form-control rounded-3" name="pegawai_total" required readonly value="">
+                                                <input type="number" id="example-number" class="form-control rounded-3" name="pegawai_total" required readonly value="{{ old('pegawai_total') }}">
                                             </div>
                                         </div>
 
-                                         <div class="col-lg-12">
+                                        <div class="col-lg-12">
                                             <div class="mb-3">
                                                 <label for="example-fileinput" class="form-label">Upload File</label><span class="text-danger">*</span>
                                                 <input type="file" id="example-fileinput" class="form-control rounded-3" name="pegawai_file" required>
@@ -91,10 +91,10 @@
 
                                         <div class="col-lg-12">
                                             <div class="mb-2 mt-2">
-                                                <button type="button" id="btnSubmit" class="btn btn-dinas rounded-3 px-4 py-2 fw-semibold"><i class="ri-save-3-line"></i> SIMPAN</button>
+                                                <button type="button" id="btnSubmit" class="btn btn-dinas rounded-3 fw-semibold px-4 py-2"><i class="ri-save-3-line"></i> SIMPAN</button>
                                             </div>
                                         </div>
-                                        
+
                                     </div> <!-- end row-->
                                 </div> <!-- end card-body -->
                             </form>
@@ -110,13 +110,13 @@
     @push('script')
         {{-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> --}}
         <script>
-            document.addEventListener('DOMContentLoaded', function () {
+            document.addEventListener('DOMContentLoaded', function() {
 
                 // hitung total pegawai
-                document.addEventListener('input', function () {
+                document.addEventListener('input', function() {
                     let total = 0;
 
-                    document.querySelectorAll('.pegawai-input').forEach(function (el) {
+                    document.querySelectorAll('.pegawai-input').forEach(function(el) {
                         total += parseInt(el.value) || 0;
                     });
 
@@ -130,7 +130,7 @@
                     return;
                 }
 
-                btn.addEventListener('click', function () {
+                btn.addEventListener('click', function() {
 
                     const getVal = name =>
                         document.querySelector(`[name="${name}"]`)?.value || '-';
@@ -166,6 +166,5 @@
             });
         </script>
     @endpush
-
 
 @endsection

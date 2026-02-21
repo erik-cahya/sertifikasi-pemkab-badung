@@ -42,7 +42,7 @@
                                     <td class="text-center">{{ $item->pegawai_total }}</td>
                                     <td class="text-center">
                                         @if (!empty($item->pegawai_file))
-                                            <a href="{{ asset('pegawai_files/' . $item->pegawai_file) }}" target="_blank"> <i class="mdi mdi-download"></i> Download</a>
+                                            <a href="{{ route('files.pegawai', $item->pegawai_file) }}" target="_blank"> <i class="mdi mdi-download"></i> Download</a>
                                         @else
                                             -
                                         @endif

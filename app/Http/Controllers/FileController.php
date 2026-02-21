@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\AsesiModel;
 use App\Models\AsesmenModel;
 use App\Models\KegiatanJadwalModel;
+use App\Models\PegawaiModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -244,24 +245,26 @@ class FileController extends Controller
     /**
      * Serve pegawai files dengan autentikasi
      */
-    public function servePegawaiFile($filename)
+    public function getPegawaiFile($filename)
     {
-        $user = Auth::user();
+        if (!Auth::check()) {
+            abort(403, 'Anda tidak memiliki akses');
+        }
 
         // Pegawai files hanya untuk Dinas/Master
-        if ($user->roles === 'lsp') {
+        if (Auth::user()->roles === 'lsp') {
             abort(403, 'Anda tidak memiliki akses ke file pegawai');
         }
 
-        $path = storage_path('app/private/pegawai_files/' . $filename);
+        $path = storage_path('app/private/pegawai_files/pegawai_hotel/' . $filename);
 
         if (!file_exists($path)) {
             abort(404, 'File tidak ditemukan');
         }
 
+        $fileName = PegawaiModel::where('pegawai_file', $filename)->select('pegawai_nama_hotel')->first();
         return response()->file($path, [
-            'Content-Type' => 'application/pdf',
-            'Content-Disposition' => 'inline; filename="' . $filename . '"'
+            'Content-Disposition' => 'inline; filename="DATA PEGAWAI - ' . $fileName->pegawai_nama_hotel . '"'
         ]);
     }
 

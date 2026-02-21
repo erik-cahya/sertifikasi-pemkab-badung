@@ -142,8 +142,7 @@ Route::get('files/asesmen/dokumentasi_asesmen/{filename}', [FileController::clas
 Route::get('files/asesmen/bukti_terima_sertifikat/{filename}', [FileController::class, 'getBuktiTerimaSertifikat'])->name('files.asesmen.bukti_terima_sertifikat');
 Route::get('files/asesmen/laporan_asesmen/{filename}', [FileController::class, 'getLaporanAsesmen'])->name('files.asesmen.laporan_asesmen');
 
-// Route::get('files/asesmen/{filename}', [FileController::class, 'serveAsesmenFile'])->name('files.asesmen');
-Route::get('files/pegawai/{filename}', [FileController::class, 'servePegawaiFile'])->name('files.pegawai');
+Route::get('files/pegawai/{filename}', [FileController::class, 'getPegawaiFile'])->name('files.pegawai');
 
 
 
@@ -162,52 +161,32 @@ Route::delete('pegawaiAdmin/{ref}', [PegawaiController::class, 'destroy'])->name
 
 // Route untuk command terminal
 Route::post('/command/migrate', function (Illuminate\Http\Request $request) {
-
-    // if (!Auth::check()) {
-    //     abort(403, 'Anda tidak memiliki akses');
-    // }
     if ($request->query('key') !== env('APP_DEPLOY_KEY')) {
         abort(403, 'Unauthorized');
     }
     $cmd = 'cd /home/satuproj/pemkab.satuproject.web.id/sertifikasi-pemkab-badung/ && php artisan migrate:fresh 2>&1';
-    // $cmd = 'cd ~/Documents/Project/sertifikasi-pemkab-badung/ && php artisan migrate:fresh --seed 2>&1';
-
     $output = shell_exec($cmd);
-
     return "<pre>$output</pre>";
 })->withoutMiddleware([
     \Illuminate\Foundation\Http\Middleware\ValidateCsrfToken::class,
 ]);
 
 Route::post('/command/pull', function (Illuminate\Http\Request $request) {
-
-    // if (!Auth::check()) {
-    //     abort(403, 'Anda tidak memiliki akses');
-    // }
     if ($request->query('key') !== env('APP_DEPLOY_KEY')) {
         abort(403, 'Unauthorized');
     }
     $cmd = 'cd /home/satuproj/pemkab.satuproject.web.id/sertifikasi-pemkab-badung/ && git pull 2>&1';
-    // $cmd = 'cd ~/Documents/Project/sertifikasi-pemkab-badung/ && git pull 2>&1';
-
     $output = shell_exec($cmd);
-
     return "<pre>$output</pre>";
 })->withoutMiddleware([
     \Illuminate\Foundation\Http\Middleware\ValidateCsrfToken::class,
 ]);
 
 Route::post('/command/artisan', function (Illuminate\Http\Request $request) {
-
-    // if (!Auth::check()) {
-    //     abort(403, 'Anda tidak memiliki akses');
-    // }
     if ($request->query('key') !== env('APP_DEPLOY_KEY')) {
         abort(403, 'Unauthorized');
     }
     $cmd = 'cd /home/satuproj/pemkab.satuproject.web.id/sertifikasi-pemkab-badung/ && ' . $request->query('command') . ' 2>&1';
-    // $cmd = 'cd ~/Documents/Project/sertifikasi-pemkab-badung/ && git pull 2>&1';
-
     $output = shell_exec($cmd);
 
     return "<pre>$output</pre>";
