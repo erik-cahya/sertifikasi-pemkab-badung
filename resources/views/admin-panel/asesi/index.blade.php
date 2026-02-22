@@ -207,7 +207,7 @@
 
                                     <div class="modal-dialog">
                                         <div class="modal-content">
-                                            <form action="{{ route('asesiAdmin.update', $item->ref) }}" method="POST">
+                                            <form action="{{ route('asesiAdmin.update', $item->ref) }}" method="POST" enctype="multipart/form-data">
                                                 @method('PUT')
                                                 @csrf
                                                 <div class="modal-header modal-colored-header bg-dinas">
@@ -246,6 +246,52 @@
                                                         <x-form.input className="col-md-4 mt-2" type="text" name="telp_kantor" label="No. Telp Kantor" value="{{ old('telp_kantor', $item->telp_kantor) }}" />
                                                         <x-form.input className="col-md-4 mt-2" type="text" name="telp_hp" label="No. Telp HP" value="{{ old('telp_hp', $item->telp_hp) }}" />
                                                         <x-form.input className="col-md-4 mt-2" type="email" name="email" label="Email" value="{{ old('email', $item->email) }}" />
+
+                                                        {{-- File Upload Section --}}
+                                                        <div class="col-12 mt-3">
+                                                            <hr>
+                                                            <h6 class="fw-bold">Upload Dokumen <small class="text-muted">(Kosongkan jika tidak ingin mengubah)</small></h6>
+                                                        </div>
+
+                                                        <div class="col-md-4 mt-2">
+                                                            <label for="ktp_file_{{ $item->ref }}" class="form-label">Scan KTP (PDF)</label>
+                                                            @if (!empty($item->ktp_file))
+                                                                <br><a href="{{ route('files.asesi.ktp', $item->ktp_file) }}" target="_blank" class="badge bg-success mb-1"><i class="mdi mdi-file-pdf-box"></i> Lihat File</a>
+                                                            @endif
+                                                            <input type="file" id="ktp_file_{{ $item->ref }}" class="form-control rounded-3" name="ktp_file" accept=".pdf">
+                                                        </div>
+
+                                                        <div class="col-md-4 mt-2">
+                                                            <label for="ijazah_file_{{ $item->ref }}" class="form-label">Ijazah Terakhir (PDF)</label>
+                                                            @if (!empty($item->ijazah_file))
+                                                                <br><a href="{{ route('files.asesi.ijazah', $item->ijazah_file) }}" target="_blank" class="badge bg-success mb-1"><i class="mdi mdi-file-pdf-box"></i> Lihat File</a>
+                                                            @endif
+                                                            <input type="file" id="ijazah_file_{{ $item->ref }}" class="form-control rounded-3" name="ijazah_file" accept=".pdf">
+                                                        </div>
+
+                                                        <div class="col-md-4 mt-2">
+                                                            <label for="sertikom_file_{{ $item->ref }}" class="form-label">Sertifikat Kompetensi (PDF)</label>
+                                                            @if (!empty($item->sertikom_file))
+                                                                <br><a href="{{ route('files.asesi.sertikom', $item->sertikom_file) }}" target="_blank" class="badge bg-success mb-1"><i class="mdi mdi-file-pdf-box"></i> Lihat File</a>
+                                                            @endif
+                                                            <input type="file" id="sertikom_file_{{ $item->ref }}" class="form-control rounded-3" name="sertikom_file" accept=".pdf">
+                                                        </div>
+
+                                                        <div class="col-md-4 mt-2">
+                                                            <label for="keterangan_kerja_file_{{ $item->ref }}" class="form-label">Surat Keterangan Kerja (PDF)</label>
+                                                            @if (!empty($item->keterangan_kerja_file))
+                                                                <br><a href="{{ route('files.asesi.skb', $item->keterangan_kerja_file) }}" target="_blank" class="badge bg-success mb-1"><i class="mdi mdi-file-pdf-box"></i> Lihat File</a>
+                                                            @endif
+                                                            <input type="file" id="keterangan_kerja_file_{{ $item->ref }}" class="form-control rounded-3" name="keterangan_kerja_file" accept=".pdf">
+                                                        </div>
+
+                                                        <div class="col-md-4 mt-2">
+                                                            <label for="pas_foto_file_{{ $item->ref }}" class="form-label">Pas Foto (JPG/PNG)</label>
+                                                            @if (!empty($item->pas_foto_file))
+                                                                <br><a href="{{ route('files.asesi.pasfoto', $item->pas_foto_file) }}" target="_blank" class="badge bg-success mb-1"><i class="mdi mdi-file-image"></i> Lihat File</a>
+                                                            @endif
+                                                            <input type="file" id="pas_foto_file_{{ $item->ref }}" class="form-control rounded-3" name="pas_foto_file" accept=".jpg,.jpeg,.png">
+                                                        </div>
 
                                                     </div>
                                                 </div>

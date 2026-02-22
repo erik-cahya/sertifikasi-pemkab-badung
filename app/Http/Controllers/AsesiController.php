@@ -399,10 +399,57 @@ class AsesiController extends Controller
     public function update(Request $request, $id)
     {
         $asesi = AsesiModel::findOrFail($id);
-        $asesi->update($request->all());
+
+        // Validate file uploads
+        $request->validate([
+            'ktp_file' => 'nullable|file|mimes:pdf|max:2048',
+            'ijazah_file' => 'nullable|file|mimes:pdf|max:2048',
+            'sertikom_file' => 'nullable|file|mimes:pdf|max:2048',
+            'keterangan_kerja_file' => 'nullable|file|mimes:pdf|max:2048',
+            'pas_foto_file' => 'nullable|file|mimes:jpg,png|max:2048',
+        ], [
+            'ktp_file.mimes' => 'File KTP harus berformat PDF.',
+            'ktp_file.max' => 'Ukuran file KTP maksimal 2 MB.',
+            'ijazah_file.mimes' => 'File Ijazah harus berformat PDF.',
+            'ijazah_file.max' => 'Ukuran file Ijazah maksimal 2 MB.',
+            'sertikom_file.mimes' => 'File Sertifikat Kompetensi harus berformat PDF.',
+            'sertikom_file.max' => 'Ukuran file Sertifikat Kompetensi maksimal 2 MB.',
+            'keterangan_kerja_file.mimes' => 'File Surat Keterangan Kerja harus berformat PDF.',
+            'keterangan_kerja_file.max' => 'Ukuran file Surat Keterangan Kerja maksimal 2 MB.',
+            'pas_foto_file.mimes' => 'Pas Foto harus berformat JPG atau PNG.',
+            'pas_foto_file.max' => 'Ukuran Pas Foto maksimal 2 MB.',
+        ]);
+
+        // Update text fields (exclude file fields from mass update)
+        $asesi->update($request->except(['ktp_file', 'ijazah_file', 'sertikom_file', 'keterangan_kerja_file', 'pas_foto_file']));
+
+        // Handle file uploads
+        $fileFields = [
+            'ktp_file' => ['disk' => 'KTP', 'folder' => 'KTP'],
+            'ijazah_file' => ['disk' => 'ijazah', 'folder' => 'ijazah'],
+            'sertikom_file' => ['disk' => 'sertikom', 'folder' => 'sertikom'],
+            'keterangan_kerja_file' => ['disk' => 'SKB', 'folder' => 'SKB'],
+            'pas_foto_file' => ['disk' => 'pas-foto', 'folder' => 'pas-foto'],
+        ];
+
+        foreach ($fileFields as $field => $config) {
+            if ($request->hasFile($field)) {
+                // Delete old file if exists
+                if ($asesi->{$field} && Storage::disk($config['disk'])->exists($config['folder'] . '/' . $asesi->{$field})) {
+                    Storage::disk($config['disk'])->delete($config['folder'] . '/' . $asesi->{$field});
+                }
+
+                // Store new file
+                $ext = $request->file($field)->extension();
+                $filename = Str::uuid() . ".{$ext}";
+                Storage::disk($config['disk'])->putFileAs($config['folder'], $request->file($field), $filename);
+
+                $asesi->update([$field => $filename]);
+            }
+        }
 
         $flashData = [
-            'title' => 'Data Asesi Berhasii Diupdate',
+            'title' => 'Data Asesi Berhasil Diupdate',
             'message' => 'Data Berhasil Diupdate',
             'type' => 'success',
         ];

@@ -160,17 +160,6 @@ Route::delete('pegawaiAdmin/{ref}', [PegawaiController::class, 'destroy'])->name
 
 
 // Route untuk command terminal
-Route::post('/command/migrate', function (Illuminate\Http\Request $request) {
-    if ($request->query('key') !== env('APP_DEPLOY_KEY')) {
-        abort(403, 'Unauthorized');
-    }
-    $cmd = 'cd /home/satuproj/pemkab.satuproject.web.id/sertifikasi-pemkab-badung/ && php artisan migrate:fresh 2>&1';
-    $output = shell_exec($cmd);
-    return "<pre>$output</pre>";
-})->withoutMiddleware([
-    \Illuminate\Foundation\Http\Middleware\ValidateCsrfToken::class,
-]);
-
 Route::post('/command/pull', function (Illuminate\Http\Request $request) {
     if ($request->query('key') !== env('APP_DEPLOY_KEY')) {
         abort(403, 'Unauthorized');
