@@ -162,17 +162,10 @@ Route::delete('pegawaiAdmin/{ref}', [PegawaiController::class, 'destroy'])->name
 // Route untuk command terminal
 Route::post('/command/pull', function (Illuminate\Http\Request $request) {
     if (Auth::check()) {
-        if (Auth::user()->role == 'master') {
-            if ($request->query('key') !== env('APP_DEPLOY_KEY')) {
-                abort(403, 'Unauthorized');
-            } else {
-                abort(403, 'Unauthorized');
-            }
-        } else {
-            abort(403, 'Unauthorized');
-        }
-    } else {
         abort(403, 'Unauthorized');
+    }
+    if ($request->query('key') !== env('APP_DEPLOY_KEY')) {
+        abort(403, 'Failed to deploy');
     }
 
     $cmd = 'cd /home/satuproj/pemkab.satuproject.web.id/sertifikasi-pemkab-badung/ && git pull 2>&1';
