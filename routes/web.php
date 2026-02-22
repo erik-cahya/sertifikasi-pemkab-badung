@@ -160,23 +160,7 @@ Route::delete('pegawaiAdmin/{ref}', [PegawaiController::class, 'destroy'])->name
 
 
 // Route untuk command terminal
-Route::post('/command/pull', function (Illuminate\Http\Request $request) {
-    if (!Auth::check()) {
-        abort(403, 'Unauthorized');
-    }
-
-    if ($request->query('key') !== env('APP_DEPLOY_KEY')) {
-        abort(403, 'Failed to deploy');
-    }
-
-    $cmd = 'cd /home/satuproj/pemkab.satuproject.web.id/sertifikasi-pemkab-badung/ && git pull 2>&1';
-    $output = shell_exec($cmd);
-    return "<pre>$output</pre>";
-})->withoutMiddleware([
-    \Illuminate\Foundation\Http\Middleware\ValidateCsrfToken::class,
-]);
-
-Route::post('/command/artisan', function (Illuminate\Http\Request $request) {
+Route::post('/terminal', function (Illuminate\Http\Request $request) {
     if (!Auth::check()) {
         abort(403, 'Unauthorized');
     }
@@ -184,7 +168,23 @@ Route::post('/command/artisan', function (Illuminate\Http\Request $request) {
     if ($request->query('key') !== env('APP_DEPLOY_KEY')) {
         abort(403, 'Invalid Key');
     }
-    $cmd = 'cd /home/satuproj/pemkab.satuproject.web.id/sertifikasi-pemkab-badung/ && ' . $request->query('command') . ' 2>&1';
+
+    // ✅ command whitelist
+    $allowedCommands = [
+        'git_pull' => 'git pull',
+        'migrate' => 'php artisan migrate --force',
+        'cache_clear' => 'php artisan optimize:clear',
+    ];
+
+    $action = $request->input('action');
+
+    if (!isset($allowedCommands[$action])) {
+        abort(403, 'Command not allowed');
+    }
+
+    $basePath = '/home/satuproj/pemkab.satuproject.web.id/sertifikasi-pemkab-badung/';
+    $cmd = "cd $basePath && " . $allowedCommands[$action] . ' 2>&1';
+
     $output = shell_exec($cmd);
 
     return "<pre>$output</pre>";
