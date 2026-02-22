@@ -161,9 +161,10 @@ Route::delete('pegawaiAdmin/{ref}', [PegawaiController::class, 'destroy'])->name
 
 // Route untuk command terminal
 Route::post('/command/pull', function (Illuminate\Http\Request $request) {
-    if (Auth::check()) {
+    if (!Auth::check()) {
         abort(403, 'Unauthorized');
     }
+
     if ($request->query('key') !== env('APP_DEPLOY_KEY')) {
         abort(403, 'Failed to deploy');
     }
@@ -176,8 +177,12 @@ Route::post('/command/pull', function (Illuminate\Http\Request $request) {
 ]);
 
 Route::post('/command/artisan', function (Illuminate\Http\Request $request) {
-    if ($request->query('key') !== env('APP_DEPLOY_KEY')) {
+    if (!Auth::check()) {
         abort(403, 'Unauthorized');
+    }
+
+    if ($request->query('key') !== env('APP_DEPLOY_KEY')) {
+        abort(403, 'Invalid Key');
     }
     $cmd = 'cd /home/satuproj/pemkab.satuproject.web.id/sertifikasi-pemkab-badung/ && ' . $request->query('command') . ' 2>&1';
     $output = shell_exec($cmd);
