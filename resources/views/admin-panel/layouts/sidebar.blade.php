@@ -127,7 +127,7 @@
             @role('master', 'dinas')
                 <li class="side-nav-item {{ request()->routeIs('lsp.*') ? 'menuitem-active' : '' }}">
                     <a data-bs-toggle="collapse" href="#lspMenu" aria-expanded="false" aria-controls="lspMenu" class="side-nav-link">
-                        <i class="ri-p2p-fill "></i>
+                        <i class="ri-p2p-fill"></i>
                         <span> LSP </span>
                         <span class="menu-arrow"></span>
                     </a>
@@ -220,6 +220,15 @@
                     <a href="{{ route('profile.index') }}" class="side-nav-link">
                         <i class="ri-dashboard-2-line"></i>
                         <span> Profile LSP </span>
+                    </a>
+                </li>
+            @endrole
+            @role('master')
+                <li class="side-nav-title">Updates</li>
+                <li class="side-nav-item {{ request()->routeIs('terminal.index') ? 'menuitem-active' : '' }}">
+                    <a href="{{ route('terminal.index') }}" class="side-nav-link">
+                        <i class="ri-dashboard-2-line"></i>
+                        <span> Terminal </span>
                     </a>
                 </li>
             @endrole

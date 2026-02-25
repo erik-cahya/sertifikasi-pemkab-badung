@@ -17,6 +17,7 @@ use App\Http\Controllers\SkemaController;
 use App\Http\Controllers\PDFController;
 use App\Http\Controllers\UserManagementController;
 use App\Http\Controllers\FileController;
+use App\Http\Controllers\TerminalController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -158,39 +159,10 @@ Route::post('pegawai/store', [PegawaiController::class, 'store'])->name('pegawai
 Route::put('pegawaiAdmin/{ref}', [PegawaiController::class, 'update'])->name('pegawai.update');
 Route::delete('pegawaiAdmin/{ref}', [PegawaiController::class, 'destroy'])->name('pegawai.destroy');
 
+Route::get('/terminal', [TerminalController::class, 'index'])->name('terminal.index')->middleware('role:master');
+Route::post('/terminal', [TerminalController::class, 'execute'])->name('terminal.execute')->middleware('role:master');
 
-// Route untuk command terminal
-Route::post('/terminal', function (Illuminate\Http\Request $request) {
-    if (!Auth::check()) {
-        abort(403, 'Unauthorized');
-    }
 
-    if ($request->query('key') !== env('APP_DEPLOY_KEY')) {
-        abort(403, 'Invalid Key');
-    }
-
-    // ✅ command whitelist
-    $allowedCommands = [
-        'git_pull' => 'git pull',
-        'migrate' => 'php artisan migrate --force',
-        'cache_clear' => 'php artisan optimize:clear',
-    ];
-
-    $action = $request->input('action');
-
-    if (!isset($allowedCommands[$action])) {
-        abort(403, 'Command not allowed');
-    }
-
-    $basePath = '/home/satuproj/pemkab.satuproject.web.id/sertifikasi-pemkab-badung/';
-    $cmd = "cd $basePath && " . $allowedCommands[$action] . ' 2>&1';
-
-    $output = shell_exec($cmd);
-
-    return "<pre>$output</pre>";
-})->withoutMiddleware([
-    \Illuminate\Foundation\Http\Middleware\ValidateCsrfToken::class,
-]);
 
 
 require __DIR__ . '/auth.php';
