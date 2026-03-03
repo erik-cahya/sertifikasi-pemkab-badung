@@ -129,6 +129,7 @@ Route::middleware('auth')->group(function () {
 Route::get('daftar-hadir/{id}', [PDFController::class, 'daftarHadir'])->name('pdf.daftar-hadir');
 Route::get('daftar-penerimaan/{id}', [PDFController::class, 'daftarPenerimaan'])->name('pdf.daftar-penerimaan');
 Route::get('tanda-terima-sertifikat/{id}', [PDFController::class, 'tandaTerimaSertifikat'])->name('pdf.tanda-terima-sertifikat');
+Route::get('jadwal-asesmen/{id}', [PDFController::class, 'jadwlAsesmen'])->name('pdf.jadwal-asesmen');
 
 // ################################ Protected File Access
 Route::get('files/asesi/ktp/{filename}', [FileController::class, 'getKTPAsesi'])->name('files.asesi.ktp');

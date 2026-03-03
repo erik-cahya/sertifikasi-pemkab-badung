@@ -65,4 +65,22 @@ class PDFController extends Controller
             ->setPaper('A4', 'portrait')
             ->stream('Tanda-Terima-Sertifikat.pdf');
     }
+
+    public function jadwlAsesmen($id)
+    {
+        if (!Auth::check()) {
+            abort(403, 'Anda tidak memiliki akses');
+        }
+
+        $asesmen = AsesmenModel::with([
+            'asesis',
+            'kegiatanJadwal.lsp',
+        ])
+            ->where('asesmen.ref', $id)
+            ->get();
+
+        return Pdf::loadView('admin-panel.pdf.jadwal-asesmen', compact('asesmen'))
+            ->setPaper('A4', 'portrait')
+            ->stream('Jadwal-Asesmen.pdf');
+    }
 }
