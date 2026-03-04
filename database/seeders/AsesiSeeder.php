@@ -32,7 +32,7 @@ class AsesiSeeder extends Seeder
         $departemenList = ['IT', 'Administrasi', 'Keuangan', 'Bidang TIK', 'Produksi'];
         $jabatanList = ['Staff IT', 'Admin', 'Analis Keuangan', 'Pranata Komputer', 'Teknisi'];
 
-        for ($i = 0; $i < 5; $i++) {
+        for ($i = 0; $i < 25; $i++) {
             $jk = $faker->randomElement(['Laki-laki', 'Perempuan']);
             $gender = $jk === 'Laki-laki' ? 'male' : 'female';
 

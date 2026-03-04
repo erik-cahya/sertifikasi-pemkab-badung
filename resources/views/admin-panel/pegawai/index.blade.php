@@ -50,15 +50,7 @@
                                     <td class="text-center">{{ $item->created_at->format('Y-m-d') }}</td>
                                     @role('master', 'dinas')
                                         <td class="text-center">
-                                            <button class="btn btn-sm btn-warning editButton"
-                                                data-ref="{{ $item->ref }}"
-                                                data-nama="{{ $item->pegawai_nama_hotel }}"
-                                                data-hk="{{ $item->pegawai_hk }}"
-                                                data-fbs="{{ $item->pegawai_fbs }}"
-                                                data-fbp="{{ $item->pegawai_fbp }}"
-                                                data-fo="{{ $item->pegawai_fo }}"
-                                                data-eng="{{ $item->pegawai_eng }}"
-                                                data-oth="{{ $item->pegawai_oth }}">
+                                            <button class="btn btn-sm btn-warning editButton" data-ref="{{ $item->ref }}" data-nama="{{ $item->pegawai_nama_hotel }}" data-hk="{{ $item->pegawai_hk }}" data-fbs="{{ $item->pegawai_fbs }}" data-fbp="{{ $item->pegawai_fbp }}" data-fo="{{ $item->pegawai_fo }}" data-eng="{{ $item->pegawai_eng }}" data-oth="{{ $item->pegawai_oth }}">
                                                 <i class="mdi mdi-pencil"></i>
                                             </button>
                                             <button class="btn btn-sm btn-danger deleteButton" data-ref="{{ $item->ref }}" data-nama="{{ $item->pegawai_nama_hotel }}"><i class="mdi mdi-delete"></i>

@@ -4,7 +4,7 @@
 $(document).ready(function () {
     "use strict";
 
-    $('#datatable-dashboard').DataTable({        
+    $('#datatable-dashboard').DataTable({
         paging: false,          // ❌ pagination
         info: true,            // ❌ info bawah
         lengthChange: true,    // ❌ show entries
@@ -12,13 +12,13 @@ $(document).ready(function () {
         searching: true,        // ✅ search
 
         scrollY: '70vh',
-        scrollX: true,          
+        scrollX: true,
         scrollCollapse: true,
         fixedHeader: true,
 
-        dom:"<'row mb-2'\ <'col-md-6 d-flex align-items-center gap-2'B>\ <'col-md-6 d-flex justify-content-end'f>\ >\ rt\ <'row mt-2'\ <'col-md-6'i>\ <'col-md-6'p>\>",
-        buttons: [{ extend: 'copy', className: 'btn-dinas-fill' },{ extend: 'print', className: 'btn-dinas-fill' },{extend: 'excelHtml5', className: 'btn-dinas-fill', exportOptions: { columns: ':not(.no-export)', stripHtml: true }}],
-        language: {info: "Menampilkan _TOTAL_ data dari _MAX_ data", infoFiltered: "(difilter dari _MAX_ data)", search: "Cari:"}
+        dom: "<'row mb-2'\ <'col-md-6 d-flex align-items-center gap-2'B>\ <'col-md-6 d-flex justify-content-end'f>\ >\ rt\ <'row mt-2'\ <'col-md-6'i>\ <'col-md-6'p>\>",
+        buttons: [{ extend: 'copy', className: 'btn-dinas-fill' }, { extend: 'print', className: 'btn-dinas-fill' }, { extend: 'excelHtml5', className: 'btn-dinas-fill', exportOptions: { columns: ':not(.no-export)', stripHtml: true } }],
+        language: { info: "Menampilkan _TOTAL_ data dari _MAX_ data", infoFiltered: "(difilter dari _MAX_ data)", search: "Cari:" }
     });
 
     $("#basic-datatable").DataTable({

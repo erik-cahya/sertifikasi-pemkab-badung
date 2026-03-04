@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use App\Models\AsesmenModel;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 
 class PDFController extends Controller
 {
@@ -66,21 +67,46 @@ class PDFController extends Controller
             ->stream('Tanda-Terima-Sertifikat.pdf');
     }
 
-    public function jadwlAsesmen($id)
+    public function jadwalAsesmen(Request $request)
     {
         if (!Auth::check()) {
             abort(403, 'Anda tidak memiliki akses');
         }
 
-        $asesmen = AsesmenModel::with([
-            'asesis',
-            'kegiatanJadwal.lsp',
-        ])
-            ->where('asesmen.ref', $id)
-            ->get();
+        $month = $request->query('month');
+        $year  = $request->query('year');
+        $kegiatanJadwalRef = $request->query('kegiatan_jadwal_ref');
 
-        return Pdf::loadView('admin-panel.pdf.jadwal-asesmen', compact('asesmen'))
-            ->setPaper('A4', 'portrait')
+        $query = AsesmenModel::with(['asesis', 'kegiatanJadwal.lsp'])
+            ->has('asesis')
+            ->whereMonth('jadwal_asesmen', $month)
+            ->whereYear('jadwal_asesmen', $year)
+            ->orderBy('jadwal_asesmen', 'asc');
+
+        if ($kegiatanJadwalRef) {
+            $query->where('kegiatan_jadwal_ref', $kegiatanJadwalRef);
+        }
+
+        $asesmenAll = $query->get();
+
+        // Group asesmen by date
+        $grouped = $asesmenAll->groupBy(function ($item) {
+            return Carbon::parse($item->jadwal_asesmen)->format('Y-m-d');
+        });
+
+        $lspNama = $asesmenAll->first()?->kegiatanJadwal?->lsp?->lsp_nama ?? '-';
+
+        // Nama bulan Indonesia
+        $bulan = Carbon::create($year, $month, 1)
+            ->locale('id')->translatedFormat('F');
+        $tahun = $year;
+
+        return Pdf::loadView('admin-panel.pdf.jadwal-asesmen', compact(
+            'grouped',
+            'bulan',
+            'tahun',
+            'lspNama'
+        ))->setPaper('A4', 'potrait')
             ->stream('Jadwal-Asesmen.pdf');
     }
 }
