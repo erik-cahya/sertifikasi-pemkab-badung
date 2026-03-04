@@ -38,8 +38,8 @@ class AsesmenController extends Controller
         }
 
         $data['dataKegiatan'] = $query->get();
-        $data['dataTUK'] = TUKModel::where('lsp_ref', $user->lspData->ref)->get();
-        $data['dataSkema'] = SkemaModel::where('lsp_ref', $user->lspData->ref)->get();
+        $data['dataTUK'] = $user->lspData ? TUKModel::where('lsp_ref', $user->lspData->ref)->get() : collect();
+        $data['dataSkema'] = $user->lspData ? SkemaModel::where('lsp_ref', $user->lspData->ref)->get() : collect();
 
         // dd($data['dataKegiatan']);
         return view('admin-panel.asesmen.index', $data);
@@ -56,17 +56,17 @@ class AsesmenController extends Controller
 
         $data['dataKegiatan'] = KegiatanModel::where('ref', $id)
             ->with([
-            'kegiatanJadwal.lsp', // detail kuota + LSP
-            'skemaPerLsp.lsp', // total skema per LSP
+                'kegiatanJadwal.lsp', // detail kuota + LSP
+                'skemaPerLsp.lsp', // total skema per LSP
 
-            // 'kuotaPerLsp.lsp',      // total kuota per LSP
+                // 'kuotaPerLsp.lsp',      // total kuota per LSP
 
-            'asesi.tuk',
-            'asesi.skema'
-        ])->withSum(
-            'kegiatanJadwal as total_peserta',
-            'kuota_lsp',
-        )->withCount('skemas', 'asesi') // total skema kegiatan
+                'asesi.tuk',
+                'asesi.skema'
+            ])->withSum(
+                'kegiatanJadwal as total_peserta',
+                'kuota_lsp',
+            )->withCount('skemas', 'asesi') // total skema kegiatan
             ->firstOrFail();
 
         $data['dataTUK'] = TUKModel::where('lsp_ref', $user->lspData->ref)->get();
@@ -144,10 +144,10 @@ class AsesmenController extends Controller
             // ->route('kegiatan.index')
             ->route('asesmen.create', $request->kegiatan_ref)
             ->with('flashData', [
-            'title' => 'Tambah Data Success',
-            'message' => 'Jadwal Asesmen Berhasil Diubah Diubah',
-            'type' => 'success',
-        ]);
+                'title' => 'Tambah Data Success',
+                'message' => 'Jadwal Asesmen Berhasil Diubah Diubah',
+                'type' => 'success',
+            ]);
     }
 
     /**
@@ -155,15 +155,13 @@ class AsesmenController extends Controller
      */
     public function show(string $id)
     {
-    //
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
-    {
-    }
+    public function edit(string $id) {}
 
     /**
      * Update the specified resource in storage.
@@ -203,10 +201,10 @@ class AsesmenController extends Controller
         return redirect()
             ->route('asesmen.create', $asesmen->kegiatan_ref)
             ->with('flashData', [
-            'title' => 'Update Data Success',
-            'message' => 'Data Asesmen Berhasil Diperbarui',
-            'type' => 'success',
-        ]);
+                'title' => 'Update Data Success',
+                'message' => 'Data Asesmen Berhasil Diperbarui',
+                'type' => 'success',
+            ]);
     }
 
     /**

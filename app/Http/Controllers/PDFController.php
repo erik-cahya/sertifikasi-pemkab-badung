@@ -7,7 +7,9 @@ use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use App\Models\AsesmenModel;
+use App\Exports\JadwalAsesmenExport;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
 use Carbon\Carbon;
 
 class PDFController extends Controller
@@ -75,6 +77,7 @@ class PDFController extends Controller
 
         $month = $request->query('month');
         $year  = $request->query('year');
+        $namaLsp  = $request->query('nama_lsp');
         $kegiatanJadwalRef = $request->query('kegiatan_jadwal_ref');
 
         $query = AsesmenModel::with(['asesis', 'kegiatanJadwal.lsp'])
@@ -94,19 +97,20 @@ class PDFController extends Controller
             return Carbon::parse($item->jadwal_asesmen)->format('Y-m-d');
         });
 
-        $lspNama = $asesmenAll->first()?->kegiatanJadwal?->lsp?->lsp_nama ?? '-';
+        // $lspNama = $asesmenAll->first()?->kegiatanJadwal?->lsp?->lsp_nama;
+
+        // dd($lspNama);
 
         // Nama bulan Indonesia
         $bulan = Carbon::create($year, $month, 1)
             ->locale('id')->translatedFormat('F');
         $tahun = $year;
 
-        return Pdf::loadView('admin-panel.pdf.jadwal-asesmen', compact(
-            'grouped',
-            'bulan',
-            'tahun',
-            'lspNama'
-        ))->setPaper('A4', 'potrait')
-            ->stream('Jadwal-Asesmen.pdf');
+        $filename = 'Jadwal-Asesmen-' . strtoupper($namaLsp) . '-' . strtoupper($bulan) . '-' . $tahun . '.xlsx';
+
+        return Excel::download(
+            new JadwalAsesmenExport($grouped, $bulan, $tahun, $namaLsp),
+            $filename
+        );
     }
 }

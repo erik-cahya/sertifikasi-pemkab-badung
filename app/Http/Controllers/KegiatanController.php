@@ -213,7 +213,10 @@ class KegiatanController extends Controller
         $data['dataKegiatan'] = $query->firstOrFail();
 
         $data['dataSkema'] = $data['dataKegiatan']->skemas->groupBy('lsp_ref');
-        $data['dataAsesi'] = AsesiModel::with('asesmen')->get()->groupBy('asesmen_ref');
+        $data['dataAsesi'] = AsesiModel::with('asesmen')
+            ->whereHas('asesmen', fn($q) => $q->where('kegiatan_ref', $id))
+            ->get()
+            ->groupBy('asesmen_ref');
         $data['jadwalKegiatan'] = $data['dataKegiatan']->jadwalAsesmen->groupBy('nama_lsp');
 
         return view('admin-panel.kegiatan.show', $data);

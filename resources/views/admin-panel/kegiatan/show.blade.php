@@ -258,9 +258,39 @@
                                             <td colspan="7" class="">
                                                 <div class="card mb-0 border-0 shadow-sm">
                                                     <div class="card-body p-0">
-                                                        <div class="card-header bg-dinas text-white" bis_skin_checked="1">
-                                                            <h4 class="card-title"> Detail Jadwal & Skema
-                                                            </h4>
+                                                        <div class="card-header bg-dinas text-white d-flex justify-content-between align-items-center" bis_skin_checked="1">
+                                                            <h4 class="card-title mb-0"> Detail Jadwal & Skema</h4>
+                                                            <div class="d-flex align-items-center gap-2">
+                                                                <select class="form-select form-select-sm bg-white text-dark month-selector-{{ $kegiatan->ref }}" style="width: 130px;">
+                                                                    @php
+                                                                        $bulanList = [
+                                                                            1 => 'Januari',
+                                                                            2 => 'Februari',
+                                                                            3 => 'Maret',
+                                                                            4 => 'April',
+                                                                            5 => 'Mei',
+                                                                            6 => 'Juni',
+                                                                            7 => 'Juli',
+                                                                            8 => 'Agustus',
+                                                                            9 => 'September',
+                                                                            10 => 'Oktober',
+                                                                            11 => 'November',
+                                                                            12 => 'Desember',
+                                                                        ];
+                                                                    @endphp
+                                                                    @foreach ($bulanList as $num => $nama)
+                                                                        <option value="{{ $num }}" {{ $num == now()->month ? 'selected' : '' }}>{{ $nama }}</option>
+                                                                    @endforeach
+                                                                </select>
+                                                                <select class="form-select form-select-sm bg-white text-dark year-selector-{{ $kegiatan->ref }}" style="width: 90px;">
+                                                                    @for ($y = now()->year - 2; $y <= now()->year + 1; $y++)
+                                                                        <option value="{{ $y }}" {{ $y == now()->year ? 'selected' : '' }}>{{ $y }}</option>
+                                                                    @endfor
+                                                                </select>
+                                                                <a href="{{ route('pdf.jadwal-asesmen', ['month' => now()->month, 'year' => now()->year, 'kegiatan_jadwal_ref' => $kegiatan->ref, 'nama_lsp' => $kegiatan->lsp->lsp_nama]) }}" class="btn btn-sm btn-light text-dark download-jadwal-btn" data-base-url="{{ route('pdf.jadwal-asesmen') }}" data-ref="{{ $kegiatan->ref }}" data-lsp="{{ $kegiatan->lsp->lsp_nama }}" title="Download Jadwal Asesmen Excel">
+                                                                    <i class="mdi mdi-file-excel"></i> Download Jadwal
+                                                                </a>
+                                                            </div>
                                                         </div>
                                                         <table class="table-sm table-bordered table" style="font-size: 12px">
                                                             <thead class="text-center align-middle">
@@ -444,6 +474,21 @@
     </div>
 @endsection
 @push('script')
+    {{-- Download Jadwal Asesmen Excel - update link on month/year change --}}
+    <script>
+        function updateJadwalLink(container) {
+            let month = container.find('[class*="month-selector-"]').val();
+            let year = container.find('[class*="year-selector-"]').val();
+            let btn = container.find('.download-jadwal-btn');
+            let baseUrl = btn.data('base-url');
+            let ref = btn.data('ref');
+            let lsp = btn.data('lsp');
+            btn.attr('href', baseUrl + '?month=' + month + '&year=' + year + '&kegiatan_jadwal_ref=' + ref + '&nama_lsp=' + encodeURIComponent(lsp));
+        }
+        $(document).on('change', '[class*="month-selector-"], [class*="year-selector-"]', function() {
+            updateJadwalLink($(this).closest('.d-flex'));
+        });
+    </script>
     <script>
         $(document).on('focus', '.single-date', function() {
             const modal = $(this).closest('.modal');
