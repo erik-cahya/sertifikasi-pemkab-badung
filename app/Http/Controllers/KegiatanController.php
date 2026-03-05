@@ -10,6 +10,7 @@ use App\Models\KegiatanLSPModel;
 use App\Models\KegiatanModel;
 use App\Models\KegiatanSkemaModel;
 use App\Models\LSPModel;
+use App\Models\PenandatanganModel;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
 use Faker\Provider\Uuid;
@@ -46,7 +47,8 @@ class KegiatanController extends Controller
             // 'kegiatanLsp.lsp:ref,lsp_nama',
 
             'kegiatanJadwal:ref,kegiatan_ref,lsp_ref,kuota_lsp',
-            'kegiatanJadwal.lsp:ref,lsp_nama'
+            'kegiatanJadwal.lsp:ref,lsp_nama',
+            'kegiatanJadwal.penandatangan',
         ])->withSum('kegiatanJadwal as total_kuota', 'kuota_lsp');
 
         if ($user->roles === 'lsp' && $user->lspData) {
@@ -202,7 +204,8 @@ class KegiatanController extends Controller
             })
                 ->with([
                     'kegiatanJadwal' => function ($q) use ($user) {
-                        $q->where('lsp_ref', $user->lspData->ref);
+                        $q->where('lsp_ref', $user->lspData->ref)
+                            ->with('penandatangan');
                     }
                 ]);
         } else {
@@ -517,6 +520,38 @@ class KegiatanController extends Controller
             'path'    => $path,
             'url'     => route('files.asesmen.bukti_terima_sertifikat', ['filename' => basename($path)]),
 
+        ]);
+    }
+
+    public function storePenandatangan(Request $request)
+    {
+        $request->validate([
+            'kegiatan_jadwal_ref'   => 'required|string',
+            'tempat_ttd'            => 'required|string',
+            'tanggal_ttd'           => 'nullable|date',
+            'nama_dinas'            => 'nullable|string',
+            'jabatan_penandatangan' => 'nullable|string',
+            'nama_penandatangan'    => 'required|string',
+            'pangkat'               => 'nullable|string',
+            'nip'                   => 'nullable|string',
+        ]);
+
+        PenandatanganModel::updateOrCreate(
+            ['kegiatan_jadwal_ref' => $request->kegiatan_jadwal_ref],
+            [
+                'tempat_ttd'            => $request->tempat_ttd,
+                'tanggal_ttd'           => $request->tanggal_ttd ?: null,
+                'nama_dinas'            => $request->nama_dinas,
+                'jabatan_penandatangan' => $request->jabatan_penandatangan,
+                'nama_penandatangan'    => $request->nama_penandatangan,
+                'pangkat'               => $request->pangkat,
+                'nip'                   => $request->nip,
+            ]
+        );
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Data Penandatangan Berhasil Disimpan',
         ]);
     }
 }

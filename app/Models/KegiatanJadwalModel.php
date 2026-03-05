@@ -56,4 +56,8 @@ class KegiatanJadwalModel extends Model
         return $this->hasMany(AsesmenModel::class, 'kegiatan_jadwal_ref', 'ref');
     }
 
+    public function penandatangan()
+    {
+        return $this->hasOne(PenandatanganModel::class, 'kegiatan_jadwal_ref', 'ref');
+    }
 }

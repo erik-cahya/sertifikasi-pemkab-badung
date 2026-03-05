@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use App\Models\AsesmenModel;
 use App\Exports\JadwalAsesmenExport;
+use App\Models\PenandatanganModel;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
 use Carbon\Carbon;
@@ -106,10 +107,16 @@ class PDFController extends Controller
             ->locale('id')->translatedFormat('F');
         $tahun = $year;
 
+        // Get penandatangan data
+        $penandatangan = null;
+        if ($kegiatanJadwalRef) {
+            $penandatangan = PenandatanganModel::where('kegiatan_jadwal_ref', $kegiatanJadwalRef)->first();
+        }
+
         $filename = 'Jadwal-Asesmen-' . strtoupper($namaLsp) . '-' . strtoupper($bulan) . '-' . $tahun . '.xlsx';
 
         return Excel::download(
-            new JadwalAsesmenExport($grouped, $bulan, $tahun, $namaLsp),
+            new JadwalAsesmenExport($grouped, $bulan, $tahun, $namaLsp, $penandatangan),
             $filename
         );
     }

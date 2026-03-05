@@ -9,6 +9,7 @@ use PhpOffice\PhpSpreadsheet\Style\Alignment;
 use PhpOffice\PhpSpreadsheet\Style\Border;
 use PhpOffice\PhpSpreadsheet\Style\Fill;
 use PhpOffice\PhpSpreadsheet\Worksheet\Drawing;
+use Carbon\Carbon;
 
 class JadwalAsesmenExport implements WithEvents, WithTitle
 {
@@ -16,13 +17,15 @@ class JadwalAsesmenExport implements WithEvents, WithTitle
     protected $bulan;
     protected $tahun;
     protected $lspNama;
+    protected $penandatangan;
 
-    public function __construct($grouped, $bulan, $tahun, $lspNama)
+    public function __construct($grouped, $bulan, $tahun, $lspNama, $penandatangan = null)
     {
         $this->grouped = $grouped;
         $this->bulan   = $bulan;
         $this->tahun   = $tahun;
         $this->lspNama = $lspNama;
+        $this->penandatangan = $penandatangan;
     }
 
     public function title(): string
@@ -88,7 +91,7 @@ class JadwalAsesmenExport implements WithEvents, WithTitle
                 $sheet->getStyle('A11')->getFont()->setBold(true)->setSize(11);
 
                 $sheet->mergeCells('A12:F12');
-                $sheet->setCellValue('A12', 'LEMBAGA PELAKSANA ' . $this->lspNama);
+                $sheet->setCellValue('A12', 'LEMBAGA PELAKSANA ' . strtoupper($this->lspNama));
                 $sheet->getStyle('A12')->getFont()->setBold(true)->setSize(11);
 
                 // ===== TABLE HEADER (row 13) =====
@@ -201,6 +204,69 @@ class JadwalAsesmenExport implements WithEvents, WithTitle
                         'font' => ['size' => 11],
                     ]);
                 }
+
+                // ===== SIGNATURE SECTION =====
+                $signRow = $lastDataRow + 3; // Leave 2 empty rows after data
+
+                $ttd = $this->penandatangan;
+
+                // Line 1: "Tempat, [tanggal bulan tahun]"
+                $tempatTtd = $ttd->tempat_ttd ?? 'Mangupura';
+                $tanggalDate = ($ttd->tanggal_ttd ?? null)
+                    ? Carbon::parse($ttd->tanggal_ttd)
+                    : Carbon::now();
+                $tanggalSurat = $tanggalDate->locale('id')->translatedFormat('j F Y');
+                $sheet->mergeCells('D' . $signRow . ':F' . $signRow);
+                $sheet->setCellValue('D' . $signRow, $tempatTtd . ', ' . $tanggalSurat);
+                $sheet->getStyle('D' . $signRow)->getAlignment()
+                    ->setHorizontal(Alignment::HORIZONTAL_CENTER)
+                    ->setVertical(Alignment::VERTICAL_CENTER);
+
+                // Line 2: Nama Dinas
+                $signRow++;
+                $sheet->mergeCells('D' . $signRow . ':F' . $signRow);
+                $sheet->setCellValue('D' . $signRow, $ttd->nama_dinas ?? '');
+                $sheet->getStyle('D' . $signRow)->getAlignment()
+                    ->setHorizontal(Alignment::HORIZONTAL_CENTER)
+                    ->setVertical(Alignment::VERTICAL_CENTER);
+                $sheet->getStyle('D' . $signRow)->getFont()->setItalic(true);
+
+                // Line 3: Jabatan Penandatangan
+                $signRow++;
+                $sheet->mergeCells('D' . $signRow . ':F' . $signRow);
+                $sheet->setCellValue('D' . $signRow, $ttd->jabatan_penandatangan ?? '');
+                $sheet->getStyle('D' . $signRow)->getAlignment()
+                    ->setHorizontal(Alignment::HORIZONTAL_CENTER)
+                    ->setVertical(Alignment::VERTICAL_CENTER);
+                $sheet->getStyle('D' . $signRow)->getFont()->setItalic(true);
+
+                // Leave space for signature (4 empty rows)
+                $signRow += 5;
+
+                // Nama (Bold + Underline)
+                $sheet->mergeCells('D' . $signRow . ':F' . $signRow);
+                $sheet->setCellValue('D' . $signRow, $ttd->nama_penandatangan ?? '');
+                $sheet->getStyle('D' . $signRow)->getFont()->setBold(true)->setUnderline(true);
+                $sheet->getStyle('D' . $signRow)->getAlignment()
+                    ->setHorizontal(Alignment::HORIZONTAL_CENTER)
+                    ->setVertical(Alignment::VERTICAL_CENTER);
+
+                // Pangkat
+                $signRow++;
+                $sheet->mergeCells('D' . $signRow . ':F' . $signRow);
+                $sheet->setCellValue('D' . $signRow, $ttd->pangkat ?? '');
+                $sheet->getStyle('D' . $signRow)->getAlignment()
+                    ->setHorizontal(Alignment::HORIZONTAL_CENTER)
+                    ->setVertical(Alignment::VERTICAL_CENTER);
+
+                // NIP
+                $signRow++;
+                $sheet->mergeCells('D' . $signRow . ':F' . $signRow);
+                $nip = $ttd->nip ?? '';
+                $sheet->setCellValue('D' . $signRow, $nip ? 'NIP. ' . $nip : '');
+                $sheet->getStyle('D' . $signRow)->getAlignment()
+                    ->setHorizontal(Alignment::HORIZONTAL_CENTER)
+                    ->setVertical(Alignment::VERTICAL_CENTER);
 
                 // ===== Page setup for printing =====
                 $sheet->getPageSetup()

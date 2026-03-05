@@ -290,6 +290,9 @@
                                                                 <a href="{{ route('pdf.jadwal-asesmen', ['month' => now()->month, 'year' => now()->year, 'kegiatan_jadwal_ref' => $kegiatan->ref, 'nama_lsp' => $kegiatan->lsp->lsp_nama]) }}" class="btn btn-sm btn-light text-dark download-jadwal-btn" data-base-url="{{ route('pdf.jadwal-asesmen') }}" data-ref="{{ $kegiatan->ref }}" data-lsp="{{ $kegiatan->lsp->lsp_nama }}" title="Download Jadwal Asesmen Excel">
                                                                     <i class="mdi mdi-file-excel"></i> Download Jadwal
                                                                 </a>
+                                                                <button type="button" class="btn btn-sm btn-warning text-dark" data-bs-toggle="modal" data-bs-target="#penandatanganModal-{{ $kegiatan->ref }}" title="Setting Penandatangan">
+                                                                    <i class="mdi mdi-account-edit"></i> Setting ttd
+                                                                </button>
                                                             </div>
                                                         </div>
                                                         <table class="table-sm table-bordered table" style="font-size: 12px">
@@ -472,6 +475,55 @@
             </div>
         </div>
     </div>
+
+    {{-- Penandatangan Modals (placed outside tables to avoid collapse issues) --}}
+    @foreach ($dataKegiatan->kegiatanJadwal as $kegiatan)
+        <div id="penandatanganModal-{{ $kegiatan->ref }}" class="modal fade" tabindex="-1" aria-hidden="true" data-bs-backdrop="static">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header bg-warning">
+                        <h5 class="modal-title">Setting Penandatangan - {{ $kegiatan->lsp->lsp_nama }}</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="hidden" class="penandatangan-ref" value="{{ $kegiatan->ref }}">
+                        <div class="mb-2">
+                            <label class="form-label fw-semibold">Tempat Tanda Tangan</label>
+                            <input type="text" class="form-control form-control-sm penandatangan-tempat" value="{{ $kegiatan->penandatangan->tempat_ttd ?? 'Mangupura' }}">
+                        </div>
+                        <div class="mb-2">
+                            <label class="form-label fw-semibold">Tanggal Surat</label>
+                            <input type="text" class="form-control form-control-sm penandatangan-tanggal single-date" value="{{ isset($kegiatan->penandatangan->tanggal_ttd) ? \Carbon\Carbon::parse($kegiatan->penandatangan->tanggal_ttd)->format('d/m/Y') : '' }}" placeholder="Kosongkan untuk tanggal hari ini">
+                        </div>
+                        <div class="mb-2">
+                            <label class="form-label fw-semibold">Nama Dinas</label>
+                            <input type="text" class="form-control form-control-sm penandatangan-dinas" value="{{ $kegiatan->penandatangan->nama_dinas ?? 'Kepala Dinas Perindustrian dan Tenaga Kerja Kabupaten Badung' }}">
+                        </div>
+                        <div class="mb-2">
+                            <label class="form-label fw-semibold">Jabatan Penandatangan</label>
+                            <input type="text" class="form-control form-control-sm penandatangan-jabatan" value="{{ $kegiatan->penandatangan->jabatan_penandatangan ?? 'Selaku Pengguna Anggaran (PA) merangkap Pejabat Pembuat Komitmen (PPK),' }}">
+                        </div>
+                        <div class="mb-2">
+                            <label class="form-label fw-semibold">Nama Penandatangan <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control form-control-sm penandatangan-nama" value="{{ $kegiatan->penandatangan->nama_penandatangan ?? '' }}" required>
+                        </div>
+                        <div class="mb-2">
+                            <label class="form-label fw-semibold">Pangkat</label>
+                            <input type="text" class="form-control form-control-sm penandatangan-pangkat" value="{{ $kegiatan->penandatangan->pangkat ?? '' }}">
+                        </div>
+                        <div class="mb-2">
+                            <label class="form-label fw-semibold">NIP</label>
+                            <input type="text" class="form-control form-control-sm penandatangan-nip" value="{{ $kegiatan->penandatangan->nip ?? '' }}">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">Tutup</button>
+                        <button type="button" class="btn btn-warning btn-save-penandatangan">Simpan</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endforeach
 @endsection
 @push('script')
     {{-- Download Jadwal Asesmen Excel - update link on month/year change --}}
@@ -1026,6 +1078,54 @@
 
             });
 
+        });
+    </script>
+
+    <!-- Save Penandatangan -->
+    <script>
+        $(document).on('click', '.btn-save-penandatangan', function() {
+            let modal = $(this).closest('.modal');
+            let ref = modal.find('.penandatangan-ref').val();
+            let nama = modal.find('.penandatangan-nama').val();
+
+            if (!nama) {
+                Swal.fire({
+                    icon: 'warning',
+                    text: 'Nama Penandatangan wajib diisi'
+                });
+                return;
+            }
+
+            $.ajax({
+                url: "{{ route('kegiatan.storePenandatangan') }}",
+                type: 'POST',
+                data: {
+                    kegiatan_jadwal_ref: ref,
+                    tempat_ttd: modal.find('.penandatangan-tempat').val(),
+                    tanggal_ttd: modal.find('.penandatangan-tanggal').val() ? moment(modal.find('.penandatangan-tanggal').val(), 'DD/MM/YYYY').format('YYYY-MM-DD') : '',
+                    nama_dinas: modal.find('.penandatangan-dinas').val(),
+                    jabatan_penandatangan: modal.find('.penandatangan-jabatan').val(),
+                    nama_penandatangan: nama,
+                    pangkat: modal.find('.penandatangan-pangkat').val(),
+                    nip: modal.find('.penandatangan-nip').val(),
+                    _token: '{{ csrf_token() }}'
+                },
+                success: function(res) {
+                    modal.modal('hide');
+                    Swal.fire({
+                        icon: 'success',
+                        text: res.message,
+                        timer: 1500,
+                        showConfirmButton: false
+                    });
+                },
+                error: function(xhr) {
+                    Swal.fire({
+                        icon: 'error',
+                        text: xhr.responseJSON?.message ?? 'Gagal menyimpan data'
+                    });
+                }
+            });
         });
     </script>
 @endpush
