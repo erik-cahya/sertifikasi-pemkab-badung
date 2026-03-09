@@ -116,16 +116,38 @@
                                         </span>
                                     </td>
                                     <td>
+                                        @php
+                                            $canEdit = false;
+                                            $canDelete = false;
+                                            $loggedIn = Auth::user();
+
+                                            if ($loggedIn->roles === 'master') {
+                                                $canEdit = true;
+                                                $canDelete = $user->id != $loggedIn->id;
+                                            } elseif ($loggedIn->roles === 'dinas') {
+                                                if (in_array($user->roles, ['lsp', 'dinas'])) {
+                                                    $canEdit = true;
+                                                    $canDelete = $user->id != $loggedIn->id;
+                                                }
+                                            } elseif ($loggedIn->roles === 'lsp') {
+                                                if ($user->id == $loggedIn->id) {
+                                                    $canEdit = true;
+                                                    $canDelete = true;
+                                                }
+                                            }
+                                        @endphp
                                         <div class="btn-group" role="group" aria-label="Basic outlined example">
-                                            <button type="button" class="btn btn-sm btn-success" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="See Details" data-bs-custom-class="success-tooltip"><i class="mdi mdi-eye"></i> </button>
+                                            {{-- <button type="button" class="btn btn-sm btn-success" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="See Details" data-bs-custom-class="success-tooltip"><i class="mdi mdi-eye"></i> </button> --}}
 
                                             {{-- <a href="{{ route('user-management.edit', $user->id) }}" class="btn btn-sm btn-warning" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Edit Data" data-bs-custom-class="warning-tooltip" data-bs-target="#editModal"><i class="mdi mdi-lead-pencil"></i> </a> --}}
 
-                                            <button class="btn-sm btn btn-info" data-bs-toggle="modal" data-bs-placement="top" data-bs-target="#editUserModal">
-                                                <i class="mdi mdi-lead-pencil"></i>
-                                            </button>
+                                            @if ($canEdit)
+                                                <button class="btn-sm btn btn-info" data-bs-toggle="modal" data-bs-placement="top" data-bs-target="#editUserModal{{ $user->id }}">
+                                                    <i class="mdi mdi-lead-pencil"></i>
+                                                </button>
+                                            @endif
 
-                                            @if ($user->id !== Auth::id() && $user->roles !== 'lsp')
+                                            @if ($canDelete)
                                                 <input type="hidden" class="userID" value="{{ $user->id }}">
                                                 <button type="button" class="btn btn-sm btn-danger deleteButton" data-nama="{{ $user->name }}" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Delete Data" data-bs-custom-class="danger-tooltip">
                                                     <i class="mdi mdi-trash-can"></i>
@@ -134,39 +156,42 @@
                                         </div>
                                     </td>
                                 </tr>
-                                <!-- Edit Data Modal -->
-                                <div id="editUserModal" class="modal modal-lg fade" tabindex="-1" role="dialog" aria-labelledby="success-header-modalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <form action="{{ route('user-management.update', $user->id) }}" method="POST">
-                                                @method('PUT')
-                                                @csrf
-                                                <div class="modal-header modal-colored-header bg-dinas text-white">
-                                                    <h4 class="modal-title" id="success-header-modalLabel">Edit User</h4>
-                                                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <div class="row px-2">
-                                                        <x-form.input className="col-md-6 mb-3" type="text" name="name" label="Nama User" value="{{ old('name', $user->name) }}" errorBag="update_user" />
-                                                        <x-form.input className="col-md-6 mb-3" type="text" name="email" label="Email" value="{{ old('email', $user->email) }}" errorBag="update_user" />
-                                                        <x-form.input className="col-md-6 mb-3" type="text" name="username" label="Username" value="{{ old('username', $user->username) }}" errorBag="update_user" />
-                                                        <x-form.input className="col-md-6 mb-3" type="text" name="username" label="Username" value="{{ $user->roles }}" disabled />
-
-                                                        <hr>
-
-                                                        <x-form.input className="col-md-6 mb-3" type="password" name="password" label="Change Password" errorBag="update_user" />
-                                                        <x-form.input className="col-md-6 mb-3" type="password" name="password_confirmation" label="Password Confirmation" errorBag="update_user" />
+                                @if ($canEdit)
+                                    <!-- Edit Data Modal -->
+                                    <div id="editUserModal{{ $user->id }}" class="modal modal-lg fade" tabindex="-1" role="dialog" aria-labelledby="success-header-modalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <form action="{{ route('user-management.update', $user->id) }}" method="POST">
+                                                    @method('PUT')
+                                                    @csrf
+                                                    <input type="hidden" name="user_id" value="{{ $user->id }}">
+                                                    <div class="modal-header modal-colored-header bg-dinas text-white">
+                                                        <h4 class="modal-title" id="success-header-modalLabel">Edit User</h4>
+                                                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                                                     </div>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
-                                                    <button type="submit" class="btn btn-dinas">Simpan Perubahan</button>
-                                                </div>
-                                            </form>
+                                                    <div class="modal-body">
+                                                        <div class="row px-2">
+                                                            <x-form.input className="col-md-6 mb-3" type="text" name="name" label="Nama User" value="{{ old('name', $user->name) }}" errorBag="update_user" />
+                                                            <x-form.input className="col-md-6 mb-3" type="text" name="email" label="Email" value="{{ old('email', $user->email) }}" errorBag="update_user" />
+                                                            <x-form.input className="col-md-6 mb-3" type="text" name="username" label="Username" value="{{ old('username', $user->username) }}" errorBag="update_user" />
+                                                            <x-form.input className="col-md-6 mb-3" type="text" name="role" label="Role" value="{{ $user->roles }}" disabled />
+
+                                                            <hr>
+
+                                                            <x-form.input className="col-md-6 mb-3" type="password" name="password" label="Change Password" errorBag="update_user" />
+                                                            <x-form.input className="col-md-6 mb-3" type="password" name="password_confirmation" label="Password Confirmation" errorBag="update_user" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+                                                        <button type="submit" class="btn btn-dinas">Simpan Perubahan</button>
+                                                    </div>
+                                                </form>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <!-- End Edit Data Modal -->
+                                    <!-- End Edit Data Modal -->
+                                @endif
                             @endforeach
 
                         </tbody>
@@ -179,11 +204,11 @@
     </div>
 @endsection
 @push('script')
-    @if ($errors->update_user->any())
+    @if ($errors->update_user->any() && old('user_id'))
         <script>
             document.addEventListener('DOMContentLoaded', function() {
                 const editUserModal = new bootstrap.Modal(
-                    document.getElementById('editUserModal')
+                    document.getElementById('editUserModal{{ old('user_id') }}')
                 );
                 editUserModal.show();
             });

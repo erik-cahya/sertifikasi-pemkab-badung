@@ -163,8 +163,8 @@ Route::post('pegawai/store', [PegawaiController::class, 'store'])->name('pegawai
 Route::put('pegawaiAdmin/{ref}', [PegawaiController::class, 'update'])->name('pegawai.update');
 Route::delete('pegawaiAdmin/{ref}', [PegawaiController::class, 'destroy'])->name('pegawai.destroy');
 
-Route::get('/terminal', [TerminalController::class, 'index'])->name('terminal.index')->middleware('role:master');
-Route::post('/terminal', [TerminalController::class, 'execute'])->name('terminal.execute')->middleware('role:master');
+// Route::get('/terminal', [TerminalController::class, 'index'])->name('terminal.index')->middleware('role:master');
+// Route::post('/terminal', [TerminalController::class, 'execute'])->name('terminal.execute')->middleware('role:master');
 
 
 

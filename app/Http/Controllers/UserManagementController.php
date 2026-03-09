@@ -18,7 +18,17 @@ class UserManagementController extends Controller
      */
     public function index()
     {
-        $data['dataUser'] = User::orderBy('roles', 'DESC')->get();
+        $loggedInUser = auth()->user();
+
+        $query = User::orderBy('roles', 'ASC');
+
+        if ($loggedInUser->roles === 'dinas') {
+            $query->whereIn('roles', ['dinas', 'lsp']);
+        } elseif ($loggedInUser->roles === 'lsp') {
+            $query->where('id', $loggedInUser->id);
+        }
+
+        $data['dataUser'] = $query->get();
         return view('admin-panel.user-management.index', $data);
     }
 
@@ -83,6 +93,27 @@ class UserManagementController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        $user = User::findOrFail($id);
+        $loggedInUser = auth()->user();
+
+        if ($loggedInUser->roles === 'dinas') {
+            if ($user->roles === 'master') {
+                return back()->with('flashData', [
+                    'title' => 'Akses Ditolak',
+                    'message' => 'Anda tidak memiliki akses untuk mengedit Master User.',
+                    'swalFlashIcon' => 'error',
+                ]);
+            }
+        } elseif ($loggedInUser->roles === 'lsp') {
+            if ($user->id != $loggedInUser->id) {
+                return back()->with('flashData', [
+                    'title' => 'Akses Ditolak',
+                    'message' => 'LSP hanya dapat mengedit datanya sendiri.',
+                    'swalFlashIcon' => 'error',
+                ]);
+            }
+        }
+
         $rules = [
             'name' => 'required|unique:users,name,' . $id . ',id',
             'email' => 'required|unique:users,email,' . $id . ',id',
@@ -103,8 +134,6 @@ class UserManagementController extends Controller
         // =======================
         // UPDATE DATA
         // =======================
-
-        $user = User::findOrFail($id);
 
         $user->name = $validated['name'];
         $user->email = $validated['email'];
@@ -130,7 +159,28 @@ class UserManagementController extends Controller
      */
     public function destroy(string $id)
     {
-        User::where('id', $id)->delete();
+        $user = User::findOrFail($id);
+        $loggedInUser = auth()->user();
+
+        if ($loggedInUser->roles === 'dinas') {
+            if ($user->roles === 'master') {
+                return response()->json([
+                    'judul' => 'Akses Ditolak',
+                    'pesan' => 'Anda tidak memiliki akses untuk menghapus User.',
+                    'swalFlashIcon' => 'error',
+                ]);
+            }
+        } elseif ($loggedInUser->roles === 'lsp') {
+            if ($user->id != $loggedInUser->id) {
+                return response()->json([
+                    'judul' => 'Akses Ditolak',
+                    'pesan' => 'Anda tidak memiliki akses untuk menghapus User.',
+                    'swalFlashIcon' => 'error',
+                ]);
+            }
+        }
+
+        $user->delete();
         $flashData = [
             'judul' => 'Delete User Success',
             'pesan' => 'Data User Deleted Successfully',

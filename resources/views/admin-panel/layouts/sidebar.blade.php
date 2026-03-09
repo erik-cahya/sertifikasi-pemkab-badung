@@ -223,7 +223,7 @@
                     </a>
                 </li>
             @endrole
-            @role('master')
+            {{-- @role('master')
                 <li class="side-nav-title">Updates</li>
                 <li class="side-nav-item {{ request()->routeIs('terminal.index') ? 'menuitem-active' : '' }}">
                     <a href="{{ route('terminal.index') }}" class="side-nav-link">
@@ -231,54 +231,8 @@
                         <span> Terminal </span>
                     </a>
                 </li>
-            @endrole
+            @endrole --}}
 
-            {{-- @endrole --}}
-
-            {{-- <li class="side-nav-item {{ request()->routeIs('violation.*') ? 'menuitem-active' : '' }}">
-                <a data-bs-toggle="collapse" href="#violationMenu" aria-expanded="false" aria-controls="violationMenu" class="side-nav-link">
-                    <i class="ri-flag-2-fill"></i>
-                    <span> Pelanggaran GSE </span>
-                    <span class="menu-arrow"></span>
-                </a>
-                <div class="{{ request()->routeIs('violation.*') ? 'show' : '' }} collapse" id="violationMenu">
-                    <ul class="side-nav-second-level">
-                        <li class="side-nav-item {{ request()->routeIs('violation.index') ? 'menuitem-active' : '' }}">
-                            <a class="side-nav-link {{ request()->routeIs('violation.index') ? 'active' : '' }}" href="{{ route('violation.index') }}">
-                                Daftar Pelanggaran
-
-                            </a>
-                        </li>
-
-                        <li class="side-nav-item {{ request()->routeIs('violation.create') ? 'menuitem-active' : '' }}">
-                            <a class="side-nav-link {{ request()->routeIs('violation.create') ? 'active' : '' }}" href="{{ route('violation.create') }}">
-                                Input Pelanggaran GSE
-                            </a>
-                        </li>
-
-                    </ul>
-                </div>
-            </li>
-
-            @if (Auth::user()->roles === 'master')
-                <li class="side-nav-item {{ request()->routeIs('user.*') ? 'menuitem-active' : '' }}">
-                    <a data-bs-toggle="collapse" href="#userManagement" aria-expanded="false" aria-controls="userManagement" class="side-nav-link">
-                        <i class="ri-user-fill"></i>
-                        <span> Users Management</span>
-                        <span class="menu-arrow"></span>
-                    </a>
-                    <div class="{{ request()->routeIs('user.*') ? 'show' : '' }} collapse" id="userManagement">
-                        <ul class="side-nav-second-level">
-                            <li class="side-nav-item {{ request()->routeIs('user.index') ? 'menuitem-active' : '' }}">
-                                <a class="side-nav-link {{ request()->routeIs('user.index') ? 'active' : '' }}" href="{{ route('user.index') }}">
-                                    Daftar User
-                                    <span class="badge bg-success float-end">{{ App\Models\User::count() }}</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
-            @endif --}}
 
         </ul>
     </div>
