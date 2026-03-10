@@ -31,8 +31,12 @@ class AsesiController extends Controller
 
     public function getLspByKegiatan($kegiatanRef)
     {
-
-        $data = AsesmenModel::where('kegiatan_ref', $kegiatanRef)->select('nama_lsp')->groupBy('nama_lsp')->get();
+        $data = DB::table('kegiatan_jadwal')
+            ->where('kegiatan_jadwal.kegiatan_ref', $kegiatanRef)
+            ->join('lsp', 'kegiatan_jadwal.lsp_ref', '=', 'lsp.ref')
+            ->select('lsp.lsp_nama as nama_lsp', 'lsp.nama_cp_1', 'lsp.nomor_cp_1', 'lsp.nama_cp_2', 'lsp.nomor_cp_2')
+            ->distinct()
+            ->get();
         return response()->json($data);
     }
 
@@ -49,15 +53,11 @@ class AsesiController extends Controller
             ->pluck('total', 'asesmen_ref');
 
 
-        $data = AsesmenModel::where('kegiatan_ref', $request->kegiatan_ref)->where('nama_lsp', $request->lsp_ref)
-            ->join('lsp', 'asesmen.nama_lsp', 'lsp.lsp_nama')
-            ->select('asesmen.*', 'lsp.nama_cp_1', 'lsp.nomor_cp_1', 'lsp.nama_cp_2', 'lsp.nomor_cp_2')
+        $dataJadwal = AsesmenModel::where('kegiatan_ref', $request->kegiatan_ref)->where('nama_lsp', $request->lsp_ref)
             ->get()
             ->map(function ($asesmen) use ($asesiPerAsesmen) {
-
                 $terpakai = $asesiPerAsesmen[$asesmen->ref] ?? 0;
                 $sisa = max($asesmen->kuota_harian - $terpakai, 0);
-
 
                 return [
                     'asesmen_ref' => $asesmen->ref,
@@ -67,15 +67,17 @@ class AsesiController extends Controller
                     'sisa_kuota' => $sisa,
                     'nama_tuk' => $asesmen->nama_tuk,
                     'nama_skema' => $asesmen->nama_skema,
-                    'nama_cp_1' => $asesmen->nama_cp_1,
-                    'nomor_cp_1' => $asesmen->nomor_cp_1,
-                    'nama_cp_2' => $asesmen->nama_cp_2,
-                    'nomor_cp_2' => $asesmen->nomor_cp_2,
                 ];
             });
 
+        $dataLsp = LSPModel::where('lsp_nama', $request->lsp_ref)
+            ->select('nama_cp_1', 'nomor_cp_1', 'nama_cp_2', 'nomor_cp_2')
+            ->first();
 
-        return response()->json($data);
+        return response()->json([
+            'jadwal' => $dataJadwal,
+            'lsp' => $dataLsp
+        ]);
     }
 
     /**

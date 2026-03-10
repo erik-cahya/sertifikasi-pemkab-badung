@@ -543,18 +543,27 @@
                 .then(res => res.json())
                 .then(data => {
                     let opt = '<option value="" disabled selected>Pilih Jadwal Sertifikasi</option>';
-                    data.forEach(item => {
-                        const isSelected = oldAsesmenRef === item.asesmen_ref ? 'selected' : '';
-                        const isFull = item.sisa_kuota <= 0;
-                        const disabled = isFull ? 'disabled' : '';
-                        const label = isFull ? '(PENUH)' : '';
+                    let cpInfo = '';
+                    if (data.lsp) {
+                        if (data.lsp.nama_cp_1) cpInfo += `${data.lsp.nama_cp_1} (${data.lsp.nomor_cp_1})`;
+                        if (data.lsp.nama_cp_2) cpInfo += ` / ${data.lsp.nama_cp_2} (${data.lsp.nomor_cp_2})`;
+                    }
 
-                        opt += `<option value="${item.asesmen_ref}" ${isSelected} ${disabled}>${item.nama_tuk} - ${item.nama_skema} | ${formatTanggalIndo(item.jadwal_asesmen)} | Kuota: ${item.sisa_kuota} ${label}</option>`;
+                    if (data.jadwal.length === 0) {
+                        opt = `<option value="" disabled selected style="color: red;">LSP ini tidak ada jadwal. Hubungi ${cpInfo}</option>`;
+                    } else {
+                        data.jadwal.forEach(item => {
+                            const isSelected = oldAsesmenRef === item.asesmen_ref ? 'selected' : '';
+                            const isFull = item.sisa_kuota <= 0;
+                            const disabled = isFull ? 'disabled' : '';
+                            const label = isFull ? '(PENUH)' : '';
+
+                            opt += `<option value="${item.asesmen_ref}" ${isSelected} ${disabled}>${item.nama_tuk} - ${item.nama_skema} | ${formatTanggalIndo(item.jadwal_asesmen)} | Kuota: ${item.sisa_kuota} ${label}</option>`;
+                        });
                         opt += `<option value="" disabled style="color: red;">
-                                Hubungi WhatsApp Kontak person LSP jika TUK tidak tersedia : 
-                                ${item.nama_cp_1} (${item.nomor_cp_1}) / ${item.nama_cp_2} (${item.nomor_cp_2})
+                                Hubungi WhatsApp Kontak person LSP jika TUK tidak tersedia : ${cpInfo}
                             </option>`;
-                    });
+                    }
                     jadwalAsesmen.innerHTML = opt;
                     jadwalAsesmen.disabled = false;
                 });
@@ -586,13 +595,26 @@
                                 .then(res => res.json())
                                 .then(data => {
                                     let opt = '<option value="" disabled>Pilih Jadwal Sertifikasi</option>';
-                                    data.forEach(item => {
-                                        const isSelected = oldAsesmenRef === item.asesmen_ref ? 'selected' : '';
-                                        const isFull = item.sisa_kuota <= 0;
-                                        const disabled = isFull ? 'disabled' : '';
-                                        const label = isFull ? '(PENUH)' : '';
-                                        opt += `<option value="${item.asesmen_ref}" ${isSelected} ${disabled}>${item.nama_tuk} - ${item.nama_skema} | ${formatTanggalIndo(item.jadwal_asesmen)} | Kuota: ${item.sisa_kuota} ${label}</option>`;
-                                    });
+                                    let cpInfo = '';
+                                    if (data.lsp) {
+                                        if (data.lsp.nama_cp_1) cpInfo += `${data.lsp.nama_cp_1} (${data.lsp.nomor_cp_1})`;
+                                        if (data.lsp.nama_cp_2) cpInfo += ` / ${data.lsp.nama_cp_2} (${data.lsp.nomor_cp_2})`;
+                                    }
+
+                                    if (data.jadwal.length === 0) {
+                                        opt = `<option value="" disabled selected style="color: red;">LSP ini tidak ada jadwal. Hubungi ${cpInfo}</option>`;
+                                    } else {
+                                        data.jadwal.forEach(item => {
+                                            const isSelected = oldAsesmenRef === item.asesmen_ref ? 'selected' : '';
+                                            const isFull = item.sisa_kuota <= 0;
+                                            const disabled = isFull ? 'disabled' : '';
+                                            const label = isFull ? '(PENUH)' : '';
+                                            opt += `<option value="${item.asesmen_ref}" ${isSelected} ${disabled}>${item.nama_tuk} - ${item.nama_skema} | ${formatTanggalIndo(item.jadwal_asesmen)} | Kuota: ${item.sisa_kuota} ${label}</option>`;
+                                        });
+                                        opt += `<option value="" disabled style="color: red;">
+                                                Hubungi WhatsApp Kontak person LSP jika TUK tidak tersedia : ${cpInfo}
+                                            </option>`;
+                                    }
                                     jadwalAsesmen.innerHTML = opt;
                                     jadwalAsesmen.disabled = false;
                                 });

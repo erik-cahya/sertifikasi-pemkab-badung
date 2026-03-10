@@ -70,10 +70,12 @@
                                             @endrole
                                             <a href="{{ route('kegiatan.show', $kegiatan->ref) }}" class="btn btn-sm btn-success" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="See Details" data-bs-custom-class="success-tooltip"><i class="mdi mdi-eye"></i> </a>
 
-                                            <input type="hidden" class="valueID" value="{{ $kegiatan->ref }}">
-                                            <button type="button" class="btn btn-sm btn-danger deleteButton" data-nama="{{ $kegiatan->nama_kegiatan }}" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Delete Data" data-bs-custom-class="danger-tooltip">
-                                                <i class="mdi mdi-trash-can"></i>
-                                            </button>
+                                            @role('dinas', 'master')
+                                                <input type="hidden" class="valueID" value="{{ $kegiatan->ref }}">
+                                                <button type="button" class="btn btn-sm btn-danger deleteButton" data-nama="{{ $kegiatan->nama_kegiatan }}" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Delete Data" data-bs-custom-class="danger-tooltip">
+                                                    <i class="mdi mdi-trash-can"></i>
+                                                </button>
+                                            @endrole
 
                                         </div>
                                     </td>

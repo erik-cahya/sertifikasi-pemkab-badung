@@ -261,6 +261,16 @@ class KegiatanController extends Controller
     public function destroy(string $id)
     {
 
+        $loggedInUser = auth()->user();
+
+        if ($loggedInUser->roles === 'lsp') {
+            return response()->json([
+                'judul' => 'Akses Ditolak',
+                'pesan' => 'Anda tidak memiliki akses untuk menghapus Kegiatan.',
+                'type' => 'error',
+            ]);
+        }
+
         KegiatanModel::where('ref', $id)->delete();
         $flashData = [
             'judul' => 'Hapus Data Success',
