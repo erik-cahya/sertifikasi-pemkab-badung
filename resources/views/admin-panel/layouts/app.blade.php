@@ -5,16 +5,16 @@
     <meta charset="utf-8" />
     <title>{{ $title ?? 'Dashboard' }} | Sistem Pelatihan dan Sertifikasi</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta content="A fully responsive admin theme which can be used to build CRM, CMS,ERP etc." name="description" />
-    <meta content="Techzaa" name="author" />
+    <meta content="Portal resmi Bidang Pelatihan dan Sertifikasi - Dinas Perindustrian dan Ketenagakerjaan Kabupaten Badung" name="description" />
+    <meta content="Bidang Pelatihan dan Sertifikasi - Dinas Perindustrian dan Ketenagakerjaan Kabupaten Badung" name="author" />
 
     @stack('style')
     <style>
         table.dataTable thead th.sorting::before,
-    table.dataTable thead th.sorting::after {
-        font-size: 9px;
-        opacity: 0.5;
-    }
+        table.dataTable thead th.sorting::after {
+            font-size: 9px;
+            opacity: 0.5;
+        }
     </style>
 
     {{-- !-- App favicon --> --}}
@@ -33,7 +33,7 @@
 
     <!-- Daterangepicker css -->
     <link href="{{ asset('admin') }}/assets/vendor/daterangepicker/daterangepicker.css" rel="stylesheet" type="text/css" />
-    
+
 </head>
 
 <body>
@@ -81,7 +81,7 @@
     <script src="{{ asset('admin') }}/assets/vendor/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js"></script>
     <script src="{{ asset('admin') }}/assets/vendor/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
     <script src="{{ asset('admin') }}/assets/vendor/datatables.net-buttons-bs5/js/buttons.bootstrap5.min.js"></script>
-    
+
     <script src="{{ asset('admin') }}/assets/vendor/jszip/jszip.min.js"></script>
 
     <script src="{{ asset('admin') }}/assets/vendor/datatables.net-buttons/js/buttons.html5.min.js"></script>

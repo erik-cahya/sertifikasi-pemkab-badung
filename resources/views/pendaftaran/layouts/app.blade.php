@@ -5,8 +5,8 @@
     <meta charset="utf-8" />
     <title>Bidang Pelatihan dan Sertifikasi - Dinas Perindustrian dan Ketenagakerjaan Kabupaten Badung</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta content="A fully responsive admin theme which can be used to build CRM, CMS,ERP etc." name="description" />
-    <meta content="Techzaa" name="author" />
+    <meta content="Portal resmi Bidang Pelatihan dan Sertifikasi - Dinas Perindustrian dan Ketenagakerjaan Kabupaten Badung" name="description" />
+    <meta content="Bidang Pelatihan dan Sertifikasi - Dinas Perindustrian dan Ketenagakerjaan Kabupaten Badung" name="author" />
 
     @stack('style')
 
@@ -26,10 +26,9 @@
     <link href="{{ asset('admin') }}/assets/vendor/flatpickr/flatpickr.min.css" rel="stylesheet" type="text/css" />
 </head>
 
-
 <body>
     <!-- Begin page -->
-    <div class="wrapper bg-white d-flex flex-column min-vh-100">
+    <div class="wrapper d-flex flex-column min-vh-100 bg-white">
 
         <!-- ========== Header ========== -->
         @include('pendaftaran.layouts.header')
