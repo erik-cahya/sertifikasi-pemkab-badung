@@ -86,7 +86,8 @@
         .page-break {
             page-break-before: always;
         }
-        .center{
+
+        .center {
             text-align: center;
         }
     </style>

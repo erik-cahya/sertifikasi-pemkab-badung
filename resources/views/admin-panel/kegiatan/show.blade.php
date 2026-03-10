@@ -433,9 +433,16 @@
                                                                                                 <tr>
                                                                                                     <td class="text-center">{{ $loop->iteration }}</td>
                                                                                                     <td>{{ $asesi->nama_lengkap }}</td>
-                                                                                                    <td><span @role('lsp') class="edited" @endrole id="no_sertifikat" ref="{{ $asesi->ref }}">
+                                                                                                    <td>
+                                                                                                        <span @role('lsp') class="edited text-primary" style="cursor: pointer; border-bottom: 1px dashed #007bff; padding-bottom: 2px" @endrole id="no_sertifikat" ref="{{ $asesi->ref }}" data-value="{{ $asesi->no_sertifikat }}">
                                                                                                             @if ($asesi->no_sertifikat != null)
-                                                                                                            {{ $asesi->no_sertifikat }} @else-
+                                                                                                                {{ $asesi->no_sertifikat }}
+                                                                                                            @else
+                                                                                                                @role('lsp')
+                                                                                                                    <i class="mdi mdi-pencil-outline"></i> Isi No. Sertifikat
+                                                                                                                @else
+                                                                                                                    -
+                                                                                                                @endrole
                                                                                                             @endif
                                                                                                         </span>
                                                                                                     </td>
@@ -668,15 +675,16 @@
             // Delegate click event to the document (or a parent element that won't change)
             $(document).on('click', '.edited', function() {
                 var span = $(this);
-                var itemText = $.trim($(this).text());
+                // Get the real value from data-value, not the rendered text (which might contain the placeholder icon)
+                var itemText = span.attr('data-value') || '';
                 var itemId = span.attr('id'); // Get the id
                 var itemRef = span.attr('ref'); // Get the ref
 
                 // Create an input field with the current text
-                var input = $('<input type="text" class="form-control"/>').val(itemText).attr('id', itemId).attr('ref', itemRef).css({
+                var input = $('<input type="text" class="form-control form-control-sm"/>').val(itemText).attr('id', itemId).attr('ref', itemRef).css({
                     width: '100%',
                     boxSizing: 'border-box'
-                });;
+                });
 
                 // Replace the span with the input field
                 span.replaceWith(input);
@@ -686,38 +694,58 @@
 
                 // Handle blur event (when input loses focus)
                 input.on('blur', function() {
-                    var newValue = input.val();
-                    var updatedSpan = $('<span class="edited"></span>').text(newValue).attr('id', itemId).attr('ref', itemRef);
+                    var newValue = $.trim(input.val());
+
+                    // Reconstruct the span based on whether it's empty or has a value
+                    var updatedSpan = $('<span class="edited text-primary" style="cursor: pointer; border-bottom: 1px dashed #007bff; padding-bottom: 2px"></span>')
+                        .attr('id', itemId)
+                        .attr('ref', itemRef)
+                        .attr('data-value', newValue);
+
+                    if (newValue !== '') {
+                        updatedSpan.text(newValue);
+                    } else {
+                        updatedSpan.html('<i class="mdi mdi-pencil-outline"></i> Isi No. Sertifikat');
+                    }
 
                     // Replace the input back with the updated span
                     input.replaceWith(updatedSpan);
 
-                    // Send the updated value to the server using AJAX
-                    $.ajax({
-                        url: "{{ route('kegiatan.sertifikatUpdate') }}",
-                        type: 'POST',
-                        data: {
-                            id: itemId,
-                            ref: itemRef,
-                            value: newValue,
-                            _token: "{{ csrf_token() }}"
-                        },
-                        success: function(res) {
-                            //notif alert bisa delete aja kalo ganggu
-                            Swal.fire({
-                                icon: res.success ? 'success' : 'error',
-                                text: res.message,
-                                timer: 1200,
-                                showConfirmButton: false
-                            });
-                        },
-                        error: function(xhr) {
-                            Swal.fire({
-                                icon: 'error',
-                                text: xhr.responseJSON?.message ?? 'Gagal menyimpan data'
-                            });
-                        }
-                    });
+                    // Send the updated value to the server using AJAX only if it changed
+                    if (itemText !== newValue) {
+                        $.ajax({
+                            url: "{{ route('kegiatan.sertifikatUpdate') }}",
+                            type: 'POST',
+                            data: {
+                                id: itemId,
+                                ref: itemRef,
+                                value: newValue,
+                                _token: "{{ csrf_token() }}"
+                            },
+                            success: function(res) {
+                                //notif alert bisa delete aja kalo ganggu
+                                Swal.fire({
+                                    icon: res.success ? 'success' : 'error',
+                                    text: res.message,
+                                    timer: 1200,
+                                    showConfirmButton: false
+                                });
+                            },
+                            error: function(xhr) {
+                                Swal.fire({
+                                    icon: 'error',
+                                    text: xhr.responseJSON?.message ?? 'Gagal menyimpan data'
+                                });
+                                // Optionally revert the span back to old value on error
+                                updatedSpan.attr('data-value', itemText);
+                                if (itemText !== '') {
+                                    updatedSpan.text(itemText);
+                                } else {
+                                    updatedSpan.html('<i class="mdi mdi-pencil-outline"></i> Isi No. Sertifikat');
+                                }
+                            }
+                        });
+                    }
                 });
 
             });
