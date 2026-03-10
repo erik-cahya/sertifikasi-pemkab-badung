@@ -176,7 +176,7 @@
                                             </tr>
                                             <tr>
                                                 <td>Tanggal</td>
-                                                <td>: {{ date('Y/m/d', strtotime($item->asesmen->jadwal_asesmen)) }}</td>
+                                                <td>: {{ \Carbon\Carbon::parse($item->asesmen->jadwal_asesmen)->locale('id')->translatedFormat('l, d F Y') }}</td>
                                             </tr>
                                             <tr>
                                                 <td>TUK</td>
@@ -246,6 +246,26 @@
                                                         <x-form.input className="col-md-4 mt-2" type="text" name="telp_kantor" label="No. Telp Kantor" value="{{ old('telp_kantor', $item->telp_kantor) }}" />
                                                         <x-form.input className="col-md-4 mt-2" type="text" name="telp_hp" label="No. Telp HP" value="{{ old('telp_hp', $item->telp_hp) }}" />
                                                         <x-form.input className="col-md-4 mt-2" type="email" name="email" label="Email" value="{{ old('email', $item->email) }}" />
+
+                                                        <hr class="mt-2">
+
+                                                        <x-form.input className="col-md-6" type="text" name="email" label="LSP" disabled value="{{ $item->asesmen->nama_lsp }}" />
+
+                                                        <div class="col-md-6">
+                                                            <label for="asesmen_ref" class="form-label">Jadwal Asesmen</label>
+                                                            <select class="rounded-3 form-select" id="asesmen_ref" name="asesmen_ref">
+                                                                <option value="" disabled selected>Pilih Jadwal Asesmen</option>
+                                                                @php
+                                                                    $jadwalLsp = $jadwalAsesmen[$item->kegiatan_ref][$item->asesmen->nama_lsp] ?? [];
+                                                                @endphp
+                                                                @foreach ($jadwalLsp as $jadwal)
+                                                                    <option value="{{ $jadwal->ref }}" {{ $item->asesmen_ref == $jadwal->ref ? 'selected' : '' }}>
+                                                                        {{ \Carbon\Carbon::parse($jadwal->jadwal_asesmen)->locale('id')->translatedFormat('l, d F Y') }} - {{ $jadwal->nama_skema }} (TUK: {{ $jadwal->nama_tuk }})
+                                                                    </option>
+                                                                @endforeach
+                                                            </select>
+                                                            <small class="text-muted text-xs">Opsi jadwal disesuaikan dengan LSP pilihan Anda.</small>
+                                                        </div>
 
                                                         {{-- File Upload Section --}}
                                                         <div class="col-12 mt-3">

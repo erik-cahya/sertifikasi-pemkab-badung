@@ -385,6 +385,17 @@ class AsesiController extends Controller
 
         $asesi = $query->orderBy('created_at', 'desc')->get();
 
+        // Ambil ID Kegiatan unik dari list Asesi untuk digunakan sebagai filter Jadwal Asesmen
+        // Mencegah query N+1 apabila terdapat ribuan asesi.
+        $kegiatanRefs = $asesi->pluck('kegiatan_ref')->unique();
+
+        $jadwalAsesmenQuery = AsesmenModel::whereIn('kegiatan_ref', $kegiatanRefs)->get();
+        // Kelompokkan hasil jadwal berdasarkan Kegiatan dan LSP
+        $jadwalAsesmen = [];
+        foreach ($jadwalAsesmenQuery as $jadwal) {
+            $jadwalAsesmen[$jadwal->kegiatan_ref][$jadwal->nama_lsp][] = $jadwal;
+        }
+
         // Data LSP untuk filter dropdown (khusus dinas/master)
         $dataLsp = ($user->roles !== 'lsp') ? LSPModel::orderBy('lsp_nama')->get() : collect();
 
@@ -395,6 +406,7 @@ class AsesiController extends Controller
             'filterLsp' => $filterLsp ?? '',
             'dataLsp' => $dataLsp,
             'userRole' => $user->roles,
+            'jadwalAsesmen' => $jadwalAsesmen,
         ]);
     }
 
