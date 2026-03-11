@@ -124,7 +124,7 @@
                             <i class="mdi mdi-whatsapp text-dinas" style="font-size: 4rem;;"></i>
                         </div>
                         <h4>Halo! Butuh bantuan?</h4>
-                        <p class="text-muted mb-4">Tim support kami siap membantu Anda. Silakan hubungi kami melalui WhatsApp di nomor berikut:</p>
+                        <p class="text-muted mb-4">Silakan hubungi kami melalui WhatsApp di nomor berikut:</p>
                         <h3 class="mb-4 text-dark fw-bold">+62 823-1779-6561</h3>
                         <a href="https://wa.me/6282317796561" target="_blank" class="btn btn-dinas btn-lg w-100 rounded-pill shadow-sm">
                             <i class="mdi mdi-whatsapp me-2"></i> Chat via WhatsApp
