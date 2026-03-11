@@ -103,7 +103,7 @@
             @include('admin-panel.layouts.footer')
         </div>
 
-        <!-- Floating Contact Support Button -->
+        {{-- <!-- Floating Contact Support Button -->
         <button type="button" class="btn btn-dinas btn-floating-support shadow-lg d-flex align-items-center justify-content-center gap-2" data-bs-toggle="modal" data-bs-target="#supportModal">
             <i class="mdi mdi-whatsapp fs-3"></i>
             <span class="d-none d-md-block fs-5">Bantuan</span>
@@ -132,7 +132,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> --}}
 
     </div>
 
