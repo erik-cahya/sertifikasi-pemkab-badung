@@ -426,7 +426,6 @@
                                             </div>
                                         </div>
 
-
                                         @if ($dataKegiatan->isNotEmpty())
                                             <div class="col-lg-12">
                                                 <div class="mb-2 mt-3">

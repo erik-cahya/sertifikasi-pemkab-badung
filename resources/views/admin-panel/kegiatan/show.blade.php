@@ -258,10 +258,10 @@
                                             <td colspan="7" class="">
                                                 <div class="card mb-0 border-0 shadow-sm">
                                                     <div class="card-body p-0">
-                                                        <div class="card-header bg-dinas text-white d-flex justify-content-between align-items-center" bis_skin_checked="1">
+                                                        <div class="card-header bg-dinas d-flex justify-content-between align-items-center text-white" bis_skin_checked="1">
                                                             <h4 class="card-title mb-0"> Detail Jadwal & Skema</h4>
                                                             <div class="d-flex align-items-center gap-2">
-                                                                <select class="form-select form-select-sm bg-white text-dark month-selector-{{ $kegiatan->ref }}" style="width: 130px;">
+                                                                <select class="form-select-sm text-dark month-selector-{{ $kegiatan->ref }} form-select bg-white" style="width: 130px;">
                                                                     @php
                                                                         $bulanList = [
                                                                             1 => 'Januari',
@@ -282,7 +282,7 @@
                                                                         <option value="{{ $num }}" {{ $num == now()->month ? 'selected' : '' }}>{{ $nama }}</option>
                                                                     @endforeach
                                                                 </select>
-                                                                <select class="form-select form-select-sm bg-white text-dark year-selector-{{ $kegiatan->ref }}" style="width: 90px;">
+                                                                <select class="form-select-sm text-dark year-selector-{{ $kegiatan->ref }} form-select bg-white" style="width: 90px;">
                                                                     @for ($y = now()->year - 2; $y <= now()->year + 1; $y++)
                                                                         <option value="{{ $y }}" {{ $y == now()->year ? 'selected' : '' }}>{{ $y }}</option>
                                                                     @endfor
@@ -317,7 +317,7 @@
                                                                     <tr class="{{ count($dataAsesi[$asesmen->ref] ?? []) != $asesmen->kuota_harian ? 'bg-warning' : '' }}">
                                                                         <td class="text-center">{{ $loop->iteration }}</td>
                                                                         <td>{{ count($dataAsesi[$asesmen->ref] ?? []) }} / {{ $asesmen->kuota_harian }} Orang</td>
-                                                                        <td class="{{ count($dataAsesi[$asesmen->ref] ?? []) >= 1 ? 'fw-bold' : '' }}">{{ \Carbon\Carbon::parse($asesmen->jadwal_asesmen)->locale('id')->translatedFormat('l, d F Y') }}</td>
+                                                                        <td class="{{ count($dataAsesi[$asesmen->ref] ?? []) >= 1 ? '' : '' }}">{{ \Carbon\Carbon::parse($asesmen->jadwal_asesmen)->locale('id')->translatedFormat('l, d F Y') }}</td>
                                                                         <td>{{ $asesmen->nama_tuk }}</td>
                                                                         <td>{{ $asesmen->nama_skema }}</td>
                                                                         <!-- Download Template -->

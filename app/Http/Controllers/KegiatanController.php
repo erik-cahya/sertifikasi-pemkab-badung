@@ -220,7 +220,7 @@ class KegiatanController extends Controller
             ->whereHas('asesmen', fn($q) => $q->where('kegiatan_ref', $id))
             ->get()
             ->groupBy('asesmen_ref');
-        $data['jadwalKegiatan'] = $data['dataKegiatan']->jadwalAsesmen->groupBy('nama_lsp');
+        $data['jadwalKegiatan'] = $data['dataKegiatan']->jadwalAsesmen->sortBy('jadwal_asesmen')->groupBy('nama_lsp');
 
         return view('admin-panel.kegiatan.show', $data);
     }

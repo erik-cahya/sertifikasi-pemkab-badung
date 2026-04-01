@@ -53,7 +53,9 @@ class AsesiController extends Controller
             ->pluck('total', 'asesmen_ref');
 
 
-        $dataJadwal = AsesmenModel::where('kegiatan_ref', $request->kegiatan_ref)->where('nama_lsp', $request->lsp_ref)
+        $dataJadwal = AsesmenModel::where('kegiatan_ref', $request->kegiatan_ref)
+            ->where('nama_lsp', $request->lsp_ref)
+            ->orderBy('jadwal_asesmen', 'asc')
             ->get()
             ->map(function ($asesmen) use ($asesiPerAsesmen) {
                 $terpakai = $asesiPerAsesmen[$asesmen->ref] ?? 0;
