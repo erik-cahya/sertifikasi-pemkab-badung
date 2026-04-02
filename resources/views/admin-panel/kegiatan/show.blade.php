@@ -432,7 +432,9 @@
                                                                                             @foreach ($dataAsesi[$asesmen->ref] ?? [] as $asesi)
                                                                                                 <tr>
                                                                                                     <td class="text-center">{{ $loop->iteration }}</td>
-                                                                                                    <td>{{ $asesi->nama_lengkap }}</td>
+                                                                                                    <td>
+                                                                                                        <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#editModal-{{ $asesi->ref }}"> {{ $asesi->nama_lengkap }}</a>
+                                                                                                    </td>
                                                                                                     <td>{{ $asesi->nama_perusahaan }}</td>
                                                                                                     <td>
                                                                                                         <span @role('lsp') class="edited text-primary" style="cursor: pointer; border-bottom: 1px dashed #007bff; padding-bottom: 2px" @endrole id="no_sertifikat" ref="{{ $asesi->ref }}" data-value="{{ $asesi->no_sertifikat }}">
@@ -460,6 +462,132 @@
                                                                                                         </span>
                                                                                                     </td>
                                                                                                 </tr>
+
+                                                                                                <!-- Edit Data Modal -->
+                                                                                                <div id="editModal-{{ $asesi->ref }}" class="modal modal-xl fade" tabindex="-1" role="dialog" aria-labelledby="primary-header-modalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+
+                                                                                                    <div class="modal-dialog">
+                                                                                                        <div class="modal-content">
+                                                                                                            <form action="{{ route('kegiatan.updateAsesi', $asesi->ref) }}" method="POST" enctype="multipart/form-data">
+                                                                                                                @method('PUT')
+                                                                                                                @csrf
+                                                                                                                <div class="modal-header modal-colored-header bg-dinas">
+                                                                                                                    <h4 class="modal-title" id="primary-header-modalLabel">Edit Data Asesi {{ $asesi->nama }}</h4>
+                                                                                                                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                                                                </div>
+                                                                                                                <div class="modal-body">
+                                                                                                                    <div class="row">
+
+                                                                                                                        <x-form.input className="col-md-4 mt-2" type="text" name="nama_lengkap" label="Nama Lengkap" value="{{ old('nama_lengkap', $asesi->nama_lengkap) }}" />
+                                                                                                                        <x-form.input className="col-md-4 mt-2" type="text" name="nik" label="NIK" value="{{ old('nik', $asesi->nik) }}" />
+                                                                                                                        <x-form.input className="col-md-4 mt-2" type="text" name="tempat_lahir" label="Tempat Lahir" value="{{ old('tempat_lahir', $asesi->tempat_lahir) }}" />
+                                                                                                                        <x-form.input className="col-md-4 mt-2" type="date" name="tgl_lahir" label="Tanggal Lahir" value="{{ old('tgl_lahir', $asesi->tgl_lahir) }}" />
+
+                                                                                                                        <div class="col-md-4 mt-2">
+                                                                                                                            <label for="kewarganegaraan" class="form-label">Kewarganegaraan</label><span class="text-danger">*</span>
+                                                                                                                            <select class="rounded-3 form-select" id="kewarganegaraan" name="kewarganegaraan" required>
+                                                                                                                                <option value="" disabled selected>Pilih Kewarganegaraan</option>
+                                                                                                                                <option value="WNI" {{ $asesi->kewarganegaraan === 'WNI' ? 'selected' : '' }}>WNI</option>
+                                                                                                                                <option value="WNA" {{ $asesi->kewarganegaraan === 'WNA' ? 'selected' : '' }}>WNA</option>
+                                                                                                                            </select>
+                                                                                                                        </div>
+
+                                                                                                                        <div class="col-md-4 mt-2">
+                                                                                                                            <label for="jenis_kelamin" class="form-label">Jenis Kelamin</label>
+                                                                                                                            <select class="text-capitalize rounded-3 form-select" id="jenis_kelamin" name="jenis_kelamin">
+                                                                                                                                <option value="#" disabled selected hidden>Pilih Jenis Kelamin</option>
+                                                                                                                                <option value="Laki-laki" {{ $asesi->jenis_kelamin === 'Laki-laki' ? 'selected' : '' }}>Laki-laki</option>
+                                                                                                                                <option value="Perempuan" {{ $asesi->jenis_kelamin === 'Perempuan' ? 'selected' : '' }}>Perempuan</option>
+                                                                                                                            </select>
+                                                                                                                        </div>
+
+                                                                                                                        <x-form.input className="col-md-4 mt-2" type="text" name="alamat" label="Alamat" value="{{ old('alamat', $asesi->alamat) }}" />
+                                                                                                                        <x-form.input className="col-md-4 mt-2" type="text" name="kode_pos" label="Kode Pos" value="{{ old('kode_pos', $asesi->kode_pos) }}" />
+                                                                                                                        <x-form.input className="col-md-4 mt-2" type="text" name="telp_rumah" label="No. Telp Rumah" value="{{ old('telp_rumah', $asesi->telp_rumah) }}" />
+                                                                                                                        <x-form.input className="col-md-4 mt-2" type="text" name="telp_kantor" label="No. Telp Kantor" value="{{ old('telp_kantor', $asesi->telp_kantor) }}" />
+                                                                                                                        <x-form.input className="col-md-4 mt-2" type="text" name="telp_hp" label="No. Telp HP" value="{{ old('telp_hp', $asesi->telp_hp) }}" />
+                                                                                                                        <x-form.input className="col-md-4 mt-2" type="email" name="email" label="Email" value="{{ old('email', $asesi->email) }}" />
+
+                                                                                                                        <hr class="mt-2">
+
+                                                                                                                        <x-form.input className="col-md-6" type="text" name="email" label="LSP" disabled value="{{ $asesi->asesmen->nama_lsp }}" />
+
+                                                                                                                        <div class="col-md-6">
+                                                                                                                            <label for="asesmen_ref" class="form-label">Jadwal Asesmen</label>
+                                                                                                                            <select class="rounded-3 form-select" id="asesmen_ref" name="asesmen_ref">
+                                                                                                                                <option value="" disabled selected>Pilih Jadwal Asesmen</option>
+                                                                                                                                @php
+                                                                                                                                    $jadwalLsp = $jadwalKegiatan[$asesi->asesmen->nama_lsp] ?? [];
+                                                                                                                                @endphp
+                                                                                                                                @foreach ($jadwalLsp as $jadwal)
+                                                                                                                                    <option value="{{ $jadwal->ref }}" {{ $asesi->asesmen_ref == $jadwal->ref ? 'selected' : '' }}>
+                                                                                                                                        {{ \Carbon\Carbon::parse($jadwal->jadwal_asesmen)->locale('id')->translatedFormat('l, d F Y') }} - {{ $jadwal->nama_skema }} (TUK: {{ $jadwal->nama_tuk }})
+                                                                                                                                    </option>
+                                                                                                                                @endforeach
+                                                                                                                            </select>
+                                                                                                                            <small class="text-muted text-xs">Opsi jadwal disesuaikan dengan LSP pilihan Anda.</small>
+                                                                                                                        </div>
+
+                                                                                                                        {{-- File Upload Section --}}
+                                                                                                                        <div class="col-12 mt-3">
+                                                                                                                            <hr>
+                                                                                                                            <h6 class="fw-bold">Upload Dokumen <small class="text-muted">(Kosongkan jika tidak ingin mengubah)</small></h6>
+                                                                                                                        </div>
+
+                                                                                                                        <div class="col-md-4 mt-2">
+                                                                                                                            <label for="ktp_file_{{ $asesi->ref }}" class="form-label">Scan KTP (PDF)</label>
+                                                                                                                            @if (!empty($asesi->ktp_file))
+                                                                                                                                <br><a href="{{ route('files.asesi.ktp', $asesi->ktp_file) }}" target="_blank" class="badge bg-success mb-1"><i class="mdi mdi-file-pdf-box"></i> Lihat File</a>
+                                                                                                                            @endif
+                                                                                                                            <input type="file" id="ktp_file_{{ $asesi->ref }}" class="form-control rounded-3" name="ktp_file" accept=".pdf">
+                                                                                                                        </div>
+
+                                                                                                                        <div class="col-md-4 mt-2">
+                                                                                                                            <label for="ijazah_file_{{ $asesi->ref }}" class="form-label">Ijazah Terakhir (PDF)</label>
+                                                                                                                            @if (!empty($asesi->ijazah_file))
+                                                                                                                                <br><a href="{{ route('files.asesi.ijazah', $asesi->ijazah_file) }}" target="_blank" class="badge bg-success mb-1"><i class="mdi mdi-file-pdf-box"></i> Lihat File</a>
+                                                                                                                            @endif
+                                                                                                                            <input type="file" id="ijazah_file_{{ $asesi->ref }}" class="form-control rounded-3" name="ijazah_file" accept=".pdf">
+                                                                                                                        </div>
+
+                                                                                                                        <div class="col-md-4 mt-2">
+                                                                                                                            <label for="sertikom_file_{{ $asesi->ref }}" class="form-label">Sertifikat Kompetensi (PDF)</label>
+                                                                                                                            @if (!empty($asesi->sertikom_file))
+                                                                                                                                <br><a href="{{ route('files.asesi.sertikom', $asesi->sertikom_file) }}" target="_blank" class="badge bg-success mb-1"><i class="mdi mdi-file-pdf-box"></i> Lihat File</a>
+                                                                                                                            @endif
+                                                                                                                            <input type="file" id="sertikom_file_{{ $asesi->ref }}" class="form-control rounded-3" name="sertikom_file" accept=".pdf">
+                                                                                                                        </div>
+
+                                                                                                                        <div class="col-md-4 mt-2">
+                                                                                                                            <label for="keterangan_kerja_file_{{ $asesi->ref }}" class="form-label">Surat Keterangan Kerja (PDF)</label>
+                                                                                                                            @if (!empty($asesi->keterangan_kerja_file))
+                                                                                                                                <br><a href="{{ route('files.asesi.skb', $asesi->keterangan_kerja_file) }}" target="_blank" class="badge bg-success mb-1"><i class="mdi mdi-file-pdf-box"></i> Lihat File</a>
+                                                                                                                            @endif
+                                                                                                                            <input type="file" id="keterangan_kerja_file_{{ $asesi->ref }}" class="form-control rounded-3" name="keterangan_kerja_file" accept=".pdf">
+                                                                                                                        </div>
+
+                                                                                                                        <div class="col-md-4 mt-2">
+                                                                                                                            <label for="pas_foto_file_{{ $asesi->ref }}" class="form-label">Pas Foto (JPG/PNG)</label>
+                                                                                                                            @if (!empty($asesi->pas_foto_file))
+                                                                                                                                <br><a href="{{ route('files.asesi.pasfoto', $asesi->pas_foto_file) }}" target="_blank" class="badge bg-success mb-1"><i class="mdi mdi-file-image"></i> Lihat File</a>
+                                                                                                                            @endif
+                                                                                                                            <input type="file" id="pas_foto_file_{{ $asesi->ref }}" class="form-control rounded-3" name="pas_foto_file" accept=".jpg,.jpeg,.png">
+                                                                                                                        </div>
+
+                                                                                                                    </div>
+                                                                                                                </div>
+                                                                                                                <div class="modal-footer">
+                                                                                                                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                                                                                                                    <button type="submit" class="btn btn-dinas">Simpan Perubahan</button>
+
+                                                                                                                    <input type="hidden" class="asesiID" value="{{ $asesi->ref }}">
+                                                                                                                    <a href="javascript:void(0)" data-nama="{{ $asesi->nama_lengkap }}" class="btn btn-sm btn-danger deleteButton" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Hapus Data Asesi" data-bs-custom-class="danger-tooltip"><i class="mdi mdi-trash-can"></i></a>
+                                                                                                                </div>
+                                                                                                            </form>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                                <!-- / END Edit Data modal -->
                                                                                             @endforeach
                                                                                         </tbody>
                                                                                     </table>
@@ -1154,6 +1282,61 @@
                         text: xhr.responseJSON?.message ?? 'Gagal menyimpan data'
                     });
                 }
+            });
+        });
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Saat halaman sudah ready
+            const deleteButtons = document.querySelectorAll('.deleteButton');
+
+            deleteButtons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+
+                    let propertyName = this.getAttribute('data-nama');
+                    let asesiID = this.parentElement.querySelector('.asesiID').value;
+
+                    Swal.fire({
+                        title: 'Are you sure?',
+                        text: "Delete data " + propertyName + "?",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Yes, delete it!'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            // Kirim DELETE request manual lewat JavaScript
+                            fetch('/asesiAdmin/' + asesiID, {
+                                    method: 'DELETE',
+                                    headers: {
+                                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                                        'Content-Type': 'application/json'
+                                    }
+                                })
+                                .then(response => response.json())
+                                .then(data => {
+                                    Swal.fire({
+                                        title: data.judul,
+                                        text: data.pesan,
+                                        icon: data.type,
+                                    });
+
+                                    // Optional: reload table / halaman
+                                    setTimeout(() => {
+                                        location.reload();
+                                    }, 1500);
+                                })
+                                .catch(error => {
+                                    console.error('Error:', error);
+                                    Swal.fire('Error', 'Something went wrong!',
+                                        'error');
+                                });
+                        }
+                    });
+                });
             });
         });
     </script>

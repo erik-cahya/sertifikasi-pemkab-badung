@@ -12,8 +12,8 @@
                     {{-- Filter Form --}}
                     <form action="{{ route('asesiAdmin.index') }}" method="GET" class="row g-2 align-items-end mb-3">
                         <div class="col-auto">
-                            <label for="filter_type" class="form-label mb-0 small">Filter berdasarkan</label>
-                            <select class="form-select form-select-sm" id="filter_type" name="filter_type">
+                            <label for="filter_type" class="form-label small mb-0">Filter berdasarkan</label>
+                            <select class="form-select-sm form-select" id="filter_type" name="filter_type">
                                 <option value="">-- Pilih Filter --</option>
                                 <option value="tanggal" {{ ($filterType ?? '') === 'tanggal' ? 'selected' : '' }}>Per Tanggal</option>
                                 <option value="bulan" {{ ($filterType ?? '') === 'bulan' ? 'selected' : '' }}>Per Bulan</option>
@@ -21,13 +21,13 @@
                             </select>
                         </div>
                         <div class="col-auto" id="filter_value_wrapper" style="{{ $filterType ?? '' ? '' : 'display:none;' }}">
-                            <label for="filter_value" class="form-label mb-0 small">Nilai Filter</label>
+                            <label for="filter_value" class="form-label small mb-0">Nilai Filter</label>
                             <input type="{{ ($filterType ?? '') === 'tanggal' ? 'date' : (($filterType ?? '') === 'bulan' ? 'month' : 'number') }}" class="form-control form-control-sm" id="filter_value" name="filter_value" value="{{ $filterValue ?? '' }}" {{ ($filterType ?? '') === 'tahun' ? 'min=2020 max=2030 placeholder=2026' : '' }}>
                         </div>
                         @if (($userRole ?? '') !== 'lsp')
                             <div class="col-auto">
-                                <label for="filter_lsp" class="form-label mb-0 small">Filter LSP</label>
-                                <select class="form-select form-select-sm" id="filter_lsp" name="filter_lsp">
+                                <label for="filter_lsp" class="form-label small mb-0">Filter LSP</label>
+                                <select class="form-select-sm form-select" id="filter_lsp" name="filter_lsp">
                                     <option value="">-- Semua LSP --</option>
                                     @foreach ($dataLsp ?? [] as $lsp)
                                         <option value="{{ $lsp->ref }}" {{ ($filterLsp ?? '') === $lsp->ref ? 'selected' : '' }}>{{ $lsp->lsp_nama }}</option>
@@ -41,7 +41,7 @@
                         </div>
                     </form>
 
-                    <table id="datatable-dashboard" class="table table-sm table-striped nowrap row-border order-column w-100">
+                    <table id="datatable-dashboard" class="table-sm table-striped nowrap row-border order-column w-100 table">
                         <thead>
                             <tr>
                                 <th>Sertifikasi</th>
@@ -197,6 +197,7 @@
                                         @endif
                                     </td>
                                     <td>{{ $item->created_at->format('Y/m/d') }}</td>
+
                                     <td class="text-center">
                                         <button class="btn btn-sm btn-dinas" data-bs-toggle="modal" data-bs-target="#editModal-{{ $item->ref }}"><i class="mdi mdi-pencil"></i></button>
                                     </td>
