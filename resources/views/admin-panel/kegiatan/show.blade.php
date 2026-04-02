@@ -417,6 +417,7 @@
                                                                                             <tr>
                                                                                                 <th>No</th>
                                                                                                 <th>Nama Asesi</th>
+                                                                                                <th>Tempat Bekerja</th>
                                                                                                 <th>Nomor Sertifikat @role('lsp')
                                                                                                         <small class="fw-normal fs-10">( Klik Kolom untuk tambah/edit )</small>
                                                                                                     @endrole
@@ -429,10 +430,10 @@
                                                                                         </thead>
                                                                                         <tbody>
                                                                                             @foreach ($dataAsesi[$asesmen->ref] ?? [] as $asesi)
-                                                                                                {{-- {{ dd($asesi) }} --}}
                                                                                                 <tr>
                                                                                                     <td class="text-center">{{ $loop->iteration }}</td>
                                                                                                     <td>{{ $asesi->nama_lengkap }}</td>
+                                                                                                    <td>{{ $asesi->nama_perusahaan }}</td>
                                                                                                     <td>
                                                                                                         <span @role('lsp') class="edited text-primary" style="cursor: pointer; border-bottom: 1px dashed #007bff; padding-bottom: 2px" @endrole id="no_sertifikat" ref="{{ $asesi->ref }}" data-value="{{ $asesi->no_sertifikat }}">
                                                                                                             @if ($asesi->no_sertifikat != null)
