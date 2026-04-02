@@ -84,7 +84,7 @@ class AsesmenController extends Controller
         $data['kegiatan_lsp_ref'] = $jadwalKegiatan->kegiatan_lsp_ref;
 
 
-        $queryDtAsesmen = AsesmenModel::where('kegiatan_ref', $id)->withCount('asesis');
+        $queryDtAsesmen = AsesmenModel::where('kegiatan_ref', $id)->withCount('asesis')->orderBy('jadwal_asesmen', 'asc');
 
         if ($user->roles === 'lsp' && $user->lspData) {
             $queryDtAsesmen->where('nama_lsp', $user->lspData->lsp_nama);

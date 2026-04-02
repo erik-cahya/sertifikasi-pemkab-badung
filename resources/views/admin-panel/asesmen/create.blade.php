@@ -46,7 +46,7 @@
                                         <div class="row">
                                             <div class="col-lg-4 mb-3">
                                                 <label for="nama_tuk" class="form-label">Pilih TUK</label>
-                                                <select class="select2 @error('nama_tuk') is-invalid @enderror form-select rounded-3" data-toggle="select2" id="nama_tuk" name="nama_tuk">
+                                                <select class="select2 @error('nama_tuk') is-invalid @enderror rounded-3 form-select" data-toggle="select2" id="nama_tuk" name="nama_tuk">
                                                     <option value="#" hidden disabled selected>Pilih TUK</option>
                                                     @foreach ($dataTUK as $tuk)
                                                         <option value="{{ $tuk->tuk_nama }}">{{ $tuk->tuk_nama }}</option>
@@ -70,7 +70,7 @@
                                             </div>
                                             <div class="col-lg-4 mb-3">
                                                 <label for="skema_sertifikasi" class="form-label">Skema Sertifikasi</label>
-                                                <select class="select2 @error('skema_sertifikasi') is-invalid @enderror form-select rounded-3" data-toggle="select2" id="skema_sertifikasi" name="skema_sertifikasi">
+                                                <select class="select2 @error('skema_sertifikasi') is-invalid @enderror rounded-3 form-select" data-toggle="select2" id="skema_sertifikasi" name="skema_sertifikasi">
                                                     <option value="#" hidden disabled selected>Pilih Skema</option>
                                                     @foreach ($dataSkema as $dtSkema)
                                                         <option value="{{ $dtSkema->skema->skema_judul }}">{{ $dtSkema->skema->skema_judul }}</option>
