@@ -43,6 +43,11 @@ Route::middleware('auth')->group(function () {
     Route::get('kegiatan/create', [KegiatanController::class, 'create'])->name('kegiatan.create');
     Route::get('kegiatan/add-lsp/{id}', [KegiatanController::class, 'add_lsp'])->name('kegiatan.add-lsp');
     Route::post('kegiatan/store', [KegiatanController::class, 'store'])->name('kegiatan.store');
+    
+    // Add & Remove Skema Kegiatan (Must be ABOVE kegiatan/{id})
+    Route::post('kegiatan/add-skema', [KegiatanController::class, 'addSkema'])->name('kegiatan.add-skema')->middleware('role:dinas,master');
+    Route::delete('kegiatan/remove-skema', [KegiatanController::class, 'removeSkema'])->name('kegiatan.remove-skema')->middleware('role:dinas,master');
+
     Route::get('kegiatan/{id}', [KegiatanController::class, 'show'])->name('kegiatan.show');
     Route::put('kegiatan/{id}', [KegiatanController::class, 'update'])->name('kegiatan.update');
     Route::delete('kegiatan/{id}', [KegiatanController::class, 'destroy'])->name('kegiatan.destroy');
@@ -53,9 +58,8 @@ Route::middleware('auth')->group(function () {
     Route::post('kegiatan/uploadLaporanAsesmen', [KegiatanController::class, 'uploadLaporanAsesmen'])->name('kegiatan.uploadLaporanAsesmen');
     Route::post('kegiatan/uploadBuktiTerimaSertifikat', [KegiatanController::class, 'uploadBuktiTerimaSertifikat'])->name('kegiatan.uploadBuktiTerimaSertifikat');
     Route::post('kegiatan/storePenandatangan', [KegiatanController::class, 'storePenandatangan'])->name('kegiatan.storePenandatangan');
-    Route::put('kegiatan/updateAsesi/{id}', [KegiatanController::class, 'updateAsesi'])->name('kegiatan.updateAsesi');
-
-
+    Route::post('kegiatan/updateAsesi/{id}', [KegiatanController::class, 'updateAsesi'])->name('kegiatan.updateAsesi');
+    
     Route::get('asesmen/create/{id}', [AsesmenController::class, 'create'])->name('asesmen.create');
     Route::post('asesment', [AsesmenController::class, 'store'])->name('asesmen.store');
     Route::delete('asesmen/{id}', [AsesmenController::class, 'destroy'])->name('asesmen.destroy');

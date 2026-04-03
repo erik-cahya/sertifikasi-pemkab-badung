@@ -138,12 +138,24 @@
                                             <td>{{ $loop->iteration }}</td>
                                             <td>{{ $kegiatan->lsp->lsp_nama }}</td>
                                             <td width="500px">
-
-                                                @foreach ($dataSkema[$kegiatan->lsp->ref] as $skema)
-                                                    <span class="badge bg-primary-subtle text-primary">
-                                                        {{ $skema->skema_judul }}
-                                                    </span>
-                                                @endforeach
+                                                <div class="d-flex mb-1 flex-wrap gap-1">
+                                                    @foreach ($dataSkema[$kegiatan->lsp->ref] ?? [] as $skema)
+                                                        <span class="badge bg-primary-subtle text-primary d-inline-flex align-items-center">
+                                                            {{ $skema->skema_judul }}
+                                                            @role('dinas', 'master')
+                                                                <button type="button" class="btn-close fs-10 btn-remove-skema ms-2"
+                                                                    style="font-size: 0.5rem;"
+                                                                    data-lsp="{{ $kegiatan->lsp->ref }}"
+                                                                    data-skema="{{ $skema->ref }}"
+                                                                    data-namaskema="{{ $skema->skema_judul }}"
+                                                                    aria-label="Remove"></button>
+                                                            @endrole
+                                                        </span>
+                                                    @endforeach
+                                                </div>
+                                                @role('dinas', 'master')
+                                                    <button class="btn btn-xs btn-outline-success mt-1 shadow-sm" style="padding: 5px; font-size: 10px;" data-bs-toggle="modal" data-bs-target="#addSkemaModal-{{ $kegiatan->lsp->ref }}"><i class="mdi mdi-plus"></i> Tambah Skema</button>
+                                                @endrole
                                             </td>
 
                                             <td>
@@ -656,6 +668,36 @@
                         <button type="button" class="btn btn-light" data-bs-dismiss="modal">Tutup</button>
                         <button type="button" class="btn btn-warning btn-save-penandatangan">Simpan</button>
                     </div>
+                </div>
+            </div>
+        </div>
+
+        {{-- Add Skema Modal --}}
+        <div id="addSkemaModal-{{ $kegiatan->lsp->ref }}" class="modal fade" tabindex="-1" aria-hidden="true" data-bs-backdrop="static">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form action="{{ route('kegiatan.add-skema') }}" method="POST">
+                        @csrf
+                        <div class="modal-header bg-primary text-white">
+                            <h5 class="modal-title">Tambah Skema - {{ $kegiatan->lsp->lsp_nama }}</h5>
+                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body">
+                            <input type="hidden" name="kegiatan_ref" value="{{ $dataKegiatan->ref }}">
+                            <input type="hidden" name="lsp_ref" value="{{ $kegiatan->lsp->ref }}">
+
+                            <div class="mb-3">
+                                <label class="form-label fw-semibold">Pilih Skema</label>
+                                <select name="skema_ref[]" class="select2-dynamic form-select" data-lsp="{{ $kegiatan->lsp->ref }}" data-assigned='@json(collect($dataSkema[$kegiatan->lsp->ref] ?? [])->pluck('ref'))' multiple="multiple" required style="width: 100%;">
+                                </select>
+                                <small class="text-muted d-block mt-1">Anda bisa memilih lebih dari satu skema.</small>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-light" data-bs-dismiss="modal">Batal</button>
+                            <button type="submit" class="btn btn-primary"><i class="mdi mdi-check"></i> Tambahkan</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -1336,6 +1378,99 @@
                                 });
                         }
                     });
+                });
+            });
+        });
+
+        // ==========================================
+        // FITUR TAMBAH DAN HAPUS SKEMA PER-LSP
+        // ==========================================
+
+        $(document).ready(function() {
+            // Load dropdown options untuk Tambah Skema saat Modal dibuka
+            $('.modal').on('show.bs.modal', function(e) {
+                var $modal = $(this);
+                var $select = $modal.find('.select2-dynamic');
+
+                if ($select.length > 0 && !$select.hasClass('loaded')) {
+                    var lspRef = $select.data('lsp');
+                    $select.html('<option disabled>Loading skema...</option>');
+
+                    $.ajax({
+                        url: '/ajax/skema-by-lsp/' + lspRef,
+                        type: 'GET',
+                        success: function(res) {
+                            var assignedRefs = $select.data('assigned') || [];
+                            var options = '';
+                            res.forEach(function(item) {
+                                if (!assignedRefs.includes(item.ref)) {
+                                    options += '<option value="' + item.ref + '">' + item.skema_judul + '</option>';
+                                }
+                            });
+
+                            if (options === '') {
+                                $select.html('<option disabled>Seluruh skema LSP ini sudah ditambahkan (tidak ada skema baru)</option>');
+                            } else {
+                                $select.html(options);
+                            }
+
+                            $select.select2({
+                                dropdownParent: $modal,
+                                placeholder: '--- Pilih Skema yang ingin ditambahkan ---',
+                                allowClear: true
+                            });
+                            $select.addClass('loaded');
+                        },
+                        error: function() {
+                            $select.html('<option disabled>Gagal mengambil data</option>');
+                        }
+                    });
+                }
+            });
+
+            // Handle fungsi Hapus Skema
+            $(document).on('click', '.btn-remove-skema', function(e) {
+                e.preventDefault();
+                let lsp_ref = $(this).data('lsp');
+                let skema_ref = $(this).data('skema');
+                let skema_nama = $(this).data('namaskema');
+                let kegiatan_ref = '{{ $dataKegiatan->ref }}';
+
+                Swal.fire({
+                    title: 'Hapus Skema?',
+                    text: 'Anda yakin ingin menghapus skema "' + skema_nama + '" dari LSP ini?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#3085d6',
+                    confirmButtonText: 'Ya, hapus!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url: '{{ route('kegiatan.remove-skema') }}',
+                            type: 'DELETE',
+                            data: {
+                                _token: '{{ csrf_token() }}',
+                                kegiatan_ref: kegiatan_ref,
+                                lsp_ref: lsp_ref,
+                                skema_ref: skema_ref
+                            },
+                            success: function(res) {
+                                Swal.fire({
+                                    icon: res.type,
+                                    title: res.judul,
+                                    text: res.pesan,
+                                    timer: 1500,
+                                    showConfirmButton: false
+                                }).then(() => {
+                                    location.reload();
+                                });
+                            },
+                            error: function(err) {
+                                Swal.fire('Error', 'Gagal menghapus skema', 'error');
+                            }
+                        });
+                    }
                 });
             });
         });

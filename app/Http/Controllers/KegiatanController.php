@@ -624,4 +624,58 @@ class KegiatanController extends Controller
         ];
         return redirect()->back()->with('flashData', $flashData);
     }
+
+    public function addSkema(Request $request)
+    {
+        \Illuminate\Support\Facades\Log::info("addSkema triggered: ", $request->all());
+        $request->validate([
+            'kegiatan_ref' => 'required|string',
+            'lsp_ref'      => 'required|string',
+            'skema_ref'    => 'required|array|min:1',
+        ]);
+
+        foreach ($request->skema_ref as $skemaId) {
+            // Check if already exists
+            $exists = KegiatanSkemaModel::where('kegiatan_ref', $request->kegiatan_ref)
+                ->where('lsp_ref', $request->lsp_ref)
+                ->where('skema_ref', $skemaId)
+                ->exists();
+
+            if (!$exists) {
+                KegiatanSkemaModel::create([
+                    'kegiatan_ref' => $request->kegiatan_ref,
+                    'lsp_ref'      => $request->lsp_ref,
+                    'skema_ref'    => $skemaId,
+                    'created_by'   => Auth::user()->ref ?? 'unknown',
+                ]);
+            }
+        }
+
+        return redirect()->back()->with('flashData', [
+            'type'    => 'success',
+            'title'   => 'Skema Berhasil Ditambahkan',
+            'message' => 'Skema baru telah ditambahkan ke Kegiatan ini.'
+        ]);
+    }
+
+    public function removeSkema(Request $request)
+    {
+        \Illuminate\Support\Facades\Log::info("removeSkema triggered: ", $request->all());
+        $request->validate([
+            'kegiatan_ref' => 'required|string',
+            'lsp_ref'      => 'required|string',
+            'skema_ref'    => 'required|string',
+        ]);
+
+        KegiatanSkemaModel::where('kegiatan_ref', $request->kegiatan_ref)
+            ->where('lsp_ref', $request->lsp_ref)
+            ->where('skema_ref', $request->skema_ref)
+            ->delete();
+
+        return response()->json([
+            'type'  => 'success',
+            'judul' => 'Skema Berhasil Dihapus',
+            'pesan' => 'Skema telah dikeluarkan dari Kegiatan ini.'
+        ]);
+    }
 }
