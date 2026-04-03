@@ -159,7 +159,10 @@
                                             </td>
 
                                             <td>
-                                                {{ $kegiatan->kuota_lsp ?? 0 }} Orang
+                                                @php
+                                                    $terdaftar = $dataKegiatan->asesi->where('lsp_ref', $kegiatan->lsp->ref)->count();
+                                                @endphp
+                                                {{ $terdaftar }} / {{ $kegiatan->kuota_lsp ?? 0 }} Orang
                                             </td>
 
                                             <td>
