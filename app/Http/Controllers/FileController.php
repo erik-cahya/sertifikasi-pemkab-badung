@@ -321,9 +321,9 @@ class FileController extends Controller
 
         // Cari di AsesmenModel
         $asesmen = AsesmenModel::where(function ($query) use ($filename) {
-            $query->where('bukti_asesmen', 'LIKE', "%{$filename}")
-                ->orWhere('dokumentasi_asesmen', 'LIKE', "%{$filename}")
-                ->orWhere('bukti_terima_sertifikat', 'LIKE', "%{$filename}");
+            $query->where('bukti_asesmen', 'LIKE', "{$filename}")
+                ->orWhere('dokumentasi_asesmen', 'LIKE', "{$filename}")
+                ->orWhere('bukti_terima_sertifikat', 'LIKE', "{$filename}");
         })->first();
 
         if ($asesmen) {

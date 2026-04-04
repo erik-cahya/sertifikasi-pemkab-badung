@@ -92,12 +92,13 @@
         }
     </style>
 </head>
+
+<body>
 @foreach ($asesmen as $item)
     @php
         $maxRow = 10;
     @endphp
 
-    <body>
         {{-- ############# DAFTAR HADIR ASESI --}}
 
         {{-- HEADER --}}
@@ -166,6 +167,9 @@
                 @endfor
             </tbody>
         </table>
+        @if (!$loop->last)
+            <div class="page-break"></div>
+        @endif
 @endforeach
 </body>
 

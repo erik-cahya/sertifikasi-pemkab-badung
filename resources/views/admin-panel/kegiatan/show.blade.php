@@ -143,12 +143,7 @@
                                                         <span class="badge bg-primary-subtle text-primary d-inline-flex align-items-center">
                                                             {{ $skema->skema_judul }}
                                                             @role('dinas', 'master')
-                                                                <button type="button" class="btn-close fs-10 btn-remove-skema ms-2"
-                                                                    style="font-size: 0.5rem;"
-                                                                    data-lsp="{{ $kegiatan->lsp->ref }}"
-                                                                    data-skema="{{ $skema->ref }}"
-                                                                    data-namaskema="{{ $skema->skema_judul }}"
-                                                                    aria-label="Remove"></button>
+                                                                <button type="button" class="btn-close fs-10 btn-remove-skema ms-2" style="font-size: 0.5rem;" data-lsp="{{ $kegiatan->lsp->ref }}" data-skema="{{ $skema->ref }}" data-namaskema="{{ $skema->skema_judul }}" aria-label="Remove"></button>
                                                             @endrole
                                                         </span>
                                                     @endforeach
