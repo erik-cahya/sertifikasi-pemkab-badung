@@ -31,7 +31,7 @@ class PDFController extends Controller
 
         return Pdf::loadView('admin-panel.pdf.daftar-hadir', compact('asesmen'))
             ->setPaper('A4', 'portrait')
-            ->download('Daftar-Hadir.pdf');
+            ->download('Daftar-Hadir_' . $asesmen->first()->nama_lsp . '.pdf');
     }
 
     public function daftarPenerimaan($id)
@@ -49,7 +49,7 @@ class PDFController extends Controller
 
         return Pdf::loadView('admin-panel.pdf.daftar-penerimaan', compact('asesmen'))
             ->setPaper('A4', 'landscape')
-            ->download('Daftar-Penerimaan.pdf');
+            ->download('Daftar-Penerimaan_' . $asesmen->first()->nama_lsp . '.pdf');
     }
 
     public function tandaTerimaSertifikat($id)
@@ -67,7 +67,7 @@ class PDFController extends Controller
 
         return Pdf::loadView('admin-panel.pdf.tanda-terima-sertifikat', compact('asesmen'))
             ->setPaper('A4', 'portrait')
-            ->download('Tanda-Terima-Sertifikat.pdf');
+            ->download('Tanda-Terima-Sertifikat_' . $asesmen->first()->nama_lsp . '.pdf');
     }
 
     public function jadwalAsesmen(Request $request)
