@@ -109,7 +109,7 @@
                 </td>
                 <td width="75%" class="center">
                     <div class="title">DINAS PERINDUSTRIAN & TENAGA KERJA KABUPATEN BADUNG</div>
-                    <div class="title">TANDA TERIMA SERTIFIKAT</div>
+                    <div class="title">DAFTAR PENERIMA SERTIFIKAT</div>
                     <div class="title">KEGIATAN UJI KOMPETENSI TENAGA KERJA TAHUN <span class="value">{{ date('Y', strtotime($item->jadwal_asesmen)) }}</span></div>
                 </td>
                 <td width="15%" class="center">
