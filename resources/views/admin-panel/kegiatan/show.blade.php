@@ -118,8 +118,9 @@
                 <div class="card" bis_skin_checked="1">
                     <h5 class="card-header bg-dinas text-white">Data Peserta</h5>
                     <div class="card-body" bis_skin_checked="1">
+
                         <div class="table-responsive">
-                            <table class="table-sm table-bordered w-100 table">
+                            <table class="table-sm table-bordered w-100 table text-nowrap" style="font-size: 12px">
                                 <thead class="text-center align-middle">
                                     <tr>
                                         <th>No</th>
@@ -652,6 +653,7 @@
                                 </tbody>
                             </table>
                         </div>
+
                     </div>
                 </div>
             </div>

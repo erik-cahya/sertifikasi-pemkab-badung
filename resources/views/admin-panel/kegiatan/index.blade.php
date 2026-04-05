@@ -15,8 +15,8 @@
                                 <th>Nama Kegiatan</th>
                                 @role('master', 'dinas')
                                     <th>LSP Terlibat</th>
-                                    <th>Kuota Peserta</th>
                                 @endrole
+                                <th>Peserta Terdaftar</th>
                                 <th>Mulai Kegiatan</th>
                                 <th>Kegiatan Selesai</th>
                                 <th>Status Kegiatan</th>
@@ -44,7 +44,7 @@
 
                                             @endphp
 
-                                            <div class="d-flex flex-column gap-1">
+                                            <div class="d-flex flex-wrap gap-1" style="font-size: 12px; width: 400px;">
                                                 @if ($lsps->isEmpty())
                                                     <span class="badge bg-danger-subtle text-danger">
                                                         Tidak ada LSP yang terlibat
@@ -58,8 +58,11 @@
                                                 @endif
                                             </div>
                                         </td>
-                                        <td>{{ $kegiatan->total_kuota ?? '0' }} Peserta</td>
                                     @endrole
+                                    <td>
+
+                                        {{ $kegiatan->asesi_count ?? 0 }} / {{ $kegiatan->total_kuota ?? 0 }}
+                                    </td>
                                     <td>{{ \Carbon\Carbon::parse($kegiatan->mulai_kegiatan)->locale('id')->translatedFormat('l, d F Y') }}</td>
                                     <td>{{ \Carbon\Carbon::parse($kegiatan->selesai_kegiatan)->locale('id')->translatedFormat('l, d F Y') }}</td>
                                     <td class="text-center"><span class="badge {{ $kegiatan->status == 1 ? 'bg-success' : 'bg-danger' }}">{{ $kegiatan->status == 1 ? 'Aktif' : 'Tidak Aktif' }}</span></td>
