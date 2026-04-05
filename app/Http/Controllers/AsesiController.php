@@ -8,6 +8,7 @@ use App\Models\JabatanModel;
 use App\Models\KegiatanModel;
 use App\Models\AsesiModel;
 use App\Models\AsesmenModel;
+use App\Models\KegiatanJadwalModel;
 use App\Models\KegiatanLSPModel;
 use App\Models\KegiatanSkemaModel;
 use App\Models\TUKModel;
@@ -210,19 +211,36 @@ class AsesiController extends Controller
             }
         }
 
-        // Validasi Kuota LSP (Jika LSP di bypass user)
-        $kegiatanRef = $request->kegiatan_ref;
-        $lspRef      = $request->lsp_ref;
+        // =============================== ByPass Kuota ===============================
+        // Ambil Data UUID LSP
+        $lspData = LSPModel::where('lsp_nama', $request->lsp_ref)->select('ref')->first();
+        $realLspRef = $lspData ? $lspData->ref : null;
 
+        if ($realLspRef) {
+            // Validasi Kuota LSP (Jika LSP di bypass user)
+            $kegiatanRef = $request->kegiatan_ref;
+            $kuotaLsp = KegiatanJadwalModel::where('kegiatan_ref', $kegiatanRef)->where('lsp_ref', $realLspRef)->value('kuota_lsp');
+            $totalAsesiLsp = AsesiModel::where('kegiatan_ref', $kegiatanRef)->where('lsp_ref', $realLspRef)->count();
 
-        // $kuotaLsp = KegiatanLSPModel::where('kegiatan_ref', $kegiatanRef)->where('lsp_ref', $lspRef)->value('kuota_lsp');
-        // $totalAsesi = AsesiModel::where('kegiatan_ref', $kegiatanRef)->where('lsp_ref', $lspRef)->count();
+            if (!is_null($kuotaLsp) && $totalAsesiLsp >= $kuotaLsp) {
+                throw ValidationException::withMessages([
+                    'lsp_ref' => 'Kuota LSP sudah penuh',
+                ]);
+            }
+        }
 
-        // if ($totalAsesi >= $kuotaLsp) {
-        //     throw ValidationException::withMessages([
-        //         'lsp_ref' => 'Kuota LSP sudah penuh',
-        //     ]);
-        // }
+        // Validasi Kuota Jadwal Asesmen (Jika Jadwal di bypass user)
+        if ($request->filled('asesmen_ref')) {
+            $asesmen = AsesmenModel::where('ref', $request->asesmen_ref)->first();
+            if ($asesmen) {
+                $totalAsesiAsesmen = AsesiModel::where('asesmen_ref', $request->asesmen_ref)->count();
+                if ($totalAsesiAsesmen >= $asesmen->kuota_harian) {
+                    throw ValidationException::withMessages([
+                        'asesmen_ref' => 'Kuota Jadwal Asesmen sudah penuh',
+                    ]);
+                }
+            }
+        }
 
         // ================== SIMPAN FILE ==================
         $nik  = $request->nik;
@@ -292,12 +310,12 @@ class AsesiController extends Controller
 
 
         // AsesiModel::create($validated);
-        $lspData = LSPModel::where('lsp_nama', $request->lsp_ref)->select('ref')->first();
+        // $lspData sudah diambil di bagian validasi kuota di atas
 
 
         AsesiModel::create([
             'kegiatan_ref' => $request->kegiatan_ref,
-            'lsp_ref' => $lspData->ref,
+            'lsp_ref' => $realLspRef,
             'asesmen_ref' => $request->asesmen_ref,
 
             'nama_lengkap' => $request->nama_lengkap,
