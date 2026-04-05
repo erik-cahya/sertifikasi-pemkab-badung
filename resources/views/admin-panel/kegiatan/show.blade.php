@@ -120,7 +120,7 @@
                     <div class="card-body" bis_skin_checked="1">
 
                         <div class="table-responsive">
-                            <table class="table-sm table-bordered w-100 table text-nowrap" style="font-size: 12px">
+                            <table class="table-sm table-bordered w-100 table " style="font-size: 12px">
                                 <thead class="text-center align-middle">
                                     <tr>
                                         <th>No</th>
@@ -529,19 +529,7 @@
                                                                                                                         <div class="col-md-6">
                                                                                                                             <label for="asesmen_ref" class="form-label">Jadwal Asesmen</label>
 
-                                                                                                                            {{-- <select class="rounded-3 form-select" id="asesmen_ref" name="asesmen_ref">
-                                                                                                                                <option value="" disabled selected>Pilih Jadwal Asesmen</option>
-                                                                                                                                @php
-                                                                                                                                    $jadwalLsp = $jadwalKegiatan[$asesi->asesmen->nama_lsp] ?? [];
-                                                                                                                                @endphp
-                                                                                                                                @foreach ($jadwalLsp as $jadwal)
-                                                                                                                                    <option value="{{ $jadwal->ref }}" {{ $asesi->asesmen_ref == $jadwal->ref ? 'selected' : '' }}>
-                                                                                                                                        {{ \Carbon\Carbon::parse($jadwal->jadwal_asesmen)->locale('id')->translatedFormat('l, d F Y') }} - {{ $jadwal->nama_skema }} (TUK: {{ $jadwal->nama_tuk }})
-                                                                                                                                    </option>
-                                                                                                                                @endforeach
-                                                                                                                            </select> --}}
-
-                                                                                                                            <select class="form-control select2" data-toggle="select2" name="asesmen_ref" id="asesmen_ref_{{ $asesi->ref }}">
+                                                                                                                            <select class="form-control select2 w-100" style="width: 100%;" data-toggle="select2" name="asesmen_ref" id="asesmen_ref_{{ $asesi->ref }}">
                                                                                                                                 <option value="" disabled selected>Pilih Jadwal Asesmen</option>
                                                                                                                                 @php
                                                                                                                                     $semuaJadwal = \App\Models\AsesmenModel::where('nama_lsp', $asesi->asesmen->nama_lsp)
