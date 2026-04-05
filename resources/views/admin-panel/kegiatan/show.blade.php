@@ -1,5 +1,8 @@
 @extends('admin-panel.layouts.app')
 @push('style')
+    <!-- Select2 css -->
+    <link href="{{ asset('admin') }}/assets/vendor/select2/css/select2.min.css" rel="stylesheet" type="text/css" />
+
     <style>
         .kegiatan-item {
             border-radius: 8px;
@@ -474,7 +477,7 @@
                                                                                                 </tr>
 
                                                                                                 <!-- Edit Data Modal -->
-                                                                                                <div id="editModal-{{ $asesi->ref }}" class="modal modal-xl fade" tabindex="-1" role="dialog" aria-labelledby="primary-header-modalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+                                                                                                <div id="editModal-{{ $asesi->ref }}" class="modal modal-xl fade" role="dialog" aria-labelledby="primary-header-modalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
 
                                                                                                     <div class="modal-dialog">
                                                                                                         <div class="modal-content">
@@ -524,7 +527,8 @@
 
                                                                                                                         <div class="col-md-6">
                                                                                                                             <label for="asesmen_ref" class="form-label">Jadwal Asesmen</label>
-                                                                                                                            <select class="rounded-3 form-select" id="asesmen_ref" name="asesmen_ref">
+
+                                                                                                                            {{-- <select class="rounded-3 form-select" id="asesmen_ref" name="asesmen_ref">
                                                                                                                                 <option value="" disabled selected>Pilih Jadwal Asesmen</option>
                                                                                                                                 @php
                                                                                                                                     $jadwalLsp = $jadwalKegiatan[$asesi->asesmen->nama_lsp] ?? [];
@@ -534,7 +538,39 @@
                                                                                                                                         {{ \Carbon\Carbon::parse($jadwal->jadwal_asesmen)->locale('id')->translatedFormat('l, d F Y') }} - {{ $jadwal->nama_skema }} (TUK: {{ $jadwal->nama_tuk }})
                                                                                                                                     </option>
                                                                                                                                 @endforeach
+                                                                                                                            </select> --}}
+
+                                                                                                                            <select class="form-control select2" data-toggle="select2" name="asesmen_ref" id="asesmen_ref_{{ $asesi->ref }}">
+                                                                                                                                <option value="" disabled selected>Pilih Jadwal Asesmen</option>
+                                                                                                                                @php
+                                                                                                                                    $semuaJadwal = \App\Models\AsesmenModel::where('nama_lsp', $asesi->asesmen->nama_lsp)
+                                                                                                                                        ->has('kegiatan')
+                                                                                                                                        ->with('kegiatan')
+                                                                                                                                        ->withCount('asesis')
+                                                                                                                                        ->orderBy('jadwal_asesmen', 'ASC')
+                                                                                                                                        ->get()
+                                                                                                                                        ->groupBy(function ($item) {
+                                                                                                                                            return $item->kegiatan->nama_kegiatan;
+                                                                                                                                        });
+                                                                                                                                @endphp
+
+                                                                                                                                @foreach ($semuaJadwal as $namaKegiatan => $jadwals)
+                                                                                                                                    <optgroup label="{{ $namaKegiatan }}">
+                                                                                                                                        @foreach ($jadwals as $jadwal)
+                                                                                                                                            @php
+                                                                                                                                                $isFull = $jadwal->asesis_count >= $jadwal->kuota_harian;
+                                                                                                                                                $statusQuota = $isFull ? '(PENUH)' : '(Kuota: ' . ($jadwal->kuota_harian - $jadwal->asesis_count) . ')';
+                                                                                                                                                $isSelected = $asesi->asesmen_ref == $jadwal->ref;
+                                                                                                                                                $isDisabled = $isFull && !$isSelected ? 'disabled' : '';
+                                                                                                                                            @endphp
+                                                                                                                                            <option value="{{ $jadwal->ref }}" {{ $isSelected ? 'selected' : '' }} {{ $isDisabled }}>
+                                                                                                                                                {{ \Carbon\Carbon::parse($jadwal->jadwal_asesmen)->locale('id')->translatedFormat('d F Y') }} - {{ $jadwal->nama_skema }} - {{ $jadwal->nama_tuk }} {{ $statusQuota }}
+                                                                                                                                            </option>
+                                                                                                                                        @endforeach
+                                                                                                                                    </optgroup>
+                                                                                                                                @endforeach
                                                                                                                             </select>
+
                                                                                                                             <small class="text-muted text-xs">Opsi jadwal disesuaikan dengan LSP pilihan Anda.</small>
                                                                                                                         </div>
 
@@ -1471,6 +1507,20 @@
                     }
                 });
             });
+
+            // Re-initialize Select2 untuk Modal (Mencegah Focus Trap Bug)
+            $('.modal').on('shown.bs.modal', function() {
+                var $modal = $(this);
+                $modal.find('select[name="asesmen_ref"]').each(function() {
+                    $(this).select2({
+                        dropdownParent: $modal,
+                        width: '100%'
+                    });
+                });
+            });
         });
     </script>
+
+    <!--  Select2 Plugin Js -->
+    <script src="{{ asset('admin') }}/assets/vendor/select2/js/select2.min.js"></script>
 @endpush

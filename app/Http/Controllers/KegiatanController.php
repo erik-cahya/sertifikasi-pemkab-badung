@@ -589,8 +589,33 @@ class KegiatanController extends Controller
             'pas_foto_file.max' => 'Ukuran Pas Foto maksimal 2 MB.',
         ]);
 
+        // Validasi Kuota Jadwal (Jika dipindah)
+        if ($request->filled('asesmen_ref') && $asesi->asesmen_ref !== $request->asesmen_ref) {
+            $asesmen = AsesmenModel::find($request->asesmen_ref);
+            if ($asesmen) {
+                $totalAsesiAsesmen = AsesiModel::where('asesmen_ref', $request->asesmen_ref)->count();
+                if ($totalAsesiAsesmen >= $asesmen->kuota_harian) {
+                    return redirect()->back()->with('flashData', [
+                        'title' => 'Gagal Pindah Jadwal',
+                        'message' => 'Kuota Jadwal Asesmen yang dituju sudah penuh.',
+                        'type' => 'error',
+                    ]);
+                }
+            }
+        }
+
+        $updateData = $request->except(['ktp_file', 'ijazah_file', 'sertikom_file', 'keterangan_kerja_file', 'pas_foto_file']);
+
+        // Pastikan kegiatan_ref disinkronkan jika asesi pindah jadwal antar-kegiatan
+        if ($request->filled('asesmen_ref')) {
+            $asesmen = AsesmenModel::find($request->asesmen_ref);
+            if ($asesmen) {
+                $updateData['kegiatan_ref'] = $asesmen->kegiatan_ref;
+            }
+        }
+
         // Update text fields (exclude file fields from mass update)
-        $asesi->update($request->except(['ktp_file', 'ijazah_file', 'sertikom_file', 'keterangan_kerja_file', 'pas_foto_file']));
+        $asesi->update($updateData);
 
         // Handle file uploads
         $fileFields = [
