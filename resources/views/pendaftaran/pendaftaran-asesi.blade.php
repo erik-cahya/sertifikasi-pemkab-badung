@@ -631,6 +631,12 @@
 
             btn.addEventListener('click', function() {
 
+                const form = document.querySelector('form');
+                if (!form.checkValidity()) {
+                    form.reportValidity();
+                    return;
+                }
+
                 const val = name =>
                     document.querySelector(`[name="${name}"]`)?.value || '-';
 

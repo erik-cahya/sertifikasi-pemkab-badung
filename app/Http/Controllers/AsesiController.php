@@ -109,6 +109,7 @@ class AsesiController extends Controller
         $validated = $request->validate([
             'kegiatan_ref' => 'required',
             'lsp_ref' => 'required',
+            'asesmen_ref' => 'required',
             // 'tuk_ref' => 'required',
             // 'tgl_asesmen' => 'required',
             // 'skema_asesmen' => 'required',
@@ -145,6 +146,7 @@ class AsesiController extends Controller
         ], [
             'kegiatan_ref.required' => 'Kegiatan tidak boleh kosong',
             'lsp_ref.required' => 'LSP tidak boleh kosong',
+            'asesmen_ref.required' => 'Jadwal asesmen tidak boleh kosong',
             'tuk_ref.required' => 'TUK tidak boleh kosong',
             'tgl_asesmen.required' => 'Tanggal asesmen tidak boleh kosong',
             'skema_asesmen.required' => 'Skema asesmen tidak boleh kosong',
