@@ -117,7 +117,11 @@ class AsesmenController extends Controller
         ]);
 
         $kuotaHarian = 10;
-        $alamatTUK = TUKModel::where('tuk_nama', $request->nama_tuk)->value('tuk_alamat');
+        
+        $jadwal = KegiatanJadwalModel::find($request->kegiatan_jadwal_ref);
+        $alamatTUK = TUKModel::where('tuk_nama', $request->nama_tuk)
+            ->where('lsp_ref', $jadwal->lsp_ref)
+            ->value('tuk_alamat');
 
         AsesmenModel::create([
             'kegiatan_ref' => $request->kegiatan_ref,
@@ -181,8 +185,10 @@ class AsesmenController extends Controller
             'no_reg_asesor' => 'required',
         ]);
 
-        $asesmen = AsesmenModel::where('ref', $id)->firstOrFail();
-        $alamatTUK = TUKModel::where('tuk_nama', $request->nama_tuk)->value('tuk_alamat');
+        $asesmen = AsesmenModel::with('kegiatanJadwal')->where('ref', $id)->firstOrFail();
+        $alamatTUK = TUKModel::where('tuk_nama', $request->nama_tuk)
+            ->where('lsp_ref', $asesmen->kegiatanJadwal->lsp_ref)
+            ->value('tuk_alamat');
 
         $asesmen->update([
             'nama_tuk' => $request->nama_tuk,
