@@ -150,7 +150,7 @@
                     @if ($loop->iteration <= $maxRow)
                         <tr>
                             <td class="center">{{ $loop->iteration }}</td>
-                            <td>{{ $asesi->nama_lengkap }}</td>
+                            <td>{{ strtoupper($asesi->nama_lengkap) }}</td>
                             <td class="center">{{ $asesi->no_sertifikat }}</td>
                             <td class="signature"> {{ $loop->iteration }}.</td>
                         </tr>

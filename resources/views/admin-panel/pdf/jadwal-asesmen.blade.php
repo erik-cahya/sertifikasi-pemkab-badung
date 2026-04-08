@@ -154,7 +154,7 @@
                                     @php $isFirstRowOfDate = false; @endphp
                                 @endif
 
-                                <td class="nama-col">{{ $asesi->nama_lengkap }}</td>
+                                <td class="nama-col">{{ strtoupper($asesi->nama_lengkap) }}</td>
 
                                 @if ($index === 0)
                                     <td class="asesor-col" rowspan="{{ $rowspanAsesmen }}">{{ $asesmen->nama_asesor }}</td>

@@ -90,10 +90,10 @@
 </head>
 
 <body>
-@foreach ($asesmen as $item)
-    @php
-        $maxRow = 10;
-    @endphp
+    @foreach ($asesmen as $item)
+        @php
+            $maxRow = 10;
+        @endphp
 
         {{-- ############# DAFTAR HADIR ASESI --}}
 
@@ -153,7 +153,7 @@
                     @if ($loop->iteration <= $maxRow)
                         <tr>
                             <td class="center">{{ $loop->iteration }}</td>
-                            <td>{{ $asesi->nama_lengkap }}</td>
+                            <td>{{ strtoupper($asesi->nama_lengkap) }}</td>
                             <td>{{ $asesi->nama_perusahaan }}</td>
                             <td class="signature"> {{ $loop->iteration }}.</td>
                         </tr>
@@ -290,7 +290,7 @@
         @if (!$loop->last)
             <div class="page-break"></div>
         @endif
-@endforeach
+    @endforeach
 </body>
 
 </html>

@@ -120,7 +120,7 @@
                     <div class="card-body" bis_skin_checked="1">
 
                         <div class="table-responsive">
-                            <table class="table-sm table-bordered w-100 table " style="font-size: 12px">
+                            <table class="table-sm table-bordered w-100 table" style="font-size: 12px">
                                 <thead class="text-center align-middle">
                                     <tr>
                                         <th>No</th>
@@ -562,6 +562,10 @@
 
                                                                                                                             <small class="text-muted text-xs">Opsi jadwal disesuaikan dengan LSP pilihan Anda.</small>
                                                                                                                         </div>
+
+                                                                                                                        <hr class="mt-2">
+
+                                                                                                                        <x-form.input className="col-md-12 mt-2" type="text" name="nama_perusahaan" label="Tempat Bekerja (Organisasi/Instansi)" value="{{ old('nama_perusahaan', $asesi->nama_perusahaan) }}" />
 
                                                                                                                         {{-- File Upload Section --}}
                                                                                                                         <div class="col-12 mt-3">
