@@ -372,7 +372,26 @@ class AsesiController extends Controller
         $user = Auth::user();
         $user->loadMissing('lspData');
 
-        $query = AsesiModel::with(['kegiatan', 'asesmen']);
+        // Data LSP untuk filter dropdown (khusus dinas/master)
+        $dataLsp = ($user->roles !== 'lsp') ? LSPModel::orderBy('lsp_nama')->get() : collect();
+
+        return view('admin-panel.asesi.index', [
+            'dataLsp' => $dataLsp,
+            'userRole' => $user->roles,
+        ]);
+    }
+
+    /**
+     * Server-side AJAX endpoint untuk DataTables.
+     */
+    public function listData(Request $request)
+    {
+        /** @var \App\Models\User $user */
+        $user = Auth::user();
+        $user->loadMissing('lspData');
+
+        $query = AsesiModel::with(['kegiatan', 'asesmen'])
+            ->select('asesi.*');
 
         // Role-based filter: LSP hanya lihat miliknya
         if ($user->roles === 'lsp' && $user->lspData) {
@@ -395,7 +414,6 @@ class AsesiController extends Controller
                     $query->whereDate('created_at', $filterValue);
                     break;
                 case 'bulan':
-                    // format: YYYY-MM
                     $query->whereYear('created_at', substr($filterValue, 0, 4))
                         ->whereMonth('created_at', substr($filterValue, 5, 2));
                     break;
@@ -405,30 +423,186 @@ class AsesiController extends Controller
             }
         }
 
-        $asesi = $query->orderBy('created_at', 'desc')->get();
+        // DataTables server-side parameters
+        $draw = (int) $request->input('draw', 1);
+        $start = (int) $request->input('start', 0);
+        $length = (int) $request->input('length', 25);
+        $searchValue = $request->input('search.value', '');
+        $orderColumnIdx = (int) $request->input('order.0.column', 23); // default: created_at
+        $orderDir = $request->input('order.0.dir', 'desc');
 
-        // Ambil ID Kegiatan unik dari list Asesi untuk digunakan sebagai filter Jadwal Asesmen
-        // Mencegah query N+1 apabila terdapat ribuan asesi.
-        $kegiatanRefs = $asesi->pluck('kegiatan_ref')->unique();
+        // Mapping kolom index DataTables ke kolom database
+        $columns = [
+            0 => 'kegiatan_ref',   // Sertifikasi
+            1 => 'nama_lengkap',
+            2 => 'nik',
+            3 => 'tempat_lahir',
+            4 => 'tgl_lahir',
+            5 => 'jenis_kelamin',
+            6 => 'kewarganegaraan',
+            7 => 'alamat',
+            8 => 'telp_hp',
+            9 => 'email',
+            10 => 'pendidikan_terakhir',
+            11 => 'nama_perusahaan',
+            12 => 'alamat_perusahaan',
+            13 => 'departemen',
+            14 => 'jabatan',
+            15 => 'telp_perusahaan',
+            16 => 'email_perusahaan',
+            17 => 'nama_kontak_person',
+            18 => 'no_kontak_person',
+            19 => null, // Dokumen (not sortable)
+            20 => null, // Jadwal Asesmen (not sortable)
+            21 => 'no_sertifikat',
+            22 => null, // Sertifikat file (not sortable)
+            23 => 'created_at',
+            24 => null, // Action (not sortable)
+        ];
 
-        $jadwalAsesmenQuery = AsesmenModel::whereIn('kegiatan_ref', $kegiatanRefs)->get();
-        // Kelompokkan hasil jadwal berdasarkan Kegiatan dan LSP
-        $jadwalAsesmen = [];
-        foreach ($jadwalAsesmenQuery as $jadwal) {
-            $jadwalAsesmen[$jadwal->kegiatan_ref][$jadwal->nama_lsp][] = $jadwal;
+        // Total records (sebelum search)
+        $totalRecords = (clone $query)->count();
+
+        // Search global
+        if (!empty($searchValue)) {
+            $query->where(function ($q) use ($searchValue) {
+                $q->where('nama_lengkap', 'like', "%{$searchValue}%")
+                    ->orWhere('nik', 'like', "%{$searchValue}%")
+                    ->orWhere('email', 'like', "%{$searchValue}%")
+                    ->orWhere('tempat_lahir', 'like', "%{$searchValue}%")
+                    ->orWhere('nama_perusahaan', 'like', "%{$searchValue}%")
+                    ->orWhere('departemen', 'like', "%{$searchValue}%")
+                    ->orWhere('jabatan', 'like', "%{$searchValue}%")
+                    ->orWhere('no_sertifikat', 'like', "%{$searchValue}%");
+            });
         }
 
-        // Data LSP untuk filter dropdown (khusus dinas/master)
-        $dataLsp = ($user->roles !== 'lsp') ? LSPModel::orderBy('lsp_nama')->get() : collect();
+        $filteredRecords = (clone $query)->count();
 
-        return view('admin-panel.asesi.index', [
-            'dataAsesi' => $asesi,
-            'filterType' => $filterType,
-            'filterValue' => $filterValue,
-            'filterLsp' => $filterLsp ?? '',
-            'dataLsp' => $dataLsp,
-            'userRole' => $user->roles,
-            'jadwalAsesmen' => $jadwalAsesmen,
+        // Ordering
+        $orderColumn = $columns[$orderColumnIdx] ?? 'created_at';
+        if ($orderColumn) {
+            $query->orderBy($orderColumn, $orderDir === 'asc' ? 'asc' : 'desc');
+        } else {
+            $query->orderBy('created_at', 'desc');
+        }
+
+        // Pagination
+        $data = $query->skip($start)->take($length)->get();
+
+        // Format data menjadi array untuk DataTables
+        $rows = [];
+        foreach ($data as $item) {
+            $namaKegiatan = $item->kegiatan->nama_kegiatan ?? '-';
+
+            // Dokumen links
+            $dokumenHtml = '<table>';
+            $dokumenHtml .= '<tr><td>KTP</td><td>: ' . (!empty($item->ktp_file) ? '<a href="' . route('files.asesi.ktp', $item->ktp_file) . '" target="_blank"><i class="mdi mdi-file-pdf-box"></i></a>' : '-') . '</td></tr>';
+            $dokumenHtml .= '<tr><td>IJAZAH</td><td>: ' . (!empty($item->ijazah_file) ? '<a href="' . route('files.asesi.ijazah', $item->ijazah_file) . '" target="_blank"><i class="mdi mdi-file-pdf-box"></i></a>' : '-') . '</td></tr>';
+            $dokumenHtml .= '<tr><td>SERTIKOM</td><td>: ' . (!empty($item->sertikom_file) ? '<a href="' . route('files.asesi.sertikom', $item->sertikom_file) . '" target="_blank"><i class="mdi mdi-file-pdf-box"></i></a>' : '-') . '</td></tr>';
+            $dokumenHtml .= '<tr><td>SKB</td><td>: ' . (!empty($item->keterangan_kerja_file) ? '<a href="' . route('files.asesi.skb', $item->keterangan_kerja_file) . '" target="_blank"><i class="mdi mdi-file-pdf-box"></i></a>' : '-') . '</td></tr>';
+            $dokumenHtml .= '<tr><td>PAS FOTO</td><td>: ' . (!empty($item->pas_foto_file) ? '<a href="' . route('files.asesi.pasfoto', $item->pas_foto_file) . '" target="_blank"><i class="mdi mdi-file-image"></i></a>' : '-') . '</td></tr>';
+            $dokumenHtml .= '</table>';
+
+            // Jadwal Asesmen
+            $jadwalHtml = '<table>';
+            if ($item->asesmen) {
+                $jadwalHtml .= '<tr><td>LSP</td><td>: ' . e($item->asesmen->nama_lsp) . '</td></tr>';
+                $jadwalHtml .= '<tr><td>Tanggal</td><td>: ' . Carbon::parse($item->asesmen->jadwal_asesmen)->locale('id')->translatedFormat('l, d F Y') . '</td></tr>';
+                $jadwalHtml .= '<tr><td>TUK</td><td>: ' . e($item->asesmen->nama_tuk) . '</td></tr>';
+                $jadwalHtml .= '<tr><td>Skema</td><td>: ' . e($item->asesmen->nama_skema) . '</td></tr>';
+            } else {
+                $jadwalHtml .= '<tr><td>-</td></tr>';
+            }
+            $jadwalHtml .= '</table>';
+
+            // Telp
+            $telpHtml = '<table>';
+            $telpHtml .= '<tr><td>Telp</td><td>: ' . e($item->telp_hp) . '</td></tr>';
+            $telpHtml .= '<tr><td>Rumah</td><td>: ' . e($item->telp_rumah) . '</td></tr>';
+            $telpHtml .= '<tr><td>Kantor</td><td>: ' . e($item->telp_kantor) . '</td></tr>';
+            $telpHtml .= '</table>';
+
+            // Telp Perusahaan
+            $telpPerusahaanHtml = '<table>';
+            $telpPerusahaanHtml .= '<tr><td>Telp</td><td>: ' . e($item->telp_perusahaan) . '</td></tr>';
+            $telpPerusahaanHtml .= '<tr><td>Fax</td><td>: ' . e($item->fax_perusahaan) . '</td></tr>';
+            $telpPerusahaanHtml .= '</table>';
+
+            // Sertifikat
+            $sertifikatHtml = !empty($item->sertifikat_file)
+                ? '<a href="' . asset('asesi_files/' . $item->sertifikat_file) . '" target="_blank"><i class="mdi mdi-file-image"></i></a>'
+                : '-';
+
+            // Action
+            $actionHtml = '<button class="btn btn-sm btn-dinas btn-edit-asesi" data-ref="' . e($item->ref) . '"><i class="mdi mdi-pencil"></i></button>';
+
+            $rows[] = [
+                '<span class="bg-dinas rounded-4 px-2 text-white">' . e($namaKegiatan) . '</span>',
+                e($item->nama_lengkap),
+                e($item->nik),
+                e($item->tempat_lahir),
+                date('Y/m/d', strtotime($item->tgl_lahir)),
+                e($item->jenis_kelamin),
+                e($item->kewarganegaraan),
+                e($item->alamat),
+                $telpHtml,
+                e($item->email),
+                e($item->pendidikan_terakhir),
+                e($item->nama_perusahaan),
+                e($item->alamat_perusahaan),
+                e($item->departemen),
+                e($item->jabatan),
+                $telpPerusahaanHtml,
+                e($item->email_perusahaan),
+                e($item->nama_kontak_person),
+                e($item->no_kontak_person),
+                $dokumenHtml,
+                $jadwalHtml,
+                e($item->no_sertifikat),
+                $sertifikatHtml,
+                $item->created_at->format('Y/m/d'),
+                $actionHtml,
+            ];
+        }
+
+        return response()->json([
+            'draw' => $draw,
+            'recordsTotal' => $totalRecords,
+            'recordsFiltered' => $filteredRecords,
+            'data' => $rows,
+        ]);
+    }
+
+    /**
+     * AJAX: Ambil detail satu asesi + jadwal asesmen options (untuk edit modal).
+     */
+    public function show($id)
+    {
+        $asesi = AsesiModel::with('asesmen')->findOrFail($id);
+
+        // Ambil jadwal asesmen berdasarkan kegiatan + LSP yang sama
+        $jadwalOptions = [];
+        if ($asesi->asesmen) {
+            $jadwalList = AsesmenModel::where('kegiatan_ref', $asesi->kegiatan_ref)
+                ->where('nama_lsp', $asesi->asesmen->nama_lsp)
+                ->orderBy('jadwal_asesmen', 'asc')
+                ->get();
+
+            foreach ($jadwalList as $jadwal) {
+                $jadwalOptions[] = [
+                    'ref' => $jadwal->ref,
+                    'label' => Carbon::parse($jadwal->jadwal_asesmen)->locale('id')->translatedFormat('l, d F Y')
+                        . ' - ' . $jadwal->nama_skema . ' (TUK: ' . $jadwal->nama_tuk . ')',
+                    'selected' => $jadwal->ref === $asesi->asesmen_ref,
+                ];
+            }
+        }
+
+        return response()->json([
+            'asesi' => $asesi,
+            'jadwalOptions' => $jadwalOptions,
+            'lspNama' => $asesi->asesmen->nama_lsp ?? '-',
         ]);
     }
 

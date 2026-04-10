@@ -123,6 +123,8 @@ Route::middleware('auth')->group(function () {
 
     // ################################ Asesi by admin
     Route::get('asesiAdmin', [AsesiController::class, 'list'])->name('asesiAdmin.index');
+    Route::get('asesiAdmin/data', [AsesiController::class, 'listData'])->name('asesiAdmin.data');
+    Route::get('asesiAdmin/{id}/show', [AsesiController::class, 'show'])->name('asesiAdmin.show');
     Route::put('asesiAdmin/{id}', [AsesiController::class, 'update'])->name('asesiAdmin.update');
     Route::delete('asesiAdmin/{id}', [AsesiController::class, 'destroy'])->name('asesiAdmin.destroy');
 
