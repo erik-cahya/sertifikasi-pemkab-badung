@@ -524,9 +524,9 @@
 
                                                                                                                         <hr class="mt-2">
 
-                                                                                                                        <x-form.input className="col-md-6" type="text" name="email" label="LSP" disabled value="{{ $asesi->asesmen->nama_lsp }}" />
+                                                                                                                        <x-form.input className="col-md-12" type="text" name="email" label="LSP" disabled value="{{ $asesi->asesmen->nama_lsp }}" />
 
-                                                                                                                        <div class="col-md-6">
+                                                                                                                        <div class="col-md-12 mt-2">
                                                                                                                             <label for="asesmen_ref" class="form-label">Jadwal Asesmen</label>
 
                                                                                                                             <select class="form-control select2 w-100" style="width: 100%;" data-toggle="select2" name="asesmen_ref" id="asesmen_ref_{{ $asesi->ref }}">
@@ -553,7 +553,7 @@
                                                                                                                                                 $isDisabled = $isFull && !$isSelected ? 'disabled' : '';
                                                                                                                                             @endphp
                                                                                                                                             <option value="{{ $jadwal->ref }}" {{ $isSelected ? 'selected' : '' }} {{ $isDisabled }}>
-                                                                                                                                                {{ \Carbon\Carbon::parse($jadwal->jadwal_asesmen)->locale('id')->translatedFormat('d F Y') }} - {{ $jadwal->nama_skema }} - {{ $jadwal->nama_tuk }} {{ $statusQuota }}
+                                                                                                                                                {{ \Carbon\Carbon::parse($jadwal->jadwal_asesmen)->locale('id')->translatedFormat('l, d F Y') }} - {{ $jadwal->nama_skema }} - {{ $jadwal->nama_tuk }} {{ $statusQuota }}
                                                                                                                                             </option>
                                                                                                                                         @endforeach
                                                                                                                                     </optgroup>
