@@ -48,6 +48,10 @@ Route::middleware('auth')->group(function () {
     Route::post('kegiatan/add-skema', [KegiatanController::class, 'addSkema'])->name('kegiatan.add-skema')->middleware('role:dinas,master');
     Route::delete('kegiatan/remove-skema', [KegiatanController::class, 'removeSkema'])->name('kegiatan.remove-skema')->middleware('role:dinas,master');
 
+    // AJAX: Lazy load asesi list & detail (MUST be before kegiatan/{id})
+    Route::get('kegiatan/asesi-list/{asesmenRef}', [KegiatanController::class, 'showAsesiList'])->name('kegiatan.asesiList');
+    Route::get('kegiatan/asesi-detail/{asesiRef}', [KegiatanController::class, 'showAsesiDetail'])->name('kegiatan.asesiDetail');
+
     Route::get('kegiatan/{id}', [KegiatanController::class, 'show'])->name('kegiatan.show');
     Route::put('kegiatan/{id}', [KegiatanController::class, 'update'])->name('kegiatan.update');
     Route::delete('kegiatan/{id}', [KegiatanController::class, 'destroy'])->name('kegiatan.destroy');

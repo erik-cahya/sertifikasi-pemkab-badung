@@ -220,13 +220,73 @@ class KegiatanController extends Controller
         $data['dataKegiatan'] = $query->firstOrFail();
 
         $data['dataSkema'] = $data['dataKegiatan']->skemas->groupBy('lsp_ref');
-        $data['dataAsesi'] = AsesiModel::with('asesmen')
-            ->whereHas('asesmen', fn($q) => $q->where('kegiatan_ref', $id))
-            ->get()
-            ->groupBy('asesmen_ref');
+
+        // Hanya hitung jumlah asesi per asesmen (untuk statistik "X / Y Orang"), BUKAN load semua data
+        $data['asesiCountPerAsesmen'] = AsesiModel::whereHas('asesmen', fn($q) => $q->where('kegiatan_ref', $id))
+            ->selectRaw('asesmen_ref, COUNT(*) as total')
+            ->groupBy('asesmen_ref')
+            ->pluck('total', 'asesmen_ref');
+
         $data['jadwalKegiatan'] = $data['dataKegiatan']->jadwalAsesmen->sortBy('jadwal_asesmen')->groupBy('nama_lsp');
 
         return view('admin-panel.kegiatan.show', $data);
+    }
+
+    /**
+     * AJAX: Return daftar asesi untuk 1 jadwal asesmen (lazy load saat klik "Lihat Asesi").
+     */
+    public function showAsesiList(string $asesmenRef)
+    {
+        $asesmen = AsesmenModel::where('ref', $asesmenRef)->firstOrFail();
+        $userRole = Auth::user()->roles;
+
+        $asesiList = AsesiModel::where('asesmen_ref', $asesmenRef)
+            ->select('ref', 'nama_lengkap', 'nama_perusahaan', 'no_sertifikat', 'sertifikat_file')
+            ->orderBy('nama_lengkap')
+            ->get();
+
+        return response()->json([
+            'asesiList' => $asesiList,
+            'userRole' => $userRole,
+        ]);
+    }
+
+    /**
+     * AJAX: Return detail 1 asesi untuk modal edit (lazy load saat klik nama asesi).
+     */
+    public function showAsesiDetail(string $asesiRef)
+    {
+        $asesi = AsesiModel::with('asesmen')->findOrFail($asesiRef);
+
+        // Ambil semua jadwal asesmen dari LSP yang sama (untuk dropdown pindah jadwal)
+        $jadwalOptions = AsesmenModel::where('nama_lsp', $asesi->asesmen->nama_lsp)
+            ->has('kegiatan')
+            ->with('kegiatan:ref,nama_kegiatan')
+            ->withCount('asesis')
+            ->orderBy('jadwal_asesmen', 'ASC')
+            ->get()
+            ->groupBy(fn($item) => $item->kegiatan->nama_kegiatan)
+            ->map(function ($jadwals, $namaKegiatan) use ($asesi) {
+                return $jadwals->map(function ($jadwal) use ($asesi) {
+                    $isFull = $jadwal->asesis_count >= $jadwal->kuota_harian;
+                    $isSelected = $asesi->asesmen_ref == $jadwal->ref;
+                    return [
+                        'ref' => $jadwal->ref,
+                        'label' => \Carbon\Carbon::parse($jadwal->jadwal_asesmen)->locale('id')->translatedFormat('l, d F Y')
+                            . ' - ' . $jadwal->nama_skema
+                            . ' - ' . $jadwal->nama_tuk
+                            . ($isFull ? ' (PENUH)' : ' (Kuota: ' . ($jadwal->kuota_harian - $jadwal->asesis_count) . ')'),
+                        'selected' => $isSelected,
+                        'disabled' => $isFull && !$isSelected,
+                    ];
+                });
+            });
+
+        return response()->json([
+            'asesi' => $asesi,
+            'lspNama' => $asesi->asesmen->nama_lsp ?? '',
+            'jadwalOptions' => $jadwalOptions,
+        ]);
     }
 
     /**
