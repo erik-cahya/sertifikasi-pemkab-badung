@@ -213,45 +213,11 @@ class AsesiController extends Controller
             }
         }
 
-        // =============================== ByPass Kuota ===============================
-        // Ambil Data UUID LSP
+        // =============================== Resolve LSP Ref ===============================
         $lspData = LSPModel::where('lsp_nama', $request->lsp_ref)->select('ref')->first();
         $realLspRef = $lspData ? $lspData->ref : null;
 
-        if ($realLspRef) {
-            // Validasi Kuota LSP (Jika LSP di bypass user)
-            $kegiatanRef = $request->kegiatan_ref;
-            $kuotaLsp = KegiatanJadwalModel::where('kegiatan_ref', $kegiatanRef)->where('lsp_ref', $realLspRef)->value('kuota_lsp');
-            $totalAsesiLsp = AsesiModel::where('kegiatan_ref', $kegiatanRef)->where('lsp_ref', $realLspRef)->count();
-
-            if (!is_null($kuotaLsp) && $totalAsesiLsp >= $kuotaLsp) {
-                throw ValidationException::withMessages([
-                    'lsp_ref' => 'Kuota LSP sudah penuh',
-                ]);
-            }
-        }
-
-        // Validasi Kuota Jadwal Asesmen (Jika Jadwal di bypass user)
-        if ($request->filled('asesmen_ref')) {
-            $asesmen = AsesmenModel::where('ref', $request->asesmen_ref)->first();
-            if ($asesmen) {
-                $totalAsesiAsesmen = AsesiModel::where('asesmen_ref', $request->asesmen_ref)->count();
-                if ($totalAsesiAsesmen >= $asesmen->kuota_harian) {
-                    throw ValidationException::withMessages([
-                        'asesmen_ref' => 'Kuota Jadwal Asesmen sudah penuh',
-                    ]);
-                }
-            }
-        }
-
-        // ================== SIMPAN FILE ==================
-        $nik  = $request->nik;
-        $time = time();
-        $ktp = NULL;
-        $ijazah = NULL;
-        $sertikom = NULL;
-        $skb = NULL;
-        $pasfoto = NULL;
+        // ================== SIMPAN FILE DULU (di luar transaction agar lock tidak lama) ==================
         $filenameKTP = NULL;
         $filenameIjazah = NULL;
         $filenameSertikom = NULL;
@@ -262,104 +228,137 @@ class AsesiController extends Controller
         if ($request->hasFile('ktp_file')) {
             $ext = $request->file('ktp_file')->extension();
             $filenameKTP = Str::uuid() . ".{$ext}";
-            $ktp = Storage::disk('KTP')->putFileAs("KTP", $request->file('ktp_file'), $filenameKTP);
-
-            // $validated['ktp_file'] = $request->file('ktp_file')
-            //     ->storeAs('asesi/ktp', $filename, 'public');
-
+            Storage::disk('KTP')->putFileAs("KTP", $request->file('ktp_file'), $filenameKTP);
         }
 
         /* ================== IJAZAH ================== */
         if ($request->hasFile('ijazah_file')) {
             $ext = $request->file('ijazah_file')->extension();
             $filenameIjazah = Str::uuid() . ".{$ext}";
-            $ijazah = Storage::disk('ijazah')->putFileAs("ijazah", $request->file('ijazah_file'), $filenameIjazah);
-
-            // $validated['ijazah_file'] = $request->file('ijazah_file')
-            // ->storeAs('asesi/ijazah', $filename, 'public');
-
+            Storage::disk('ijazah')->putFileAs("ijazah", $request->file('ijazah_file'), $filenameIjazah);
         }
 
         /* ================== SERTIFIKAT KOMPETENSI ================== */
         if ($request->hasFile('sertikom_file')) {
             $ext = $request->file('sertikom_file')->extension();
             $filenameSertikom = Str::uuid() . ".{$ext}";
-            $sertikom = Storage::disk('sertikom')->putFileAs("sertikom", $request->file('sertikom_file'), $filenameSertikom);
-
-            // $validated['sertikom_file'] = $request->file('sertikom_file')
-            //     ->storeAs('asesi/sertikom', $filename, 'public');
+            Storage::disk('sertikom')->putFileAs("sertikom", $request->file('sertikom_file'), $filenameSertikom);
         }
 
         /* ================== KETERANGAN KERJA ================== */
         if ($request->hasFile('keterangan_kerja_file')) {
             $ext = $request->file('keterangan_kerja_file')->extension();
             $filenameSKB = Str::uuid() . ".{$ext}";
-            $skb = Storage::disk('SKB')->putFileAs("SKB", $request->file('keterangan_kerja_file'), $filenameSKB);
-
-            // $validated['keterangan_kerja_file'] = $request->file('keterangan_kerja_file')
-            //     ->storeAs('asesi/keterangan_kerja', $filename, 'public');
+            Storage::disk('SKB')->putFileAs("SKB", $request->file('keterangan_kerja_file'), $filenameSKB);
         }
 
         /* ================== PAS FOTO ================== */
         if ($request->hasFile('pas_foto_file')) {
             $ext = $request->file('pas_foto_file')->extension();
             $filenamePasFoto = Str::uuid() . ".{$ext}";
-            $pasfoto = Storage::disk('pas-foto')->putFileAs("pas-foto", $request->file('pas_foto_file'), $filenamePasFoto);
-
-            // $validated['pas_foto_file'] = $request->file('pas_foto_file')
-            //     ->storeAs('asesi/pas_foto', $filename, 'public');
+            Storage::disk('pas-foto')->putFileAs("pas-foto", $request->file('pas_foto_file'), $filenamePasFoto);
         }
 
+        // =============================== TRANSACTION: Cek Kuota + INSERT (atomik, mencegah race condition) ===============================
+        // Menggunakan DB::transaction + lockForUpdate agar ketika banyak user submit bersamaan,
+        // hanya 1 request yang bisa cek kuota + insert pada satu waktu.
+        try {
+            DB::transaction(function () use ($request, $realLspRef, $filenameKTP, $filenameIjazah, $filenameSertikom, $filenameSKB, $filenamePasFoto) {
 
-        // AsesiModel::create($validated);
-        // $lspData sudah diambil di bagian validasi kuota di atas
+                // ---- Validasi Kuota LSP (dengan lock) ----
+                if ($realLspRef) {
+                    $kegiatanRef = $request->kegiatan_ref;
+                    $jadwalLsp = KegiatanJadwalModel::where('kegiatan_ref', $kegiatanRef)
+                        ->where('lsp_ref', $realLspRef)
+                        ->lockForUpdate()
+                        ->first();
 
+                    $kuotaLsp = $jadwalLsp ? $jadwalLsp->kuota_lsp : null;
+                    $totalAsesiLsp = AsesiModel::where('kegiatan_ref', $kegiatanRef)
+                        ->where('lsp_ref', $realLspRef)
+                        ->count();
 
-        AsesiModel::create([
-            'kegiatan_ref' => $request->kegiatan_ref,
-            'lsp_ref' => $realLspRef,
-            'asesmen_ref' => $request->asesmen_ref,
+                    if (!is_null($kuotaLsp) && $totalAsesiLsp >= $kuotaLsp) {
+                        throw ValidationException::withMessages([
+                            'lsp_ref' => 'Kuota LSP sudah penuh',
+                        ]);
+                    }
+                }
 
-            'nama_lengkap' => $request->nama_lengkap,
-            'nik' => $request->nik,
-            'tempat_lahir' => $request->tempat_lahir,
-            'tgl_lahir' => $request->tgl_lahir,
-            'jenis_kelamin' => $request->jenis_kelamin,
-            'kewarganegaraan' => $request->kewarganegaraan,
-            'alamat' => $request->alamat,
-            'kode_pos' => $request->kode_pos,
-            'telp_rumah' => $request->telp_rumah,
-            'telp_kantor' => $request->telp_kantor,
-            'telp_hp' => $request->telp_hp,
-            'email' => $request->email,
-            'pendidikan_terakhir' => $request->pendidikan_terakhir,
-            'nama_perusahaan' => $request->nama_perusahaan,
-            'alamat_perusahaan' => $request->alamat_perusahaan,
-            'departemen' => $request->departemen,
-            'jabatan' => $request->jabatan,
-            'kode_pos_perusahaan' => $request->kode_pos_perusahaan,
-            'telp_perusahaan' => $request->telp_perusahaan,
-            'fax_perusahaan' => $request->fax_perusahaan,
-            'email_perusahaan' => $request->email_perusahaan,
+                // ---- Validasi Kuota Jadwal Asesmen (dengan lock) ----
+                if ($request->filled('asesmen_ref')) {
+                    // lockForUpdate pada baris asesmen → request lain harus menunggu
+                    $asesmen = AsesmenModel::where('ref', $request->asesmen_ref)
+                        ->lockForUpdate()
+                        ->first();
 
-            'sertikom_file' => $filenameSertikom,
-            'ijazah_file' => $filenameIjazah,
-            'ktp_file' => $filenameKTP,
-            'keterangan_kerja_file' => $filenameSKB,
-            'pas_foto_file' => $filenamePasFoto,
+                    if ($asesmen) {
+                        $totalAsesiAsesmen = AsesiModel::where('asesmen_ref', $request->asesmen_ref)->count();
+                        if ($totalAsesiAsesmen >= $asesmen->kuota_harian) {
+                            throw ValidationException::withMessages([
+                                'asesmen_ref' => 'Kuota Jadwal Asesmen sudah penuh',
+                            ]);
+                        }
+                    }
+                }
 
-            'nama_kontak_person' => $request->nama_kontak_person,
-            'no_kontak_person' => $request->no_kontak_person,
+                // ---- INSERT (masih di dalam transaction, dijamin kuota valid) ----
+                AsesiModel::create([
+                    'kegiatan_ref' => $request->kegiatan_ref,
+                    'lsp_ref' => $realLspRef,
+                    'asesmen_ref' => $request->asesmen_ref,
 
-            'status' => NULL,
-            'kompeten' => NULL,
+                    'nama_lengkap' => $request->nama_lengkap,
+                    'nik' => $request->nik,
+                    'tempat_lahir' => $request->tempat_lahir,
+                    'tgl_lahir' => $request->tgl_lahir,
+                    'jenis_kelamin' => $request->jenis_kelamin,
+                    'kewarganegaraan' => $request->kewarganegaraan,
+                    'alamat' => $request->alamat,
+                    'kode_pos' => $request->kode_pos,
+                    'telp_rumah' => $request->telp_rumah,
+                    'telp_kantor' => $request->telp_kantor,
+                    'telp_hp' => $request->telp_hp,
+                    'email' => $request->email,
+                    'pendidikan_terakhir' => $request->pendidikan_terakhir,
+                    'nama_perusahaan' => $request->nama_perusahaan,
+                    'alamat_perusahaan' => $request->alamat_perusahaan,
+                    'departemen' => $request->departemen,
+                    'jabatan' => $request->jabatan,
+                    'kode_pos_perusahaan' => $request->kode_pos_perusahaan,
+                    'telp_perusahaan' => $request->telp_perusahaan,
+                    'fax_perusahaan' => $request->fax_perusahaan,
+                    'email_perusahaan' => $request->email_perusahaan,
 
-            'no_sertifikat' => NULL,
-            'sertifikat_file' => NULL,
-        ]);
+                    'sertikom_file' => $filenameSertikom,
+                    'ijazah_file' => $filenameIjazah,
+                    'ktp_file' => $filenameKTP,
+                    'keterangan_kerja_file' => $filenameSKB,
+                    'pas_foto_file' => $filenamePasFoto,
+
+                    'nama_kontak_person' => $request->nama_kontak_person,
+                    'no_kontak_person' => $request->no_kontak_person,
+
+                    'status' => NULL,
+                    'kompeten' => NULL,
+
+                    'no_sertifikat' => NULL,
+                    'sertifikat_file' => NULL,
+                ]);
+            });
+        } catch (ValidationException $e) {
+            // Kuota penuh → hapus file yang sudah diupload agar tidak jadi sampah
+            if ($filenameKTP) Storage::disk('KTP')->delete("KTP/{$filenameKTP}");
+            if ($filenameIjazah) Storage::disk('ijazah')->delete("ijazah/{$filenameIjazah}");
+            if ($filenameSertikom) Storage::disk('sertikom')->delete("sertikom/{$filenameSertikom}");
+            if ($filenameSKB) Storage::disk('SKB')->delete("SKB/{$filenameSKB}");
+            if ($filenamePasFoto) Storage::disk('pas-foto')->delete("pas-foto/{$filenamePasFoto}");
+
+            throw $e; // Re-throw agar error tetap tampil ke user
+        }
 
         $flashData = [
-            'title' => 'Pendaftaran Calon Asesi Berhasii',
+            'title' => 'Pendaftaran Calon Asesi Berhasil',
             'message' => 'Data Berhasil Dikirim',
             'type' => 'success',
         ];

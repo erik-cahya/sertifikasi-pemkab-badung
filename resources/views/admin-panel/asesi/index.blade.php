@@ -36,7 +36,7 @@
                             </div>
                         @endif
                         <div class="col-auto">
-                            <button type="button" id="btn-filter" class="btn btn-sm btn-dinas"><i class="mdi mdi-filter"></i> Filter</button>
+                            <button type="button" id="btn-filter" class="btn btn-sm btn-dinas"><i class="mdi mdi-filter"></i> Terapkan Filter</button>
                             <button type="button" id="btn-reset" class="btn btn-sm btn-secondary"><i class="mdi mdi-refresh"></i> Reset</button>
                         </div>
                     </div>
@@ -63,7 +63,7 @@
                                 <th>Email Perusahaan</th>
                                 <th>Nama Kontak Person Perusahaan</th>
                                 <th>Nomor HP Kontak Person Perusahaan</th>
-                                <th class="no-export">Dokumen</th>
+                                <th class="no-export" style="padding: 8px 40px;">Dokumen</th>
                                 <th>Jadwal Asesmen</th>
                                 <th>No Sertifikat</th>
                                 <th>Sertifikat</th>
@@ -214,7 +214,7 @@
                 order: [
                     [23, 'desc']
                 ], // default sort: Mendaftar pada
-                pageLength: 25,
+                pageLength: 50,
                 scrollX: true,
                 scrollY: '70vh',
                 scrollCollapse: true,
