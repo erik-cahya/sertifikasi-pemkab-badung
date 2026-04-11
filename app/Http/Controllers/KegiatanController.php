@@ -549,7 +549,7 @@ class KegiatanController extends Controller
             'success' => true,
             'message' => 'Laporan - ' . $index . ' - ' . $kegiatan . ' - ' . $lsp . ' berhasil diupload',
             'path'    => $path,
-            'url'     => route('files.asesmen', ['filename' => basename($path)]),
+            'url'     => route('files.asesmen.laporan_asesmen', ['filename' => basename($path)]),
         ]);
     }
 
