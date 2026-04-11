@@ -136,7 +136,7 @@ class JadwalAsesmenExport implements WithEvents, WithTitle
 
                         if ($asesiCount > 0) {
                             foreach ($asesiList as $asesi) {
-                                $sheet->setCellValue('C' . $currentRow, $asesi->nama_lengkap);
+                                $sheet->setCellValue('C' . $currentRow, ucwords(strtolower($asesi->nama_lengkap)));
                                 $sheet->getStyle('C' . $currentRow)->getAlignment()->setVertical(Alignment::VERTICAL_CENTER);
                                 $currentRow++;
                             }
