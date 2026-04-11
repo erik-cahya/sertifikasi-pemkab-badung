@@ -242,6 +242,31 @@ class FileController extends Controller
         ]);
     }
 
+    public function getJadwalSigned($filename)
+    {
+        if (!Auth::check()) {
+            abort(403, 'Anda tidak memiliki akses');
+        }
+
+        $this->checkAsesmenFileAuthorization($filename);
+
+        $path = storage_path('app/private/asesmen_files/jadwal_signed/' . $filename);
+
+        if (!file_exists($path)) {
+            abort(404, 'File tidak ditemukan');
+        }
+
+        $fileName = KegiatanJadwalModel::where('kegiatan_jadwal.jadwal_signed', $filename)
+            ->join('lsp', 'kegiatan_jadwal.lsp_ref', '=', 'lsp.ref')
+            ->select('lsp_nama')
+            ->first();
+
+        $ext = pathinfo($filename, PATHINFO_EXTENSION);
+        return response()->file($path, [
+            'Content-Disposition' => 'inline; filename="Jadwal Asesmen - ' . ($fileName->lsp_nama ?? '') . '.' . $ext . '"'
+        ]);
+    }
+
     /**
      * Serve pegawai files dengan autentikasi
      */
@@ -334,13 +359,14 @@ class FileController extends Controller
             return;
         }
 
-        // Cari di KegiatanJadwalModel (untuk laporan asesmen)
+        // Cari di KegiatanJadwalModel (untuk laporan asesmen & jadwal signed)
         $jadwal = KegiatanJadwalModel::where(function ($query) use ($filename) {
             $query->where('laporan_asesmen', 'LIKE', "%{$filename}")
                 ->orWhere('laporan_asesmen2', 'LIKE', "%{$filename}")
                 ->orWhere('laporan_asesmen3', 'LIKE', "%{$filename}")
                 ->orWhere('laporan_asesmen4', 'LIKE', "%{$filename}")
-                ->orWhere('laporan_asesmen5', 'LIKE', "%{$filename}");
+                ->orWhere('laporan_asesmen5', 'LIKE', "%{$filename}")
+                ->orWhere('jadwal_signed', 'LIKE', "%{$filename}");
         })->first();
 
         if ($jadwal) {

@@ -279,12 +279,30 @@
                                                                     $kegiatanMonth = \Carbon\Carbon::parse($dataKegiatan->mulai_kegiatan)->month;
                                                                     $kegiatanYear = \Carbon\Carbon::parse($dataKegiatan->mulai_kegiatan)->year;
                                                                 @endphp
-                                                                <a href="{{ route('pdf.jadwal-asesmen', ['month' => $kegiatanMonth, 'year' => $kegiatanYear, 'kegiatan_jadwal_ref' => $kegiatan->ref, 'nama_lsp' => $kegiatan->lsp->lsp_nama]) }}" class="btn btn-sm btn-light text-dark" title="Download Jadwal Asesmen Excel">
-                                                                    <i class="mdi mdi-file-excel"></i> Download Jadwal
-                                                                </a>
-                                                                <button type="button" class="btn btn-sm btn-warning text-dark" data-bs-toggle="modal" data-bs-target="#penandatanganModal-{{ $kegiatan->ref }}" title="Setting Penandatangan">
-                                                                    <i class="mdi mdi-account-edit"></i> Setting ttd
-                                                                </button>
+
+                                                                @role('lsp', 'master')
+                                                                    <a style="font-size: 12px" href="{{ route('pdf.jadwal-asesmen', ['month' => $kegiatanMonth, 'year' => $kegiatanYear, 'kegiatan_jadwal_ref' => $kegiatan->ref, 'nama_lsp' => $kegiatan->lsp->lsp_nama]) }}" class="btn btn-sm btn-light text-dark" title="Download Jadwal Asesmen Excel">
+                                                                        <i class="mdi mdi-file-excel"></i> Download Template Jadwal
+                                                                    </a>
+                                                                    <button style="font-size: 12px" type="button" class="btn btn-sm btn-warning text-dark me-4" data-bs-toggle="modal" data-bs-target="#penandatanganModal-{{ $kegiatan->ref }}" title="Setting Penandatangan">
+                                                                        <i class="mdi mdi-account-edit"></i> Setting ttd
+                                                                    </button>
+                                                                @endrole
+
+                                                                <span id="jadwal-signed-container-{{ $kegiatan->ref }}">
+                                                                    @if ($kegiatan->jadwal_signed)
+                                                                        <a style="font-size: 12px" href="{{ route('files.asesmen.jadwal_signed', $kegiatan->jadwal_signed) }}" target="_blank" class="btn btn-sm btn-warning text-white" title="Lihat Jadwal Asesmen (Signed)">
+                                                                            <i class="mdi mdi-download"></i> Download Jadwal Signed
+                                                                        </a>
+                                                                    @endif
+                                                                </span>
+                                                                @role('lsp')
+                                                                    <button style="font-size: 12px" type="button" class="btn btn-sm btn-primary text-white" onclick="$('#upload-jadwal-signed-{{ $kegiatan->ref }}').click();" title="Upload Jadwal Asesmen (Signed)">
+                                                                        <i class="mdi mdi-upload"></i> Upload Jadwal
+                                                                    </button>
+                                                                    <input type="file" id="upload-jadwal-signed-{{ $kegiatan->ref }}" class="d-none upload-jadwal-signed-input" data-ref="{{ $kegiatan->ref }}">
+                                                                @endrole
+
                                                             </div>
                                                         </div>
                                                         <table class="table-sm table-bordered table" style="font-size: 12px">
@@ -986,6 +1004,79 @@
                     $('#dokumentasi-' + ref).html(`
                         <a href="${res.url}" target="_blank" class="text-danger fs-5">
                             <i class="mdi mdi-download"></i> Download
+                        </a>
+                    `);
+                },
+                error: function(xhr) {
+                    Swal.fire({
+                        icon: 'error',
+                        text: xhr.responseJSON?.message ?? 'Upload gagal'
+                    });
+                }
+            });
+        });
+    </script>
+
+    <!-- Upload Jadwal Signed -->
+    <script>
+        $(document).on('change', '.upload-jadwal-signed-input', function() {
+            let input = this;
+            let file = this.files[0];
+            let ref = $(this).data('ref');
+
+            if (!file) return;
+
+            let formData = new FormData();
+            formData.append('file', file);
+            formData.append('ref', ref);
+            formData.append('_token', '{{ csrf_token() }}');
+
+            $.ajax({
+                url: "{{ route('kegiatan.uploadJadwalSigned') }}",
+                type: "POST",
+                data: formData,
+                processData: false,
+                contentType: false,
+
+                beforeSend: function() {
+                    Swal.fire({
+                        title: 'Mengunggah...',
+                        html: `
+                            <div style="position:relative; width:100%; height:24px; background:#a3a3a3; border-radius:12px; overflow:hidden;">
+                                <div id="progress-bar-js" style="position:absolute; left:0; top:0; height:100%; width:0%; background:#671919; transition:width 0.3s ease; z-index:1;"></div>
+                                <div id="progress-text-js" style="position:absolute; left:0; top:0; width:100%; height:100%; display:flex; align-items:center; justify-content:center; font-weight:600; color:#ffffff; z-index:2;">0%</div>
+                            </div>
+                            <small class="mt-2 d-block">Mohon tunggu, file sedang diunggah</small>
+                        `,
+                        allowOutsideClick: false,
+                        allowEscapeKey: false,
+                        showConfirmButton: false
+                    });
+                },
+
+                xhr: function() {
+                    let xhr = new window.XMLHttpRequest();
+                    xhr.upload.addEventListener("progress", function(evt) {
+                        if (evt.lengthComputable) {
+                            let percent = Math.round((evt.loaded / evt.total) * 100);
+                            $('#progress-bar-js').css('width', percent + '%');
+                            $('#progress-text-js').text(percent + '%');
+                        }
+                    }, false);
+                    return xhr;
+                },
+
+                success: function(res) {
+                    input.value = '';
+                    Swal.fire({
+                        icon: 'success',
+                        text: res.message,
+                        timer: 1500,
+                        showConfirmButton: false
+                    });
+                    $('#jadwal-signed-container-' + ref).html(`
+                        <a style="font-size: 12px" href="${res.url}" target="_blank" class="btn btn-sm btn-info text-white" title="Lihat Jadwal Asesmen (Signed)">
+                            <i class="mdi mdi-download"></i> Jadwal Signed
                         </a>
                     `);
                 },

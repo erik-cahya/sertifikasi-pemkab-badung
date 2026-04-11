@@ -61,6 +61,7 @@ Route::middleware('auth')->group(function () {
     Route::post('kegiatan/uploadDokumentasiAsesmen', [KegiatanController::class, 'uploadDokumentasiAsesmen'])->name('kegiatan.uploadDokumentasiAsesmen');
     Route::post('kegiatan/uploadLaporanAsesmen', [KegiatanController::class, 'uploadLaporanAsesmen'])->name('kegiatan.uploadLaporanAsesmen');
     Route::post('kegiatan/uploadBuktiTerimaSertifikat', [KegiatanController::class, 'uploadBuktiTerimaSertifikat'])->name('kegiatan.uploadBuktiTerimaSertifikat');
+    Route::post('kegiatan/uploadJadwalSigned', [KegiatanController::class, 'uploadJadwalSigned'])->name('kegiatan.uploadJadwalSigned');
     Route::post('kegiatan/storePenandatangan', [KegiatanController::class, 'storePenandatangan'])->name('kegiatan.storePenandatangan');
     Route::put('kegiatan/updateAsesi/{id}', [KegiatanController::class, 'updateAsesi'])->name('kegiatan.updateAsesi');
 
@@ -157,6 +158,7 @@ Route::middleware('auth')->group(function () {
     Route::get('files/asesmen/dokumentasi_asesmen/{filename}', [FileController::class, 'getDokumentasiAsesmen'])->name('files.asesmen.dokumentasi_asesmen');
     Route::get('files/asesmen/bukti_terima_sertifikat/{filename}', [FileController::class, 'getBuktiTerimaSertifikat'])->name('files.asesmen.bukti_terima_sertifikat');
     Route::get('files/asesmen/laporan_asesmen/{filename}', [FileController::class, 'getLaporanAsesmen'])->name('files.asesmen.laporan_asesmen');
+    Route::get('files/asesmen/jadwal_signed/{filename}', [FileController::class, 'getJadwalSigned'])->name('files.asesmen.jadwal_signed');
 
     Route::get('files/pegawai/{filename}', [FileController::class, 'getPegawaiFile'])->name('files.pegawai');
 });

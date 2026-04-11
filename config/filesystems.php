@@ -132,6 +132,13 @@ return [
             'throw' => false,
         ],
 
+        'jadwal_signed' => [
+            'driver' => 'local',
+            'root' => storage_path('app/private/asesmen_files'),
+            'visibility' => 'private',
+            'throw' => false,
+        ],
+
         'pegawai_hotel' => [
             'driver' => 'local',
             'root' => storage_path('app/private/pegawai_files'),

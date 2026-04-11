@@ -553,6 +553,49 @@ class KegiatanController extends Controller
         ]);
     }
 
+    public function uploadJadwalSigned(Request $request)
+    {
+        $request->validate([
+            'ref' => 'required',
+            // Max file 100MB
+            'file' => 'required|file|max:10000',
+        ]);
+
+        $jadwal = KegiatanJadwalModel::with(['lsp', 'kegiatan'])->where('ref', $request->ref)->first();
+
+        if (!$jadwal) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Data Jadwal tidak ditemukan'
+            ], 404);
+        }
+
+        $ext  = $request->file('file')->extension();
+        $lsp  = $jadwal->lsp->lsp_nama;
+        $kegiatan  = $jadwal->kegiatan->nama_kegiatan;
+        $filename = "JADWAL-SIGNED-" . Str::uuid() . ".{$ext}";
+
+        // hapus file lama
+        if ($jadwal->jadwal_signed && Storage::disk('jadwal_signed')->exists($jadwal->jadwal_signed)) {
+            Storage::disk('jadwal_signed')->delete($jadwal->jadwal_signed);
+        }
+
+        // simpan file
+        $path = Storage::disk('jadwal_signed')->putFileAs("jadwal_signed", $request->file('file'), $filename);
+
+        //update tb
+        $jadwal->update(['jadwal_signed' => $filename]);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Jadwal Signed - ' . $kegiatan . ' - ' . $lsp . ' berhasil diupload',
+            'path'    => $path,
+            'url'     => route('files.asesmen.jadwal_signed', ['filename' => basename($path)]),
+        ]);
+    }
+
+
+
     public function uploadBuktiTerimaSertifikat(Request $request)
     {
         $request->validate([
