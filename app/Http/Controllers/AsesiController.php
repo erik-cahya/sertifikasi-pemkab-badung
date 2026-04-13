@@ -573,6 +573,24 @@ class AsesiController extends Controller
         ]);
     }
 
+    public function export(Request $request)
+    {
+        /** @var \App\Models\User $user */
+        $user = Auth::user();
+        $user->loadMissing('lspData');
+
+        $filters = [
+            'filter_lsp' => $request->filter_lsp,
+            'filter_type' => $request->filter_type,
+            'filter_value' => $request->filter_value,
+            'user_role' => $user->roles,
+            'lsp_ref_identity' => $user->lspData->ref ?? null,
+        ];
+
+        $filename = 'data-asesi-' . date('Ymd-His') . '.xlsx';
+        return \Maatwebsite\Excel\Facades\Excel::download(new \App\Exports\AsesiExport($filters), $filename);
+    }
+
     /**
      * AJAX: Ambil detail satu asesi + jadwal asesmen options (untuk edit modal).
      */

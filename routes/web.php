@@ -132,6 +132,7 @@ Route::middleware('auth')->group(function () {
     Route::get('asesiAdmin/{id}/show', [AsesiController::class, 'show'])->name('asesiAdmin.show');
     Route::put('asesiAdmin/{id}', [AsesiController::class, 'update'])->name('asesiAdmin.update');
     Route::delete('asesiAdmin/{id}', [AsesiController::class, 'destroy'])->name('asesiAdmin.destroy');
+    Route::get('asesiAdmin/export', [AsesiController::class, 'export'])->name('asesiAdmin.export');
 
 
 

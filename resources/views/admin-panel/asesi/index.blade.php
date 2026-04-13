@@ -229,11 +229,19 @@
                         className: 'btn-dinas-fill'
                     },
                     {
-                        extend: 'excelHtml5',
+                        text: '<i class="mdi mdi-microsoft-excel"></i> Excel',
                         className: 'btn-dinas-fill',
-                        exportOptions: {
-                            columns: ':not(.no-export)',
-                            stripHtml: true
+                        action: function(e, dt, node, config) {
+                            var filter_type = $('#filter_type').val();
+                            var filter_value = $('#filter_value').val();
+                            var filter_lsp = $('#filter_lsp').val();
+
+                            var url = '{{ route('asesiAdmin.export') }}' +
+                                '?filter_type=' + encodeURIComponent(filter_type || '') +
+                                '&filter_value=' + encodeURIComponent(filter_value || '') +
+                                '&filter_lsp=' + encodeURIComponent(filter_lsp || '');
+
+                            window.location.href = url;
                         }
                     }
                 ],
