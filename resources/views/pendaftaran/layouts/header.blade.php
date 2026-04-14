@@ -22,6 +22,9 @@
                     <a class="nav-link {{ request()->is('/') ? 'active fw-semibold' : '' }}" href="/">Beranda</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link {{ request()->is('download-sertifikat') ? 'active fw-semibold' : '' }}" href="{{ route('download-sertifikat.index') }}">Cari Sertifikat</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link {{ request()->routeIs('pegawai.index') ? 'active fw-semibold' : '' }}" href="{{ route('pegawai.index') }}">Pendataan Pegawai</a>
                 </li>
                 <li class="nav-item">

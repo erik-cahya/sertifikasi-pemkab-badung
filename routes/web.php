@@ -7,8 +7,8 @@ use App\Http\Controllers\TUKController;
 use App\Http\Controllers\AsesiController;
 use App\Http\Controllers\AsesmenController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DownloadSertifikatController;
 use App\Http\Controllers\KegiatanController;
-use App\Http\Controllers\KegiatanDetailController;
 use App\Http\Controllers\KegiatanLSPController;
 use App\Http\Controllers\KodeUnitController;
 use App\Http\Controllers\LSPController;
@@ -17,9 +17,6 @@ use App\Http\Controllers\SkemaController;
 use App\Http\Controllers\PDFController;
 use App\Http\Controllers\UserManagementController;
 use App\Http\Controllers\FileController;
-use App\Http\Controllers\TerminalController;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 
@@ -178,9 +175,10 @@ Route::post('pegawai/store', [PegawaiController::class, 'store'])->name('pegawai
 Route::put('pegawaiAdmin/{ref}', [PegawaiController::class, 'update'])->name('pegawai.update');
 Route::delete('pegawaiAdmin/{ref}', [PegawaiController::class, 'destroy'])->name('pegawai.destroy');
 
-// Route::get('/terminal', [TerminalController::class, 'index'])->name('terminal.index')->middleware('role:master');
-// Route::post('/terminal', [TerminalController::class, 'execute'])->name('terminal.execute')->middleware('role:master');
-
+// ################################ Cari Sertifikat
+Route::get('download-sertifikat', [DownloadSertifikatController::class, 'index'])->name('download-sertifikat.index');
+Route::post('download-sertifikat', [DownloadSertifikatController::class, 'search'])->name('download-sertifikat.search');
+Route::get('download-sertifikat/file/{filename}', [DownloadSertifikatController::class, 'download'])->name('download-sertifikat.download');
 
 
 
