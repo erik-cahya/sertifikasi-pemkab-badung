@@ -43,7 +43,7 @@
                 </div>
                 <div class="card-body">
 
-                    <table id="datatable-dashboard" class="table-striped nowrap row-border order-column w-100 table">
+                    <table id="datatable-dashboard" class="fs-12 table-striped table-bordered table-sm nowrap row-border order-column w-100 table">
                         <thead>
                             <tr>
                                 <th>Kode Departemen</th>
@@ -57,14 +57,14 @@
                                 <tr>
                                     <td>{{ $item->departemen_kode }}</td>
                                     <td>{{ $item->departemen_nama }}</td>
-                                    <td>{{ $item->name }} <br> {{ $item->created_at->format('Y-m-d') }}</td>
+                                    <td>{{ $item->name }} - {{ \Carbon\Carbon::parse($item->created_at)->locale('id')->translatedFormat('l, d F Y') }}</td>
                                     <td>
                                         <div class="btn-group" role="group" aria-label="Basic outlined example">
 
                                             <a href="{{ route('departemen.edit', $item->ref) }}" class="btn btn-sm btn-info" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Edit Departemen" data-bs-custom-class="info-tooltip"><i class="mdi mdi-pencil"></i></a>
 
                                             <input type="hidden" class="departemenID" value="{{ $item->ref }}">
-                                            <a href="javascript:void(0)"data-nama="{{ $item->departemen_nama }}"class="btn btn-sm btn-danger deleteButton" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Hapus Departemen" data-bs-custom-class="danger-tooltip"><i class="mdi mdi-trash-can"></i></a>
+                                            <a href="javascript:void(0)"data-nama="{{ $item->departemen_nama }}" class="btn btn-sm btn-danger deleteButton" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Hapus Departemen" data-bs-custom-class="danger-tooltip"><i class="mdi mdi-trash-can"></i></a>
                                         </div>
                                     </td>
                                 </tr>

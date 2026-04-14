@@ -55,9 +55,10 @@
                 </div>
                 <div class="card-body">
 
-                    <table id="datatable-dashboard" class="table-striped nowrap row-border order-column w-100 table">
+                    <table id="datatable-dashboard" class="table-striped table-bordered nowrap row-border order-column w-100 table-sm table">
                         <thead>
                             <tr>
+                                <th>No</th>
                                 <th>Departemen</th>
                                 <th>Nama Jabatan</th>
                                 <th>Dibuat oleh</th>
@@ -67,9 +68,10 @@
                         <tbody>
                             @foreach ($dataJabatan as $item)
                                 <tr>
+                                    <td>{{ $loop->iteration }}</td>
                                     <td>{{ $item->departemen_nama }}</td>
                                     <td>{{ $item->jabatan_nama }}</td>
-                                    <td>{{ $item->name }} <br> {{ $item->created_at->format('Y-m-d') }}</td>
+                                    <td>{{ $item->name }} <br> {{ \Carbon\Carbon::parse($item->created_at)->locale('id')->translatedFormat('l, d F Y') }}</td>
                                     <td>
                                         <div class="btn-group" role="group" aria-label="Basic outlined example">
                                             <a href="{{ route('jabatan.edit', $item->ref) }}" class="btn btn-sm btn-info" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Edit Jabatan" data-bs-custom-class="info-tooltip"><i class="mdi mdi-pencil"></i></a>
