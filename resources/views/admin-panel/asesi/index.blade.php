@@ -3,53 +3,57 @@
 @section('content')
     <div class="row">
         <div class="col-12">
-            <div class="card">
-                <div class="card-header bg-dinas text-white">
-                    <h4 class=".card-title">Daftar Calon Asesi</h4>
+            <div class="card rounded-4 border-0 shadow-lg">
+                <div class="card-header bg-dinas rounded-top-4 px-4 py-3 text-white">
+                    <h4 class="card-title fw-bold mb-0"><i class="mdi mdi-account-group me-2"></i>Daftar Calon Asesi</h4>
                 </div>
                 <div class="card-body">
 
                     {{-- Filter Form --}}
-                    <div class="row g-2 align-items-end mb-3">
-                        <div class="col-auto">
-                            <label for="filter_type" class="form-label small mb-0">Filter berdasarkan</label>
-                            <select class="form-select-sm form-select" id="filter_type">
-                                <option value="">-- Pilih Filter --</option>
-                                <option value="tanggal">Per Tanggal</option>
-                                <option value="bulan">Per Bulan</option>
-                                <option value="tahun">Per Tahun</option>
-                            </select>
-                        </div>
-                        <div class="col-auto" id="filter_value_wrapper" style="display:none;">
-                            <label for="filter_value" class="form-label small mb-0">Nilai Filter</label>
-                            <input type="text" class="form-control form-control-sm" id="filter_value">
-                        </div>
-                        @if (($userRole ?? '') !== 'lsp')
-                            <div class="col-auto">
-                                <label for="filter_lsp" class="form-label small mb-0">Filter LSP</label>
-                                <select class="form-select-sm form-select" id="filter_lsp">
-                                    <option value="">-- Semua LSP --</option>
-                                    @foreach ($dataLsp ?? [] as $lsp)
-                                        <option value="{{ $lsp->ref }}">{{ $lsp->lsp_nama }}</option>
-                                    @endforeach
-                                </select>
+                    <div class="card rounded-3 mb-3 border">
+                        <div class="card-body px-3 py-2">
+                            <div class="row g-2 align-items-end">
+                                <div class="col-auto">
+                                    <label for="filter_type" class="form-label small fw-semibold mb-0">Filter berdasarkan</label>
+                                    <select class="form-select-sm rounded-3 form-select" id="filter_type">
+                                        <option value="">-- Pilih Filter --</option>
+                                        <option value="tanggal">Per Tanggal</option>
+                                        <option value="bulan">Per Bulan</option>
+                                        <option value="tahun">Per Tahun</option>
+                                    </select>
+                                </div>
+                                <div class="col-auto" id="filter_value_wrapper" style="display:none;">
+                                    <label for="filter_value" class="form-label small fw-semibold mb-0">Nilai Filter</label>
+                                    <input type="text" class="form-control form-control-sm rounded-3" id="filter_value">
+                                </div>
+                                @if (($userRole ?? '') !== 'lsp')
+                                    <div class="col-auto">
+                                        <label for="filter_lsp" class="form-label small fw-semibold mb-0">Filter LSP</label>
+                                        <select class="form-select-sm rounded-3 form-select" id="filter_lsp">
+                                            <option value="">-- Semua LSP --</option>
+                                            @foreach ($dataLsp ?? [] as $lsp)
+                                                <option value="{{ $lsp->ref }}">{{ $lsp->lsp_nama }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                @endif
+                                <div class="d-flex col-auto gap-1">
+                                    <button type="button" id="btn-filter" class="btn btn-sm btn-dinas rounded-3"><i class="mdi mdi-filter me-1"></i>Terapkan</button>
+                                    <button type="button" id="btn-reset" class="btn btn-sm btn-secondary rounded-3"><i class="mdi mdi-refresh me-1"></i>Reset</button>
+                                </div>
                             </div>
-                        @endif
-                        <div class="col-auto">
-                            <button type="button" id="btn-filter" class="btn btn-sm btn-dinas"><i class="mdi mdi-filter"></i> Terapkan Filter</button>
-                            <button type="button" id="btn-reset" class="btn btn-sm btn-secondary"><i class="mdi mdi-refresh"></i> Reset</button>
                         </div>
                     </div>
 
-                    <table id="datatable-asesi" class="table-sm table-striped nowrap row-border order-column w-100 table">
+                    <table id="datatable-asesi" class="table-sm table-striped table-bordered fs-12 nowrap row-border order-column w-100 table">
                         <thead>
                             <tr>
                                 <th>Sertifikasi</th>
                                 <th>Nama</th>
                                 <th>NIK</th>
-                                <th>Tempat Lahir </th>
-                                <th>Tanggal Lahir </th>
-                                <th>Jenis Kelamin </th>
+                                <th>Tempat Lahir</th>
+                                <th>Tanggal Lahir</th>
+                                <th>Jenis Kelamin</th>
                                 <th>Kewarganegaraan</th>
                                 <th>Alamat</th>
                                 <th>Telp</th>
@@ -82,12 +86,12 @@
     <!-- Single Shared Edit Modal -->
     <div id="editModal" class="modal modal-xl fade" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
         <div class="modal-dialog">
-            <div class="modal-content">
+            <div class="modal-content rounded-4 border-0 shadow">
                 <form id="editForm" method="POST" enctype="multipart/form-data">
                     @method('PUT')
                     @csrf
-                    <div class="modal-header modal-colored-header bg-dinas">
-                        <h4 class="modal-title" id="editModalLabel">Edit Data Asesi</h4>
+                    <div class="modal-header modal-colored-header bg-dinas rounded-top-4">
+                        <h4 class="modal-title d-flex align-items-center gap-2" id="editModalLabel"><i class="mdi mdi-account-edit"></i> Edit Data Asesi</h4>
                         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -96,6 +100,12 @@
                             <p class="text-muted mt-2">Memuat data...</p>
                         </div>
                         <div class="row" id="modal-content" style="display: none;">
+
+                            {{-- Section: Data Pribadi --}}
+                            <div class="col-12 mb-2">
+                                <h6 class="fw-bold text-dinas mb-0"><i class="mdi mdi-account me-1"></i> Data Pribadi</h6>
+                                <hr class="mb-2 mt-1">
+                            </div>
 
                             <x-form.input className="col-md-4 mt-2" type="text" name="nama_lengkap" label="Nama Lengkap" value="" />
                             <x-form.input className="col-md-4 mt-2" type="text" name="nik" label="NIK" value="" />
@@ -127,11 +137,15 @@
                             <x-form.input className="col-md-4 mt-2" type="text" name="telp_hp" label="No. Telp HP" value="" />
                             <x-form.input className="col-md-4 mt-2" type="email" name="email" label="Email" value="" />
 
-                            <hr class="mt-2">
+                            {{-- Section: Jadwal Asesmen --}}
+                            <div class="col-12 mb-2 mt-3">
+                                <h6 class="fw-bold text-dinas mb-0"><i class="mdi mdi-calendar-check me-1"></i> Jadwal Asesmen</h6>
+                                <hr class="mb-2 mt-1">
+                            </div>
 
                             <div class="col-md-6">
                                 <label class="form-label">LSP</label>
-                                <input type="text" class="form-control rounded-3" id="edit_lsp_nama" disabled>
+                                <input type="text" class="form-control rounded-3 bg-light" id="edit_lsp_nama" disabled>
                             </div>
 
                             <div class="col-md-6">
@@ -142,10 +156,11 @@
                                 <small class="text-muted text-xs">Opsi jadwal disesuaikan dengan LSP pilihan Anda.</small>
                             </div>
 
-                            {{-- File Upload Section --}}
-                            <div class="col-12 mt-3">
-                                <hr>
-                                <h6 class="fw-bold">Upload Dokumen <small class="text-muted">(Kosongkan jika tidak ingin mengubah)</small></h6>
+                            {{-- Section: Upload Dokumen --}}
+                            <div class="col-12 mb-2 mt-3">
+                                <h6 class="fw-bold text-dinas mb-0"><i class="mdi mdi-file-upload me-1"></i> Upload Dokumen</h6>
+                                <small class="text-muted">Kosongkan jika tidak ingin mengubah</small>
+                                <hr class="mb-2 mt-1">
                             </div>
 
                             <div class="col-md-4 mt-2">
@@ -180,12 +195,11 @@
 
                         </div>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-dinas">Simpan Perubahan</button>
-
+                    <div class="modal-footer border-top">
                         <input type="hidden" id="edit_asesi_ref" value="">
-                        <a href="javascript:void(0)" id="btn-delete-asesi" data-nama="" class="btn btn-sm btn-danger" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Hapus Data Asesi" data-bs-custom-class="danger-tooltip"><i class="mdi mdi-trash-can"></i></a>
+                        <a href="javascript:void(0)" id="btn-delete-asesi" data-nama="" class="btn btn-sm btn-danger rounded-3 me-auto" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Hapus Data Asesi" data-bs-custom-class="danger-tooltip"><i class="mdi mdi-trash-can me-1"></i>Hapus</a>
+                        <button type="button" class="btn btn-light rounded-3" data-bs-dismiss="modal">Tutup</button>
+                        <button type="submit" class="btn btn-dinas rounded-3"><i class="mdi mdi-content-save me-1"></i>Simpan Perubahan</button>
                     </div>
                 </form>
             </div>

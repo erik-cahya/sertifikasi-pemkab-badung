@@ -494,39 +494,45 @@ class AsesiController extends Controller
         foreach ($data as $item) {
             $namaKegiatan = $item->kegiatan->nama_kegiatan ?? '-';
 
+            // Shared inline style to override table-bordered inheritance
+            $nb = 'border:none !important;padding:2px 4px;';
+            $tbl = 'border-collapse:collapse;border:none !important;';
+            $tr = 'border:none !important;';
+            $tb = 'border:none !important;';
+
             // Dokumen links
-            $dokumenHtml = '<table>';
-            $dokumenHtml .= '<tr><td>KTP</td><td>: ' . (!empty($item->ktp_file) ? '<a href="' . route('files.asesi.ktp', $item->ktp_file) . '" target="_blank"><i class="mdi mdi-file-pdf-box"></i></a>' : '-') . '</td></tr>';
-            $dokumenHtml .= '<tr><td>IJAZAH</td><td>: ' . (!empty($item->ijazah_file) ? '<a href="' . route('files.asesi.ijazah', $item->ijazah_file) . '" target="_blank"><i class="mdi mdi-file-pdf-box"></i></a>' : '-') . '</td></tr>';
-            $dokumenHtml .= '<tr><td>SERTIKOM</td><td>: ' . (!empty($item->sertikom_file) ? '<a href="' . route('files.asesi.sertikom', $item->sertikom_file) . '" target="_blank"><i class="mdi mdi-file-pdf-box"></i></a>' : '-') . '</td></tr>';
-            $dokumenHtml .= '<tr><td>SKB</td><td>: ' . (!empty($item->keterangan_kerja_file) ? '<a href="' . route('files.asesi.skb', $item->keterangan_kerja_file) . '" target="_blank"><i class="mdi mdi-file-pdf-box"></i></a>' : '-') . '</td></tr>';
-            $dokumenHtml .= '<tr><td>PAS FOTO</td><td>: ' . (!empty($item->pas_foto_file) ? '<a href="' . route('files.asesi.pasfoto', $item->pas_foto_file) . '" target="_blank"><i class="mdi mdi-file-image"></i></a>' : '-') . '</td></tr>';
-            $dokumenHtml .= '</table>';
+            $dokumenHtml = '<table style="' . $tbl . '"><tbody style="' . $tb . '">';
+            $dokumenHtml .= '<tr style="' . $tr . '"><td style="' . $nb . '">KTP</td><td style="' . $nb . '">: ' . (!empty($item->ktp_file) ? '<a href="' . route('files.asesi.ktp', $item->ktp_file) . '" target="_blank"><i class="mdi mdi-file-pdf-box"></i></a>' : '-') . '</td></tr>';
+            $dokumenHtml .= '<tr style="' . $tr . '"><td style="' . $nb . '">IJAZAH</td><td style="' . $nb . '">: ' . (!empty($item->ijazah_file) ? '<a href="' . route('files.asesi.ijazah', $item->ijazah_file) . '" target="_blank"><i class="mdi mdi-file-pdf-box"></i></a>' : '-') . '</td></tr>';
+            $dokumenHtml .= '<tr style="' . $tr . '"><td style="' . $nb . '">SERTIKOM</td><td style="' . $nb . '">: ' . (!empty($item->sertikom_file) ? '<a href="' . route('files.asesi.sertikom', $item->sertikom_file) . '" target="_blank"><i class="mdi mdi-file-pdf-box"></i></a>' : '-') . '</td></tr>';
+            $dokumenHtml .= '<tr style="' . $tr . '"><td style="' . $nb . '">SKB</td><td style="' . $nb . '">: ' . (!empty($item->keterangan_kerja_file) ? '<a href="' . route('files.asesi.skb', $item->keterangan_kerja_file) . '" target="_blank"><i class="mdi mdi-file-pdf-box"></i></a>' : '-') . '</td></tr>';
+            $dokumenHtml .= '<tr style="' . $tr . '"><td style="' . $nb . '">PAS FOTO</td><td style="' . $nb . '">: ' . (!empty($item->pas_foto_file) ? '<a href="' . route('files.asesi.pasfoto', $item->pas_foto_file) . '" target="_blank"><i class="mdi mdi-file-image"></i></a>' : '-') . '</td></tr>';
+            $dokumenHtml .= '</tbody></table>';
 
             // Jadwal Asesmen
-            $jadwalHtml = '<table>';
+            $jadwalHtml = '<table style="' . $tbl . '"><tbody style="' . $tb . '">';
             if ($item->asesmen) {
-                $jadwalHtml .= '<tr><td>LSP</td><td>: ' . e($item->asesmen->nama_lsp) . '</td></tr>';
-                $jadwalHtml .= '<tr><td>Tanggal</td><td>: ' . Carbon::parse($item->asesmen->jadwal_asesmen)->locale('id')->translatedFormat('l, d F Y') . '</td></tr>';
-                $jadwalHtml .= '<tr><td>TUK</td><td>: ' . e($item->asesmen->nama_tuk) . '</td></tr>';
-                $jadwalHtml .= '<tr><td>Skema</td><td>: ' . e($item->asesmen->nama_skema) . '</td></tr>';
+                $jadwalHtml .= '<tr style="' . $tr . '"><td style="' . $nb . '">LSP</td><td style="' . $nb . '">: ' . e($item->asesmen->nama_lsp) . '</td></tr>';
+                $jadwalHtml .= '<tr style="' . $tr . '"><td style="' . $nb . '">Tanggal</td><td style="' . $nb . '">: ' . Carbon::parse($item->asesmen->jadwal_asesmen)->locale('id')->translatedFormat('l, d F Y') . '</td></tr>';
+                $jadwalHtml .= '<tr style="' . $tr . '"><td style="' . $nb . '">TUK</td><td style="' . $nb . '">: ' . e($item->asesmen->nama_tuk) . '</td></tr>';
+                $jadwalHtml .= '<tr style="' . $tr . '"><td style="' . $nb . '">Skema</td><td style="' . $nb . '">: ' . e($item->asesmen->nama_skema) . '</td></tr>';
             } else {
-                $jadwalHtml .= '<tr><td>-</td></tr>';
+                $jadwalHtml .= '<tr style="' . $tr . '"><td style="' . $nb . '">-</td></tr>';
             }
-            $jadwalHtml .= '</table>';
+            $jadwalHtml .= '</tbody></table>';
 
             // Telp
-            $telpHtml = '<table>';
-            $telpHtml .= '<tr><td>Telp</td><td>: ' . e($item->telp_hp) . '</td></tr>';
-            $telpHtml .= '<tr><td>Rumah</td><td>: ' . e($item->telp_rumah) . '</td></tr>';
-            $telpHtml .= '<tr><td>Kantor</td><td>: ' . e($item->telp_kantor) . '</td></tr>';
-            $telpHtml .= '</table>';
+            $telpHtml = '<table style="' . $tbl . '"><tbody style="' . $tb . '">';
+            $telpHtml .= '<tr style="' . $tr . '"><td style="' . $nb . '">Telp</td><td style="' . $nb . '">: ' . e($item->telp_hp) . '</td></tr>';
+            $telpHtml .= '<tr style="' . $tr . '"><td style="' . $nb . '">Rumah</td><td style="' . $nb . '">: ' . e($item->telp_rumah) . '</td></tr>';
+            $telpHtml .= '<tr style="' . $tr . '"><td style="' . $nb . '">Kantor</td><td style="' . $nb . '">: ' . e($item->telp_kantor) . '</td></tr>';
+            $telpHtml .= '</tbody></table>';
 
             // Telp Perusahaan
-            $telpPerusahaanHtml = '<table>';
-            $telpPerusahaanHtml .= '<tr><td>Telp</td><td>: ' . e($item->telp_perusahaan) . '</td></tr>';
-            $telpPerusahaanHtml .= '<tr><td>Fax</td><td>: ' . e($item->fax_perusahaan) . '</td></tr>';
-            $telpPerusahaanHtml .= '</table>';
+            $telpPerusahaanHtml = '<table style="' . $tbl . '"><tbody style="' . $tb . '">';
+            $telpPerusahaanHtml .= '<tr style="' . $tr . '"><td style="' . $nb . '">Telp</td><td style="' . $nb . '">: ' . e($item->telp_perusahaan) . '</td></tr>';
+            $telpPerusahaanHtml .= '<tr style="' . $tr . '"><td style="' . $nb . '">Fax</td><td style="' . $nb . '">: ' . e($item->fax_perusahaan) . '</td></tr>';
+            $telpPerusahaanHtml .= '</tbody></table>';
 
             // Sertifikat
             $sertifikatHtml = !empty($item->sertifikat_file)
