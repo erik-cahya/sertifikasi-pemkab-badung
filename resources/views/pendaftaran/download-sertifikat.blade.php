@@ -16,15 +16,28 @@
                             <div class="card-body px-4 py-4">
                                 <form action="{{ route('download-sertifikat.search') }}" method="POST">
                                     @csrf
-                                    <div class="mb-3">
+                                    <div class="mb-4">
                                         <label for="nik" class="form-label fw-semibold">Cari berdasarkan NIK</label>
                                         <textarea name="nik" id="nik" class="form-control rounded-3" rows="5" placeholder="Masukkan NIK di sini...&#10;&#10;Untuk mencari lebih dari satu, pisahkan dengan ENTER.&#10;Contoh:&#10;5171010101010001&#10;5171010101010002" required>{{ $nikInput ?? '' }}</textarea>
                                         <small class="text-muted"><i class="mdi mdi-information-outline"></i> Pisahkan setiap NIK dengan menekan ENTER untuk pencarian lebih dari satu.</small>
                                     </div>
-                                    <div class="d-grid d-md-flex justify-content-md-end">
-                                        <button type="submit" class="btn btn-dinas rounded-3 fw-semibold px-5 py-2">
-                                            <i class="mdi mdi-magnify me-1"></i> Cari Sertifikat
-                                        </button>
+
+                                    <div class="d-md-flex flex-md-row justify-content-between align-items-md-center align-items-stretch">
+                                        <div class="mb-md-0 mb-3" style="max-width: 350px;">
+                                            <label for="tahun" class="form-label fw-semibold">Tahun Sertifikasi</label>
+                                            <select name="tahun" id="tahun" class="rounded-3 form-select mb-1">
+                                                <option value="">Semua Tahun</option>
+                                                @foreach ($tahunList as $tahun)
+                                                    <option value="{{ $tahun }}" {{ isset($selectedTahun) && $selectedTahun == $tahun ? 'selected' : '' }}>{{ $tahun }}</option>
+                                                @endforeach
+                                            </select>
+                                            <small class="text-muted"><i class="mdi mdi-information-outline"></i> Filter berdasarkan tahun pendaftaran sertifikasi.</small>
+                                        </div>
+                                        <div class="d-grid d-md-block mt-md-0 mt-3">
+                                            <button type="submit" class="btn btn-dinas rounded-3 fw-semibold px-5 py-2">
+                                                <i class="mdi mdi-magnify me-1"></i> Cari Sertifikat
+                                            </button>
+                                        </div>
                                     </div>
                                 </form>
                             </div>
@@ -51,6 +64,7 @@
                                                         <th class="px-3 py-2">NIK</th>
                                                         <th class="px-3 py-2">Nama Asesi</th>
                                                         <th class="px-3 py-2">Tempat Bekerja</th>
+                                                        <th class="px-3 py-2">Tahun Sertifikasi</th>
                                                         <th class="px-3 py-2">No. Sertifikat</th>
                                                         <th class="px-3 py-2 text-center" style="width: 150px;">Download</th>
                                                     </tr>
@@ -68,6 +82,11 @@
                                                                 @endif
                                                             </td>
                                                             <td class="px-3">{{ $item->nama_perusahaan ?? '-' }}</td>
+                                                            <td class="px-3">
+                                                                <span class="badge bg-danger-subtle text-danger rounded-pill px-3">
+                                                                    {{ $item->created_at ? \Carbon\Carbon::parse($item->created_at)->format('Y') : '-' }}
+                                                                </span>
+                                                            </td>
                                                             <td class="px-3">{{ $item->no_sertifikat ?? '-' }}</td>
                                                             <td class="px-3 text-center">
                                                                 @if (!empty($item->sertifikat_file))

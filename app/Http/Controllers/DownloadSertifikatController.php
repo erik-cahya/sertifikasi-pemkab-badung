@@ -4,14 +4,23 @@ namespace App\Http\Controllers;
 
 use App\Models\AsesiModel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class DownloadSertifikatController extends Controller
 {
     public function index()
     {
+        $tahunList = AsesiModel::selectRaw('YEAR(created_at) as tahun')
+            ->whereNotNull('created_at')
+            ->distinct()
+            ->orderBy('tahun', 'desc')
+            ->pluck('tahun');
+
         return view('pendaftaran.download-sertifikat', [
             'asesiList' => collect(),
             'searched' => false,
+            'tahunList' => $tahunList,
+            'selectedTahun' => null,
         ]);
     }
 
@@ -19,10 +28,17 @@ class DownloadSertifikatController extends Controller
     {
         $asesiList = collect();
         $nikInput = $request->nik;
+        $selectedTahun = $request->tahun;
         $nikArray = array_filter(array_map('trim', explode("\n", $nikInput)));
 
         if (count($nikArray) > 0) {
-            $asesiData = AsesiModel::whereIn('nik', $nikArray)->get()->groupBy('nik');
+            $query = AsesiModel::whereIn('nik', $nikArray);
+
+            if ($selectedTahun) {
+                $query->whereYear('created_at', $selectedTahun);
+            }
+
+            $asesiData = $query->get()->groupBy('nik');
 
             foreach ($nikArray as $nik) {
                 if ($asesiData->has($nik)) {
@@ -37,16 +53,25 @@ class DownloadSertifikatController extends Controller
                         'nama_perusahaan' => '-',
                         'no_sertifikat' => '-',
                         'sertifikat_file' => null,
-                        'is_found' => false
+                        'is_found' => false,
+                        'created_at' => null,
                     ]);
                 }
             }
         }
 
+        $tahunList = AsesiModel::selectRaw('YEAR(created_at) as tahun')
+            ->whereNotNull('created_at')
+            ->distinct()
+            ->orderBy('tahun', 'desc')
+            ->pluck('tahun');
+
         return view('pendaftaran.download-sertifikat', [
             'asesiList' => $asesiList,
             'searched' => true,
             'nikInput' => $nikInput,
+            'tahunList' => $tahunList,
+            'selectedTahun' => $selectedTahun,
         ]);
     }
 
