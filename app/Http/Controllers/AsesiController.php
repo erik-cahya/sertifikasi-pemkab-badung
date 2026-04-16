@@ -373,9 +373,11 @@ class AsesiController extends Controller
 
         // Data LSP untuk filter dropdown (khusus dinas/master)
         $dataLsp = ($user->roles !== 'lsp') ? LSPModel::orderBy('lsp_nama')->get() : collect();
+        $dataKegiatan = KegiatanModel::whereStatus(1)->get();
 
         return view('admin-panel.asesi.index', [
             'dataLsp' => $dataLsp,
+            'dataKegiatan' => $dataKegiatan,
             'userRole' => $user->roles,
         ]);
     }
@@ -401,6 +403,12 @@ class AsesiController extends Controller
         $filterLsp = $request->filter_lsp;
         if ($user->roles !== 'lsp' && $filterLsp) {
             $query->where('lsp_ref', $filterLsp);
+        }
+
+        // Filter berdasarkan kegiatan
+        $filterKegiatan = $request->filter_kegiatan;
+        if ($filterKegiatan) {
+            $query->where('kegiatan_ref', $filterKegiatan);
         }
 
         // Filter berdasarkan tanggal/bulan/tahun
@@ -589,6 +597,7 @@ class AsesiController extends Controller
             'filter_lsp' => $request->filter_lsp,
             'filter_type' => $request->filter_type,
             'filter_value' => $request->filter_value,
+            'filter_kegiatan' => $request->filter_kegiatan,
             'user_role' => $user->roles,
             'lsp_ref_identity' => $user->lspData->ref ?? null,
         ];

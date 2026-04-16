@@ -35,6 +35,11 @@ class AsesiExport implements FromQuery, WithHeadings, WithMapping, ShouldAutoSiz
             $query->where('lsp_ref', $this->filters['filter_lsp']);
         }
 
+        // Filter berdasarkan kegiatan
+        if (!empty($this->filters['filter_kegiatan'])) {
+            $query->where('kegiatan_ref', $this->filters['filter_kegiatan']);
+        }
+
         // Filter based on date
         $filterType = $this->filters['filter_type'] ?? null;
         $filterValue = $this->filters['filter_value'] ?? null;

@@ -13,7 +13,7 @@
                     <div class="card rounded-3 mb-3 border">
                         <div class="card-body px-3 py-2">
                             <div class="row g-2 align-items-end">
-                                <div class="col-auto">
+                                <div class="col-2">
                                     <label for="filter_type" class="form-label small fw-semibold mb-0">Filter berdasarkan</label>
                                     <select class="form-select-sm rounded-3 form-select" id="filter_type">
                                         <option value="">-- Pilih Filter --</option>
@@ -22,12 +22,12 @@
                                         <option value="tahun">Per Tahun</option>
                                     </select>
                                 </div>
-                                <div class="col-auto" id="filter_value_wrapper" style="display:none;">
+                                <div class="col-2" id="filter_value_wrapper" style="display:none;">
                                     <label for="filter_value" class="form-label small fw-semibold mb-0">Nilai Filter</label>
                                     <input type="text" class="form-control form-control-sm rounded-3" id="filter_value">
                                 </div>
                                 @if (($userRole ?? '') !== 'lsp')
-                                    <div class="col-auto">
+                                    <div class="col-2">
                                         <label for="filter_lsp" class="form-label small fw-semibold mb-0">Filter LSP</label>
                                         <select class="form-select-sm rounded-3 form-select" id="filter_lsp">
                                             <option value="">-- Semua LSP --</option>
@@ -37,7 +37,16 @@
                                         </select>
                                     </div>
                                 @endif
-                                <div class="d-flex col-auto gap-1">
+                                <div class="col-3">
+                                    <label for="filter_kegiatan" class="form-label small fw-semibold mb-0">Filter Kegiatan</label>
+                                    <select class="form-select-sm rounded-3 form-select" id="filter_kegiatan">
+                                        <option value="">-- Semua Kegiatan --</option>
+                                        @foreach ($dataKegiatan ?? [] as $kegiatan)
+                                            <option value="{{ $kegiatan->ref }}">{{ $kegiatan->nama_kegiatan }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="d-flex col-3 gap-1">
                                     <button type="button" id="btn-filter" class="btn btn-sm btn-dinas rounded-3"><i class="mdi mdi-filter me-1"></i>Terapkan</button>
                                     <button type="button" id="btn-reset" class="btn btn-sm btn-secondary rounded-3"><i class="mdi mdi-refresh me-1"></i>Reset</button>
                                 </div>
@@ -223,6 +232,7 @@
                         d.filter_type = $('#filter_type').val();
                         d.filter_value = $('#filter_value').val();
                         d.filter_lsp = $('#filter_lsp').val();
+                        d.filter_kegiatan = $('#filter_kegiatan').val();
                     }
                 },
                 order: [
@@ -249,11 +259,13 @@
                             var filter_type = $('#filter_type').val();
                             var filter_value = $('#filter_value').val();
                             var filter_lsp = $('#filter_lsp').val();
+                            var filter_kegiatan = $('#filter_kegiatan').val();
 
                             var url = '{{ route('asesiAdmin.export') }}' +
                                 '?filter_type=' + encodeURIComponent(filter_type || '') +
                                 '&filter_value=' + encodeURIComponent(filter_value || '') +
-                                '&filter_lsp=' + encodeURIComponent(filter_lsp || '');
+                                '&filter_lsp=' + encodeURIComponent(filter_lsp || '') +
+                                '&filter_kegiatan=' + encodeURIComponent(filter_kegiatan || '');
 
                             window.location.href = url;
                         }
@@ -291,6 +303,8 @@
                 document.getElementById('filter_value').value = '';
                 var filterLsp = document.getElementById('filter_lsp');
                 if (filterLsp) filterLsp.value = '';
+                var filterKegiatan = document.getElementById('filter_kegiatan');
+                if (filterKegiatan) filterKegiatan.value = '';
                 document.getElementById('filter_value_wrapper').style.display = 'none';
                 asesiTable.ajax.reload();
             });
