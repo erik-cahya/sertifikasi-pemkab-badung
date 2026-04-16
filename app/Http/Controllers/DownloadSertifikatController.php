@@ -32,7 +32,7 @@ class DownloadSertifikatController extends Controller
         $nikArray = array_filter(array_map('trim', explode("\n", $nikInput)));
 
         if (count($nikArray) > 0) {
-            $query = AsesiModel::whereIn('nik', $nikArray);
+            $query = AsesiModel::with('asesmen')->whereIn('nik', $nikArray);
 
             if ($selectedTahun) {
                 $query->whereYear('created_at', $selectedTahun);

@@ -5,7 +5,7 @@
         <div class="content">
             <div class="container-fluid">
                 <div class="row justify-content-center">
-                    <div class="col-12 col-lg-10">
+                    <div class="col-12 col-lg-12">
 
                         {{-- Card Pencarian --}}
                         <div class="card rounded-4 mt-2 border-0 shadow-lg">
@@ -63,9 +63,9 @@
                                                         <th class="px-3 py-2 text-center" style="width: 50px;">No</th>
                                                         <th class="px-3 py-2">NIK</th>
                                                         <th class="px-3 py-2">Nama Asesi</th>
-                                                        <th class="px-3 py-2">Tempat Bekerja</th>
+                                                        <th class="px-3 py-2">Lembaga Sertifikasi</th>
+                                                        <th class="px-3 py-2">Skema Sertifikasi</th>
                                                         <th class="px-3 py-2">Tahun Sertifikasi</th>
-                                                        <th class="px-3 py-2">No. Sertifikat</th>
                                                         <th class="px-3 py-2 text-center" style="width: 150px;">Download</th>
                                                     </tr>
                                                 </thead>
@@ -81,13 +81,13 @@
                                                                     {{ $item->nama_lengkap }}
                                                                 @endif
                                                             </td>
-                                                            <td class="px-3">{{ $item->nama_perusahaan ?? '-' }}</td>
+                                                            <td class="px-3">{{ $item->asesmen->nama_lsp ?? '-' }}</td>
+                                                            <td class="px-3">{{ $item->asesmen->nama_skema ?? '-' }}</td>
                                                             <td class="px-3">
                                                                 <span class="badge bg-danger-subtle text-danger rounded-pill px-3">
                                                                     {{ $item->created_at ? \Carbon\Carbon::parse($item->created_at)->format('Y') : '-' }}
                                                                 </span>
                                                             </td>
-                                                            <td class="px-3">{{ $item->no_sertifikat ?? '-' }}</td>
                                                             <td class="px-3 text-center">
                                                                 @if (!empty($item->sertifikat_file))
                                                                     <a href="{{ route('download-sertifikat.download', $item->sertifikat_file) }}" class="btn btn-sm btn-success rounded-3">
