@@ -524,6 +524,7 @@ class AsesiController extends Controller
                 $jadwalHtml .= '<tr style="' . $tr . '"><td style="' . $nb . '">Tanggal</td><td style="' . $nb . '">: ' . Carbon::parse($item->asesmen->jadwal_asesmen)->locale('id')->translatedFormat('l, d F Y') . '</td></tr>';
                 $jadwalHtml .= '<tr style="' . $tr . '"><td style="' . $nb . '">TUK</td><td style="' . $nb . '">: ' . e($item->asesmen->nama_tuk) . '</td></tr>';
                 $jadwalHtml .= '<tr style="' . $tr . '"><td style="' . $nb . '">Skema</td><td style="' . $nb . '">: ' . e($item->asesmen->nama_skema) . '</td></tr>';
+                $jadwalHtml .= '<tr style="' . $tr . '"><td style="' . $nb . '">Nama Asesor</td><td style="' . $nb . '">: ' . e($item->asesmen->nama_asesor) . '</td></tr>';
             } else {
                 $jadwalHtml .= '<tr style="' . $tr . '"><td style="' . $nb . '">-</td></tr>';
             }

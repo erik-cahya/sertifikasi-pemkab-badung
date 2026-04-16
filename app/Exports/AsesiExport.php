@@ -91,8 +91,9 @@ class AsesiExport implements FromQuery, WithHeadings, WithMapping, ShouldAutoSiz
             'Tanggal Asesmen',
             'TUK',
             'Skema',
+            'Nama Asesor',
             'No Sertifikat',
-            'Mendaftar pada'
+            'Mendaftar pada',
         ];
     }
 
@@ -125,6 +126,7 @@ class AsesiExport implements FromQuery, WithHeadings, WithMapping, ShouldAutoSiz
             $item->asesmen ? Carbon::parse($item->asesmen->jadwal_asesmen)->format('Y/m/d') : '-',
             $item->asesmen->nama_tuk ?? '-',
             $item->asesmen->nama_skema ?? '-',
+            $item->asesmen->nama_asesor ?? '-',
             $item->no_sertifikat,
             $item->created_at->format('Y/m/d H:i:s'),
         ];
