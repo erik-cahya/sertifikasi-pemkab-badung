@@ -179,6 +179,7 @@ Route::delete('pegawaiAdmin/{ref}', [PegawaiController::class, 'destroy'])->name
 Route::get('download-sertifikat', [DownloadSertifikatController::class, 'index'])->name('download-sertifikat.index');
 Route::post('download-sertifikat', [DownloadSertifikatController::class, 'search'])->name('download-sertifikat.search');
 Route::get('download-sertifikat/file/{filename}', [DownloadSertifikatController::class, 'download'])->name('download-sertifikat.download');
+Route::post('download-sertifikat/bulk', [DownloadSertifikatController::class, 'bulkDownload'])->name('download-sertifikat.bulk');
 
 
 

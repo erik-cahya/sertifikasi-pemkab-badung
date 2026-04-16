@@ -88,4 +88,34 @@ class DownloadSertifikatController extends Controller
 
         return response()->download($path, 'Sertifikat - ' . $namaLengkap . '.pdf');
     }
+    public function bulkDownload(Request $request)
+    {
+        $filenames = $request->input('sertifikat_files', []);
+
+        if (empty($filenames)) {
+            // we should not get here if disabled button is working, but just in case
+            return back()->with('error', 'Tidak ada sertifikat yang dipilih.');
+        }
+
+        $zip = new \ZipArchive();
+        $zipFileName = 'Bulk_Sertifikat_' . time() . '.zip';
+        // Simpan zip sementara di temporary directory atau storage lokal
+        $zipFilePath = storage_path('app/private/asesi_files/sertifikat/' . $zipFileName);
+
+        if ($zip->open($zipFilePath, \ZipArchive::CREATE | \ZipArchive::OVERWRITE) === TRUE) {
+            foreach ($filenames as $filename) {
+                $path = storage_path('app/private/asesi_files/sertifikat/' . $filename);
+                if (file_exists($path)) {
+                    $asesi = AsesiModel::where('sertifikat_file', $filename)->first();
+                    $namaLengkap = $asesi ? $asesi->nama_lengkap : 'Asesi';
+                    $zip->addFile($path, 'Sertifikat - ' . $namaLengkap . ' - ' . uniqid() . '.pdf');
+                }
+            }
+            $zip->close();
+
+            return response()->download($zipFilePath)->deleteFileAfterSend(true);
+        }
+
+        return back()->with('error', 'Gagal membuat file ZIP.');
+    }
 }

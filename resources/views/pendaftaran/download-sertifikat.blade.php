@@ -57,54 +57,76 @@
                                 <div class="card-body p-0">
                                     @if (isset($asesiList) && $asesiList->count() > 0)
                                         <div class="table-responsive">
-                                            <table class="table-bordered table-hover table-sm mb-0 table align-middle" style="font-size: 12px">
-                                                <thead class="bg-light">
-                                                    <tr>
-                                                        <th class="px-3 py-2 text-center" style="width: 50px;">No</th>
-                                                        <th class="px-3 py-2">NIK</th>
-                                                        <th class="px-3 py-2">Nama Asesi</th>
-                                                        <th class="px-3 py-2">Lembaga Sertifikasi</th>
-                                                        <th class="px-3 py-2">Skema Sertifikasi</th>
-                                                        <th class="px-3 py-2">Tahun Sertifikasi</th>
-                                                        <th class="px-3 py-2 text-center" style="width: 150px;">Download</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    @foreach ($asesiList as $item)
-                                                        <tr class="{{ isset($item->is_found) && !$item->is_found ? 'table-danger' : '' }}">
-                                                            <td class="px-3 text-center">{{ $loop->iteration }}</td>
-                                                            <td class="font-monospace px-3">{{ $item->nik }}</td>
-                                                            <td class="px-3">
-                                                                @if (isset($item->is_found) && !$item->is_found)
-                                                                    <span class="text-danger fst-italic"><i class="mdi mdi-alert-circle-outline me-1"></i>{{ $item->nama_lengkap }}</span>
-                                                                @else
-                                                                    {{ $item->nama_lengkap }}
-                                                                @endif
-                                                            </td>
-                                                            <td class="px-3">{{ $item->asesmen->nama_lsp ?? '-' }}</td>
-                                                            <td class="px-3">{{ $item->asesmen->nama_skema ?? '-' }}</td>
-                                                            <td class="px-3">
-                                                                <span class="badge bg-danger-subtle text-danger rounded-pill px-3">
-                                                                    {{ $item->created_at ? \Carbon\Carbon::parse($item->created_at)->format('Y') : '-' }}
-                                                                </span>
-                                                            </td>
-                                                            <td class="px-3 text-center">
-                                                                @if (!empty($item->sertifikat_file))
-                                                                    <a href="{{ route('download-sertifikat.download', $item->sertifikat_file) }}" class="btn btn-sm btn-success rounded-3">
-                                                                        <i class="mdi mdi-download me-1"></i> Download
-                                                                    </a>
-                                                                @elseif (isset($item->is_found) && !$item->is_found)
-                                                                    <span class="text-muted">-</span>
-                                                                @else
-                                                                    <span class="badge bg-warning text-dark rounded-3 px-3 py-1">
-                                                                        <i class="mdi mdi-clock-outline me-1"></i>Belum Tersedia
-                                                                    </span>
-                                                                @endif
-                                                            </td>
+                                            <form action="{{ route('download-sertifikat.bulk') }}" method="POST" id="bulk-download-form">
+                                                @csrf
+                                                <div class="d-flex justify-content-start m-2">
+                                                    <button type="submit" class="btn btn-dinas rounded-3 fs-12 px-3 py-1" id="btn-bulk-download" disabled>
+                                                        <i class="mdi mdi-download-multiple me-1"></i> Download Terpilih (.zip)
+                                                    </button>
+                                                </div>
+                                                <table class="table-bordered table-hover table-sm mb-0 table align-middle" style="font-size: 12px">
+                                                    <thead class="bg-light">
+                                                        <tr>
+                                                            <th class="px-2 py-2 text-center" style="width: 40px;">
+                                                                <div class="form-check d-flex justify-content-center mb-0">
+                                                                    <input class="form-check-input" type="checkbox" id="check-all">
+                                                                </div>
+                                                            </th>
+                                                            <th class="px-3 py-2 text-center" style="width: 50px;">No</th>
+                                                            <th class="px-3 py-2">NIK</th>
+                                                            <th class="px-3 py-2">Nama Asesi</th>
+                                                            <th class="px-3 py-2">Lembaga Sertifikasi</th>
+                                                            <th class="px-3 py-2">Skema Sertifikasi</th>
+                                                            <th class="px-3 py-2">Tahun Sertifikasi</th>
+                                                            <th class="px-3 py-2 text-center" style="width: 150px;">Download</th>
                                                         </tr>
-                                                    @endforeach
-                                                </tbody>
-                                            </table>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach ($asesiList as $item)
+                                                            <tr class="{{ isset($item->is_found) && !$item->is_found ? 'table-danger' : '' }}">
+                                                                <td class="px-2 text-center">
+                                                                    <div class="form-check d-flex justify-content-center mb-0">
+                                                                        @if (!empty($item->sertifikat_file))
+                                                                            <input class="form-check-input row-checkbox" type="checkbox" name="sertifikat_files[]" value="{{ $item->sertifikat_file }}">
+                                                                        @else
+                                                                            <input class="form-check-input" type="checkbox" disabled>
+                                                                        @endif
+                                                                    </div>
+                                                                </td>
+                                                                <td class="px-3 text-center">{{ $loop->iteration }}</td>
+                                                                <td class="font-monospace px-3">{{ $item->nik }}</td>
+                                                                <td class="px-3">
+                                                                    @if (isset($item->is_found) && !$item->is_found)
+                                                                        <span class="text-danger fst-italic"><i class="mdi mdi-alert-circle-outline me-1"></i>{{ $item->nama_lengkap }}</span>
+                                                                    @else
+                                                                        {{ $item->nama_lengkap }}
+                                                                    @endif
+                                                                </td>
+                                                                <td class="px-3">{{ $item->asesmen->nama_lsp ?? '-' }}</td>
+                                                                <td class="px-3">{{ $item->asesmen->nama_skema ?? '-' }}</td>
+                                                                <td class="px-3">
+                                                                    <span class="badge bg-danger-subtle text-danger rounded-pill px-3">
+                                                                        {{ $item->created_at ? \Carbon\Carbon::parse($item->created_at)->format('Y') : '-' }}
+                                                                    </span>
+                                                                </td>
+                                                                <td class="px-3 text-center">
+                                                                    @if (!empty($item->sertifikat_file))
+                                                                        <a href="{{ route('download-sertifikat.download', $item->sertifikat_file) }}" class="badge bg-success rounded-3 px-3 py-1 text-white">
+                                                                            <i class="mdi mdi-download me-1"></i> Download
+                                                                        </a>
+                                                                    @elseif (isset($item->is_found) && !$item->is_found)
+                                                                        <span class="text-muted">-</span>
+                                                                    @else
+                                                                        <span class="badge bg-warning text-dark rounded-3 px-3 py-1">
+                                                                            <i class="mdi mdi-clock-outline me-1"></i>Belum Tersedia
+                                                                        </span>
+                                                                    @endif
+                                                                </td>
+                                                            </tr>
+                                                        @endforeach
+                                                    </tbody>
+                                                </table>
+                                            </form>
                                         </div>
                                     @else
                                         <div class="px-4 py-5 text-center">
@@ -123,3 +145,40 @@
         </div>
     </div>
 @endsection
+
+@push('script')
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const checkAll = document.getElementById('check-all');
+            const checkboxes = document.querySelectorAll('.row-checkbox');
+            const bulkDownloadBtn = document.getElementById('btn-bulk-download');
+
+            function toggleBulkDownloadBtn() {
+                const checkedCount = document.querySelectorAll('.row-checkbox:checked').length;
+                if (bulkDownloadBtn) {
+                    bulkDownloadBtn.disabled = checkedCount === 0;
+                }
+                if (checkAll && checkboxes.length > 0) {
+                    checkAll.checked = checkedCount === checkboxes.length;
+                }
+            }
+
+            if (checkAll) {
+                checkAll.addEventListener('change', function() {
+                    checkboxes.forEach(cb => {
+                        cb.checked = checkAll.checked;
+                    });
+                    toggleBulkDownloadBtn();
+                });
+            }
+
+            if (checkboxes.length > 0) {
+                checkboxes.forEach(cb => {
+                    cb.addEventListener('change', function() {
+                        toggleBulkDownloadBtn();
+                    });
+                });
+            }
+        });
+    </script>
+@endpush
