@@ -435,36 +435,33 @@ class AsesiController extends Controller
         $start = (int) $request->input('start', 0);
         $length = (int) $request->input('length', 25);
         $searchValue = $request->input('search.value', '');
-        $orderColumnIdx = (int) $request->input('order.0.column', 23); // default: created_at
+        $orderColumnIdx = (int) $request->input('order.0.column', 18); // default: created_at
         $orderDir = $request->input('order.0.dir', 'desc');
 
         // Mapping kolom index DataTables ke kolom database
         $columns = [
             0 => 'kegiatan_ref',   // Sertifikasi
             1 => 'nama_lengkap',
-            2 => 'nik',
-            3 => 'tempat_lahir',
-            4 => 'tgl_lahir',
-            5 => 'jenis_kelamin',
-            6 => 'kewarganegaraan',
-            7 => 'alamat',
-            8 => 'telp_hp',
-            9 => 'email',
-            10 => 'pendidikan_terakhir',
-            11 => 'nama_perusahaan',
-            12 => 'alamat_perusahaan',
-            13 => 'departemen',
-            14 => 'jabatan',
-            15 => 'telp_perusahaan',
-            16 => 'email_perusahaan',
-            17 => 'nama_kontak_person',
-            18 => 'no_kontak_person',
-            19 => null, // Dokumen (not sortable)
-            20 => null, // Jadwal Asesmen (not sortable)
-            21 => 'no_sertifikat',
-            22 => null, // Sertifikat file (not sortable)
-            23 => 'created_at',
-            24 => null, // Action (not sortable)
+            2 => 'tempat_lahir',
+            // 3 => 'jenis_kelamin',
+            // 4 => 'kewarganegaraan',
+            3 => 'alamat',
+            4 => 'telp_hp',
+            5 => 'pendidikan_terakhir',
+            6 => 'nama_perusahaan',
+            7 => 'alamat_perusahaan',
+            // 8 => 'departemen',
+            // 9 => 'jabatan',
+            8 => 'telp_perusahaan',
+            // 11 => 'email_perusahaan',
+            // 12 => 'nama_kontak_person',
+            // 13 => 'no_kontak_person',
+            9 => null, // Dokumen (not sortable)
+            10 => null, // Jadwal Asesmen (not sortable)
+            11 => 'no_sertifikat',
+            12 => null, // Sertifikat file (not sortable)
+            13 => 'created_at',
+            14 => null, // Action (not sortable)
         ];
 
         // Total records (sebelum search)
@@ -507,6 +504,26 @@ class AsesiController extends Controller
             $tbl = 'border-collapse:collapse;border:none !important;';
             $tr = 'border:none !important;';
             $tb = 'border:none !important;';
+
+            // Nama Column HTML
+            $namaHtml = '<table style="' . $tbl . '"><tbody style="' . $tb . '">';
+            $namaHtml .= '<tr style="font-size: 14px;font-weight:bold;text-transform:uppercase;' . $tr . '"><td colspan="3" style="' . $nb . '">' . e($item->nama_lengkap) . '</td></tr>';
+            $namaHtml .= '<tr style="' . $tr . '"><td colspan="3" style="' . $nb . '"><hr style="margin:2px;"></td></tr>';
+            $namaHtml .= '<tr style="' . $tr . '"><td style="' . $nb . '">NIK</td><td style="' . $nb . '">: ' . e($item->nik) . '</td></tr>';
+            $namaHtml .= '<tr style="' . $tr . '"><td style="' . $nb . '">Email</td><td style="' . $nb . '">: ' . e($item->email) . '</td></tr>';
+            $namaHtml .= '<tr style="' . $tr . '"><td style="' . $nb . '">Jenis Kelamin</td><td style="' . $nb . '">: ' . e($item->jenis_kelamin) . '</td></tr>';
+            $namaHtml .= '<tr style="' . $tr . '"><td style="' . $nb . '">Kewarganegaraan</td><td style="' . $nb . '">: ' . e($item->kewarganegaraan) . '</td></tr>';
+            $namaHtml .= '</tbody></table>';
+
+            // Perusahaan Column HTML
+            $perusahaanHtml = '<table style="' . $tbl . '"><tbody style="' . $tb . '">';
+            $perusahaanHtml .= '<tr style="font-size: 14px;font-weight:bold;text-transform:uppercase;' . $tr . '"><td colspan="3" style="' . $nb . '">' . e($item->nama_perusahaan) . '</td></tr>';
+            $perusahaanHtml .= '<tr style="' . $tr . '"><td colspan="3" style="' . $nb . '"><hr style="margin:2px;"></td></tr>';
+            $perusahaanHtml .= '<tr style="' . $tr . '"><td style="' . $nb . '">Departemen</td><td style="' . $nb . '">: ' . e($item->departemen) . '</td></tr>';
+            $perusahaanHtml .= '<tr style="' . $tr . '"><td style="' . $nb . '">Jabatan</td><td style="' . $nb . '">: ' . e($item->jabatan) . '</td></tr>';
+            $perusahaanHtml .= '<tr style="' . $tr . '"><td style="' . $nb . '">Email</td><td style="' . $nb . '">: ' . e($item->email_perusahaan) . '</td></tr>';
+            $perusahaanHtml .= '<tr style="' . $tr . '"><td style="' . $nb . '">CP Perusahaan</td><td style="' . $nb . '">: ' . e($item->nama_kontak_person) . ' ( ' . e($item->no_kontak_person) . ' )' . '</td></tr>';
+            $perusahaanHtml .= '</tbody></table>';
 
             // Dokumen links
             $dokumenHtml = '<table style="' . $tbl . '"><tbody style="' . $tb . '">';
@@ -553,29 +570,30 @@ class AsesiController extends Controller
 
             $rows[] = [
                 '<span class="bg-dinas rounded-4 px-2 text-white">' . e($namaKegiatan) . '</span>',
-                e($item->nama_lengkap),
-                e($item->nik),
-                e($item->tempat_lahir),
-                date('Y/m/d', strtotime($item->tgl_lahir)),
-                e($item->jenis_kelamin),
-                e($item->kewarganegaraan),
-                e($item->alamat),
+                $namaHtml,
+                // e($item->nik),
+                e($item->tempat_lahir . ', ' . date('d/m/Y', strtotime($item->tgl_lahir))),
+                // e($item->jenis_kelamin),
+                // e($item->kewarganegaraan),
+                '<div style="white-space: normal; min-width: 200px; max-width: 300px;">' . e($item->alamat) . '</div>',
                 $telpHtml,
-                e($item->email),
+                // e($item->email),
                 e($item->pendidikan_terakhir),
-                e($item->nama_perusahaan),
-                e($item->alamat_perusahaan),
-                e($item->departemen),
-                e($item->jabatan),
+                // e($item->nama_perusahaan),
+                $perusahaanHtml,
                 $telpPerusahaanHtml,
-                e($item->email_perusahaan),
-                e($item->nama_kontak_person),
-                e($item->no_kontak_person),
+                '<div style="white-space: normal; min-width: 200px; max-width: 300px;">' . e($item->alamat_perusahaan) . '</div>',
+                // e($item->departemen),
+                // e($item->jabatan),
+                // e($item->email_perusahaan),
+                // e($item->nama_kontak_person),
+                // e($item->no_kontak_person),
                 $dokumenHtml,
                 $jadwalHtml,
                 e($item->no_sertifikat),
                 $sertifikatHtml,
-                $item->created_at->format('Y/m/d'),
+                // $item->created_at->format('Y/m/d'),
+                \Carbon\Carbon::parse($item->created_at)->locale('id')->translatedFormat('l, d F Y'),
                 $actionHtml,
             ];
         }

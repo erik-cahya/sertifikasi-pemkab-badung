@@ -58,24 +58,23 @@
                         <thead>
                             <tr>
                                 <th>Sertifikasi</th>
-                                <th>Nama</th>
-                                <th>NIK</th>
+                                <th>Biodata Asesi</th>
                                 <th>Tempat Lahir</th>
-                                <th>Tanggal Lahir</th>
-                                <th>Jenis Kelamin</th>
-                                <th>Kewarganegaraan</th>
-                                <th>Alamat</th>
-                                <th>Telp</th>
-                                <th>Email</th>
+                                {{-- <th>Tanggal Lahir</th> --}}
+                                {{-- <th>Jenis Kelamin</th> --}}
+                                {{-- <th>Kewarganegaraan</th> --}}
+                                <th>Alamat Asesi</th>
+                                <th>Kontak Asesi</th>
+                                {{-- <th>Email</th> --}}
                                 <th>Pendidikan Terakhir</th>
-                                <th>Nama Perusahaan</th>
-                                <th>Alamat</th>
-                                <th>Departemen</th>
-                                <th>Jabatan</th>
-                                <th>Telp Perusahaan</th>
-                                <th>Email Perusahaan</th>
-                                <th>Nama Kontak Person Perusahaan</th>
-                                <th>Nomor HP Kontak Person Perusahaan</th>
+                                <th>Data Perusahaan</th>
+                                <th>Kontak Perusahaan</th>
+                                <th>Alamat Perusahaan</th>
+                                {{-- <th>Departemen</th> --}}
+                                {{-- <th>Jabatan</th> --}}
+                                {{-- <th>Email Perusahaan</th> --}}
+                                {{-- <th>Nama Kontak Person Perusahaan</th> --}}
+                                {{-- <th>Nomor HP Kontak Person Perusahaan</th> --}}
                                 <th class="no-export" style="padding: 8px 40px;">Dokumen</th>
                                 <th>Jadwal Asesmen</th>
                                 <th>No Sertifikat</th>
@@ -235,8 +234,13 @@
                         d.filter_kegiatan = $('#filter_kegiatan').val();
                     }
                 },
+                columnDefs: [{
+                        targets: [9, 10, 12, 14],
+                        orderable: false
+                    }, // Dokumen, Jadwal, Sertifikat, Action
+                ],
                 order: [
-                    [23, 'desc']
+                    [13, 'desc']
                 ], // default sort: Mendaftar pada
                 pageLength: 50,
                 scrollX: true,
@@ -282,11 +286,6 @@
                     },
                     lengthMenu: "Tampilkan _MENU_ data",
                 },
-                columnDefs: [{
-                        targets: [19, 20, 22, 24],
-                        orderable: false
-                    }, // Dokumen, Jadwal, Sertifikat, Action
-                ],
                 drawCallback: function() {
                     $(".dataTables_paginate > .pagination").addClass("pagination-rounded");
                 }
