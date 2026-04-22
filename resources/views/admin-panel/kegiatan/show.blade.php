@@ -165,19 +165,16 @@
                                             </td>
 
                                             <td>
-                                                <div class="d-flex align-items-center mb-2 gap-2">
-                                                    <div style="width:120px;">Laporan 1</div>
-                                                    <div style="width:15px;">:</div>
-                                                    <span id="laporan-{{ $kegiatan->ref }}-1" class="flex-fill">
-                                                        @if ($kegiatan->laporan_asesmen)
-                                                            <a href="{{ route('files.asesmen.laporan_asesmen', $kegiatan->laporan_asesmen) }}" target="_blank" class="text-danger d-inline-flex align-items-center gap-1" title="Lihat Laporan Asesmen"> <i class="mdi mdi-download"></i> Download </a>
-                                                        @else
-                                                            <span class="text-muted">-</span>
-                                                        @endif
-                                                    </span>
-                                                </div>
+                                                {{-- <div>Laporan 1</div> --}}
+                                                <span id="laporan-{{ $kegiatan->ref }}-1" class="flex-fill">
+                                                    @if ($kegiatan->laporan_asesmen)
+                                                        <a href="{{ route('files.asesmen.laporan_asesmen', $kegiatan->laporan_asesmen) }}" target="_blank" class="text-danger d-inline-flex align-items-center gap-1" title="Lihat Laporan Asesmen"> <i class="mdi mdi-download"></i> Download Laporan Asesmen</a>
+                                                    @else
+                                                        <span class="text-muted">-</span>
+                                                    @endif
+                                                </span>
 
-                                                <div class="d-flex align-items-center mb-2 gap-2">
+                                                {{-- <div class="d-flex align-items-center mb-2 gap-2">
                                                     <div style="width:120px;">Laporan 2</div>
                                                     <div style="width:15px;">:</div>
                                                     <span id="laporan-{{ $kegiatan->ref }}-2" class="flex-fill">
@@ -199,9 +196,9 @@
                                                             <span class="text-muted">-</span>
                                                         @endif
                                                     </span>
-                                                </div>
+                                                </div> --}}
 
-                                                <div class="d-flex align-items-center mb-2 gap-2">
+                                                {{-- <div class="d-flex align-items-center mb-2 gap-2">
                                                     <div style="width:120px;">Laporan 4</div>
                                                     <div style="width:15px;">:</div>
                                                     <span id="laporan-{{ $kegiatan->ref }}-4" class="flex-fill">
@@ -223,19 +220,19 @@
                                                             <span class="text-muted">-</span>
                                                         @endif
                                                     </span>
-                                                </div>
+                                                </div> --}}
                                             </td>
 
                                             @role('lsp')
                                                 <td>
                                                     {{-- <input type="file" class="form-control upload-laporan-asesmen form-control-sm" data-ref="{{ $kegiatan->ref }}" accept="application/pdf"> --}}
-                                                    <div class="d-flex align-items-center mb-2">
-                                                        <div style="width:120px;">Laporan 1</div>
-                                                        <div style="width:15px;">:</div>
-                                                        <input type="file" class="form-control form-control-sm upload-laporan-asesmen" data-ref="{{ $kegiatan->ref }}" data-index="1" accept="application/pdf">
-                                                    </div>
 
-                                                    <div class="d-flex align-items-center mb-2">
+                                                    <label class="btn btn-outline-primary btn-sm mb-0 shadow-sm" style="font-size: 11px; padding: 4px 8px; cursor: pointer;">
+                                                        <i class="mdi mdi-upload"></i> Upload Laporan Asesmen
+                                                        <input type="file" class="d-none upload-laporan-asesmen" data-ref="{{ $kegiatan->ref }}" data-index="1" accept="application/pdf">
+                                                    </label>
+
+                                                    {{-- <div class="d-flex align-items-center mb-2">
                                                         <div style="width:120px;">Laporan 2</div>
                                                         <div style="width:15px;">:</div>
                                                         <input type="file" class="form-control form-control-sm upload-laporan-asesmen" data-ref="{{ $kegiatan->ref }}" data-index="2" accept="application/pdf">
@@ -257,7 +254,7 @@
                                                         <div style="width:120px;">Laporan 5</div>
                                                         <div style="width:15px;">:</div>
                                                         <input type="file" class="form-control form-control-sm upload-laporan-asesmen" data-ref="{{ $kegiatan->ref }}" data-index="5" accept="application/pdf">
-                                                    </div>
+                                                    </div> --}}
                                                 </td>
                                             @endrole
 
@@ -338,17 +335,17 @@
                                                                             <div class="d-flex align-items-center mb-2">
                                                                                 <div style="width:180px;">Daftar Hadir</div>
                                                                                 <div style="width:15px;">:</div>
-                                                                                <a href="{{ route('pdf.daftar-hadir', $asesmen->ref) }}" target="_blank" class="d-inline-flex align-items-center gap-1" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Download Daftar Hadir" data-bs-custom-class="info-tooltip"><i class="mdi mdi-download"></i> Download </a>
+                                                                                <a href="{{ route('pdf.daftar-hadir', $asesmen->ref) }}" target="_blank" class="text-danger d-inline-flex align-items-center gap-1" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Download Daftar Hadir" data-bs-custom-class="info-tooltip"><i class="mdi mdi-download"></i> Download </a>
                                                                             </div>
                                                                             <div class="d-flex align-items-center mb-2">
                                                                                 <div style="width:180px;">Daftar Penerimaan</div>
                                                                                 <div style="width:15px;">:</div>
-                                                                                <a href="{{ route('pdf.daftar-penerimaan', $asesmen->ref) }}" target="_blank" class="d-inline-flex align-items-center gap-1" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Download Daftar Hadir" data-bs-custom-class="info-tooltip"><i class="mdi mdi-download"></i> Download </a>
+                                                                                <a href="{{ route('pdf.daftar-penerimaan', $asesmen->ref) }}" target="_blank" class="text-danger d-inline-flex align-items-center gap-1" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Download Daftar Hadir" data-bs-custom-class="info-tooltip"><i class="mdi mdi-download"></i> Download </a>
                                                                             </div>
                                                                             <div class="d-flex align-items-center mb-2">
                                                                                 <div style="width:180px;">Tanda Terima Sertifikat</div>
                                                                                 <div style="width:15px;">:</div>
-                                                                                <a href="{{ route('pdf.tanda-terima-sertifikat', $asesmen->ref) }}" target="_blank" class="d-inline-flex align-items-center gap-1" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Download Daftar Hadir" data-bs-custom-class="info-tooltip"><i class="mdi mdi-download"></i> Download </a>
+                                                                                <a href="{{ route('pdf.tanda-terima-sertifikat', $asesmen->ref) }}" target="_blank" class="text-danger d-inline-flex align-items-center gap-1" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Download Daftar Hadir" data-bs-custom-class="info-tooltip"><i class="mdi mdi-download"></i> Download </a>
                                                                             </div>
                                                                         </td>
                                                                         <!-- Download Bukti -->
@@ -390,23 +387,22 @@
                                                                         <!-- Upload Bukti -->
                                                                         @role('lsp')
                                                                             <td>
-                                                                                <div class="d-flex align-items-center mb-2">
-                                                                                    <div style="width:180px;">Bukti Asesmen</div>
-                                                                                    <div style="width:15px;">:</div>
-                                                                                    <input type="file" class="form-control form-control-sm upload-bukti-asesmen" data-ref="{{ $asesmen->ref }}" accept="application/pdf">
-                                                                                </div>
 
-                                                                                <div class="d-flex align-items-center mb-2">
-                                                                                    <div style="width:180px;">Dokumentasi Asesmen</div>
-                                                                                    <div style="width:15px;">:</div>
-                                                                                    <input type="file" class="form-control form-control-sm upload-dokumentasi-asesmen" data-ref="{{ $asesmen->ref }}" accept="application/pdf">
-                                                                                </div>
+                                                                                <label class="btn btn-outline-primary btn-sm mb-0 shadow-sm" style="font-size: 11px; padding: 4px 8px; cursor: pointer;">
+                                                                                    <i class="mdi mdi-upload"></i> Upload Bukti Asesmen
+                                                                                    <input type="file" class="d-none upload-bukti-asesmen" data-ref="{{ $asesmen->ref }}" accept="application/pdf">
+                                                                                </label>
 
-                                                                                <div class="d-flex align-items-center mb-2">
-                                                                                    <div style="width:180px;">Bukti Terima Sertifikat</div>
-                                                                                    <div style="width:15px;">:</div>
-                                                                                    <input type="file" class="form-control form-control-sm upload-bukti-terima" data-ref="{{ $asesmen->ref }}" accept="application/pdf">
-                                                                                </div>
+                                                                                <label class="btn btn-outline-primary btn-sm mb-0 mt-2 shadow-sm" style="font-size: 11px; padding: 4px 8px; cursor: pointer;">
+                                                                                    <i class="mdi mdi-upload"></i> Upload Dokumentasi Asesmen
+                                                                                    <input type="file" class="d-none upload-dokumentasi-asesmen" data-ref="{{ $asesmen->ref }}" accept="application/pdf">
+                                                                                </label>
+
+                                                                                <label class="btn btn-outline-primary btn-sm mb-0 mt-2 shadow-sm" style="font-size: 11px; padding: 4px 8px; cursor: pointer;">
+                                                                                    <i class="mdi mdi-upload"></i> Upload Bukti Terima Sertifikat
+                                                                                    <input type="file" class="d-none upload-bukti-terima" data-ref="{{ $asesmen->ref }}" accept="application/pdf">
+                                                                                </label>
+
                                                                             </td>
                                                                         @endrole
                                                                         <td>
@@ -1366,8 +1362,8 @@
                 var html = '<table class="table-sm table-bordered table" style="font-size: 12px">';
                 html += '<thead class="text-center align-middle"><tr>';
                 html += '<th>No</th><th>Nama Asesi</th><th>Tempat Bekerja</th>';
-                html += '<th>Nomor Sertifikat' + (isLsp ? ' <small class="fw-normal fs-10">( Klik Kolom untuk tambah/edit )</small>' : '') + '</th>';
-                if (isLsp) html += '<th width="20%">Upload Sertifikat</th>';
+                html += '<th>Nomor Sertifikat' + (isLsp ? '<br> <small class="fw-normal fs-10">( Klik Kolom untuk tambah/edit )</small>' : '') + '</th>';
+                if (isLsp) html += '<th>Upload Sertifikat</th>';
                 html += '<th>Download Sertifikat</th>';
                 html += '</tr></thead><tbody>';
 
@@ -1393,7 +1389,12 @@
 
                     // Upload Sertifikat (LSP only)
                     if (isLsp) {
-                        html += '<td><input type="file" class="form-control upload-sertifikat" data-ref="' + asesi.ref + '" accept="application/pdf"></td>';
+                        html += '<td>';
+                        html += '<label class="btn btn-outline-primary btn-sm mb-0 shadow-sm" style="font-size: 11px; padding: 4px 8px; cursor: pointer;">';
+                        html += '<i class="mdi mdi-upload"></i> Upload Sertifikat';
+                        html += '<input type="file" class="d-none upload-sertifikat" data-ref="' + asesi.ref + '" accept="application/pdf">';
+                        html += '</label>';
+                        html += '</td>';
                     }
 
                     // Download Sertifikat
