@@ -486,7 +486,7 @@
         }
 
         /* ── Responsive ── */
-        @media (max-width: 900px) {
+        @media (max-width: 1000px) {
             .login-wrapper {
                 flex-direction: column;
             }
@@ -507,7 +507,11 @@
             }
 
             .brand-features {
-                display: none;
+                display: block;
+            }
+
+            .feature-item {
+                margin: 10px;
             }
 
             .form-panel {
@@ -636,7 +640,7 @@
                             <input type="checkbox" name="remember" id="checkbox-signin">
                             <span>Ingat saya</span>
                         </label>
-                        <a href="{{ route('password.request') }}" class="forgot-link">Lupa password?</a>
+                        {{-- <a href="{{ route('password.request') }}" class="forgot-link">Lupa password?</a> --}}
                     </div>
 
                     <button class="btn-login" type="submit" id="btn-submit">
