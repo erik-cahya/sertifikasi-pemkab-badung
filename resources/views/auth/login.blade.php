@@ -30,7 +30,7 @@
         body {
             font-family: 'Inter', sans-serif;
             min-height: 100vh;
-            overflow: hidden;
+            /* overflow: hidden; */
             background: #1a0a0a;
         }
 
